@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Hoàng Đế – BD Team</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
 <style>
@@ -772,6 +772,24 @@ footer .ver{display:block;margin-top:8px;opacity:.5;font-size:11px}
 #admLogin{gap:14px;max-width:calc(100vw - 24px);box-sizing:border-box;min-width:0}#admLogin .lg-t1{font-size:clamp(19px,5.6vw,30px)}#admin.lg-mode .adm-in>*{min-width:0}#admLogin h3{font:700 21px 'Be Vietnam Pro',Inter,system-ui,sans-serif}#admLogin .lg-brand{margin-top:12px}
 @media(max-width:380px){.lg-t1{font-size:23px}.lg-t2 span{font-size:12px}}
 @media (prefers-reduced-motion:reduce){.lg-t1,.lg-t1 em,.lg-go::after,.lg-med::after{animation:none!important}}
+
+/* ===== v13: MƯỢT + CHỐNG THAO TÁC NHẦM ===== */
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:none}
+body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;overflow-x:clip}
+button,a,.pc,.chip,.cf,.dice-zone,.qadd,.fab,.pd-chips,.au-tabs,nav,header,.st,.pk,.sp{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+img{-webkit-user-drag:none;-webkit-touch-callout:none}
+input,textarea,select{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+@media(max-width:820px){input,textarea,select{font-size:16px!important}}
+html.lock,html.lock body{overflow:hidden}
+#auth,#pedit,#cart,#pdet,#bill,#ordBill,#micAsk,#voice,.cart-box,.pd-box,.au-box,.pe-box,.bl-imgs,.chat,.chat *,.ma-box,#admin .adm-in{overscroll-behavior:contain}
+/* hộp thoại đang đóng: không vẽ + dừng hiệu ứng */
+#auth,#pedit,#cart,#pdet,#bill,#ordBill,#micAsk,#voice{visibility:hidden;transition:opacity .3s,visibility 0s linear .3s!important}
+#auth.on,#pedit.on,#cart.on,#pdet.on,#bill.on,#ordBill.on,#micAsk.on,#voice.on{visibility:visible;transition:opacity .3s,visibility 0s!important}
+#auth:not(.on) *,#pedit:not(.on) *,#cart:not(.on) *,#pdet:not(.on) *,#bill:not(.on) *,#ordBill:not(.on) *,#micAsk:not(.on) *,#voice:not(.on) *,.chat:not(.open) *{animation-play-state:paused!important}
+/* phần trang ngoài màn hình: dừng hiệu ứng */
+.paused,.paused *,.paused::before,.paused::after,.paused *::before,.paused *::after{animation-play-state:paused!important}
+.sbg::before{will-change:transform}.sbg{contain:paint}
+@media(max-width:820px){.sbg::before{mix-blend-mode:normal;opacity:.3}}
 </style>
 </head>
 <body class="loading">
@@ -1515,7 +1533,18 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="09/11-v12";
+const APP_VER="09/11-v13";
+/* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
+{const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
+  $$("section,footer").forEach(el=>io2.observe(el))}
+{const MS=["#auth","#pedit","#cart","#pdet","#bill","#ordBill","#micAsk","#voice"].map(x=>document.querySelector(x)).filter(Boolean),chatEl=$("#chat");
+  const upd=()=>{const open=MS.some(m=>m.classList.contains("on"))||(chatEl&&chatEl.classList.contains("open")&&innerWidth<700);document.documentElement.classList.toggle("lock",open)};
+  const mo=new MutationObserver(upd);[...MS,chatEl].filter(Boolean).forEach(m=>mo.observe(m,{attributes:true,attributeFilter:["class"]}))}
+{let lastEl=null,lastT=0;document.addEventListener("click",e=>{const el=e.target.closest("button,a,.pc,[data-act]");if(!el)return;
+  if(el.matches("[data-d]")||el.closest(".pg-nav,.pd-thumbs,#dots,.dl-qk")){lastEl=null;return}
+  const now=Date.now();if(el===lastEl&&now-lastT<450){e.preventDefault();e.stopImmediatePropagation();return}lastEl=el;lastT=now},true)}
+["gesturestart","gesturechange"].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
+
 {const fw=document.querySelector("footer .wrap");if(fw)fw.insertAdjacentHTML("beforeend",`<small class="ver">Phiên bản ${APP_VER}</small>`)}
 const isTouch=matchMedia("(pointer:coarse)").matches||"ontouchstart" in window;
 /* micro trên bàn phím điện thoại: phải focus NGAY trong lần chạm thì bàn phím mới bật */
