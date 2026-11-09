@@ -609,6 +609,24 @@ body.adm-on .cart-fab{display:none!important}
 .oc-i{display:grid;gap:4px;font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.25)}.oc-i div{display:flex;justify-content:space-between;gap:10px}.oc-i em{color:#c9b6ff;font-style:normal;font-size:12px}.oc-i small{color:var(--muted)}
 .oc-f{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px}.oc-b{display:flex;gap:6px;flex-wrap:wrap}.oc-b .btn{padding:8px 12px;font-size:13px;min-height:0;text-decoration:none}
 
+
+/* ===== v8 ===== */
+.au-lg{width:84px!important;height:84px!important;padding:3px;background:linear-gradient(135deg,#f7dc92,#ffb36b,#ff6fae)!important;box-shadow:0 10px 30px -10px rgba(247,220,146,.6);font-size:38px;overflow:hidden}
+.au-lg img{width:100%;height:100%;object-fit:cover;border-radius:50%;background:#0b0907;display:block}
+#admLogin .au-lg{margin:0 auto 10px}
+footer .ver{display:block;margin-top:8px;opacity:.5;font-size:11px}
+.ord-set{display:grid;gap:10px;padding:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(120deg,rgba(255,111,174,.08),rgba(247,220,146,.06));margin-bottom:12px}
+.os-r{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.os-r b{font-size:14px;margin-right:4px}.os-r .btn{padding:8px 13px;font-size:13px;min-height:0}
+.os-r small{font-size:12px;color:var(--muted)}.os-sw{display:flex;align-items:center;gap:6px;font-size:13.5px;cursor:pointer}.os-sw input{width:18px;height:18px;accent-color:#ff6fae}
+#ktZalo{flex:1;min-width:150px;max-width:220px;padding:9px 12px!important;font-size:14px!important}
+#obKt{text-align:center;text-decoration:none}#obKt.pulse{animation:ktp 1s 3}@keyframes ktp{50%{box-shadow:0 0 0 8px rgba(247,220,146,.25)}}
+#ordAlert{position:fixed;left:0;right:0;top:0;z-index:400;padding:10px;pointer-events:none}
+.oa-in{pointer-events:auto;max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px;border-radius:18px;color:#fff;
+ background:linear-gradient(120deg,#e11d48,#f97316,#e11d48);background-size:200% 100%;animation:oaBg 1.2s linear infinite,oaShake .6s 3;box-shadow:0 20px 50px -10px rgba(225,29,72,.7)}
+.oa-in b{font-size:18px;letter-spacing:.5px}.oa-in span{flex:1;min-width:180px;font-size:14px}.oa-in .btn{padding:8px 14px;min-height:0}
+.oa-x{border:0;background:rgba(0,0,0,.25);color:#fff;width:32px;height:32px;border-radius:50%;font-size:20px;cursor:pointer}
+@keyframes oaBg{to{background-position:200% 0}}@keyframes oaShake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.pc{opacity:1;transform:none}}
 </style>
 </head>
@@ -653,7 +671,12 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   </div>
 </div></div>
 <div id="ordBill" role="dialog" aria-modal="true"><div class="cart-box"><div class="pe-h"><h3 id="obT">🧾 Bill</h3><button type="button" id="obX" aria-label="Đóng">×</button></div>
-  <div class="bl-imgs" id="obImgs"></div><button class="btn btn-gold" type="button" id="obSave">⬇️ Lưu ảnh bill</button></div></div>
+  <div class="bl-imgs" id="obImgs"></div>
+  <a class="btn btn-gold" id="obKt" href="https://zalo.me/" target="_blank" rel="noopener">➡️ Chuyển bill cho kế toán qua Zalo</a>
+  <p class="bl-hint" id="obHow"></p>
+  <div class="bl-row"><button class="btn btn-ghost" type="button" id="obCopy">📋 Chép ảnh bill</button><button class="btn btn-ghost" type="button" id="obTxt">📝 Chép nội dung</button></div>
+  <div class="bl-row"><button class="btn btn-ghost" type="button" id="obShare">📤 Chia sẻ…</button><button class="btn btn-ghost" type="button" id="obSave">⬇️ Lưu ảnh</button></div></div></div>
+<div id="ordAlert" role="alert" hidden><div class="oa-in"><b>🔔 CÓ ĐƠN MỚI!</b><span id="oaTxt"></span><button type="button" class="btn btn-gold" id="oaView">Xem đơn</button><button type="button" class="oa-x" id="oaX" aria-label="Tắt">×</button></div></div>
 <div id="micAsk" role="dialog" aria-modal="true"><div class="ma-box">
   <div class="ma-ic" id="maIc">🎤</div>
   <h3 id="maT">Cho phép sử dụng micro</h3>
@@ -805,10 +828,10 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <!-- ============ ĐĂNG NHẬP / ĐĂNG KÝ KHÁCH ============ -->
 <div id="auth" role="dialog" aria-modal="true"><div class="au-box">
   <button class="au-x" id="auClose" aria-label="Đóng">×</button>
-  <div class="au-head"><div class="au-ic">👤</div><h3>Tài khoản khách hàng</h3><p>Nhận báo giá, ưu đãi đại lý và tư vấn từ BD Team</p></div>
+  <div class="au-head"><div class="au-ic au-lg"><img class="js-logo" alt="Phụ Kiện Hoàng Đế" onerror="this.replaceWith('👑')"></div><h3>Tài khoản khách hàng</h3><p>Nhận báo giá, ưu đãi đại lý và tư vấn từ BD Team</p></div>
   <div class="au-tabs"><button data-tab="login" class="on">Đăng nhập</button><button data-tab="reg">Đăng ký</button></div>
   <form id="fLogin" data-pane="login" autocomplete="on">
-    <label>Số điện thoại<input name="id_" inputmode="tel" autocomplete="username" placeholder="0912 345 678" required></label>
+    <label>Tên đăng nhập hoặc số điện thoại<input name="id_" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="vd: minhanh88 hoặc 0912345678" required></label>
     <label>Mật khẩu<input name="pass" type="password" autocomplete="current-password" required></label>
     <div class="au-err"></div><button class="btn btn-gold" type="submit">Đăng nhập</button>
     <button type="button" class="au-link" id="auForgot">Quên mật khẩu?</button>
@@ -816,6 +839,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <form id="fReg" data-pane="reg" hidden>
     <label>Tên khách hàng<input name="name" autocomplete="name" placeholder="Nguyễn Văn A" maxlength="80" required></label>
     <label>Số điện thoại<input name="phone" inputmode="tel" autocomplete="tel" placeholder="0912 345 678" required></label>
+    <label>Tên đăng nhập (chữ và số, viết liền)<input name="user" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="vd: minhanh88 – bỏ trống = dùng SĐT" maxlength="24"></label>
     <label>Tên shop<input name="shop" placeholder="Phụ kiện Minh Anh" maxlength="100" required></label>
     <label>Địa chỉ<input name="address" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh" maxlength="200" required></label>
     <label>Mật khẩu (ít nhất 6 ký tự)<input name="pass" type="password" autocomplete="new-password" minlength="6" required></label>
@@ -825,6 +849,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <form id="fMe" data-pane="me" hidden>
     <label>Tên khách hàng<input name="name" maxlength="80" required></label>
     <label>Số điện thoại<input name="phone" disabled></label>
+    <label>Tên đăng nhập<input name="user" disabled></label>
     <label>Tên shop<input name="shop" maxlength="100" required></label>
     <label>Địa chỉ<input name="address" maxlength="200" required></label>
     <div class="au-err"></div><button class="btn btn-gold" type="submit">Lưu thông tin</button>
@@ -840,7 +865,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="adm-in">
     <div data-v="demo" hidden class="adm-card"><h3>Chưa kết nối Firebase</h3><p>Trang quản trị sẽ hoạt động sau khi bạn dán cấu hình Firebase và email admin vào file (xem HUONG-DAN-CAI-DAT). Hiện website đang chạy với 68 sản phẩm mẫu.</p></div>
     <div data-v="err" hidden class="adm-card"><h3>Không kết nối được Firebase</h3><p>Kiểm tra lại mạng hoặc cấu hình Firebase trong file.</p></div>
-    <form data-v="login" hidden class="adm-card" id="admLogin"><h3>Đăng nhập Admin</h3>
+    <form data-v="login" hidden class="adm-card" id="admLogin"><div class="au-ic au-lg"><img class="js-logo" alt="" onerror="this.replaceWith('👑')"></div><h3>Đăng nhập Admin</h3>
       <label>Email admin<input name="email" type="email" autocomplete="username" required></label>
       <label>Mật khẩu<input name="pass" type="password" autocomplete="current-password" required></label>
       <div class="au-err"></div><button class="btn btn-gold" type="submit">Đăng nhập</button></form>
@@ -857,8 +882,13 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
       </div>
       <div data-t="ord" hidden>
         <div class="adm-bar"><input id="oQ" placeholder="🔍 Tìm mã đơn, tên, SĐT…"><select id="oSt"><option value="all">Tất cả đơn</option><option value="new">🆕 Đơn mới</option><option value="ok">✅ Đã xác nhận</option><option value="done">🚚 Đã giao</option><option value="cancel">✖ Đã huỷ</option></select></div>
+        <div class="ord-set">
+          <div class="os-r"><b>🔔 Báo đơn mới</b><label class="os-sw"><input type="checkbox" id="almOn"> Bật chuông + giọng</label><button type="button" class="btn btn-gold" id="almTest">🔊 Thử chuông</button></div>
+          <div class="os-r"><button type="button" class="btn" id="almRec">🎙️ Ghi giọng “Có đơn Nhật ơi”</button><button type="button" class="btn" id="almClr" hidden>↺ Dùng giọng máy</button><small id="almInfo"></small></div>
+          <div class="os-r"><b>➡️ Zalo kế toán</b><input id="ktZalo" inputmode="tel" maxlength="14" placeholder="SĐT Zalo kế toán"><button type="button" class="btn" id="ktSave">Lưu</button></div>
+        </div>
         <div class="adm-stat" id="oStat">Đang tải đơn hàng…</div><div id="oList"></div>
-        <p class="adm-tip">Đơn mới hiện ngay khi khách bấm “Tạo bill” (trang này cần đang mở). Có tiếng “ting” khi có đơn mới.</p>
+        <p class="adm-tip">Đơn mới hiện ngay khi khách bấm “Tạo bill”. Để có chuông: giữ trang admin mở, bật âm lượng máy, và chạm vào trang ít nhất 1 lần sau khi mở.</p>
       </div>
       <div data-t="cust" hidden>
         <div class="adm-bar"><input id="cQ" placeholder="🔍 Tìm tên, SĐT, shop…"><button class="btn btn-gold" id="cExp">⬇ Xuất Excel</button></div>
@@ -976,7 +1006,7 @@ $("#dlIn").addEventListener("input",e=>{const d=e.target.value.replace(/\D/g,"")
 $$(".dl-qk button").forEach(b=>b.onclick=()=>{$("#dlIn").value=(+b.dataset.v*1e6).toLocaleString("vi-VN");dlCalc()});dlCalc();
 $$(".js-zalo").forEach(a=>a.href=zalo);$$(".js-call").forEach(a=>a.href="tel:"+CONFIG.phone);
 $$(".js-phone").forEach(e=>e.textContent=CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3"));
-$("#logo").src=U+"2022/04/logo-pkhd.jpg";
+$("#logo").src=U+"2022/04/logo-pkhd.jpg";$$(".js-logo").forEach(i=>i.src=$("#logo").src);
 
 /* ===================================================================
    KẾT NỐI FIREBASE – dán cấu hình của bạn vào đây (xem HUONG-DAN)
@@ -1303,22 +1333,25 @@ function order(p,qty){const tot=p.p*qty;ctx.last=[p];
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 const vo=$("#voice"),voT=$("#voText"),voH=$("#voHint");let rec=null;
 function toast(t){const el=$("#toast");el.innerHTML=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),3200)}
-function startRec(onFinal){
+function startRec(onFinal,soft){
   if(rec)try{rec.abort()}catch(e){}
+  /* soft = iPhone: bàn phím đã mở sẵn – lỗi thì không bật hộp thoại (tránh đóng bàn phím), chỉ nhắc dùng micro bàn phím */
+  if(soft){const f=onFinal;onFinal=(t,a)=>{try{document.activeElement&&document.activeElement.blur()}catch(e){}f(t,a)}}
   rec=new SR();rec.lang="vi-VN";rec.interimResults=true;rec.maxAlternatives=3;rec.continuous=false;
-  vo.classList.add("on");vo.classList.remove("err");voT.textContent="Đang nghe…";voH.textContent="Hãy nói: \"cáp sạc\", \"tai nghe bluetooth\", \"đồng hồ PICOM\"…";
+  vo.classList.add("on");vo.classList.remove("err");voT.textContent="Đang nghe…";voH.textContent=soft?"Hãy nói tên sản phẩm… Nếu không nhận, bấm Hủy rồi chạm 🎤 trên bàn phím.":"Hãy nói: \"cáp sạc\", \"tai nghe bluetooth\", \"đồng hồ PICOM\"…";
   let done=false,lastT="",lastA=[];
   rec.onstart=()=>{try{localStorage.setItem("micOK","1")}catch(_){}};
   rec.onresult=e=>{let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;voT.textContent="“"+t+"”";lastT=t;lastA=[...e.results[e.results.length-1]].map(a=>a.transcript);
     if(e.results[e.results.length-1].isFinal&&!done){done=true;const alts=[...e.results[e.results.length-1]].map(a=>a.transcript);setTimeout(()=>{vo.classList.remove("on");onFinal(t,alts)},450)}};
-  rec.onerror=e=>{done=true;MA_ERR=e.error||"";if(e.error==="not-allowed"||e.error==="service-not-allowed"){vo.classList.remove("on");try{localStorage.removeItem("micOK")}catch(_){}return micDialog(e.error==="service-not-allowed"&&isIOS?"siri":"denied",onFinal)}
+  rec.onerror=e=>{done=true;MA_ERR=e.error||"";
+    if(soft&&e.error!=="no-speech"){vo.classList.remove("on");if(e.error!=="aborted")toast(`🎤 Chạm biểu tượng <b>micro trên bàn phím</b> để đọc tên sản phẩm <small>(${esc(e.error)} • ${APP_VER})</small>`);return}if(e.error==="not-allowed"||e.error==="service-not-allowed"){vo.classList.remove("on");try{localStorage.removeItem("micOK")}catch(_){}return micDialog(e.error==="service-not-allowed"&&isIOS?"siri":"denied",onFinal)}
     if(e.error==="aborted")return vo.classList.remove("on");
     if(e.error==="audio-capture"||e.error==="network"||e.error==="language-not-supported"){vo.classList.remove("on");return micDialog("fail",onFinal)}vo.classList.add("err");
     voT.textContent=e.error==="not-allowed"||e.error==="service-not-allowed"?"Chưa được phép dùng micro":e.error==="no-speech"?"Không nghe thấy gì":"Không nhận được giọng nói";
     voH.innerHTML=e.error==="not-allowed"||e.error==="service-not-allowed"?"Hãy cho phép micro. Lưu ý: tính năng giọng nói cần mở website qua đường link <b>https://</b>.":"Bấm micro để thử lại.";setTimeout(()=>vo.classList.remove("on"),3500)};
   /* iPhone đôi khi không báo "kết quả cuối" – lấy câu vừa nghe được khi micro tắt */
   rec.onend=()=>{if(done)return;if(lastT.trim()){done=true;vo.classList.remove("on");onFinal(lastT,lastA)}else setTimeout(()=>vo.classList.remove("on"),300)};
-  try{rec.start()}catch(e){vo.classList.remove("on");MA_ERR="start:"+(e&&e.name||"");micDialog("fail",onFinal)}}
+  try{rec.start()}catch(e){vo.classList.remove("on");MA_ERR="start:"+(e&&e.name||"");if(soft)return toast("🎤 Chạm biểu tượng <b>micro trên bàn phím</b> để đọc tên sản phẩm");micDialog("fail",onFinal)}}
 
 /* ---------- XIN QUYỀN MICRO ---------- */
 const ma=$("#micAsk");let maCb=null,maInput=null;
@@ -1327,12 +1360,14 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="09/11-v7";
+const APP_VER="09/11-v8";
+{const fw=document.querySelector("footer .wrap");if(fw)fw.insertAdjacentHTML("beforeend",`<small class="ver">Phiên bản ${APP_VER}</small>`)}
 const isTouch=matchMedia("(pointer:coarse)").matches||"ontouchstart" in window;
 /* micro trên bàn phím điện thoại: phải focus NGAY trong lần chạm thì bàn phím mới bật */
-function kbDictate(inputEl){const inp=inputEl||$("#q");
+function kbFocus(inputEl){const inp=inputEl||$("#q");
   if(inp.id==="q"){const y=inp.getBoundingClientRect().top+scrollY-120;scrollTo(0,y)}
-  try{inp.focus({preventScroll:inp.id!=="q"})}catch(e){inp.focus()}
+  try{inp.focus({preventScroll:inp.id!=="q"})}catch(e){inp.focus()}}
+function kbDictate(inputEl){kbFocus(inputEl);
   toast(isIOS?"🎤 Chạm biểu tượng <b>micro</b> trên bàn phím (góc dưới) rồi đọc tên sản phẩm":"🎤 Chạm <b>micro</b> trên bàn phím rồi đọc tên sản phẩm")}
 let MA_ERR="";
 function micDialog(mode,cb){maCb=cb;$("#maCode").textContent=`Mã: ${MA_ERR||mode} • ${isIOS?"iPhone":/Android/.test(navigator.userAgent)?"Android":"PC"}${inApp?" • in-app":""} • bản ${APP_VER}`;const st=$("#maSteps"),ok=$("#maOk");st.style.display="none";ok.style.display="";
@@ -1365,6 +1400,8 @@ function listen(onFinal,inputEl){maInput=inputEl||null;MA_ERR="";
   if(isTouch&&(!SR||inApp))return kbDictate(inputEl);
   if(!SR)return micDialog("unsupported",onFinal);
   if(!window.isSecureContext)return micDialog("insecure",onFinal);
+  /* iPhone: mở sẵn bàn phím (micro bàn phím luôn dùng được) + đồng thời thử nghe trực tiếp */
+  if(isIOS){kbFocus(inputEl);return startRec(onFinal,true)}
   let ok=false;try{ok=!!localStorage.getItem("micOK")}catch(_){}
   if(ok||isIOS)return startRec(onFinal);
   micDialog("ask",onFinal)}
@@ -1388,7 +1425,10 @@ $("#chatMic").onclick=()=>listen(t=>ask(t),$("#ci"));
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const normPhone=s=>{let d=String(s||"").replace(/\D/g,"");if(d.startsWith("84")&&d.length===11)d="0"+d.slice(2);return d};
 const phoneMail=ph=>`${ph}@khach.bdteam`;
-const AUTH_ERR={"auth/email-already-in-use":"Số điện thoại này đã đăng ký. Hãy đăng nhập.","auth/invalid-credential":"Sai số điện thoại/email hoặc mật khẩu.","auth/wrong-password":"Sai mật khẩu.","auth/user-not-found":"Chưa có tài khoản với thông tin này.","auth/weak-password":"Mật khẩu cần ít nhất 6 ký tự.","auth/too-many-requests":"Thử sai quá nhiều lần, vui lòng đợi ít phút.","auth/network-request-failed":"Mất kết nối mạng, thử lại nhé.","auth/invalid-email":"Thông tin đăng nhập không hợp lệ."};
+/* tên đăng nhập: chữ + số (bỏ dấu, viết thường); toàn số thì coi như số điện thoại */
+const normUser=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[đĐ]/g,"d").toLowerCase().replace(/\s+/g,"");
+const userMail=u=>/^\+?\d+$/.test(u)?phoneMail(normPhone(u)):`${u}@khach.bdteam`;
+const AUTH_ERR={"auth/email-already-in-use":"Tên đăng nhập / số điện thoại này đã có người dùng. Hãy chọn tên khác hoặc đăng nhập.","auth/invalid-credential":"Sai số điện thoại/email hoặc mật khẩu.","auth/wrong-password":"Sai mật khẩu.","auth/user-not-found":"Chưa có tài khoản với thông tin này.","auth/weak-password":"Mật khẩu cần ít nhất 6 ký tự.","auth/too-many-requests":"Thử sai quá nhiều lần, vui lòng đợi ít phút.","auth/network-request-failed":"Mất kết nối mạng, thử lại nhé.","auth/invalid-email":"Thông tin đăng nhập không hợp lệ."};
 const authMsg=e=>AUTH_ERR[e&&e.code]||("Có lỗi xảy ra: "+(e&&(e.code||e.message)||"không rõ"));
 const auth=$("#auth");
 function openAuth(tab){if(IS_ADMIN){location.hash="#admin";return}if(DEMO){toast("Tài khoản sẽ hoạt động sau khi kết nối Firebase (xem HUONG-DAN).");return}
@@ -1397,7 +1437,7 @@ function openAuth(tab){if(IS_ADMIN){location.hash="#admin";return}if(DEMO){toast
 function closeAuth(){auth.classList.remove("on")}
 function showAuthTab(t){$$("#auth [data-pane]").forEach(p=>p.hidden=p.dataset.pane!==t);$$("#auth .au-tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
   $("#auth .au-tabs").hidden=t==="me";$$("#auth .au-err").forEach(e=>e.textContent="");
-  if(t==="me"&&PROFILE){const f=$("#fMe");["name","phone","shop","address"].forEach(k=>f[k].value=PROFILE[k]||"");f.phone.disabled=true}}
+  if(t==="me"&&PROFILE){const f=$("#fMe");["name","phone","shop","address"].forEach(k=>f[k].value=PROFILE[k]||"");f.user.value=PROFILE.user||PROFILE.phone||"";f.phone.disabled=true}}
 $("#acctBtn").onclick=()=>openAuth();$("#auClose").onclick=closeAuth;auth.onclick=e=>{if(e.target===auth)closeAuth()};
 $$("#auth .au-tabs button").forEach(b=>b.onclick=()=>showAuthTab(b.dataset.tab));
 $("#auForgot").onclick=()=>toast(`Liên hệ BD Team (${CONFIG.phone}) để được hỗ trợ đặt lại mật khẩu.`);
@@ -1406,15 +1446,18 @@ $("#fReg").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySele
   const d={name:f.name.value.trim(),phone:normPhone(f.phone.value),shop:f.shop.value.trim(),address:f.address.value.trim()};
   if(d.name.length<2)return er.textContent="Vui lòng nhập tên khách hàng.";
   if(!/^0\d{9}$/.test(d.phone))return er.textContent="Số điện thoại cần 10 số, bắt đầu bằng 0.";
+  const u=normUser(f.user.value)||d.phone;
+  if(!/^[a-z0-9]{3,24}$/.test(u))return er.textContent="Tên đăng nhập chỉ gồm chữ và số (3–24 ký tự, viết liền, không ký tự đặc biệt).";
+  d.user=/^\d+$/.test(u)?normPhone(u):u;
   if(d.shop.length<2)return er.textContent="Vui lòng nhập tên shop.";
   if(d.address.length<5)return er.textContent="Vui lòng nhập địa chỉ.";
   if(f.pass.value.length<6)return er.textContent="Mật khẩu cần ít nhất 6 ký tự.";
   if(!f.consent.checked)return er.textContent="Vui lòng tích đồng ý để BD Team liên hệ tư vấn.";
-  busy(b,true);try{const {A,F,auth:au,db}=FB;const cr=await A.createUserWithEmailAndPassword(au,phoneMail(d.phone),f.pass.value);
+  busy(b,true);try{const {A,F,auth:au,db}=FB;const cr=await A.createUserWithEmailAndPassword(au,userMail(d.user),f.pass.value);
     await F.setDoc(F.doc(db,"customers",cr.user.uid),{...d,consent:true,createdAt:F.serverTimestamp()});
-    PROFILE=d;updateAcct();closeAuth();f.reset();toast(`🎉 Chào mừng ${esc(d.name)} – ${esc(d.shop)}!`)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
+    PROFILE=d;updateAcct();closeAuth();f.reset();toast(`🎉 Chào mừng ${esc(d.name)} – ${esc(d.shop)}! Tên đăng nhập: <b>${esc(d.user)}</b>`)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $("#fLogin").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button[type=submit]");
-  const id=f.id_.value.trim(),mail=id.includes("@")?id:phoneMail(normPhone(id));
+  const id=f.id_.value.trim(),mail=id.includes("@")?id:userMail(normUser(id));
   busy(b,true);try{await FB.A.signInWithEmailAndPassword(FB.auth,mail,f.pass.value);closeAuth();f.reset()}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $("#fMe").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button[type=submit]");
   const d={name:f.name.value.trim(),shop:f.shop.value.trim(),address:f.address.value.trim()};
@@ -1453,7 +1496,7 @@ function ordWatch(){if(ordOn||!FB||!FB.F.onSnapshot)return;ordOn=true;const {F,d
   const qy=F.query?F.query(F.collection(db,"orders"),F.orderBy("at","desc"),F.limit(300)):F.collection(db,"orders");
   F.onSnapshot(qy,snap=>{const added=ordFirst?[]:snap.docChanges().filter(c=>c.type==="added").map(c=>c.doc.data());ordFirst=false;
     AD.ord=snap.docs.map(d=>({id:d.id,...d.data()}));ordList();
-    if(added.length){ding();atoast(`🔔 Có <b>${added.length}</b> đơn hàng mới – ${esc(added[0].cus&&added[0].cus.name||"")}`)}},
+    if(added.length)newOrderAlert(added)},
   err=>{$("#oStat").innerHTML=`❌ Chưa đọc được đơn hàng (${esc(err.code||err.message)}). Hãy cập nhật <b>quy tắc Firestore</b> có mục <b>orders</b>.`})}
 function ding(){try{const ac=new (window.AudioContext||window.webkitAudioContext)();[880,1320].forEach((fq,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=fq;o.connect(g);g.connect(ac.destination);
   g.gain.setValueAtTime(.0001,ac.currentTime+i*.18);g.gain.exponentialRampToValueAtTime(.3,ac.currentTime+i*.18+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+i*.18+.35);o.start(ac.currentTime+i*.18);o.stop(ac.currentTime+i*.18+.4)})}catch(e){}}
@@ -1468,13 +1511,76 @@ function ordList(){const nNew=AD.ord.filter(o=>(o.status||"new")==="new").length
       <div class="oc-c"><b>${esc(c.name)}</b>${c.shop?` <span class="g">• ${esc(c.shop)}</span>`:""}<small>📍 ${esc(c.address)}</small>${c.note?`<small>📝 ${esc(c.note)}</small>`:""}</div>
       <div class="oc-i">${it.slice(0,6).map(x=>`<div><span>${esc(x.n)}${x.vn||x.cn?` <em>(${esc([x.vn,x.cn].filter(Boolean).join(" • "))})</em>`:""}</span><b>× ${x.q}</b></div>`).join("")}${it.length>6?`<small>+ ${it.length-6} mã hàng khác…</small>`:""}</div>
       <div class="oc-f"><span>${(o.qty||0).toLocaleString("vi-VN")} sp • <b class="g">${vnd(o.tot||0)}</b></span>
-        <span class="oc-b"><button type="button" class="btn btn-gold" data-bill>🧾 Bill</button><a class="btn" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a><a class="btn" href="https://zalo.me/${esc(c.phone)}" target="_blank" rel="noopener">Zalo</a><button type="button" class="btn" data-del title="Xoá đơn">🗑</button></span></div></div>`}).join("")||'<div class="aempty">Chưa có đơn hàng nào.</div>'}
+        <span class="oc-b"><button type="button" class="btn btn-gold" data-bill>🧾 Bill</button><button type="button" class="btn" data-copy>📋 Chép đơn</button><button type="button" class="btn" data-kt>➡️ Kế toán</button><a class="btn" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a><a class="btn" href="https://zalo.me/${esc(c.phone)}" target="_blank" rel="noopener">Zalo</a><button type="button" class="btn" data-del title="Xoá đơn">🗑</button></span></div></div>`}).join("")||'<div class="aempty">Chưa có đơn hàng nào.</div>'}
 $("#oList").addEventListener("change",async e=>{if(!e.target.matches("[data-st]"))return;const id=e.target.closest(".oc").dataset.id;
   try{await FB.F.updateDoc(FB.F.doc(FB.db,"orders",id),{status:e.target.value});atoast("✅ Đã cập nhật trạng thái")}catch(err){atoast("❌ "+authMsg(err))}});
 $("#oList").addEventListener("click",async e=>{const card=e.target.closest(".oc");if(!card)return;const o=AD.ord.find(x=>x.id===card.dataset.id);if(!o)return;
   if(e.target.closest("[data-del]")){if(!confirm(`Xoá đơn ${o.code}?`))return;try{await FB.F.deleteDoc(FB.F.doc(FB.db,"orders",o.id));atoast("🗑 Đã xoá đơn")}catch(err){atoast("❌ "+authMsg(err))}return}
-  if(e.target.closest("[data-bill]")){atoast("Đang vẽ bill…");try{const B=await makeBill(o.cus||{},o.items||[],{code:o.code,date:o.at?new Date(tms(o.at)):new Date()});OB=B;
-    $("#obT").textContent="🧾 "+o.code;$("#obImgs").innerHTML=B.urls.map(u=>`<figure><img src="${u}" alt=""></figure>`).join("");$("#ordBill").classList.add("on")}catch(err){atoast("❌ Không vẽ được bill")}}});
+  if(e.target.closest("[data-copy]")){copyText(ordText(o),"📋 Đã chép nội dung đơn "+o.code);return}
+  const kt=e.target.closest("[data-kt]");
+  if(e.target.closest("[data-bill]")||kt){atoast("Đang vẽ bill…");try{const B=await makeBill(o.cus||{},o.items||[],{code:o.code,date:o.at?new Date(tms(o.at)):new Date()});if(OB)OB.urls.forEach(u=>URL.revokeObjectURL(u));OB=B;OB.o=o;
+    $("#obT").textContent="🧾 "+o.code;$("#obImgs").innerHTML=B.urls.map(u=>`<figure><img src="${u}" alt=""></figure>`).join("");obPrep(!!kt);$("#ordBill").classList.add("on")}catch(err){atoast("❌ Không vẽ được bill")}}});
+/* nội dung đơn dạng chữ (chép / gửi kế toán) */
+function ordText(o){const c=o.cus||{},it=o.items||[],t=o.at?new Date(tms(o.at)).toLocaleString("vi-VN"):"";
+  return[`🧾 ĐƠN HÀNG ${o.code}`,t&&`⏰ ${t}`,`👤 ${c.name||""}${c.shop?" – "+c.shop:""}`,`📞 ${c.phone||""}`,`📍 ${c.address||""}`,c.note&&`📝 ${c.note}`,"────────",
+    ...it.map((x,i)=>`${i+1}. ${x.n}${x.vn||x.cn?` (${[x.vn,x.cn].filter(Boolean).join(" • ")})`:""} – SL ${x.q} × ${vnd(x.u)} = ${vnd(x.q*x.u)}`),"────────",
+    `Tổng số lượng: ${(o.qty||0).toLocaleString("vi-VN")}`,`TỔNG CỘNG: ${vnd(o.tot||0)}`].filter(Boolean).join("\n")}
+function copyText(t,msg){const ok=()=>atoast(msg||"📋 Đã chép");if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok).catch(()=>fallbackCopy(t,ok));else fallbackCopy(t,ok)}
+const ktNum=()=>{try{return localStorage.getItem("ktZalo")||""}catch(e){return""}};
+$("#ktZalo").value=ktNum();
+$("#ktSave").onclick=()=>{const v=normPhone($("#ktZalo").value);if(!/^0\d{9,10}$/.test(v))return atoast("❌ Số Zalo kế toán chưa đúng");try{localStorage.setItem("ktZalo",v)}catch(e){}$("#ktZalo").value=v;atoast("✅ Đã lưu Zalo kế toán "+v)};
+function obPrep(focusKt){const k=ktNum(),a=$("#obKt");a.href=k?"https://zalo.me/"+k:"#";a.classList.toggle("pulse",focusKt);
+  $("#obHow").innerHTML=k?`Bấm nút trên → Zalo mở chat kế toán (<b>${k}</b>), ảnh bill đã chép sẵn → <b>chạm giữ ô soạn tin → Dán → Gửi</b>.`:`⚠️ Chưa có số Zalo kế toán – nhập ở mục <b>➡️ Zalo kế toán</b> phía trên danh sách đơn.`;
+  $("#obShare").hidden=!canShareFiles(OB.files)}
+const clipImg=()=>{if(!(OB&&OB.png&&window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write))return Promise.reject();return navigator.clipboard.write([new ClipboardItem({"image/png":OB.png})])};
+$("#obKt").onclick=e=>{if(!OB){e.preventDefault();return}const k=ktNum();
+  if(!k){e.preventDefault();$("#ordBill").classList.remove("on");$("#ktZalo").focus();return atoast("Nhập số Zalo kế toán rồi bấm Lưu")}
+  clipImg().then(()=>atoast("📋 Đã chép ảnh bill – dán vào Zalo kế toán")).catch(()=>{copyText(ordText(OB.o),"📋 Đã chép nội dung đơn – dán vào Zalo kế toán")})};
+$("#obCopy").onclick=()=>clipImg().then(()=>atoast("📋 Đã chép ảnh bill")).catch(()=>atoast("Máy này chưa hỗ trợ chép ảnh – dùng Lưu ảnh"));
+$("#obTxt").onclick=()=>OB&&copyText(ordText(OB.o),"📋 Đã chép nội dung đơn");
+$("#obShare").onclick=()=>{if(OB&&canShareFiles(OB.files))navigator.share({files:OB.files,title:"Đơn "+OB.o.code}).catch(()=>{})};
+/* ---- CHUÔNG + GIỌNG “Có đơn Nhật ơi” ×3 ---- */
+const ALM={on:true,clip:null};try{ALM.on=localStorage.getItem("almOff")!=="1";ALM.clip=localStorage.getItem("almClip")}catch(e){}
+let ACX=null;
+function acx(){try{if(!ACX){const C=window.AudioContext||window.webkitAudioContext;if(C)ACX=new C()}if(ACX&&ACX.state==="suspended")ACX.resume()}catch(e){}return ACX}
+function siren(ac){const t0=ac.currentTime+.03,comp=ac.createDynamicsCompressor(),g=ac.createGain(),o=ac.createOscillator(),o2=ac.createOscillator();
+  comp.threshold.value=-10;comp.ratio.value=4;comp.connect(ac.destination);g.connect(comp);o.type="square";o2.type="sawtooth";o.connect(g);o2.connect(g);
+  for(let k=0;k<6;k++){const f=k%2?988:1397;o.frequency.setValueAtTime(f,t0+k*.2);o2.frequency.setValueAtTime(f/2,t0+k*.2)}
+  g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(1,t0+.03);g.gain.setValueAtTime(1,t0+1.12);g.gain.exponentialRampToValueAtTime(.0001,t0+1.2);
+  o.start(t0);o2.start(t0);o.stop(t0+1.25);o2.stop(t0+1.25)}
+const viVoice=()=>{try{const v=speechSynthesis.getVoices();return v.find(x=>/^vi/i.test(x.lang))||null}catch(e){return null}};
+function sayOnce(){return new Promise(res=>{let d=false;const fin=()=>{if(!d){d=true;res()}};setTimeout(fin,4500);
+  if(ALM.clip){const a=new Audio(ALM.clip);a.volume=1;a.onended=fin;a.onerror=fin;a.play().catch(fin);return}
+  if(!window.speechSynthesis)return fin();try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance("Có đơn Nhật ơi!");u.lang="vi-VN";const v=viVoice();if(v)u.voice=v;
+    u.volume=1;u.rate=.95;u.pitch=1.1;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u)}catch(e){fin()}})}
+let almBusy=false;
+async function alarm(force){if((!ALM.on&&!force)||almBusy)return;almBusy=true;const ac=acx();
+  try{for(let i=0;i<3;i++){if(ac){siren(ac);await new Promise(r=>setTimeout(r,1300))}await sayOnce();await new Promise(r=>setTimeout(r,300))}}finally{almBusy=false}}
+function almUI(){$("#almOn").checked=ALM.on;$("#almClr").hidden=!ALM.clip;$("#almRec").textContent=ALM.clip?"🎙️ Ghi lại giọng báo":"🎙️ Ghi giọng “Có đơn Nhật ơi”";
+  $("#almInfo").innerHTML=ALM.clip?"✅ Đang dùng giọng bạn đã ghi":viVoice()?"Giọng đọc tiếng Việt của máy":"⚠️ Máy chưa có giọng tiếng Việt – nên bấm <b>Ghi giọng</b> để có câu báo rõ ràng"}
+$("#almOn").onchange=e=>{ALM.on=e.target.checked;try{localStorage.setItem("almOff",ALM.on?"0":"1")}catch(_){}almPrime();almUI()};
+$("#almTest").onclick=()=>{almPrime();alarm(true)};
+$("#almClr").onclick=()=>{ALM.clip=null;try{localStorage.removeItem("almClip")}catch(e){}almUI()};
+$("#almRec").onclick=async()=>{const b=$("#almRec");if(!navigator.mediaDevices||!window.MediaRecorder)return atoast("Trình duyệt này không ghi âm được – dùng giọng máy");
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true}),mr=new MediaRecorder(st),ch=[];mr.ondataavailable=e=>e.data.size&&ch.push(e.data);
+    mr.onstop=()=>{st.getTracks().forEach(t=>t.stop());const bl=new Blob(ch,{type:mr.mimeType||"audio/webm"}),fr=new FileReader();
+      fr.onload=()=>{ALM.clip=fr.result;try{localStorage.setItem("almClip",fr.result)}catch(e){atoast("⚠️ File ghi âm quá lớn, chỉ dùng được đến khi tải lại trang")}almUI();b.disabled=false;atoast("✅ Đã lưu giọng báo – bấm Thử chuông để nghe");sayOnce()};fr.readAsDataURL(bl)};
+    b.disabled=true;let n=3;b.textContent=`🔴 Đang ghi… nói “Có đơn Nhật ơi” (${n})`;mr.start();
+    const tm=setInterval(()=>{n--;if(n>0)b.textContent=`🔴 Đang ghi… nói “Có đơn Nhật ơi” (${n})`;else{clearInterval(tm);mr.stop()}},1000)}
+  catch(e){atoast("❌ Chưa được phép dùng micro để ghi âm")}};
+/* trình duyệt chỉ cho phát tiếng sau khi đã chạm vào trang → “mồi” âm thanh ở lần chạm đầu */
+function almPrime(){acx();try{if(window.speechSynthesis){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}}catch(e){}
+  try{if(window.Notification&&Notification.permission==="default")Notification.requestPermission()}catch(e){}}
+["pointerdown","keydown"].forEach(ev=>addEventListener(ev,function once(){if(!adm.hidden){almPrime();removeEventListener(ev,once,true)}},true));
+try{speechSynthesis.onvoiceschanged=()=>almUI()}catch(e){}almUI();
+let oaT=null;
+function newOrderAlert(list){const o=list[0],c=o.cus||{};
+  $("#oaTxt").innerHTML=`${list.length>1?`<b>${list.length} đơn</b> • `:""}${esc(o.code)} • ${esc(c.name||"")}${c.shop?" – "+esc(c.shop):""} • <b>${vnd(o.tot||0)}</b>`;$("#ordAlert").hidden=false;
+  alarm();try{if(window.Notification&&Notification.permission==="granted")new Notification("🔔 Có đơn Nhật ơi!",{body:`${o.code} – ${c.name||""} – ${vnd(o.tot||0)}`,tag:o.code,requireInteraction:true})}catch(e){}
+  try{navigator.vibrate&&navigator.vibrate([400,200,400,200,400])}catch(e){}
+  clearInterval(oaT);const base=document.title.replace(/^🔔 ĐƠN MỚI! · /,"");let f=false;oaT=setInterval(()=>{f=!f;document.title=f?"🔔 ĐƠN MỚI! · "+base:base},900)}
+function oaClose(){$("#ordAlert").hidden=true;clearInterval(oaT);document.title=document.title.replace(/^🔔 ĐƠN MỚI! · /,"")}
+$("#oaX").onclick=oaClose;$("#oaView").onclick=()=>{oaClose();$('#admTabs button[data-tab="ord"]').click();scrollTo(0,0)};
 let OB=null;$("#obX").onclick=()=>$("#ordBill").classList.remove("on");$("#ordBill").onclick=e=>{if(e.target.id==="ordBill")$("#ordBill").classList.remove("on")};
 $("#obSave").onclick=()=>{if(!OB)return;OB.files.forEach((f,i)=>setTimeout(()=>{const a=document.createElement("a");a.href=OB.urls[i];a.download=f.name;document.body.appendChild(a);a.click();a.remove()},i*350))};
 async function admLoad(){$("#admStat").textContent="Đang tải dữ liệu…";try{AD.items=await loadCatalog();AD.loaded=1}catch(e){$("#admStat").textContent="Lỗi tải dữ liệu: "+(e.code||e.message);return}admList()}
@@ -1596,7 +1702,7 @@ const tms=t=>t?(t.toMillis?t.toMillis():+t):0,fdate=t=>t?new Date(tms(t)).toLoca
 $("#cQ").oninput=custList;
 function custList(){const q=nm($("#cQ").value||""),l=AD.cust.filter(c=>!q||nm([c.name,c.phone,c.shop,c.address].join(" ")).includes(q));
   $("#cStat").innerHTML=`<b>${AD.cust.length}</b> khách đã đăng ký`;
-  $("#cList").innerHTML=l.map(c=>`<div class="cr"><div><b>${esc(c.name)}</b> <span class="g">• ${esc(c.shop)}</span><small>${esc(c.address)}</small><small>Đăng ký: ${fdate(c.createdAt)}</small></div>
+  $("#cList").innerHTML=l.map(c=>`<div class="cr"><div><b>${esc(c.name)}</b> <span class="g">• ${esc(c.shop)}</span>${c.user?`<small>👤 ${esc(c.user)}</small>`:""}<small>${esc(c.address)}</small><small>Đăng ký: ${fdate(c.createdAt)}</small></div>
     <div class="cb"><a href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a><a href="https://zalo.me/${esc(c.phone)}" target="_blank" rel="noopener">Zalo</a></div></div>`).join("")||'<div class="aempty">Chưa có khách đăng ký.</div>'}
 $("#cExp").onclick=()=>dl("khach-hang-bd-team.csv",[["Tên khách hàng","Số điện thoại","Tên shop","Địa chỉ","Ngày đăng ký"],...AD.cust.map(c=>[c.name,c.phone,c.shop,c.address,fdate(c.createdAt)])]);
 function dl(name,rows){const csv="﻿"+rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
