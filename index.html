@@ -446,7 +446,7 @@ body.adm-on .cart-fab{display:none!important}
 .pd-sec p{font-size:14px;color:#e6dccb}.pd-sec ul{list-style:none;display:grid;gap:6px}.pd-sec li{font-size:14px;color:#e6dccb;display:flex;gap:8px}.pd-sec li::before{content:"✓";color:#6fdc9a;font-weight:700}
 .pd-sec table{width:100%;border-collapse:collapse;font-size:13.5px}.pd-sec td{padding:7px 0;border-bottom:1px dashed var(--line);color:#e6dccb}.pd-sec td:first-child{color:var(--muted);width:42%}.pd-sec tr:last-child td{border:0}
 .pd-cr{font-size:11.5px;color:var(--muted);margin-top:8px}
-.pd-buy{position:sticky;bottom:0;margin:14px -16px 0;padding:12px 16px 16px;background:linear-gradient(180deg,rgba(15,12,9,.9),#0f0c09 30%);border-top:1px solid var(--line);display:grid;gap:9px}
+.pd-buy{position:sticky;bottom:0;margin:14px -16px 0;padding:12px 16px 16px;background:#0f0c09;box-shadow:0 -14px 24px -8px rgba(0,0,0,.7);border-top:1px solid var(--line);display:grid;gap:9px}
 .pd-ql{font-size:12.5px;color:var(--muted)}.pd-q{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .pd-q>button{min-width:48px;padding:9px 0;border-radius:12px;border:1px solid var(--gold3);background:rgba(217,178,95,.08);color:var(--gold2);font:700 14px 'Be Vietnam Pro';cursor:pointer}
 .pd-q>button.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1408;border-color:transparent}
@@ -543,6 +543,25 @@ body.adm-on .cart-fab{display:none!important}
 .pe-r .x{width:30px;height:30px;border-radius:50%;border:0;background:#c0392b;color:#fff;cursor:pointer;padding:0}
 .pe-empty{font-size:12.5px;color:var(--muted);margin-top:6px}
 
+
+/* ===== chọn màu / phân loại trong thanh mua ===== */
+.pd-buy>*,#pdOpts,#pdOpts .pd-opt{min-width:0}.pd-buy{grid-template-columns:minmax(0,1fr)}#pdOpts:empty{display:none}#pdOpts .pd-opt{margin:0 0 2px}#pdOpts .pd-opt h5{margin:0 0 6px}
+#pdOpts .pd-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 2px 4px;margin:0 -2px}
+#pdOpts .pd-chips::-webkit-scrollbar{display:none}#pdOpts .pd-chips button{flex:none;min-height:38px;padding:6px 12px;touch-action:manipulation}
+.pd-chips.need{animation:need .5s 2}@keyframes need{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pd-chips.need button{border-color:#ff6fae}
+/* ===== bill ===== */
+#bill{position:fixed;inset:0;z-index:186;background:rgba(5,4,6,.88);display:flex;align-items:flex-end;justify-content:center;padding:10px;opacity:0;pointer-events:none;transition:opacity .3s}
+#bill.on{opacity:1;pointer-events:auto}@media(min-width:600px){#bill{align-items:center}}#bill.on .cart-box{transform:none}
+#bill form{display:grid;gap:10px}#bill label{display:grid;gap:5px;font-size:13px;color:var(--muted)}
+#bill input,#bill textarea{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 13px;font:16px 'Be Vietnam Pro';outline:none;resize:vertical}
+#bill input:focus,#bill textarea:focus{border-color:var(--gold)}#bill .btn{width:100%}
+#blView{display:grid;gap:10px}.bl-hint{font-size:13px;color:#e6dccb;text-align:center;margin:0}
+.bl-imgs{display:grid;gap:10px;max-height:52svh;overflow-y:auto;border-radius:14px}
+.bl-imgs figure{margin:0;position:relative}.bl-imgs img{width:100%;display:block;border-radius:12px;border:1px solid var(--line)}
+.bl-imgs figcaption{position:absolute;top:8px;right:8px;background:rgba(7,6,10,.75);color:#fff;font-size:12px;padding:2px 9px;border-radius:999px}
+.bl-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bl-row .btn{padding-left:8px;padding-right:8px;font-size:13.5px}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.pc{opacity:1;transform:none}}
 </style>
 </head>
@@ -559,10 +578,30 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <a href="#admin" id="admFab" class="adm-fab" hidden>👑 Quản trị</a>
 <button id="cartFab" class="cart-fab" hidden aria-label="Giỏ hàng">🛒 <span id="cartN">0</span><small id="cartT"></small></button>
 <div id="pdet" role="dialog" aria-modal="true"><div class="pd-box"><button type="button" class="au-x" id="pdClose" aria-label="Đóng">×</button><div id="pdBody"></div>
-  <div class="pd-buy"><div class="pd-ql">Số lượng</div><div class="pd-q" id="pdQ"><button data-q="1">1</button><button data-q="10">10</button><button data-q="50">50</button><button data-q="100">100</button>
+  <div class="pd-buy"><div id="pdOpts"></div><div class="pd-ql">Số lượng</div><div class="pd-q" id="pdQ"><button data-q="1">1</button><button data-q="10">10</button><button data-q="50">50</button><button data-q="100">100</button>
     <span class="pd-in"><button data-d="-1" aria-label="Bớt">−</button><input id="pdIn" inputmode="numeric" aria-label="Nhập số lượng"><button data-d="1" aria-label="Thêm">+</button></span></div>
     <div class="pd-tot">Thành tiền: <b id="pdTot"></b></div><button class="btn btn-gold" id="pdAdd">🛒 Thêm vào giỏ hàng</button></div></div></div>
 <div id="cart" role="dialog" aria-modal="true"><div class="cart-box"><div class="pe-h"><h3>🛒 Giỏ hàng</h3><button type="button" id="cartClose" aria-label="Đóng">×</button></div><div id="cartList"></div><div id="cartSum"></div></div></div>
+<div id="bill" role="dialog" aria-modal="true"><div class="cart-box">
+  <div class="pe-h"><h3 id="blT">📝 Thông tin nhận hàng</h3><button type="button" id="blClose" aria-label="Đóng">×</button></div>
+  <form id="blForm" novalidate>
+    <label>Họ và tên *<input name="name" maxlength="60" autocomplete="name" placeholder="vd: Nguyễn Văn A"></label>
+    <label>Số điện thoại *<input name="phone" inputmode="tel" maxlength="14" autocomplete="tel" placeholder="vd: 0912 345 678"></label>
+    <label>Tên shop / cửa hàng<input name="shop" maxlength="60" placeholder="không bắt buộc"></label>
+    <label>Địa chỉ nhận hàng *<textarea name="address" rows="2" maxlength="200" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"></textarea></label>
+    <label>Ghi chú<textarea name="note" rows="2" maxlength="200" placeholder="vd: giao giờ hành chính, gọi trước khi giao…"></textarea></label>
+    <div class="au-err" id="blErr"></div>
+    <button class="btn btn-gold" type="submit" id="blMake">🧾 Tạo bill</button>
+    <button class="btn" type="button" id="blBack" style="color:var(--muted);background:none">← Quay lại giỏ hàng</button>
+  </form>
+  <div id="blView" hidden>
+    <p class="bl-hint" id="blHint"></p>
+    <div class="bl-imgs" id="blImgs"></div>
+    <button class="btn btn-gold" type="button" id="blSend">📤 Gửi đơn cho BD Team qua Zalo</button>
+    <p class="bl-hint" id="blHow"></p>
+    <div class="bl-row"><button class="btn btn-ghost" type="button" id="blSave">⬇️ Lưu ảnh về máy</button><button class="btn btn-ghost" type="button" id="blEdit">✏️ Sửa thông tin</button></div>
+  </div>
+</div></div>
 <div id="micAsk" role="dialog" aria-modal="true"><div class="ma-box">
   <div class="ma-ic" id="maIc">🎤</div>
   <h3 id="maT">Cho phép sử dụng micro</h3>
@@ -1160,26 +1199,36 @@ function startRec(onFinal){
   if(rec)try{rec.abort()}catch(e){}
   rec=new SR();rec.lang="vi-VN";rec.interimResults=true;rec.maxAlternatives=3;rec.continuous=false;
   vo.classList.add("on");vo.classList.remove("err");voT.textContent="Đang nghe…";voH.textContent="Hãy nói: \"cáp sạc\", \"tai nghe bluetooth\", \"đồng hồ PICOM\"…";
-  let done=false;
-  rec.onresult=e=>{let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;voT.textContent="“"+t+"”";
+  let done=false,lastT="",lastA=[];
+  rec.onstart=()=>{try{localStorage.setItem("micOK","1")}catch(_){}};
+  rec.onresult=e=>{let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;voT.textContent="“"+t+"”";lastT=t;lastA=[...e.results[e.results.length-1]].map(a=>a.transcript);
     if(e.results[e.results.length-1].isFinal&&!done){done=true;const alts=[...e.results[e.results.length-1]].map(a=>a.transcript);setTimeout(()=>{vo.classList.remove("on");onFinal(t,alts)},450)}};
-  rec.onerror=e=>{done=true;if(e.error==="not-allowed"||e.error==="service-not-allowed"){vo.classList.remove("on");try{localStorage.removeItem("micOK")}catch(_){}return micDialog("denied",onFinal)}vo.classList.add("err");
+  rec.onerror=e=>{done=true;if(e.error==="not-allowed"||e.error==="service-not-allowed"){vo.classList.remove("on");try{localStorage.removeItem("micOK")}catch(_){}return micDialog(e.error==="service-not-allowed"&&isIOS?"siri":"denied",onFinal)}
+    if(e.error==="aborted")return vo.classList.remove("on");vo.classList.add("err");
     voT.textContent=e.error==="not-allowed"||e.error==="service-not-allowed"?"Chưa được phép dùng micro":e.error==="no-speech"?"Không nghe thấy gì":"Không nhận được giọng nói";
     voH.innerHTML=e.error==="not-allowed"||e.error==="service-not-allowed"?"Hãy cho phép micro. Lưu ý: tính năng giọng nói cần mở website qua đường link <b>https://</b>.":"Bấm micro để thử lại.";setTimeout(()=>vo.classList.remove("on"),3500)};
-  rec.onend=()=>{if(!done)setTimeout(()=>vo.classList.remove("on"),300)};
+  /* iPhone đôi khi không báo "kết quả cuối" – lấy câu vừa nghe được khi micro tắt */
+  rec.onend=()=>{if(done)return;if(lastT.trim()){done=true;vo.classList.remove("on");onFinal(lastT,lastA)}else setTimeout(()=>vo.classList.remove("on"),300)};
   try{rec.start()}catch(e){vo.classList.remove("on")}}
 
 /* ---------- XIN QUYỀN MICRO ---------- */
 const ma=$("#micAsk");let maCb=null,maInput=null;
-const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent);
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(navigator.userAgent);
 const GUIDE_DENIED=isIOS
- ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ<br>2. Chọn <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa<br><br>Hoặc: <b>Cài đặt</b> → <b>Safari</b> → <b>Micro</b> → <b>Cho phép</b>."
+ ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
 function micDialog(mode,cb){maCb=cb;const st=$("#maSteps"),ok=$("#maOk");st.style.display="none";ok.style.display="";
   if(mode==="ask"){$("#maIc").textContent="🎤";$("#maT").textContent="Cho phép sử dụng micro";
     $("#maP").innerHTML='Để tìm sản phẩm bằng giọng nói, website cần quyền dùng micro. Bấm <b>"Cho phép micro"</b>, sau đó chọn <b>"Cho phép"</b> trên thông báo của trình duyệt.';ok.textContent="🎤 Cho phép micro"}
   else if(mode==="denied"){$("#maIc").textContent="🔒";$("#maT").textContent="Micro đang bị chặn";
     $("#maP").innerHTML="Trình duyệt đã chặn quyền micro cho trang này. Bật lại theo hướng dẫn:";st.innerHTML=GUIDE_DENIED;st.style.display="block";ok.textContent="🔄 Thử lại"}
+  else if(mode==="siri"){$("#maIc").textContent="🗣️";$("#maT").textContent="Cần bật Đọc chính tả";
+    $("#maP").innerHTML="Micro đã được cho phép, nhưng iPhone đang tắt tính năng nhận giọng nói (Đọc chính tả) nên Safari chưa nghe được.";
+    st.innerHTML="1. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b><br>2. Bật <b>Đọc chính tả</b> (Enable Dictation)<br>3. Nếu có mục <b>Siri</b>, bật <b>Siri</b> và chọn ngôn ngữ <b>Tiếng Việt</b><br>4. Quay lại trang, bấm <b>Thử lại</b>";st.style.display="block";ok.textContent="🔄 Thử lại"}
+  else if(mode==="inapp"){$("#maIc").textContent="🧭";$("#maT").textContent="Mở bằng Safari / Chrome";
+    $("#maP").innerHTML="Trình duyệt bên trong Zalo / Facebook không hỗ trợ nhận giọng nói. Bấm <b>⋯</b> (góc trên) → <b>Mở bằng trình duyệt</b> để dùng micro.";
+    st.innerHTML="Hoặc bấm <b>“Dùng micro trên bàn phím”</b> rồi chạm 🎤 trên bàn phím để đọc tên sản phẩm.";st.style.display="block";ok.style.display="none"}
   else if(mode==="insecure"){$("#maIc").textContent="🔗";$("#maT").textContent="Cần mở website qua đường link";
     $("#maP").innerHTML="Trình duyệt chỉ cho phép dùng micro khi website được mở bằng đường link bắt đầu bằng <b>https://</b>. Hiện trang đang được mở trực tiếp từ file nên không thể xin quyền.";
     st.innerHTML="Trong lúc chờ, bạn vẫn có thể bấm <b>“Dùng micro trên bàn phím”</b> rồi chạm vào biểu tượng 🎤 trên bàn phím điện thoại để đọc tên sản phẩm.";st.style.display="block";ok.style.display="none"}
@@ -1189,17 +1238,14 @@ function micDialog(mode,cb){maCb=cb;const st=$("#maSteps"),ok=$("#maOk");st.styl
 function closeMa(){ma.classList.remove("on")}
 $("#maNo").onclick=closeMa;ma.onclick=e=>{if(e.target===ma)closeMa()};
 $("#maKb").onclick=()=>{closeMa();const inp=maInput||$("#q");if(inp.id==="q")document.getElementById("tat-ca").scrollIntoView({block:"start"});setTimeout(()=>{inp.focus();toast("Chạm vào 🎤 trên bàn phím để đọc tên sản phẩm")},350)};
-$("#maOk").onclick=async()=>{const cb=maCb;closeMa();
-  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});st.getTracks().forEach(t=>t.stop());try{localStorage.setItem("micOK","1")}catch(_){}
-    toast("✅ Đã bật micro – hãy nói tên sản phẩm");startRec(cb)}
-  catch(err){if(err&&(err.name==="NotAllowedError"||err.name==="SecurityError"))micDialog("denied",cb);
-    else if(err&&err.name==="NotFoundError"){toast("Không tìm thấy micro trên thiết bị này")}else startRec(cb)}};
-async function listen(onFinal,inputEl){maInput=inputEl||null;
+/* Lưu ý: Safari (iPhone) chỉ cho bật nghe khi gọi NGAY trong lần chạm của khách – không được chờ (await) trước đó */
+$("#maOk").onclick=()=>{const cb=maCb;closeMa();startRec(cb)};
+function listen(onFinal,inputEl){maInput=inputEl||null;
+  if(inApp&&!SR)return micDialog("inapp",onFinal);
   if(!SR)return micDialog("unsupported",onFinal);
-  if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return micDialog("insecure",onFinal);
-  let state="prompt";try{const r=await navigator.permissions.query({name:"microphone"});state=r.state}catch(_){try{if(localStorage.getItem("micOK"))state="granted"}catch(__){}}
-  if(state==="granted")return startRec(onFinal);
-  if(state==="denied")return micDialog("denied",onFinal);
+  if(!window.isSecureContext)return micDialog("insecure",onFinal);
+  let ok=false;try{ok=!!localStorage.getItem("micOK")}catch(_){}
+  if(ok||isIOS)return startRec(onFinal);
   micDialog("ask",onFinal)}
 $("#voCancel").onclick=()=>{try{rec&&rec.abort()}catch(e){}vo.classList.remove("on")};
 function voiceGo(text,alts=[]){
@@ -1579,9 +1625,9 @@ function renderCart(){const it=cartItems(),tot=it.reduce((a,x)=>a+x.q*x.u,0),n=i
   $("#cartSum").innerHTML=it.length?`<div class="cs-row"><span>${it.length} mã hàng • ${n.toLocaleString("vi-VN")} sản phẩm</span><b>${vnd(tot)}</b></div>
     <div class="cs-bar"><i style="width:${pct}%"></i></div><div class="cs-note">${tot<1e6?`Thêm <b>${vnd(1e6-tot)}</b> để đạt đơn tối thiểu online 1.000.000₫`:"✅ Đạt đơn tối thiểu online"}</div>
     <div class="cs-bar g"><i style="width:${pct5}%"></i></div><div class="cs-note">${tot<5e6?`Thêm <b>${vnd(5e6-tot)}</b> để được hỗ trợ phí ship (đơn trên 5 triệu, thanh toán trước)`:"🚚 Được hỗ trợ phí vận chuyển"}</div>
-    <button class="btn btn-gold" id="cartSend">💬 Gửi đơn cho BD Team qua Zalo</button><button class="btn" id="cartClear">Xóa giỏ hàng</button>
+    <button class="btn btn-gold" id="cartSend">📝 Đặt hàng – nhập thông tin nhận hàng</button><button class="btn" id="cartClear">Xóa giỏ hàng</button>
     <div class="cs-foot">Giá sỉ tham khảo, BD Team xác nhận lại khi chốt đơn.</div>`:"";
-  if(it.length){$("#cartSend").onclick=sendCart;$("#cartClear").onclick=()=>{if(confirm("Xóa toàn bộ giỏ hàng?")){CART={};saveCart();renderCart();cartBadge()}}}}
+  if(it.length){$("#cartSend").onclick=openBill;$("#cartClear").onclick=()=>{if(confirm("Xóa toàn bộ giỏ hàng?")){CART={};saveCart();renderCart();cartBadge()}}}}
 $("#cartList").addEventListener("click",e=>{const row=e.target.closest(".ci");if(!row)return;const id=row.dataset.k,b=e.target.closest("button");if(!b)return;
   if(b.classList.contains("ci-x"))delete CART[id];else if(b.dataset.s)CART[id]=+b.dataset.s;else if(b.dataset.d)CART[id]=Math.max(1,(CART[id]||0)+(+b.dataset.d));
   saveCart();renderCart();cartBadge()});
@@ -1592,6 +1638,92 @@ function sendCart(){const it=cartItems(),tot=it.reduce((a,x)=>a+x.q*x.u,0);
     it.map(({p,q,u,vn,cn},i)=>`${i+1}. ${p.n}${vn||cn?` (${[vn&&"Loại: "+vn,cn&&"Màu: "+cn].filter(Boolean).join(", ")})`:""} – SL ${q} × ${vnd(u)} = ${vnd(u*q)}`).join("\n")+`\nTỔNG TẠM TÍNH: ${vnd(tot)}`;
   const go=()=>{toast("📋 Đã sao chép đơn hàng – mở Zalo và <b>dán</b> vào tin nhắn gửi BD Team");setTimeout(()=>window.open(zalo,"_blank","noopener"),900)};
   if(navigator.clipboard&&isSecureContext)navigator.clipboard.writeText(txt).then(go,()=>fallbackCopy(txt,go));else fallbackCopy(txt,go)}
+/* ---------- ĐẶT HÀNG: nhập thông tin → tạo bill JPG (tự chia nhiều ảnh) → gửi Zalo ---------- */
+const bill=$("#bill"),blF=$("#blForm");let BILL=null;
+function openBill(){let c={};try{c=JSON.parse(localStorage.getItem("bdCus")||"{}")||{}}catch(e){}
+  const pf=PROFILE||{};["name","phone","shop","address"].forEach(k=>{if(!blF[k].value)blF[k].value=c[k]||pf[k]||""});
+  blF.hidden=false;$("#blView").hidden=true;$("#blT").textContent="📝 Thông tin nhận hàng";$("#blErr").textContent="";closeCart();bill.classList.add("on")}
+const closeBill=()=>bill.classList.remove("on");
+$("#blClose").onclick=closeBill;bill.onclick=e=>{if(e.target===bill)closeBill()};$("#blBack").onclick=()=>{closeBill();openCart()};
+$("#blEdit").onclick=()=>{blF.hidden=false;$("#blView").hidden=true;$("#blT").textContent="📝 Thông tin nhận hàng"};
+blF.onsubmit=async e=>{e.preventDefault();const er=$("#blErr"),d={};["name","phone","shop","address","note"].forEach(k=>d[k]=blF[k].value.trim());
+  const ph=d.phone.replace(/[^\d+]/g,"").replace(/^\+84/,"0");
+  if(d.name.length<2)return er.textContent="❌ Nhập họ và tên.";
+  if(!/^0\d{9,10}$/.test(ph))return er.textContent="❌ Số điện thoại chưa đúng (10 số, bắt đầu bằng 0).";
+  if(d.address.length<8)return er.textContent="❌ Nhập địa chỉ nhận hàng đầy đủ.";
+  d.phone=ph;er.textContent="";try{localStorage.setItem("bdCus",JSON.stringify({name:d.name,phone:d.phone,shop:d.shop,address:d.address}))}catch(_){}
+  const it=cartItems();if(!it.length){closeBill();return toast("Giỏ hàng trống")}
+  const b=$("#blMake");b.disabled=true;b.textContent="Đang tạo bill…";
+  try{BILL=await makeBill(d,it);showBill()}catch(err){console.warn(err);er.textContent="❌ Không tạo được ảnh bill trên trình duyệt này. Thử lại hoặc dùng Chrome / Safari."}
+  finally{b.disabled=false;b.textContent="🧾 Tạo bill"}};
+function showBill(){blF.hidden=true;$("#blView").hidden=false;$("#blT").textContent=`🧾 Bill ${BILL.code}`;
+  const n=BILL.files.length;$("#blHint").innerHTML=`Đơn gồm <b>${BILL.qty.toLocaleString("vi-VN")}</b> sản phẩm • Tổng <b>${vnd(BILL.tot)}</b>${n>1?` • Bill dài nên được chia thành <b>${n} ảnh</b>`:""}`;
+  $("#blImgs").innerHTML=BILL.urls.map((u,i)=>`<figure><img src="${u}" alt="Bill trang ${i+1}">${n>1?`<figcaption>Ảnh ${i+1}/${n}</figcaption>`:""}</figure>`).join("");
+  const share=canShareFiles(BILL.files);
+  $("#blHow").innerHTML=share?`Bấm nút trên → chọn <b>Zalo</b> → chọn <b>BD Team (${CONFIG.zalo})</b> → <b>Gửi</b>.`
+    :`Máy sẽ lưu ${n>1?n+" ảnh":"ảnh"} bill và mở Zalo của BD Team – bạn đính kèm ảnh vừa lưu rồi gửi.`;
+  $("#blSend").textContent=share?"📤 Gửi đơn cho BD Team qua Zalo":"📤 Lưu bill & mở Zalo BD Team"}
+const canShareFiles=fs=>{try{return!!(navigator.canShare&&navigator.share&&navigator.canShare({files:fs}))}catch(e){return false}};
+function saveBillFiles(){BILL.files.forEach((f,i)=>setTimeout(()=>{const a=document.createElement("a");a.href=BILL.urls[i];a.download=f.name;document.body.appendChild(a);a.click();a.remove()},i*350))}
+$("#blSave").onclick=()=>{if(!BILL)return;saveBillFiles();toast(`⬇️ Đã lưu ${BILL.files.length} ảnh bill`)};
+$("#blSend").onclick=()=>{if(!BILL)return;
+  if(canShareFiles(BILL.files)){navigator.share({files:BILL.files,title:`Đơn hàng ${BILL.code}`}).then(()=>toast("✅ Đã gửi bill – BD Team sẽ liên hệ xác nhận đơn sớm nhất")).catch(err=>{if(err&&err.name!=="AbortError"){saveBillFiles();setTimeout(()=>window.open(zalo,"_blank","noopener"),900)}});return}
+  saveBillFiles();toast("⬇️ Đã lưu ảnh bill – đang mở Zalo BD Team, bạn đính kèm ảnh rồi gửi nhé");setTimeout(()=>window.open(zalo,"_blank","noopener"),1200)};
+/* vẽ bill lên canvas → JPG, tự chia trang khi đơn dài */
+async function makeBill(cus,it){
+  const FF='"Be Vietnam Pro",Arial,Helvetica,sans-serif';try{await Promise.all(["400","600","800"].map(w=>document.fonts.load(`${w} 28px "Be Vietnam Pro"`,"Đơn hàng")))}catch(e){}
+  const W=1080,PX=56,MAXH=1880,now=new Date(),pad=n=>String(n).padStart(2,"0");
+  const code="BD"+String(now.getFullYear()).slice(2)+pad(now.getMonth()+1)+pad(now.getDate())+"-"+String(Math.floor(Math.random()*9000)+1000);
+  const when=`${pad(now.getHours())}:${pad(now.getMinutes())} ${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()}`;
+  const mc=document.createElement("canvas").getContext("2d");
+  const wrap=(t,font,w)=>{mc.font=font;const out=[];let line="";for(const word of String(t).split(/\s+/)){let wd=word;
+      while(mc.measureText(wd).width>w){let k=wd.length;while(k>1&&mc.measureText(wd.slice(0,k)).width>w)k--;if(line){out.push(line);line=""}out.push(wd.slice(0,k));wd=wd.slice(k)}
+      const tt=line?line+" "+wd:wd;if(mc.measureText(tt).width>w&&line){out.push(line);line=wd}else line=tt}if(line)out.push(line);return out.length?out:[""]};
+  const C={nx:PX+70,nw:470,q:722,u:880,t:W-PX};
+  const fName=`600 27px ${FF}`,fSub=`400 22px ${FF}`;
+  const rows=it.map(({p,q,u,vn,cn},i)=>{const ln=wrap(p.n,fName,C.nw),sub=[vn&&"Loại: "+vn,cn&&"Màu: "+cn].filter(Boolean).join(" • "),sl=sub?wrap(sub,fSub,C.nw):[];
+    return{i:i+1,ln,sl,q,u,h:22+ln.length*36+sl.length*30+16}});
+  const cusL=[["Khách hàng",cus.name],["Điện thoại",cus.phone],cus.shop&&["Shop",cus.shop],["Địa chỉ",cus.address],cus.note&&["Ghi chú",cus.note]].filter(Boolean).map(([k,v])=>({k,ln:wrap(v,`500 26px ${FF}`,W-PX*2-190)}));
+  const HEAD=210,CUSH=40+cusL.reduce((a,x)=>a+x.ln.length*36+10,0)+24,TH=60,FOOT=80,TOTH=230;
+  const pages=[];let cur={rows:[],first:true},used=HEAD+CUSH+TH;
+  for(const r of rows){if(used+r.h+FOOT>MAXH&&cur.rows.length){pages.push(cur);cur={rows:[]};used=HEAD+TH}cur.rows.push(r);used+=r.h}
+  if(used+TOTH+FOOT>MAXH){pages.push(cur);cur={rows:[],onlyTot:true};used=HEAD}pages.push(cur);
+  const tot=it.reduce((a,x)=>a+x.q*x.u,0),qty=it.reduce((a,x)=>a+x.q,0),N=pages.length,files=[],urls=[];
+  for(let pi=0;pi<N;pi++){const pg=pages[pi],last=pi===N-1;
+    const H=HEAD+(pg.first?CUSH:0)+(pg.onlyTot?0:TH+pg.rows.reduce((a,r)=>a+r.h,0))+(last?TOTH:0)+FOOT;
+    const cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");
+    x.fillStyle="#fffdf8";x.fillRect(0,0,W,H);
+    const g=x.createLinearGradient(0,0,W,HEAD);g.addColorStop(0,"#1a140b");g.addColorStop(1,"#3a2a12");x.fillStyle=g;x.fillRect(0,0,W,HEAD);
+    const gl=x.createLinearGradient(0,0,W,0);gl.addColorStop(0,"#f7dc92");gl.addColorStop(.5,"#ffb36b");gl.addColorStop(1,"#ff6fae");x.fillStyle=gl;x.fillRect(0,HEAD-8,W,8);
+    x.textBaseline="alphabetic";x.fillStyle="#f7dc92";x.font=`800 44px ${FF}`;x.fillText("PHỤ KIỆN HOÀNG ĐẾ",PX,82);
+    x.fillStyle="#e9dcc0";x.font=`500 24px ${FF}`;x.fillText(`BD Team • Hotline / Zalo: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}`,PX,124);
+    x.fillStyle="#bfae8c";x.font=`400 22px ${FF}`;x.fillText(`Ngày đặt: ${when}`,PX,164);
+    x.textAlign="right";x.fillStyle="#fff";x.font=`800 30px ${FF}`;x.fillText("ĐƠN ĐẶT HÀNG",W-PX,82);
+    x.fillStyle="#f7dc92";x.font=`700 26px ${FF}`;x.fillText(code,W-PX,124);
+    x.fillStyle="#bfae8c";x.font=`400 22px ${FF}`;x.fillText(N>1?`Trang ${pi+1}/${N}`:"",W-PX,164);x.textAlign="left";
+    let y=HEAD;
+    if(pg.first){y+=40;x.fillStyle="#f6efe0";x.fillRect(PX-16,y-30,W-PX*2+32,CUSH-34);
+      for(const c of cusL){x.fillStyle="#8a7650";x.font=`600 24px ${FF}`;x.fillText(c.k+":",PX,y+8);x.fillStyle="#1d1810";x.font=`500 26px ${FF}`;
+        c.ln.forEach((l,j)=>x.fillText(l,PX+190,y+8+j*36));y+=c.ln.length*36+10}y+=24}
+    if(!pg.onlyTot){x.fillStyle="#2a2013";x.fillRect(PX-16,y,W-PX*2+32,TH);x.fillStyle="#f7dc92";x.font=`700 23px ${FF}`;const hy=y+39;
+      x.fillText("STT",PX,hy);x.fillText("Sản phẩm",C.nx,hy);x.textAlign="right";x.fillText("SL",C.q,hy);x.fillText("Đơn giá",C.u,hy);x.fillText("Thành tiền",C.t,hy);x.textAlign="left";y+=TH;
+      pg.rows.forEach((r,k)=>{if(r.i%2===0){x.fillStyle="#f8f2e6";x.fillRect(PX-16,y,W-PX*2+32,r.h)}const ty=y+22+27;
+        x.fillStyle="#8a7650";x.font=`600 24px ${FF}`;x.fillText(String(r.i),PX+6,ty);
+        x.fillStyle="#1d1810";x.font=fName;r.ln.forEach((l,j)=>x.fillText(l,C.nx,ty+j*36));
+        x.fillStyle="#7a52c7";x.font=fSub;r.sl.forEach((l,j)=>x.fillText(l,C.nx,ty+r.ln.length*36+j*30-4));
+        x.textAlign="right";x.fillStyle="#1d1810";x.font=`700 26px ${FF}`;x.fillText(r.q.toLocaleString("vi-VN"),C.q,ty);
+        x.font=`500 24px ${FF}`;x.fillStyle="#3d3427";x.fillText(vnd(r.u),C.u,ty);x.font=`700 25px ${FF}`;x.fillStyle="#1d1810";x.fillText(vnd(r.q*r.u),C.t,ty);x.textAlign="left";
+        y+=r.h;x.fillStyle="#e6dcc6";x.fillRect(PX-16,y-1,W-PX*2+32,1)})}
+    if(last){y+=34;x.fillStyle="#1a140b";x.fillRect(PX-16,y,W-PX*2+32,TOTH-60);
+      x.fillStyle="#e9dcc0";x.font=`500 25px ${FF}`;x.fillText(`Số mã hàng: ${it.length}`,PX+10,y+50);x.fillText(`Tổng số lượng: ${qty.toLocaleString("vi-VN")}`,PX+10,y+92);
+      x.textAlign="right";x.fillStyle="#bfae8c";x.font=`600 24px ${FF}`;x.fillText("TỔNG CỘNG",W-PX-10,y+50);x.fillStyle="#f7dc92";x.font=`800 52px ${FF}`;x.fillText(vnd(tot),W-PX-10,y+118);x.textAlign="left";
+      x.fillStyle="#bfae8c";x.font=`400 20px ${FF}`;x.fillText(tot<1e6?"⚠ Chưa đạt đơn tối thiểu online 1.000.000₫":tot>=5e6?"✓ Được hỗ trợ phí vận chuyển (thanh toán trước)":"✓ Đạt đơn tối thiểu online",PX+10,y+150);y+=TOTH-60}
+    x.fillStyle="#8a7650";x.font=`400 20px ${FF}`;x.textAlign="center";
+    x.fillText(`Giá sỉ tham khảo – BD Team sẽ gọi xác nhận đơn${N>1?` • Ảnh ${pi+1}/${N}`:""}`,W/2,H-34);x.textAlign="left";
+    const blob=await new Promise((res,rej)=>cv.toBlob(b=>b?res(b):rej(new Error("toBlob")),"image/jpeg",.92));
+    const name=`don-hang-${code}${N>1?`-${pi+1}`:""}.jpg`;files.push(new File([blob],name,{type:"image/jpeg"}));urls.push(URL.createObjectURL(blob))}
+  if(BILL)BILL.urls.forEach(u=>URL.revokeObjectURL(u));
+  return{code,files,urls,tot,qty}}
 function fallbackCopy(t,cb){const ta=document.createElement("textarea");ta.value=t;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy")}catch(e){}ta.remove();cb()}
 cartBadge();
 
@@ -1639,9 +1771,10 @@ function openDetail(id){const p=ALL.find(x=>x.id===id);if(!p)return;PDP=p;PDQ=1;
    ${gal.length>1?`<button type="button" class="pg-nav l" data-g="-1" aria-label="Ảnh trước">‹</button><button type="button" class="pg-nav r" data-g="1" aria-label="Ảnh sau">›</button><span class="pg-cnt">1/${gal.length}</span><div class="pg-dots">${gal.map(()=>"<i></i>").join("")}</div>`:""}</div>
    ${gal.length>1?`<div class="pd-thumbs">${gal.map((src,k)=>`<button type="button" data-k="${k}" aria-label="Ảnh ${k+1}">${IMG(src,"")}</button>`).join("")}</div>`:""}
    <div class="pd-ct">${catName[p.c]}${br?` • ${escH(br)}`:""}</div><h3 class="pd-n">${escH(p.n)}</h3>
-   <div class="pd-pr" id="pdPr"></div>
-   ${p.cl&&p.cl.length?`<div class="pd-opt"><h5>Màu sắc: <b id="pdCn"></b></h5><div class="pd-chips" id="pdCl">${p.cl.map((c,i)=>`<button type="button" data-ci="${i}"><i style="background:${c.h}"></i>${escH(c.n)}</button>`).join("")}</div></div>`:""}
-   ${p.v&&p.v.length?`<div class="pd-opt"><h5>Phân loại: <b id="pdVn"></b></h5><div class="pd-chips" id="pdVr">${p.v.map((x,i)=>`<button type="button" data-vi="${i}">${escH(x.n)}<small>${vnd(x.p||p.p)}</small></button>`).join("")}</div></div>`:""}
+   <div class="pd-pr" id="pdPr"></div>`;
+  $("#pdOpts").innerHTML=`${p.cl&&p.cl.length?`<div class="pd-opt"><h5>Màu sắc: <b id="pdCn"></b></h5><div class="pd-chips" id="pdCl">${p.cl.map((c,i)=>`<button type="button" data-ci="${i}"><i style="background:${c.h}"></i>${escH(c.n)}</button>`).join("")}</div></div>`:""}
+   ${p.v&&p.v.length?`<div class="pd-opt"><h5>Phân loại: <b id="pdVn"></b></h5><div class="pd-chips" id="pdVr">${p.v.map((x,i)=>`<button type="button" data-vi="${i}">${escH(x.n)}<small>${vnd(x.p||p.p)}</small></button>`).join("")}</div></div>`:""}`;
+  $("#pdBody").insertAdjacentHTML("beforeend",`
    ${p.s?`<div class="pd-sold">🔥 Đã bán <b>${p.s.toLocaleString("vi-VN")}+</b>${rk<=3?` • <b>Top ${rk}</b> bán chạy nhóm ${catName[p.c]}`:""}</div>`:""}
    <div class="pd-sec"><h4>📄 Mô tả sản phẩm</h4><p>${escH(bodyOf(p))}</p></div>
    ${perf.length?`<div class="pd-sec"><h4>⚡ Hiệu suất</h4><ul>${perf.map(x=>`<li>${escH(x.charAt(0).toUpperCase()+x.slice(1))}</li>`).join("")}</ul></div>`:""}
@@ -1649,7 +1782,7 @@ function openDetail(id){const p=ALL.find(x=>x.id===id);if(!p)return;PDP=p;PDQ=1;
      <tr><td>Danh mục</td><td>${catName[p.c]}</td></tr>${br?`<tr><td>Thương hiệu</td><td>${escH(br)}</td></tr>`:""}
      <tr><td>Giá sỉ</td><td><b class="g">${prTxt(p)}</b></td></tr>${p.o&&!(p.v&&p.v.length)?`<tr><td>Giá gốc</td><td>${vnd(p.o)} (giảm ${p.off}%)</td></tr>`:""}
      ${p.s?`<tr><td>Đã bán</td><td>${p.s.toLocaleString("vi-VN")}+</td></tr><tr><td>Mức bán chạy</td><td>${rk<=3?`Top ${rk} nhóm ${catName[p.c]}`:`Hạng ${rk} trong nhóm`}</td></tr>`:""}</table></div>
-   ${p.cr?`<div class="pd-cr">📷 Ảnh: ${escH(p.cr)}</div>`:""}`;
+   ${p.cr?`<div class="pd-cr">📷 Ảnh: ${escH(p.cr)}</div>`:""}`);
   galInit(gal.length);pdOpt();pd.classList.add("on");pd.querySelector(".pd-box").scrollTop=0}
 /* vuốt trái/phải để xem ảnh khác */
 let GAL=null;
@@ -1676,13 +1809,13 @@ function pdOpt(){const p=PDP;if(!p)return;const v=p.v&&p.v[PDV],u=pdUnit(),o=v?(
   $$("#pdVr [data-vi]").forEach(b=>b.classList.toggle("on",+b.dataset.vi===PDV));const vn=$("#pdVn");if(vn)vn.textContent=v?v.n:"";
   $$("#pdCl [data-ci]").forEach(b=>b.classList.toggle("on",+b.dataset.ci===PDC));const cn=$("#pdCn");if(cn)cn.textContent=PDC>=0?p.cl[PDC].n:"chọn màu";
   pdQty()}
-$("#pdBody").addEventListener("click",e=>{const v=e.target.closest("[data-vi]");if(v){PDV=+v.dataset.vi;pdOpt();return}
+$("#pdOpts").addEventListener("click",e=>{const v=e.target.closest("[data-vi]");if(v){PDV=+v.dataset.vi;pdOpt();return}
   const c=e.target.closest("[data-ci]");if(c){PDC=+c.dataset.ci;pdOpt();if(GAL&&GAL.to)GAL.to(PDP.cl[PDC].k)}});
 function pdQty(){$$("#pdQ [data-q]").forEach(b=>b.classList.toggle("on",+b.dataset.q===PDQ));$("#pdIn").value=PDQ;$("#pdTot").textContent=PDP?vnd(pdUnit()*PDQ):""}
 $("#pdQ").addEventListener("click",e=>{const b=e.target.closest("[data-q]");if(b){PDQ=+b.dataset.q;pdQty()}const d=e.target.closest("[data-d]");if(d){PDQ=Math.max(1,PDQ+(+d.dataset.d));pdQty()}});
 $("#pdIn").oninput=e=>{const v=Math.round(+e.target.value.replace(/\D/g,""));if(v>0){PDQ=v;$$("#pdQ [data-q]").forEach(b=>b.classList.toggle("on",+b.dataset.q===PDQ));$("#pdTot").textContent=vnd(pdUnit()*PDQ)}};
 $("#pdAdd").onclick=()=>{if(!PDP)return;const hasC=PDP.cl&&PDP.cl.length,hasV=PDP.v&&PDP.v.length;
-  if(hasC&&PDC<0){toast("🎨 Vui lòng chọn màu sắc");$("#pdCl").scrollIntoView({block:"center",behavior:"smooth"});return}
+  if(hasC&&PDC<0){toast("🎨 Vui lòng chọn màu sắc");const c=$("#pdCl");c.classList.remove("need");void c.offsetWidth;c.classList.add("need");return}
   addCart(PDP.id,PDQ,hasC||hasV?{v:hasV?PDP.v[PDV].n:"",c:hasC?PDP.cl[PDC].n:""}:null);pd.classList.remove("on")};
 $("#pdClose").onclick=()=>pd.classList.remove("on");pd.onclick=e=>{if(e.target===pd)pd.classList.remove("on")};
 $("#grid").addEventListener("click",e=>{if(e.target.closest(".qadd"))return;const c=e.target.closest(".pc");if(c&&(e.target.closest(".im,.nm,.pdbtn")))openDetail(c.dataset.id)});
