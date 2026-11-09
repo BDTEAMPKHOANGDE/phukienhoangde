@@ -790,6 +790,27 @@ html.lock,html.lock body{overflow:hidden}
 .paused,.paused *,.paused::before,.paused::after,.paused *::before,.paused *::after{animation-play-state:paused!important}
 .sbg::before{will-change:transform}.sbg{contain:paint}
 @media(max-width:820px){.sbg::before{mix-blend-mode:normal;opacity:.3}}
+
+/* ===== v14: khung nói tên sản phẩm ===== */
+#vsheet{position:fixed;inset:0;z-index:260;background:rgba(5,4,10,.86);display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top) + 10px) 10px 10px;opacity:0;pointer-events:none;visibility:hidden;transition:opacity .25s,visibility 0s linear .25s;overscroll-behavior:contain}
+#vsheet.on{opacity:1;pointer-events:auto;visibility:visible;transition:opacity .25s,visibility 0s}
+.vs-box{width:min(460px,100%);display:grid;gap:12px;padding:16px;border-radius:22px;background:linear-gradient(180deg,rgba(32,22,72,.97),rgba(14,12,40,.97));border:1px solid rgba(255,255,255,.12);border-top-color:rgba(246,200,106,.55);box-shadow:0 24px 60px -20px #000;transform:translateY(-16px);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+#vsheet.on .vs-box{transform:none}
+.vs-top{display:flex;align-items:center;gap:12px}.vs-top h3{margin:0;font:700 17px 'Be Vietnam Pro',Inter,system-ui,sans-serif;color:#fff}.vs-top p{margin:2px 0 0;font:400 13px 'Be Vietnam Pro',Inter,system-ui,sans-serif;color:#cfc8ea}
+.vs-top p small{opacity:.6}.vs-top>div:nth-child(2){flex:1;min-width:0}
+.vs-x{width:34px;height:34px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:20px;cursor:pointer}
+.vs-mic{position:relative;width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ffe7a6,#f6c86a 55%,#d99b3c);box-shadow:0 8px 24px -8px rgba(246,200,106,.8)}
+.vs-mic b{position:relative;font-size:22px}.vs-mic span{position:absolute;inset:0;border-radius:50%;border:2px solid #f6c86a;opacity:0}
+#vsheet.live .vs-mic span{animation:vsRing 1.4s ease-out infinite}#vsheet.live .vs-mic span:nth-child(2){animation-delay:.7s}
+@keyframes vsRing{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
+.vs-eq{display:flex;justify-content:center;align-items:center;gap:5px;height:26px}.vs-eq i{width:4px;height:6px;border-radius:4px;background:linear-gradient(#f6c86a,#9b7bff);opacity:.35}
+#vsheet.live .vs-eq i{opacity:1;animation:vsEq .9s ease-in-out infinite}#vsheet.live .vs-eq i:nth-child(2n){animation-delay:.15s}#vsheet.live .vs-eq i:nth-child(3n){animation-delay:.3s}
+@keyframes vsEq{50%{height:24px}}
+.vs-f{display:flex;gap:8px}.vs-f input{flex:1;min-width:0;height:52px;border-radius:14px;border:1px solid rgba(246,200,106,.5);background:rgba(255,255,255,.07);color:#fff;font:500 16px 'Be Vietnam Pro',Inter,system-ui,sans-serif;padding:0 14px;outline:none}
+.vs-f input:focus{box-shadow:0 0 0 3px rgba(246,200,106,.2)}.vs-f .btn{height:52px;padding:0 18px;border-radius:14px}
+.vs-kb{font:400 13px/1.55 'Be Vietnam Pro',Inter,system-ui,sans-serif;color:#e6e0ff;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.14)}
+.vs-kb small{display:block;margin-top:4px;color:#a9a2cf;font-size:12px}.kbm{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#f6c86a;color:#1b1408;font-size:13px;vertical-align:-6px;animation:ldPulse 1.6s infinite}
+.vs-act{display:flex;gap:8px;flex-wrap:wrap}.vs-act .btn{flex:1;min-height:44px;font-size:14px;text-decoration:none;text-align:center}.vs-act [hidden]{display:none}
 </style>
 </head>
 <body class="loading">
@@ -849,6 +870,13 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="bl-row"><button class="btn btn-ghost" type="button" id="obCopy">📋 Chép ảnh bill</button><button class="btn btn-ghost" type="button" id="obTxt">📝 Chép nội dung</button></div>
   <div class="bl-row"><button class="btn btn-ghost" type="button" id="obShare">📤 Chia sẻ…</button><button class="btn btn-ghost" type="button" id="obSave">⬇️ Lưu ảnh</button></div></div></div>
 <div id="ordAlert" role="alert" hidden><div class="oa-in"><b>🔔 CÓ ĐƠN MỚI!</b><span id="oaTxt"></span><button type="button" class="btn btn-gold" id="oaView">Xem đơn</button><button type="button" class="oa-x" id="oaX" aria-label="Tắt">×</button></div></div>
+<div id="vsheet" role="dialog" aria-modal="true" aria-label="Tìm bằng giọng nói"><div class="vs-box">
+  <div class="vs-top"><div class="vs-mic"><span></span><span></span><b>🎤</b></div><div><h3>Nói tên sản phẩm</h3><p id="vsSt">Đang chuẩn bị…</p></div><button type="button" class="vs-x" id="vsX" aria-label="Đóng">×</button></div>
+  <div class="vs-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <form id="vsF" class="vs-f"><input id="vsIn" autocomplete="off" autocorrect="off" enterkeyhint="search" placeholder="vd: cáp sạc type-c, tai nghe bluetooth…"><button class="btn btn-gold" type="submit">Tìm</button></form>
+  <div class="vs-kb" id="vsKb"></div>
+  <div class="vs-act"><button type="button" class="btn btn-ghost" id="vsAgain" hidden>🎤 Nghe lại</button><a class="btn btn-ghost" id="vsOpen" hidden>🧭 Mở bằng trình duyệt</a></div>
+</div></div>
 <div id="micAsk" role="dialog" aria-modal="true"><div class="ma-box">
   <div class="ma-ic" id="maIc">🎤</div>
   <h3 id="maT">Cho phép sử dụng micro</h3>
@@ -1533,11 +1561,11 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="09/11-v13";
+const APP_VER="09/11-v14";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
-{const MS=["#auth","#pedit","#cart","#pdet","#bill","#ordBill","#micAsk","#voice"].map(x=>document.querySelector(x)).filter(Boolean),chatEl=$("#chat");
+{const MS=["#auth","#pedit","#cart","#pdet","#bill","#ordBill","#micAsk","#voice","#vsheet"].map(x=>document.querySelector(x)).filter(Boolean),chatEl=$("#chat");
   const upd=()=>{const open=MS.some(m=>m.classList.contains("on"))||(chatEl&&chatEl.classList.contains("open")&&innerWidth<700);document.documentElement.classList.toggle("lock",open)};
   const mo=new MutationObserver(upd);[...MS,chatEl].filter(Boolean).forEach(m=>mo.observe(m,{attributes:true,attributeFilter:["class"]}))}
 {let lastEl=null,lastT=0;document.addEventListener("click",e=>{const el=e.target.closest("button,a,.pc,[data-act]");if(!el)return;
@@ -1580,6 +1608,8 @@ $("#maKb").onclick=()=>{closeMa();kbDictate(maInput)};
 /* Lưu ý: Safari (iPhone) chỉ cho bật nghe khi gọi NGAY trong lần chạm của khách – không được chờ (await) trước đó */
 $("#maOk").onclick=()=>{const cb=maCb;closeMa();startRec(cb)};
 function listen(onFinal,inputEl){maInput=inputEl||null;MA_ERR="";
+  /* điện thoại / máy tính bảng: dùng khung “Nói tên sản phẩm” (chạy được trên mọi trình duyệt) */
+  if(isTouch&&typeof vsOpen==="function")return vsOpen(onFinal);
   /* trình duyệt trong Zalo/Facebook hoặc không hỗ trợ: dùng micro bàn phím ngay (luôn chạy được trên điện thoại) */
   if(isTouch&&(!SR||inApp))return kbDictate(inputEl);
   if(!SR)return micDialog("unsupported",onFinal);
@@ -1600,6 +1630,36 @@ function voiceGo(text,alts=[]){
   if(cat&&(!hit.length||hit[0].c===cat&&q.replace(/\s/g,"").length<16)){goCat(cat);return toast(`🎤 “${text}” → mở danh mục <b>${catName[cat]}</b>`)}
   if(hit.length){goCat(hit[0].c,null,hit[0].n);return toast(`🎤 Tìm thấy <b>${hit[0].n}</b>`)}
   openChat();ask(text)}
+
+/* ===== v14: KHUNG “NÓI TÊN SẢN PHẨM” cho điện thoại – 2 lớp: nghe trực tiếp (nếu trình duyệt hỗ trợ) + micro bàn phím (luôn dùng được) ===== */
+const VS=$("#vsheet"),vsIn=$("#vsIn"),vsSt=$("#vsSt");let VS_CB=null,vsT=null,vsRec=null,vsDoneF=false;
+const isAndroid=/Android/i.test(navigator.userAgent);
+function vsKbHint(){$("#vsKb").innerHTML=isIOS
+  ?`<b>Cách nói trên iPhone:</b> chạm biểu tượng <span class="kbm">🎤</span> ở <b>góc dưới bàn phím</b> → nói → chạm lại để dừng.<small>Không thấy 🎤? Mở <b>Cài đặt → Cài đặt chung → Bàn phím</b> → bật <b>Đọc chính tả</b>.</small>`
+  :`<b>Cách nói trên Android:</b> chạm biểu tượng <span class="kbm">🎤</span> trên <b>bàn phím</b> (thường ở góc trên bên phải) → nói.<small>Không thấy 🎤? Dùng bàn phím <b>Gboard</b> và bật <b>Nhập liệu bằng giọng nói</b>.</small>`}
+function vsOpen(cb){VS_CB=cb;vsDoneF=false;vsIn.value="";clearTimeout(vsT);VS.classList.add("on");VS.classList.remove("live");
+  try{vsIn.focus({preventScroll:true})}catch(e){vsIn.focus()}   /* mở bàn phím NGAY trong lần chạm */
+  vsKbHint();const canSR=SR&&!inApp&&window.isSecureContext;$("#vsAgain").hidden=!canSR;
+  const op=$("#vsOpen");op.hidden=!inApp;if(inApp){op.href=isAndroid?`intent://${location.host}${location.pathname}${location.search}#Intent;scheme=https;package=com.android.chrome;end`:`x-safari-https://${location.host}${location.pathname}${location.search}`;op.textContent=isAndroid?"🧭 Mở bằng Chrome để nghe trực tiếp":"🧭 Mở bằng Safari để nghe trực tiếp"}
+  if(canSR)vsListen();else vsSt.innerHTML="Chạm <b>🎤 trên bàn phím</b> rồi nói – kết quả tự tìm khi bạn nói xong"}
+function vsListen(){try{vsRec&&vsRec.abort()}catch(e){}let r;try{r=new SR()}catch(e){vsSt.innerHTML="Chạm <b>🎤 trên bàn phím</b> rồi nói";return}
+  vsRec=r;r.lang="vi-VN";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;let got="";
+  VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe… hãy nói tên sản phẩm";
+  r.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;got=t;vsIn.value=t;if(e.results[e.results.length-1].isFinal)vsDone(t)};
+  r.onerror=e=>{VS.classList.remove("live");if(vsDoneF)return;const c=e.error||"";
+    vsSt.innerHTML=c==="no-speech"?"Chưa nghe rõ – bấm <b>Nghe lại</b> hoặc dùng <b>🎤 trên bàn phím</b>":c==="aborted"?"":`Trình duyệt chưa nghe được <small>(${esc(c)})</small> – hãy dùng <b>🎤 trên bàn phím</b> ngay bên dưới`;
+    try{vsIn.focus({preventScroll:true})}catch(_){}};
+  r.onend=()=>{VS.classList.remove("live");if(!vsDoneF&&got.trim())vsDone(got)};
+  try{r.start()}catch(e){VS.classList.remove("live");vsSt.innerHTML="Hãy dùng <b>🎤 trên bàn phím</b> để nói"}}
+function vsDone(t){t=String(t||"").trim();if(!t||vsDoneF)return;vsDoneF=true;clearTimeout(vsT);vsSt.innerHTML=`✅ “${esc(t)}” – đang tìm…`;const cb=VS_CB;
+  setTimeout(()=>{vsClose();cb&&cb(t,[])},350)}
+function vsClose(){try{vsRec&&vsRec.abort()}catch(e){}VS.classList.remove("on","live");clearTimeout(vsT);try{vsIn.blur()}catch(e){}}
+/* micro bàn phím gõ chữ dần → tự tìm sau khi ngừng nói 1,8 giây */
+vsIn.addEventListener("input",()=>{if(VS.classList.contains("live"))return;clearTimeout(vsT);const v=vsIn.value.trim();
+  if(v){vsSt.innerHTML=`“${esc(v)}” – tự tìm khi bạn nói xong…`;vsT=setTimeout(()=>vsDone(vsIn.value),1800)}});
+$("#vsF").onsubmit=e=>{e.preventDefault();vsDone(vsIn.value)};
+$("#vsX").onclick=vsClose;VS.onclick=e=>{if(e.target===VS)vsClose()};
+$("#vsAgain").onclick=()=>{vsDoneF=false;vsListen()};
 $("#fabMic").onclick=()=>listen(voiceGo);$("#qMic").onclick=()=>listen(voiceGo,$("#q"));
 $("#chatMic").onclick=()=>listen(t=>ask(t),$("#ci"));
 
