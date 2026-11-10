@@ -1372,7 +1372,8 @@ $("#sup").innerHTML=SUPPORT.map((s,i)=>`<div class="sp rv d${i%4}"><div class="i
 const pics=ALL.filter((_,i)=>i%3===1).map(p=>p.i);
 /* partner images: admin uploads via Firestore doc partners/{pkey}.img */
 let PIMG={};
-(async()=>{if(!FB)return;try{const fs=(await import(`https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js`));const db=fs.getFirestore(FB);const snap=await fs.getDocs(fs.collection(db,"partners"));snap.forEach(d=>{const dt=d.data();if(dt.img)PIMG[d.id]=dt.img});renderStores()}catch(e){console.warn("partner imgs:",e)}})();
+/* ảnh đối tác lưu trong collection "images" (đã có sẵn quyền) với id "partner-<key>" */
+FB_READY.then(async f=>{if(!f)return;try{await Promise.all(STORES.filter(s=>s.pkey).map(async s=>{const d=await f.F.getDoc(f.F.doc(f.db,"images","partner-"+s.pkey));if(d.exists()&&d.data().d)PIMG[s.pkey]=d.data().d}));renderStores()}catch(e){console.warn("partner imgs:",e)}});
 function renderStores(){
 $("#stores").innerHTML=STORES.map((s,i)=>{
   const pimg=s.pkey&&PIMG[s.pkey];
@@ -1847,12 +1848,12 @@ function renderPartnerAdmin(){const el=$("#ptList");if(!el)return;
       ${img?`<button class="btn btn-ghost" style="font-size:13px;color:#ff8c7a" data-rm="${s.pkey}">🗑 Xóa ảnh</button>`:""}</div></div>`}).join("");
   el.querySelectorAll("input[type=file]").forEach(inp=>inp.onchange=async e=>{
     const f=e.target.files[0];if(!f)return;const pk=inp.dataset.pk;
-    try{const b64=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)});
-      const {F,db}=FB;await F.setDoc(F.doc(db,"partners",pk),{img:b64,updated:Date.now()},{merge:true});
-      PIMG[pk]=b64;renderStores();renderPartnerAdmin();aToast("✅ Đã lưu ảnh "+pk)}catch(err){aToast("❌ Lỗi: "+err.message)}});
+    try{if(!FB)throw new Error("Chưa kết nối Firebase");atoast("⏳ Đang tải ảnh lên…");const r=await compress(f,900);
+      const {F,db}=FB;await F.setDoc(F.doc(db,"images","partner-"+pk),{d:r.data});
+      PIMG[pk]=r.data;renderStores();renderPartnerAdmin();atoast("✅ Đã lưu ảnh đối tác")}catch(err){console.warn(err);atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}});
   el.querySelectorAll("[data-rm]").forEach(btn=>btn.onclick=async()=>{const pk=btn.dataset.rm;
     if(!confirm("Xóa ảnh "+pk+"?"))return;
-    try{const {F,db}=FB;await F.deleteDoc(F.doc(db,"partners",pk));delete PIMG[pk];renderStores();renderPartnerAdmin();aToast("✅ Đã xóa ảnh")}catch(err){aToast("❌ Lỗi: "+err.message)}})}
+    try{const {F,db}=FB;await F.deleteDoc(F.doc(db,"images","partner-"+pk));delete PIMG[pk];renderStores();renderPartnerAdmin();atoast("✅ Đã xóa ảnh")}catch(err){atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}})}
 /* ---- đơn hàng (realtime) ---- */
 const OST={new:["🆕","Đơn mới"],ok:["✅","Đã xác nhận"],done:["🚚","Đã giao"],cancel:["✖","Đã huỷ"]};
 AD.ord=[];let ordOn=false,ordFirst=true;
