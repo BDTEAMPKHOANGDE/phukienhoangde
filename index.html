@@ -6,7 +6,7 @@
 document.documentElement.classList.add(m?"dev-mobile":"dev-pc")})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Hoàng Đế – BD Team</title>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap&subset=vietnamese" rel="stylesheet">
 <style>
 :root{--bg:#07060a;--bg2:#0f0d0b;--card:#16130e;--line:#2e271b;--gold:#d9b25f;--gold2:#f7dc92;--gold3:#a07a33;--text:#f4eee2;--muted:#aaa291;--red:#e2513b}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -77,6 +77,8 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 /* loader */
 #loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;transition:clip-path 1.1s cubic-bezier(.77,0,.18,1);clip-path:inset(0)}
 #loader.out{clip-path:inset(0 0 100% 0)}
+#loader.out .ld-c{animation:ldExit .7s cubic-bezier(.77,0,.18,1) forwards}
+@keyframes ldExit{to{opacity:0;transform:translateY(-60px) scale(.92)}}
 .ld-cube{width:64px;height:64px;margin:0 auto 26px;transform-style:preserve-3d;animation:ldspin 2s cubic-bezier(.6,0,.4,1) infinite;position:relative}
 .ld-cube i{position:absolute;inset:0;border:1.5px solid var(--gold);background:rgba(217,178,95,.08)}
 .ld-cube i:nth-child(1){transform:translateZ(32px)}.ld-cube i:nth-child(2){transform:rotateY(180deg) translateZ(32px)}.ld-cube i:nth-child(3){transform:rotateY(90deg) translateZ(32px)}.ld-cube i:nth-child(4){transform:rotateY(-90deg) translateZ(32px)}.ld-cube i:nth-child(5){transform:rotateX(90deg) translateZ(32px)}.ld-cube i:nth-child(6){transform:rotateX(-90deg) translateZ(32px)}
@@ -195,6 +197,10 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 .store h4{font-size:18px;margin:4px 0}.store p{font-size:14px;color:#cfc6b4}
 .store a{display:inline-flex;margin-top:10px;font-size:13px;color:var(--gold2);border:1px solid var(--gold3);padding:6px 14px;border-radius:999px}
 .store.empty{border-style:dashed;border-color:var(--gold3);background:rgba(22,19,14,.6)}
+.store.partner{border-color:var(--gold2);background:rgba(22,19,14,.6)}
+.store.partner .partner-pic{position:absolute;inset:0;display:grid;place-items:center;opacity:1;filter:none;background:rgba(255,255,255,.95);border-radius:24px 24px 0 0}
+.store.partner .partner-pic img{width:60%;max-height:70%;object-fit:contain;filter:none}
+.store.partner::after{background:linear-gradient(180deg,rgba(7,6,10,0) 20%,rgba(7,6,10,.92) 65%)}
 .map-pin{position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,var(--gold2),var(--gold3));animation:bob 2.2s ease-in-out infinite}
 .map-pin::after{content:"";position:absolute;inset:12px;border-radius:50%;background:#1b1408}
 @keyframes bob{50%{transform:rotate(-45deg) translate(4px,-4px)}}
@@ -645,6 +651,11 @@ footer .ver{display:block;margin-top:8px;opacity:.5;font-size:11px}
 @keyframes ldTw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
 .ld-c{position:relative;z-index:1;display:grid;justify-items:center;text-align:center;padding:24px;animation:ldIn 1s cubic-bezier(.16,1,.3,1) both}
 @keyframes ldIn{from{opacity:0;transform:translateY(24px) scale(.96)}}
+@keyframes ldFloat{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.03) translateY(-4px)}}
+.ld-k{animation:ldIn .8s .15s both}
+.ld-s{animation:ldIn .8s .5s both}
+.ld-tag{animation:ldIn .8s .7s both}
+.ld-bar{animation:ldIn .6s .4s both}
 .ld-emb{position:relative;width:148px;height:148px;display:grid;place-items:center;margin-bottom:26px}
 .ld-ring{position:absolute;inset:0;border-radius:50%;padding:3px;background:conic-gradient(from 0deg,#fff1c4,#f7c66b,#ff8a3d,#ff6fae,#9b7bff,#22d3ee,#fff1c4);
  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));animation:ldRot 2.4s linear infinite}
@@ -653,7 +664,7 @@ footer .ver{display:block;margin-top:8px;opacity:.5;font-size:11px}
 .ld-glow{position:absolute;inset:8px;border-radius:50%;box-shadow:0 0 60px 10px rgba(247,198,107,.45),0 0 120px 30px rgba(224,71,158,.25);animation:ldPulse 2s ease-in-out infinite}
 @keyframes ldPulse{50%{box-shadow:0 0 80px 18px rgba(247,198,107,.6),0 0 150px 40px rgba(123,92,255,.3)}}
 .ld-logo{position:relative;width:124px;height:124px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#2b2113,#0b0907);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,241,196,.25)}
-.ld-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:ldLogo .8s .2s both}
+.ld-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:ldLogo .8s .2s both,ldFloat 3s 1.5s ease-in-out infinite}
 @keyframes ldLogo{from{opacity:0;transform:scale(1.15)}}
 .ld-crown{width:60px;height:60px;filter:drop-shadow(0 4px 14px rgba(247,198,107,.6))}
 .ld-k{font:600 13px 'Be Vietnam Pro',sans-serif;letter-spacing:.6em;padding-left:.6em;color:#fff1c4;opacity:.9}
@@ -913,7 +924,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 
 <header id="hdr"><div class="wrap nav">
   <a href="#hero" class="brand"><span class="lg"><img id="logo" alt="" onerror="this.style.display='none'"></span><span>Phụ Kiện Hoàng Đế<small>BD TEAM</small><small class="bdv">Business Development</small></span></a>
-  <nav class="menu"><a href="#chu-luc">Sản phẩm chính</a><a href="#hop-tac">Chính sách hợp tác</a><a href="#cua-hang">Cửa hàng</a><a href="#tat-ca">Tổng sản phẩm</a></nav>
+  <nav class="menu"><a href="#chu-luc">Sản phẩm chính</a><a href="#hop-tac">Chính sách hợp tác</a><a href="#cua-hang">Đối tác</a><a href="#tat-ca">Tổng sản phẩm</a></nav>
   <div class="hd-r"><button class="acct" id="acctBtn" aria-label="Tài khoản">👤 <span id="acctName">Đăng nhập</span></button><a class="btn btn-gold js-zalo" target="_blank" rel="noopener">Nhận báo giá</a></div>
 </div></header>
 
@@ -1006,7 +1017,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 
 <!-- STORES -->
 <section class="sec hasbg" id="cua-hang"><div class="sbg bg-net"></div><div class="scrim"></div><div class="wrap">
-  <div class="sec-h rv"><div class="tag">Hệ thống</div><h2 class="serif">Cửa hàng & <span class="gold">đối tác chiến lược</span></h2><p>Kho tổng, trụ sở và chuỗi cửa hàng trên toàn quốc. Bấm "Chỉ đường" để mở bản đồ.</p></div>
+  <div class="sec-h rv"><div class="tag">Hệ thống</div><h2 class="serif">Văn phòng & <span class="gold">đối tác chiến lược</span></h2><p>Kho tổng, trụ sở và các đối tác chiến lược lâu dài trên toàn quốc.</p></div>
   <div class="stores" id="stores"></div>
 </div></section>
 
@@ -1201,10 +1212,9 @@ const SUPPORT=[
 const STORES=[
  {ty:"KHO TỔNG",name:"Kho tổng Thái Bình",addr:"Tòa nhà số 65 đường số 6, KĐT Petro Thăng Long, TP Thái Bình"},
  {ty:"TRỤ SỞ MIỀN NAM",name:"Văn phòng TP.HCM",addr:"Tòa nhà số 02 Nguyễn Ngọc Lộc, Phường 14, Quận 10, TP.HCM"},
- {ty:"CỬA HÀNG",name:"Cửa hàng Nam Định",addr:"136 Hàn Thuyên, TP Nam Định"},
- {ty:"CỬA HÀNG",name:"Cửa hàng Thái Bình",addr:"155 Hai Bà Trưng, TP Thái Bình"},
- {ty:"CỬA HÀNG",name:"Cửa hàng Hải Phòng",addr:"291 Trần Nguyên Hãn, TP Hải Phòng"},
- {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Cửa hàng đối tác",addr:"Đang cập nhật – BD Team bổ sung danh sách cửa hàng đối tác tại đây",empty:1}
+ {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Thế Giới Di Động",addr:"Hệ thống bán lẻ lớn nhất Việt Nam",partner:1,logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Logo_of_Mobile_World_Group.svg/400px-Logo_of_Mobile_World_Group.svg.png"},
+ {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Viettel Store",addr:"Mạng lưới phủ rộng toàn quốc",partner:1,logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Viettel_logo_2021.svg/400px-Viettel_logo_2021.svg.png"},
+ {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"CellphoneS",addr:"Đối tác chiến lược lâu dài",partner:1,logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Logo_of_CellphoneS.svg/400px-Logo_of_CellphoneS.svg.png"}
 ];
 /* ======================================================= */
 
@@ -1357,8 +1367,8 @@ $("#brands").innerHTML=BR.map((b,i)=>`<div class="bd ${b.ex?"ex":""} rv d${i}"><
 $("#pk").innerHTML=PACKS.map((p,i)=>`<div class="pk ${p.hot?"hot":""} rv d${i}">${p.hot?'<span class="ribbon">PHỔ BIẾN</span>':""}<div class="nm">${p.nm}</div><h3>${p.title}</h3><div class="cap">${p.cap}</div><div class="money">${p.money}</div><ul>${p.items.map(t=>`<li>${t}</li>`).join("")}</ul><a class="btn ${p.hot?"btn-gold":"btn-ghost"}" style="width:100%;margin-top:18px" href="${zalo}" target="_blank" rel="noopener">Tư vấn gói này</a></div>`).join("");
 $("#sup").innerHTML=SUPPORT.map((s,i)=>`<div class="sp rv d${i%4}"><div class="ic">${s[0]}</div><h4>${s[1]}</h4><p>${s[2]}</p></div>`).join("");
 const pics=ALL.filter((_,i)=>i%3===1).map(p=>p.i);
-$("#stores").innerHTML=STORES.map((s,i)=>`<div class="store ${s.empty?"empty":""} rv d${i%3}"><div class="pic">${[0,1,2].map(k=>`<img src="${pics[(i*3+k)%pics.length]}" alt="" loading="lazy" onerror="this.remove()">`).join("")}</div>${s.empty?"":'<span class="map-pin"></span>'}
- <div class="in"><div class="ty">${s.ty}</div><h4>${s.name}</h4><p>${s.addr}</p>${s.empty?`<a href="${zalo}" target="_blank" rel="noopener">Đăng ký làm đối tác →</a>`:`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.addr)}" target="_blank" rel="noopener">📍 Chỉ đường</a>`}</div></div>`).join("");
+$("#stores").innerHTML=STORES.map((s,i)=>`<div class="store ${s.partner?"partner":""} rv d${i%3}">${s.partner?`<div class="pic partner-pic"><img src="${s.logo}" alt="${s.name}" loading="lazy" onerror="this.parentElement.innerHTML='<span style=font-size:48px>🤝</span>'"></div>`:`<div class="pic">${[0,1,2].map(k=>`<img src="${pics[(i*3+k)%pics.length]}" alt="" loading="lazy" onerror="this.remove()">`).join("")}</div>`}${s.partner?"":'<span class="map-pin"></span>'}
+ <div class="in"><div class="ty">${s.ty}</div><h4>${s.name}</h4><p>${s.addr}</p>${s.partner?`<a href="${zalo}" target="_blank" rel="noopener">Liên hệ hợp tác →</a>`:`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.addr)}" target="_blank" rel="noopener">📍 Chỉ đường</a>`}</div></div>`).join("");
 /* pointer light + tilt on policy cards */
 $$(".pk").forEach(el=>{el.addEventListener("pointermove",e=>{const b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;
   el.style.setProperty("--mx",x*100+"%");el.style.setProperty("--my",y*100+"%");if(e.pointerType==="mouse")el.style.transform=`rotateY(${(x-.5)*14}deg) rotateX(${(.5-y)*14}deg)`});
@@ -1516,7 +1526,7 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   if(has(/(hoa don|vat|chung tu)/))return{h:"🧾 Công ty có xuất hóa đơn đỏ."};
   if(has(/(bao hanh|doi tra|\bhong\b|\bbi loi\b)/))return{h:"🔧 Bảo hành trọn đời miễn phí cho sản phẩm WK Design. Sản phẩm khác theo chính sách bảo hành của công ty – gửi mã sản phẩm qua Zalo để được hướng dẫn."+ZL};
   if(has(/(thanh toan|chuyen khoan|\bcod\b|tra tien)/))return{h:"💳 Thanh toán chuyển khoản hoặc thỏa thuận khi chốt đơn. Đơn trên 5 triệu thanh toán trước được hỗ trợ ship."+ZL};
-  if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+STORES.filter(s=>!s.empty).map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n"+btn("Xem bản đồ","sec:cua-hang")};
+  if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+STORES.filter(s=>!s.partner).map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n🤝 Đối tác chiến lược: Thế Giới Di Động, Viettel Store, CellphoneS\n"+btn("Xem chi tiết","sec:cua-hang")};
   if(has(/(doi tac|doc quyen|thuong hieu|chinh hang|hang that)/))return{h:"🏆 Nhà phân phối độc quyền PICOM, đối tác chiến lược lâu dài của WK Design và WEKOME. Phân phối 64 tỉnh thành."+btn("Xem đồng hồ PICOM","cat:dc")};
   if(has(/(ban chay|chu luc|hot nhat|noi bat)/))return{h:"⭐ Sản phẩm chủ lực:\n"+MAIN.map(p=>`• ${p.name} – <b>${p.price}</b>`).join("\n")+"\n"+btn("Xem dạng 3D","sec:chu-luc")};
   /* so sánh */
