@@ -565,7 +565,7 @@ body.adm-on .cart-fab{display:none!important}
 .bl-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bl-row .btn{padding-left:8px;padding-right:8px;font-size:13.5px}
 
 
-/* ===== hai hướng hợp tác + đại lý WEKOME ===== */
+/* ===== hai hướng hợp tác + chính sách chiết khấu đại lý ===== */
 .path{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;margin:0 auto}
 .path-c{display:grid;gap:6px;padding:22px;border-radius:22px;text-decoration:none;color:#fff;border:1px solid rgba(247,220,146,.35);background:linear-gradient(150deg,rgba(123,92,255,.22),rgba(247,220,146,.08) 60%,rgba(0,0,0,.3));transition:transform .3s,box-shadow .3s}
 .path-c.alt{background:linear-gradient(150deg,rgba(16,185,129,.22),rgba(247,220,146,.08) 60%,rgba(0,0,0,.3))}
@@ -955,7 +955,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="sec-h rv"><div class="tag">Chính sách hợp tác</div><h2 class="serif">Hai con đường <span class="gold">cùng Hoàng Đế</span></h2><p>Chọn chính sách phù hợp với cửa hàng của bạn.</p></div>
   <div class="path rv">
     <a href="#goi-setup" class="path-c"><i>🏗️</i><small>Bạn <b>chưa có</b> cửa hàng</small><strong>Gói setup shop trọn gói</strong><span>Từ 60 triệu • thiết kế, kệ, hàng hoá, đào tạo</span><em>Xem các gói →</em></a>
-    <a href="#dai-ly" class="path-c alt"><i>🏪</i><small>Bạn <b>đã có</b> cửa hàng</small><strong>Đại lý WEKOME chính hãng</strong><span>Chiết khấu luỹ tiến theo tháng, tối đa 10%</span><em>Xem chiết khấu →</em></a>
+    <a href="#dai-ly" class="path-c alt"><i>🏪</i><small>Bạn <b>đã có</b> cửa hàng</small><strong>Chính sách chiết khấu đại lý</strong><span>Chiết khấu luỹ tiến theo tổng hoá đơn, tối đa 10%</span><em>Xem chiết khấu →</em></a>
   </div>
   <div class="sec-h rv" id="goi-setup" style="margin-top:56px"><div class="tag">Chưa có cửa hàng</div><h2 class="serif">Setup shop <span class="gold">trọn gói</span></h2><p>Bốn gói mở cửa hàng phụ kiện cùng Hoàng Đế. Mức vốn khởi điểm từ 60 triệu đồng.</p></div>
   <div class="pk-grid" id="pk"></div>
@@ -978,22 +978,22 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
     </div>
   </div>
 
-  <!-- ĐẠI LÝ WEKOME -->
+  <!-- ĐẠI LÝ -->
   <div id="dai-ly" class="dl">
-    <div class="sec-h rv"><div class="tag">Đã có cửa hàng</div><h2 class="serif">🌟 Chính sách đại lý chính hãng <span class="gold">WEKOME</span></h2>
-      <p>Kính gửi Quý Đối tác và Chủ cửa hàng phụ kiện điện thoại,<br>nhằm mở rộng mạng lưới phân phối và hỗ trợ tối đa cho các đại lý kinh doanh hiệu quả, Phụ Kiện Hoàng Đế trân trọng gửi tới Quý đối tác bảng chính sách chiết khấu độc quyền dành riêng cho dòng sản phẩm <b>WEKOME chính hãng</b>. Chính sách linh hoạt theo doanh số và quy mô đơn hàng trong tháng, giúp tối ưu biên độ lợi nhuận cho từng mô hình cửa hàng.</p></div>
+    <div class="sec-h rv"><div class="tag">Đã có cửa hàng</div><h2 class="serif">🌟 Chính sách chiết khấu <span class="gold">đại lý</span></h2>
+      <p>Kính gửi Quý Đối tác và Chủ cửa hàng phụ kiện điện thoại,<br>nhằm mở rộng mạng lưới phân phối và hỗ trợ tối đa cho các đại lý kinh doanh hiệu quả, Phụ Kiện Hoàng Đế trân trọng gửi tới Quý đối tác bảng chính sách chiết khấu dành riêng cho đại lý. Chiết khấu áp dụng cho <b>tất cả sản phẩm</b> tại Hoàng Đế, tính theo tổng giá trị hoá đơn trong tháng, giúp tối ưu biên độ lợi nhuận cho từng mô hình cửa hàng.</p></div>
     <div class="panel dl-tb rv"><h3>📊 Bảng chính sách chiết khấu đại lý</h3>
       <div class="dl-head"><span>Tổng đơn hàng<br><small>(trong 1 tháng)</small></span><span>Chiết khấu</span><span>Giá trị đơn<br>trung bình</span><span>Lưu ý / Quy định áp dụng</span></div>
       <div id="dlRows"></div>
-      <p class="dl-note">⚠️ Điều kiện đăng ký đại lý phân phối: đạt <b>tổng đơn hàng trong tháng</b> và <b>giá trị đơn hàng trung bình</b> theo mức tương ứng. Chiết khấu áp dụng cho các đơn hàng trong 1 tháng.</p>
+      <p class="dl-note">⚠️ Chiết khấu tính theo <b>tổng giá trị hoá đơn trong tháng</b> (tất cả sản phẩm cộng lại), không giới hạn thương hiệu. Đạt mức nào hưởng chiết khấu mức đó.</p>
     </div>
     <div class="dl-calc panel rv"><h3>🧮 Tính nhanh chiết khấu của bạn</h3>
-      <label>Doanh số nhập WEKOME dự kiến mỗi tháng<div class="dl-in"><input id="dlIn" inputmode="numeric" placeholder="vd: 35.000.000"><span>₫</span></div></label>
+      <label>Tổng giá trị hoá đơn dự kiến mỗi tháng<div class="dl-in"><input id="dlIn" inputmode="numeric" placeholder="vd: 35.000.000"><span>₫</span></div></label>
       <div class="dl-qk"><button type="button" data-v="15">15 tr</button><button type="button" data-v="25">25 tr</button><button type="button" data-v="40">40 tr</button><button type="button" data-v="70">70 tr</button><button type="button" data-v="120">120 tr</button></div>
       <div class="dl-out" id="dlOut"></div>
     </div>
     <div class="dl-ben">
-      <div class="panel rv"><i>💎</i><h4>Sản phẩm chính hãng chất lượng cao</h4><p>Phụ kiện WEKOME thiết kế độc lạ, tỉ mỉ, luôn dẫn đầu xu hướng, dễ thu hút khách hàng trẻ.</p></div>
+      <div class="panel rv"><i>💎</i><h4>Hơn 500 mã hàng chính hãng</h4><p>Phụ kiện PICOM, WEKOME, WK Design, Denmen… đa dạng mẫu mã, luôn dẫn đầu xu hướng.</p></div>
       <div class="panel rv d1"><i>📈</i><h4>Chiết khấu hấp dẫn, luỹ tiến theo tháng</h4><p>Doanh số càng cao, chiết khấu càng lớn (tối đa 10%) – giảm giá vốn đầu vào, tăng lợi nhuận ròng.</p></div>
       <div class="panel rv d2"><i>🤝</i><h4>Chính sách hỗ trợ linh hoạt</h4><p>Hỗ trợ đơn hàng nhỏ gọn theo tuần/tháng với giá trị đơn trung bình hợp lý (từ trên 2 triệu đến trên 5 triệu).</p></div>
     </div>
@@ -1216,7 +1216,7 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),lerp=(a,b,t)=>a+(b-a)*t;
 const vnd=n=>n.toLocaleString("vi-VN")+"₫",nm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d");
 const catName=Object.fromEntries(CATS),zalo="https://zalo.me/"+CONFIG.zalo;
-/* ĐẠI LÝ WEKOME: [từ (triệu), dưới (triệu, 0 = trở lên), chiết khấu %, giá trị đơn trung bình, lưu ý] – sửa ở đây */
+/* CHIẾT KHẤU ĐẠI LÝ: [từ (triệu), dưới (triệu, 0 = trở lên), chiết khấu %, giá trị đơn trung bình, lưu ý] – áp dụng tất cả sản phẩm, tính theo tổng hoá đơn/tháng – sửa ở đây */
 const WK_TIERS=[[10,20,3,"Trên 2 triệu","Trừ cường lực"],[20,30,7,"Trên 2 triệu","Trừ cường lực"],[30,50,8,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"],[50,100,9,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"],[100,0,10,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"]];
 const wkTier=v=>{const m=v/1e6;return WK_TIERS.find(t=>m>=t[0]&&(!t[1]||m<t[1]))||null};
 const wkRange=t=>t[1]?`${t[0]} – < ${t[1]} triệu`:`${t[0]} triệu trở lên`;
@@ -1226,7 +1226,7 @@ $("#dlRows").innerHTML=WK_TIERS.map((t,i)=>`<div class="dl-r" data-i="${i}"><spa
 function dlCalc(){const v=Math.round(+String($("#dlIn").value).replace(/\D/g,"")),o=$("#dlOut");$$("#dlRows .dl-r").forEach(r=>r.classList.remove("on"));
   if(!v){o.innerHTML='<span class="mut">Nhập doanh số để xem mức chiết khấu và số tiền tiết kiệm mỗi tháng.</span>';return}
   const t=wkTier(v),nx=WK_TIERS.find(x=>x[0]*1e6>v);
-  if(!t){o.innerHTML=`Doanh số <b>${vnd(v)}</b> chưa đạt mức đại lý (từ <b>10 triệu/tháng</b>). Còn thiếu <b class="g">${vnd(1e7-v)}</b> để hưởng chiết khấu <b>3%</b>.`;return}
+  if(!t){o.innerHTML=`Tổng hoá đơn <b>${vnd(v)}</b>/tháng chưa đạt mức chiết khấu đại lý (từ <b>10 triệu/tháng</b>). Còn thiếu <b class="g">${vnd(1e7-v)}</b> để hưởng chiết khấu <b>3%</b>.`;return}
   $(`#dlRows .dl-r[data-i="${WK_TIERS.indexOf(t)}"]`).classList.add("on");
   o.innerHTML=`Mức của bạn: <b class="g">${t[2]}%</b> (${wkRange(t)}) • đơn trung bình ${t[3].toLowerCase()}<br>💰 Tiết kiệm ước tính: <b class="g">${vnd(Math.round(v*t[2]/100))}</b>/tháng ≈ <b>${vnd(Math.round(v*t[2]/100)*12)}</b>/năm<br><small>${t[4]}.${nx?` Nhập thêm ${vnd(nx[0]*1e6-v)}/tháng để lên mức ${nx[2]}%.`:""} Số tiền ước tính trên toàn bộ doanh số – thực tế tuỳ cơ cấu hàng.</small>`}
 $("#dlIn").addEventListener("input",e=>{const d=e.target.value.replace(/\D/g,"");e.target.value=d?(+d).toLocaleString("vi-VN"):"";dlCalc()});
@@ -1491,13 +1491,13 @@ function reply(raw){
     return{h:`Cảm ơn bạn! Để BD Team nhận được số ${ph[0]}, bạn bấm sao chép rồi gửi qua Zalo giúp mình nhé (trang này không tự gửi tin được).
 ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="copy" data-text="${escH(msg)}"`)}${ZL}`}}
   if(has(/(nhan vien|tu van vien|nguoi that|goi lai|hotline|so dien thoai|lien he|gap ai)/))return{h:`📞 Gọi/Zalo BD Team: <b>${CONFIG.phone}</b>\nHoặc để lại số điện thoại tại đây, mình soạn sẵn tin nhắn cho bạn gửi.${ZL}`};
-  /* chiết khấu đại lý WEKOME (khách đã có cửa hàng) */
+  /* chiết khấu đại lý (tất cả sản phẩm) */
   if(has(/(chiet khau|wekome|dai ly phan phoi|da co (cua hang|shop)|co san (cua hang|shop)|doanh so|dang ky dai ly|lam dai ly|\bck\b)/)){
     const mv=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/),tb=WK_TIERS.map(t=>`• ${wkRange(t)}/tháng → <b>${t[2]}%</b> (đơn TB ${t[3].toLowerCase()}; ${t[4].toLowerCase()})`).join("\n");
     if(mv){const v=toVND(mv[1],mv[2]),t=wkTier(v);
-      return{h:t?`📊 Doanh số ${vnd(v)}/tháng → chiết khấu <b>${t[2]}%</b> (đơn trung bình ${t[3].toLowerCase()}).\n${t[4]}.\n💰 Tiết kiệm ước tính ≈ <b>${vnd(Math.round(v*t[2]/100))}</b>/tháng.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`
-        :`Doanh số ${vnd(v)}/tháng chưa đạt mức đại lý WEKOME (từ 10 triệu/tháng → 3%). Bạn vẫn nhập sỉ bình thường, đơn tối thiểu 1.000.000đ online.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
-    return{h:`🌟 Chính sách đại lý WEKOME chính hãng (dành cho khách <b>đã có cửa hàng</b>), tính theo tổng đơn trong 1 tháng:\n${tb}\nCho mình biết doanh số dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
+      return{h:t?`📊 Tổng hoá đơn ${vnd(v)}/tháng → chiết khấu <b>${t[2]}%</b> (đơn trung bình ${t[3].toLowerCase()}).\n${t[4]}.\n💰 Tiết kiệm ước tính ≈ <b>${vnd(Math.round(v*t[2]/100))}</b>/tháng.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`
+        :`Tổng hoá đơn ${vnd(v)}/tháng chưa đạt mức chiết khấu đại lý (từ 10 triệu/tháng → 3%). Bạn vẫn nhập sỉ bình thường, đơn tối thiểu 1.000.000đ online.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
+    return{h:`🌟 Chính sách chiết khấu đại lý (dành cho khách <b>đã có cửa hàng</b>), áp dụng <b>tất cả sản phẩm</b>, tính theo tổng hoá đơn trong 1 tháng:\n${tb}\nCho mình biết tổng hoá đơn dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
   /* ngân sách mở shop */
   const bud=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/);
   if(bud&&has(/(mo|shop|cua hang|kinh doanh|von|setup|dau tu|ngan sach)/)){const v=toVND(bud[1],bud[2]),num=s=>parseFloat(s)*1e6;
