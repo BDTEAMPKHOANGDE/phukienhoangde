@@ -1587,7 +1587,7 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="10/11-v16";
+const APP_VER="10/11-v17";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
@@ -1667,14 +1667,14 @@ function vsKbHint(){$("#vsKb").innerHTML=isIOS
 function vsOpen(cb){VS_CB=cb;vsDoneF=false;vsIn.value="";clearTimeout(vsT);VS.classList.add("on");VS.classList.remove("live","busy");$("#vsKb").innerHTML="";$("#vsKb").hidden=true;
   $("#vsAgain").hidden=true;$("#vsAlt").hidden=true;const op=$("#vsOpen");op.hidden=true;
   if(inApp){op.href=isAndroid?`intent://${location.host}${location.pathname}${location.search}#Intent;scheme=https;package=com.android.chrome;end`:`x-safari-https://${location.host}${location.pathname}${location.search}`;op.textContent=isAndroid?"🧭 Mở bằng Chrome":"🧭 Mở bằng Safari"}
-  /* Ưu tiên nhận giọng trực tiếp của trình duyệt (giống PC) trên MỌI thiết bị. Chỉ dùng AI khi trình duyệt không hỗ trợ hoặc lỗi */
-  const nativeOK=SR&&!inApp&&window.isSecureContext;
+  /* iPhone: ghi âm + AI (getUserMedia bắt buộc xin quyền micro, đáng tin hơn native SR). Android Chrome: nhận giọng Google. Còn lại: ghi âm + AI */
+  const nativeOK=SR&&!inApp&&!isIOS&&window.isSecureContext;
   if(nativeOK)vsListen();else vsAI()}
 /* ---- ghi âm WAV 16kHz + tự dừng khi ngừng nói ---- */
 let VREC=null;
 function vsAI(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return vsFail("Trình duyệt này không cho dùng micro. Hãy mở bằng Safari / Chrome.",true);
   const C=window.AudioContext||window.webkitAudioContext;let ac;try{ac=new C();ac.resume()}catch(e){return vsFail("Không mở được âm thanh trên trình duyệt này.",true)}   /* tạo NGAY trong lần chạm (iPhone bắt buộc) */
-  aiLoad();VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe… hãy nói tên sản phẩm";const eq=[...$$("#vsEq i")];
+  aiLoad();VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe… hãy nói tên sản phẩm<br><small>Ngừng nói là tự dừng – hoặc chạm vòng micro để dừng sớm</small>";const eq=[...$$("#vsEq i")];
   navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}}).then(st=>{
     const src=ac.createMediaStreamSource(st),pr=ac.createScriptProcessor(4096,1,1),bufs=[],SRt=ac.sampleRate;let spoke=false,silent=0,el=0,floor=0,nF=0,stopped=false;
     const stop=(why)=>{if(stopped)return;stopped=true;try{pr.disconnect();src.disconnect()}catch(e){}st.getTracks().forEach(t=>t.stop());try{ac.close()}catch(e){}VREC=null;VS.classList.remove("live");
@@ -1710,28 +1710,19 @@ async function vsRecog(b64){VS.classList.add("busy");vsSt.innerHTML="⏳ Đang n
   try{const t=await withTimeout(aiTranscribe(b64),15000);VS.classList.remove("busy");
     if(!t){vsSt.innerHTML="Chưa nghe rõ – bấm <b>Nói lại</b>";$("#vsAgain").hidden=false;return}vsIn.value=t;vsDone(t)}
   catch(e){VS.classList.remove("busy");console.warn("AI giọng nói:",e);const m=String(e&&(e.code||e.message||e));
-    const why=/app.?check|appcheck|attestation|unauthenticated|401/i.test(m)?"AI giọng nói chưa được xác minh (App Check)":/(api.?not.?enabled|has not been used|disabled|SERVICE_DISABLED|403|permission)/i.test(m)?"Chưa bật Firebase AI Logic cho dự án":/quota|429|exhausted/i.test(m)?"AI giọng nói đang quá tải, thử lại sau ít phút":/timeout|network|fetch/i.test(m)?"Mạng chậm, chưa gửi được giọng nói":"Chưa nhận dạng được";
+    if(/no-firebase/i.test(m)){vsSt.innerHTML='<b>Micro hoạt động!</b> Nhưng cần admin bật <b>Firebase AI Logic</b> (miễn phí) để chuyển giọng nói thành chữ.<br><small>Firebase Console → AI Logic → Get started → Gemini Developer API</small>';$("#vsAgain").hidden=false;return}
+    const why=/app.?check|appcheck|attestation|unauthenticated|401/i.test(m)?"Cần xác minh App Check. Admin vào Firebase → App Check → hoãn thực thi hoặc thêm reCAPTCHA v3":/(api.?not.?enabled|has not been used|disabled|SERVICE_DISABLED|403|permission)/i.test(m)?"Chưa bật Firebase AI Logic. Admin vào Firebase Console → AI Logic → Get started":/quota|429|exhausted/i.test(m)?"AI giọng nói đang quá tải, thử lại sau ít phút":/timeout|network|fetch/i.test(m)?"Mạng chậm, chưa gửi được giọng nói":"Chưa nhận dạng được";
     vsFail(`${why}. <small>(${esc(m.slice(0,80))})</small>`,false,true)}}
 function vsFail(msg,showOpen,allowAlt){vsSt.innerHTML=msg;$("#vsAgain").hidden=false;$("#vsAlt").hidden=!(allowAlt&&SR&&!inApp&&window.isSecureContext);$("#vsOpen").hidden=!(showOpen&&inApp)}
 function vsListen(){try{vsRec&&vsRec.abort()}catch(e){}let r;try{r=new SR()}catch(e){return vsAI()}
-  vsRec=r;r.lang="vi-VN";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;let got="",started=false;
+  vsRec=r;r.lang="vi-VN";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;let got="";
   VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe… hãy nói tên sản phẩm";
-  r.onstart=()=>{started=true};
   r.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;got=t;vsIn.value=t;if(e.results[e.results.length-1].isFinal)vsDone(t)};
   r.onerror=e=>{VS.classList.remove("live");if(vsDoneF)return;const c=e.error||"";if(c==="aborted")return;
     if(c==="no-speech"){vsSt.innerHTML="Chưa nghe rõ – bấm <b>Nói lại</b>";$("#vsAgain").hidden=false;return}
-    /* iPhone lỗi "service-not-allowed" = chưa bật Đọc chính tả: hướng dẫn rõ */
-    if(isIOS&&(c==="service-not-allowed"||c==="not-allowed")){
-      vsSt.innerHTML='<b>iPhone cần bật Đọc chính tả</b><br>Vào <b>Cài đặt → Cài đặt chung → Bàn phím</b> → bật <b>Đọc chính tả</b> → quay lại bấm Nói lại';
-      $("#vsAgain").hidden=false;
-      /* cũng cho thử AI nếu có cấu hình Firebase */
-      if(VOICE_AI.recaptchaV3||VOICE_AI.models.length){$("#vsAlt").hidden=false;$("#vsAlt").textContent="🤖 Thử nghe bằng AI"}
-      return}
-    /* các lỗi khác: tự chuyển sang AI */
-    if(VOICE_AI.models.length){vsSt.innerHTML=`Đang chuyển sang nghe bằng AI… <small>(${esc(c)})</small>`;setTimeout(vsAI,200)}
-    else{vsSt.innerHTML=`Không nhận được giọng nói <small>(${esc(c)})</small>. Bấm <b>Nói lại</b> để thử.`;$("#vsAgain").hidden=false}};
+    vsSt.innerHTML=`Đang chuyển sang nghe bằng AI… <small>(${esc(c)})</small>`;setTimeout(vsAI,200)};
   r.onend=()=>{VS.classList.remove("live");if(!vsDoneF&&got.trim())vsDone(got)};
-  try{r.start()}catch(e){VS.classList.remove("live");if(VOICE_AI.models.length)vsAI();else{vsSt.innerHTML="Trình duyệt chưa hỗ trợ nhận giọng. Bấm <b>Nói lại</b> để thử.";$("#vsAgain").hidden=false}}}
+  try{r.start()}catch(e){VS.classList.remove("live");vsAI()}}
 function vsDone(t){t=String(t||"").trim();if(!t||vsDoneF)return;vsDoneF=true;clearTimeout(vsT);vsSt.innerHTML=`✅ “${esc(t)}” – đang tìm…`;const cb=VS_CB;
   setTimeout(()=>{vsClose();cb&&cb(t,[])},350)}
 function vsClose(){try{vsRec&&vsRec.abort()}catch(e){}try{VREC&&VREC.stop("cancel")}catch(e){}VS.classList.remove("on","live");clearTimeout(vsT);try{vsIn.blur()}catch(e){}}
@@ -1740,7 +1731,7 @@ vsIn.addEventListener("input",()=>{if(VS.classList.contains("live")||VS.classLis
   if(v){vsSt.innerHTML=`“${esc(v)}” – tự tìm khi bạn nói xong…`;vsT=setTimeout(()=>vsDone(vsIn.value),1800)}});
 $("#vsF").onsubmit=e=>{e.preventDefault();vsDone(vsIn.value)};
 $("#vsX").onclick=vsClose;VS.onclick=e=>{if(e.target===VS)vsClose()};
-$("#vsAgain").onclick=()=>{vsDoneF=false;$("#vsAgain").hidden=true;$("#vsAlt").hidden=true;const nativeOK=SR&&!inApp&&window.isSecureContext;nativeOK?vsListen():vsAI()};
+$("#vsAgain").onclick=()=>{vsDoneF=false;$("#vsAgain").hidden=true;$("#vsAlt").hidden=true;const nativeOK=SR&&!inApp&&!isIOS&&window.isSecureContext;nativeOK?vsListen():vsAI()};
 $("#vsAlt").onclick=()=>{vsDoneF=false;$("#vsAgain").hidden=true;$("#vsAlt").hidden=true;vsListen()};
 /* bấm vào vòng micro để dừng sớm */
 $(".vs-mic").onclick=()=>{if(VREC)VREC.stop()};
