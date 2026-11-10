@@ -6,7 +6,7 @@
 document.documentElement.classList.add(m?"dev-mobile":"dev-pc")})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Hoàng Đế – BD Team</title>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap&subset=vietnamese" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
 <style>
 :root{--bg:#07060a;--bg2:#0f0d0b;--card:#16130e;--line:#2e271b;--gold:#d9b25f;--gold2:#f7dc92;--gold3:#a07a33;--text:#f4eee2;--muted:#aaa291;--red:#e2513b}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -75,12 +75,8 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 @media(max-width:900px){.menu{display:none}}
 
 /* loader */
-#loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;transition:clip-path 1.1s cubic-bezier(.77,0,.18,1);clip-path:inset(0)}
-#loader.out{clip-path:inset(0 0 100% 0)}
-#loader.out .ld-c{animation:ldExit .8s cubic-bezier(.77,0,.18,1) forwards}
-#loader.out .ld-bg{animation:ldBgOut .9s ease-in forwards}
-@keyframes ldExit{to{opacity:0;transform:translateY(-80px) scale(.85)}}
-@keyframes ldBgOut{to{opacity:0;transform:scale(1.15)}}
+#loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;transition:opacity .6s,transform .8s cubic-bezier(.77,0,.18,1);opacity:1;transform:scale(1)}
+#loader.out{opacity:0;transform:scale(1.08);pointer-events:none}
 .ld-cube{width:64px;height:64px;margin:0 auto 26px;transform-style:preserve-3d;animation:ldspin 2s cubic-bezier(.6,0,.4,1) infinite;position:relative}
 .ld-cube i{position:absolute;inset:0;border:1.5px solid var(--gold);background:rgba(217,178,95,.08)}
 .ld-cube i:nth-child(1){transform:translateZ(32px)}.ld-cube i:nth-child(2){transform:rotateY(180deg) translateZ(32px)}.ld-cube i:nth-child(3){transform:rotateY(90deg) translateZ(32px)}.ld-cube i:nth-child(4){transform:rotateY(-90deg) translateZ(32px)}.ld-cube i:nth-child(5){transform:rotateX(90deg) translateZ(32px)}.ld-cube i:nth-child(6){transform:rotateX(-90deg) translateZ(32px)}
@@ -199,10 +195,6 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 .store h4{font-size:18px;margin:4px 0}.store p{font-size:14px;color:#cfc6b4}
 .store a{display:inline-flex;margin-top:10px;font-size:13px;color:var(--gold2);border:1px solid var(--gold3);padding:6px 14px;border-radius:999px}
 .store.empty{border-style:dashed;border-color:var(--gold3);background:rgba(22,19,14,.6)}
-.store.partner{border-color:var(--gold2);background:rgba(22,19,14,.6)}
-.store.partner .partner-pic{position:absolute;inset:0;display:grid;place-items:center;opacity:1;filter:none;background:rgba(255,255,255,.95);border-radius:24px 24px 0 0}
-.store.partner .partner-pic img{width:60%;max-height:70%;object-fit:contain;filter:none}
-.store.partner::after{background:linear-gradient(180deg,rgba(7,6,10,0) 20%,rgba(7,6,10,.92) 65%)}
 .map-pin{position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,var(--gold2),var(--gold3));animation:bob 2.2s ease-in-out infinite}
 .map-pin::after{content:"";position:absolute;inset:12px;border-radius:50%;background:#1b1408}
 @keyframes bob{50%{transform:rotate(-45deg) translate(4px,-4px)}}
@@ -651,15 +643,8 @@ footer .ver{display:block;margin-top:8px;opacity:.5;font-size:11px}
 @keyframes ldGrid{to{background-position:0 48px,48px 0}}
 .ld-stars i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(255,236,190,.8);animation:ldTw 3s var(--d) ease-in-out infinite}
 @keyframes ldTw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
-.ld-c{position:relative;z-index:1;display:grid;justify-items:center;text-align:center;padding:24px}
-@keyframes ldIn{from{opacity:0;transform:translateY(30px) scale(.92)}}
-@keyframes ldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes ldZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.ld-emb{animation:ldIn .8s .1s both,ldFloat 4s 1.5s ease-in-out infinite}
-.ld-k{animation:ldIn .7s .4s both}
-.ld-s{animation:ldIn .7s .8s both}
-.ld-tag{animation:ldIn .7s 1s both}
-.ld-bar{animation:ldIn .6s .6s both}
+.ld-c{position:relative;z-index:1;display:grid;justify-items:center;text-align:center;padding:24px;animation:ldIn 1s cubic-bezier(.16,1,.3,1) both}
+@keyframes ldIn{from{opacity:0;transform:translateY(24px) scale(.96)}}
 .ld-emb{position:relative;width:148px;height:148px;display:grid;place-items:center;margin-bottom:26px}
 .ld-ring{position:absolute;inset:0;border-radius:50%;padding:3px;background:conic-gradient(from 0deg,#fff1c4,#f7c66b,#ff8a3d,#ff6fae,#9b7bff,#22d3ee,#fff1c4);
  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));animation:ldRot 2.4s linear infinite}
@@ -667,25 +652,29 @@ footer .ver{display:block;margin-top:8px;opacity:.5;font-size:11px}
 @keyframes ldRot{to{transform:rotate(360deg)}}
 .ld-glow{position:absolute;inset:8px;border-radius:50%;box-shadow:0 0 60px 10px rgba(247,198,107,.45),0 0 120px 30px rgba(224,71,158,.25);animation:ldPulse 2s ease-in-out infinite}
 @keyframes ldPulse{50%{box-shadow:0 0 80px 18px rgba(247,198,107,.6),0 0 150px 40px rgba(123,92,255,.3)}}
-.ld-bg b{animation:ldDrift 8s ease-in-out infinite alternate,ldZoom 6s ease-in-out infinite!important}
-.ld-bg .ld-a2{animation-delay:-3s,-2s!important}.ld-bg .ld-a3{animation-delay:-6s,-4s!important}
 .ld-logo{position:relative;width:124px;height:124px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#2b2113,#0b0907);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,241,196,.25)}
 .ld-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:ldLogo .8s .2s both}
 @keyframes ldLogo{from{opacity:0;transform:scale(1.15)}}
 .ld-crown{width:60px;height:60px;filter:drop-shadow(0 4px 14px rgba(247,198,107,.6))}
 .ld-k{font:600 13px 'Be Vietnam Pro',sans-serif;letter-spacing:.6em;padding-left:.6em;color:#fff1c4;opacity:.9}
-.ld-t{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:clamp(44px,12vw,82px);line-height:1.1;letter-spacing:.14em;padding-left:.14em;margin:6px 0 4px;
+.ld-t{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:clamp(44px,11vw,82px);line-height:1.05;letter-spacing:.08em;padding-left:.08em;margin:6px 0 4px;
  color:#f7dc92;text-shadow:0 0 40px rgba(247,198,107,.5),0 0 80px rgba(247,198,107,.25),0 2px 0 #c4952e,0 4px 0 #a07a28,0 6px 12px rgba(0,0,0,.6);
- position:relative;overflow:visible;animation:ldIn .9s .3s both,ldTitleGlow 3s 1.5s ease-in-out infinite}
-.ld-t::after{content:"";position:absolute;inset:-10% -20%;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.25) 45%,rgba(255,255,255,.4) 50%,rgba(255,255,255,.25) 55%,transparent 65%);background-size:300% 100%;animation:ldShine 4s 1.5s linear infinite;pointer-events:none;mix-blend-mode:soft-light}
-@keyframes ldShine{0%{background-position:200% 0}100%{background-position:-100% 0}}
-@keyframes ldTitleGlow{0%,100%{text-shadow:0 0 40px rgba(247,198,107,.5),0 0 80px rgba(247,198,107,.25),0 2px 0 #c4952e,0 4px 0 #a07a28,0 6px 12px rgba(0,0,0,.6)}50%{text-shadow:0 0 60px rgba(247,198,107,.7),0 0 120px rgba(255,143,184,.3),0 2px 0 #c4952e,0 4px 0 #a07a28,0 6px 12px rgba(0,0,0,.6)}}
+ position:relative;animation:ldTitleIn 1s .3s cubic-bezier(.16,1,.3,1) both}
+.ld-t::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);background-size:250% 100%;animation:ldShine 3s 1.5s linear infinite}
+@keyframes ldShine{0%{background-position:200% 0}100%{background-position:-50% 0}}
+@keyframes ldTitleIn{0%{opacity:0;transform:translateY(20px) scale(.92);filter:blur(6px)}100%{opacity:1;transform:none;filter:blur(0)}}
+@keyframes ldGlow{0%,100%{text-shadow:0 0 40px rgba(247,198,107,.5),0 0 80px rgba(247,198,107,.25),0 2px 0 #c4952e,0 4px 0 #a07a28,0 6px 12px rgba(0,0,0,.6)}50%{text-shadow:0 0 60px rgba(247,198,107,.7),0 0 120px rgba(247,198,107,.4),0 2px 0 #c4952e,0 4px 0 #a07a28,0 6px 12px rgba(0,0,0,.6)}}
 .ld-s{display:flex;align-items:center;gap:12px;font:600 12.5px 'Be Vietnam Pro',sans-serif;letter-spacing:.35em;color:#f3e6c8}
 .ld-s i{width:5px;height:5px;border-radius:50%;background:#ff6fae;box-shadow:0 0 10px #ff6fae}
 .ld-bar{width:min(260px,62vw);height:4px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin:28px 0 14px}
 .ld-bar i{display:block;height:100%;width:40%;border-radius:9px;background:linear-gradient(90deg,#f7dc92,#ff8a3d,#ff6fae,#9b7bff);animation:ldBar 1.4s cubic-bezier(.65,0,.35,1) infinite}
 @keyframes ldBar{0%{transform:translateX(-110%)}100%{transform:translateX(260%)}}
-.ld-tag{font-size:13px;color:#d9cdb3;letter-spacing:.04em;opacity:0;animation:ldf .8s .6s forwards}
+.ld-tag{font-size:13px;color:#d9cdb3;letter-spacing:.04em;opacity:0;animation:ldf .8s 1.4s forwards}
+.ld-emb{animation:ldFadeUp .8s .1s cubic-bezier(.16,1,.3,1) both}
+.ld-k{animation:ldFadeUp .7s .2s cubic-bezier(.16,1,.3,1) both}
+.ld-s{animation:ldFadeUp .7s .5s cubic-bezier(.16,1,.3,1) both}
+.ld-bar{animation:ldFadeUp .6s .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes ldFadeUp{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:none}}
 @media(max-width:480px){.ld-emb{width:124px;height:124px}.ld-logo{width:104px;height:104px}.ld-s{font-size:10.5px;letter-spacing:.25em;gap:8px}.ld-k{font-size:12px}}
 @media (prefers-reduced-motion:reduce){.ld-bg b,.ld-grid,.ld-stars i,.ld-ring,.ld-glow,.ld-t,.ld-bar i{animation:none!important}}
 
@@ -975,7 +964,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="sec-h rv"><div class="tag">Chính sách hợp tác</div><h2 class="serif">Hai con đường <span class="gold">cùng Hoàng Đế</span></h2><p>Chọn chính sách phù hợp với cửa hàng của bạn.</p></div>
   <div class="path rv">
     <a href="#goi-setup" class="path-c"><i>🏗️</i><small>Bạn <b>chưa có</b> cửa hàng</small><strong>Gói setup shop trọn gói</strong><span>Từ 60 triệu • thiết kế, kệ, hàng hoá, đào tạo</span><em>Xem các gói →</em></a>
-    <a href="#dai-ly" class="path-c alt"><i>🏪</i><small>Bạn <b>đã có</b> cửa hàng</small><strong>Chính sách chiết khấu đại lý</strong><span>Chiết khấu luỹ tiến theo tổng hoá đơn, tối đa 10%</span><em>Xem chiết khấu →</em></a>
+    <a href="#dai-ly" class="path-c alt"><i>🏪</i><small>Bạn <b>đã có</b> cửa hàng</small><strong>Chính sách chiết khấu đại lý</strong><span>Chiết khấu luỹ tiến theo tháng, tối đa 10%</span><em>Xem chiết khấu →</em></a>
   </div>
   <div class="sec-h rv" id="goi-setup" style="margin-top:56px"><div class="tag">Chưa có cửa hàng</div><h2 class="serif">Setup shop <span class="gold">trọn gói</span></h2><p>Bốn gói mở cửa hàng phụ kiện cùng Hoàng Đế. Mức vốn khởi điểm từ 60 triệu đồng.</p></div>
   <div class="pk-grid" id="pk"></div>
@@ -998,14 +987,14 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
     </div>
   </div>
 
-  <!-- ĐẠI LÝ -->
+  <!-- CHIẾT KHẤU ĐẠI LÝ: áp dụng tất cả sản phẩm, tính theo tổng hoá đơn/tháng -->
   <div id="dai-ly" class="dl">
     <div class="sec-h rv"><div class="tag">Đã có cửa hàng</div><h2 class="serif">🌟 Chính sách chiết khấu <span class="gold">đại lý</span></h2>
-      <p>Kính gửi Quý Đối tác và Chủ cửa hàng phụ kiện điện thoại,<br>nhằm mở rộng mạng lưới phân phối và hỗ trợ tối đa cho các đại lý kinh doanh hiệu quả, Phụ Kiện Hoàng Đế trân trọng gửi tới Quý đối tác bảng chính sách chiết khấu dành riêng cho đại lý. Chiết khấu áp dụng cho <b>tất cả sản phẩm</b> tại Hoàng Đế, tính theo tổng giá trị hoá đơn trong tháng, giúp tối ưu biên độ lợi nhuận cho từng mô hình cửa hàng.</p></div>
+      <p>Kính gửi Quý Đối tác và Chủ cửa hàng phụ kiện điện thoại,<br>nhằm mở rộng mạng lưới phân phối và hỗ trợ tối đa cho các đại lý kinh doanh hiệu quả, Phụ Kiện Hoàng Đế trân trọng gửi tới Quý đối tác bảng chính sách chiết khấu dành cho <b>tất cả sản phẩm</b>. Chiết khấu tính theo tổng giá trị hoá đơn trong tháng (tất cả sản phẩm cộng lại), giúp tối ưu biên độ lợi nhuận cho từng mô hình cửa hàng.</p></div>
     <div class="panel dl-tb rv"><h3>📊 Bảng chính sách chiết khấu đại lý</h3>
       <div class="dl-head"><span>Tổng đơn hàng<br><small>(trong 1 tháng)</small></span><span>Chiết khấu</span><span>Giá trị đơn<br>trung bình</span><span>Lưu ý / Quy định áp dụng</span></div>
       <div id="dlRows"></div>
-      <p class="dl-note">⚠️ Chiết khấu tính theo <b>tổng giá trị hoá đơn trong tháng</b> (tất cả sản phẩm cộng lại), không giới hạn thương hiệu. Đạt mức nào hưởng chiết khấu mức đó.</p>
+      <p class="dl-note">⚠️ Điều kiện đăng ký đại lý phân phối: đạt <b>tổng đơn hàng trong tháng</b> và <b>giá trị đơn hàng trung bình</b> theo mức tương ứng. Chiết khấu áp dụng cho các đơn hàng trong 1 tháng.</p>
     </div>
     <div class="dl-calc panel rv"><h3>🧮 Tính nhanh chiết khấu của bạn</h3>
       <label>Tổng giá trị hoá đơn dự kiến mỗi tháng<div class="dl-in"><input id="dlIn" inputmode="numeric" placeholder="vd: 35.000.000"><span>₫</span></div></label>
@@ -1013,7 +1002,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
       <div class="dl-out" id="dlOut"></div>
     </div>
     <div class="dl-ben">
-      <div class="panel rv"><i>💎</i><h4>Hơn 500 mã hàng chính hãng</h4><p>Phụ kiện PICOM, WEKOME, WK Design, Denmen… đa dạng mẫu mã, luôn dẫn đầu xu hướng.</p></div>
+      <div class="panel rv"><i>💎</i><h4>Hơn 500 mã hàng chính hãng</h4><p>PICOM, WK Design, WEKOME, Denmen, Kingston… đa dạng danh mục, dễ phối hàng và thu hút khách.</p></div>
       <div class="panel rv d1"><i>📈</i><h4>Chiết khấu hấp dẫn, luỹ tiến theo tháng</h4><p>Doanh số càng cao, chiết khấu càng lớn (tối đa 10%) – giảm giá vốn đầu vào, tăng lợi nhuận ròng.</p></div>
       <div class="panel rv d2"><i>🤝</i><h4>Chính sách hỗ trợ linh hoạt</h4><p>Hỗ trợ đơn hàng nhỏ gọn theo tuần/tháng với giá trị đơn trung bình hợp lý (từ trên 2 triệu đến trên 5 triệu).</p></div>
     </div>
@@ -1026,7 +1015,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 
 <!-- STORES -->
 <section class="sec hasbg" id="cua-hang"><div class="sbg bg-net"></div><div class="scrim"></div><div class="wrap">
-  <div class="sec-h rv"><div class="tag">Hệ thống</div><h2 class="serif">Văn phòng & <span class="gold">đối tác chiến lược</span></h2><p>Kho tổng, trụ sở và các đối tác chiến lược lâu dài trên toàn quốc.</p></div>
+  <div class="sec-h rv"><div class="tag">Hệ thống</div><h2 class="serif">Văn phòng & <span class="gold">đối tác chiến lược</span></h2><p>Kho tổng, văn phòng và đối tác phân phối trên toàn quốc.</p></div>
   <div class="stores" id="stores"></div>
 </div></section>
 
@@ -1105,7 +1094,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <div id="admin" hidden><div class="lg-scene adm-scene" aria-hidden="true"><b class="lg-amb a1"></b><b class="lg-amb a2"></b><b class="lg-amb a3"></b><span class="lg-gridtop"></span><span class="lg-floor"><span></span></span><span class="lg-dust"><i style="--x:8%;--d:0s;--t:9s;--s:2px"></i><i style="--x:16%;--d:3s;--t:11s;--s:3px"></i><i style="--x:24%;--d:1.5s;--t:8s;--s:2px"></i><i style="--x:33%;--d:5s;--t:12s;--s:2px"></i><i style="--x:41%;--d:2s;--t:10s;--s:3px"></i><i style="--x:49%;--d:6s;--t:9s;--s:2px"></i><i style="--x:57%;--d:0.8s;--t:13s;--s:2px"></i><i style="--x:64%;--d:4s;--t:10s;--s:3px"></i><i style="--x:72%;--d:2.6s;--t:9s;--s:2px"></i><i style="--x:80%;--d:5.5s;--t:12s;--s:2px"></i><i style="--x:88%;--d:1.2s;--t:11s;--s:3px"></i><i style="--x:94%;--d:3.6s;--t:8s;--s:2px"></i><i style="--x:12%;--d:7s;--t:14s;--s:2px"></i><i style="--x:28%;--d:8s;--t:10s;--s:2px"></i><i style="--x:52%;--d:9s;--t:12s;--s:3px"></i><i style="--x:70%;--d:7.5s;--t:9s;--s:2px"></i><i style="--x:86%;--d:8.6s;--t:13s;--s:2px"></i><i style="--x:38%;--d:10s;--t:11s;--s:2px"></i></span></div>
   <div class="adm-top"><div class="adm-brand">👑 Quản trị <span>BD Team</span></div>
     <div class="adm-act"><button class="btn btn-ghost" id="admExit">Xem trang khách</button><button class="btn" id="admOut" hidden>Đăng xuất</button></div></div>
-  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Khách hàng</button><button data-tab="data">📥 Dữ liệu</button></div>
+  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Khách hàng</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button></div>
   <div class="adm-in">
     <div data-v="demo" hidden class="adm-card"><h3>Chưa kết nối Firebase</h3><p>Trang quản trị sẽ hoạt động sau khi bạn dán cấu hình Firebase và email admin vào file (xem HUONG-DAN-CAI-DAT). Hiện website đang chạy với 68 sản phẩm mẫu.</p></div>
     <div data-v="err" hidden class="adm-card"><h3>Không kết nối được Firebase</h3><p>Kiểm tra lại mạng hoặc cấu hình Firebase trong file.</p></div>
@@ -1137,6 +1126,12 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
       <div data-t="cust" hidden>
         <div class="adm-bar"><input id="cQ" placeholder="🔍 Tìm tên, SĐT, shop…"><button class="btn btn-gold" id="cExp">⬇ Xuất Excel</button></div>
         <div class="adm-stat" id="cStat"></div><div id="cList"></div>
+      </div>
+      <div data-t="partner" hidden>
+        <div class="adm-card"><h3>🤝 Quản lý ảnh đối tác chiến lược</h3>
+          <p>Upload ảnh cho từng đối tác. Ảnh sẽ hiển thị trong phần "Đối tác chiến lược" trên trang khách.</p>
+          <div id="ptList"></div>
+        </div>
       </div>
       <div data-t="data" hidden>
         <div class="adm-card"><h3>Nhập từ Excel</h3><p>Mỗi dòng một sản phẩm. Cột bắt buộc: <b>Tên sản phẩm</b>, <b>Giá sỉ</b>. Cột thêm: Danh mục, Giá gốc, Nhãn, Mô tả, Nổi bật (ghi x), Link ảnh. Sản phẩm trùng tên sẽ được cập nhật.</p>
@@ -1217,13 +1212,12 @@ const SUPPORT=[
  ["📜","Chứng nhận đại lý","Giấy chứng nhận đại lý chính thức, độc quyền biển hiệu khu vực."],
  ["🤝","Giới thiệu khách","Công ty giới thiệu khách hàng cho đại lý trong khu vực."]
 ];
-/* Cửa hàng: thêm cửa hàng đối tác của bạn vào danh sách này */
+/* Văn phòng & đối tác chiến lược */
 const STORES=[
  {ty:"KHO TỔNG",name:"Kho tổng Thái Bình",addr:"Tòa nhà số 65 đường số 6, KĐT Petro Thăng Long, TP Thái Bình"},
- {ty:"TRỤ SỞ MIỀN NAM",name:"Văn phòng TP.HCM",addr:"Tòa nhà số 02 Nguyễn Ngọc Lộc, Phường 14, Quận 10, TP.HCM"},
- {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Thế Giới Di Động",addr:"Hệ thống bán lẻ lớn nhất Việt Nam",partner:1,logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Logo_of_Mobile_World_Group.svg/400px-Logo_of_Mobile_World_Group.svg.png"},
- {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Viettel Store",addr:"Mạng lưới phủ rộng toàn quốc",partner:1,logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Viettel_logo_2021.svg/400px-Viettel_logo_2021.svg.png"},
- {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"CellphoneS",addr:"Đối tác chiến lược lâu dài",partner:1,logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Logo_of_CellphoneS.svg/400px-Logo_of_CellphoneS.svg.png"}
+ {ty:"VĂN PHÒNG MIỀN NAM",name:"Văn phòng TP.HCM",addr:"Tòa nhà số 02 Nguyễn Ngọc Lộc, Phường 14, Quận 10, TP.HCM"},
+ {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Viettel Store",addr:"Hệ thống cửa hàng Viettel Store toàn quốc",partner:true,pkey:"viettel"},
+ {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"CellphoneS",addr:"Hệ thống CellphoneS toàn quốc",partner:true,pkey:"cellphones"}
 ];
 /* ======================================================= */
 
@@ -1235,7 +1229,7 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),lerp=(a,b,t)=>a+(b-a)*t;
 const vnd=n=>n.toLocaleString("vi-VN")+"₫",nm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d");
 const catName=Object.fromEntries(CATS),zalo="https://zalo.me/"+CONFIG.zalo;
-/* CHIẾT KHẤU ĐẠI LÝ: [từ (triệu), dưới (triệu, 0 = trở lên), chiết khấu %, giá trị đơn trung bình, lưu ý] – áp dụng tất cả sản phẩm, tính theo tổng hoá đơn/tháng – sửa ở đây */
+/* CHIẾT KHẤU ĐẠI LÝ: [từ (triệu), dưới (triệu, 0 = trở lên), chiết khấu %, giá trị đơn trung bình, lưu ý] – áp dụng tất cả sản phẩm, tính theo tổng hoá đơn/tháng */
 const WK_TIERS=[[10,20,3,"Trên 2 triệu","Trừ cường lực"],[20,30,7,"Trên 2 triệu","Trừ cường lực"],[30,50,8,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"],[50,100,9,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"],[100,0,10,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"]];
 const wkTier=v=>{const m=v/1e6;return WK_TIERS.find(t=>m>=t[0]&&(!t[1]||m<t[1]))||null};
 const wkRange=t=>t[1]?`${t[0]} – < ${t[1]} triệu`:`${t[0]} triệu trở lên`;
@@ -1376,8 +1370,18 @@ $("#brands").innerHTML=BR.map((b,i)=>`<div class="bd ${b.ex?"ex":""} rv d${i}"><
 $("#pk").innerHTML=PACKS.map((p,i)=>`<div class="pk ${p.hot?"hot":""} rv d${i}">${p.hot?'<span class="ribbon">PHỔ BIẾN</span>':""}<div class="nm">${p.nm}</div><h3>${p.title}</h3><div class="cap">${p.cap}</div><div class="money">${p.money}</div><ul>${p.items.map(t=>`<li>${t}</li>`).join("")}</ul><a class="btn ${p.hot?"btn-gold":"btn-ghost"}" style="width:100%;margin-top:18px" href="${zalo}" target="_blank" rel="noopener">Tư vấn gói này</a></div>`).join("");
 $("#sup").innerHTML=SUPPORT.map((s,i)=>`<div class="sp rv d${i%4}"><div class="ic">${s[0]}</div><h4>${s[1]}</h4><p>${s[2]}</p></div>`).join("");
 const pics=ALL.filter((_,i)=>i%3===1).map(p=>p.i);
-$("#stores").innerHTML=STORES.map((s,i)=>`<div class="store ${s.partner?"partner":""} rv d${i%3}">${s.partner?`<div class="pic partner-pic"><img src="${s.logo}" alt="${s.name}" loading="lazy" onerror="this.parentElement.innerHTML='<span style=font-size:48px>🤝</span>'"></div>`:`<div class="pic">${[0,1,2].map(k=>`<img src="${pics[(i*3+k)%pics.length]}" alt="" loading="lazy" onerror="this.remove()">`).join("")}</div>`}${s.partner?"":'<span class="map-pin"></span>'}
- <div class="in"><div class="ty">${s.ty}</div><h4>${s.name}</h4><p>${s.addr}</p>${s.partner?`<a href="${zalo}" target="_blank" rel="noopener">Liên hệ hợp tác →</a>`:`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.addr)}" target="_blank" rel="noopener">📍 Chỉ đường</a>`}</div></div>`).join("");
+/* partner images: admin uploads via Firestore doc partners/{pkey}.img */
+let PIMG={};
+(async()=>{if(!FB)return;try{const fs=(await import(`https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js`));const db=fs.getFirestore(FB);const snap=await fs.getDocs(fs.collection(db,"partners"));snap.forEach(d=>{const dt=d.data();if(dt.img)PIMG[d.id]=dt.img});renderStores()}catch(e){console.warn("partner imgs:",e)}})();
+function renderStores(){
+$("#stores").innerHTML=STORES.map((s,i)=>{
+  const pimg=s.pkey&&PIMG[s.pkey];
+  const picHTML=pimg?`<div class="pic"><img src="${pimg}" alt="${s.name}" loading="lazy" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover"></div>`
+    :s.partner?`<div class="pic" style="display:grid;place-items:center;background:rgba(255,255,255,.05);font-size:13px;color:var(--muted);letter-spacing:.04em">Ảnh đối tác<br><small>(admin cập nhật)</small></div>`
+    :`<div class="pic">${[0,1,2].map(k=>`<img src="${pics[(i*3+k)%pics.length]}" alt="" loading="lazy" onerror="this.remove()">`).join("")}</div>`;
+  const link=s.partner?`<a href="${zalo}" target="_blank" rel="noopener">Liên hệ hợp tác →</a>`:`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.addr)}" target="_blank" rel="noopener">📍 Chỉ đường</a>`;
+  return`<div class="store rv d${i%3}">${picHTML}<span class="map-pin"></span><div class="in"><div class="ty">${s.ty}</div><h4>${s.name}</h4><p>${s.addr}</p>${link}</div></div>`}).join("")}
+renderStores();
 /* pointer light + tilt on policy cards */
 $$(".pk").forEach(el=>{el.addEventListener("pointermove",e=>{const b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;
   el.style.setProperty("--mx",x*100+"%");el.style.setProperty("--my",y*100+"%");if(e.pointerType==="mouse")el.style.transform=`rotateY(${(x-.5)*14}deg) rotateX(${(.5-y)*14}deg)`});
@@ -1428,6 +1432,8 @@ requestAnimationFrame(loop);
 function start(){if(start.done)return;start.done=1;document.body.classList.add("ready");const l=$("#loader");if(l)l.classList.add("out");document.body.classList.remove("loading");
   setTimeout(()=>{$$(".rv").forEach(el=>io.observe(el));if(l)l.remove()},300)}
 addEventListener("load",()=>setTimeout(start,1200));setTimeout(start,3500);
+/* preload AI SDK sớm để mic phản hồi nhanh */
+setTimeout(()=>{try{aiLoad()}catch(e){}},2000);
 $$('a[href^="#"]:not([href="#admin"])').forEach(a=>a.addEventListener("click",e=>{const h=a.getAttribute("href")||"";if(!/^#[\w-]+$/.test(h))return;const el=document.querySelector(h);if(el){e.preventDefault();scrollTo({top:el.getBoundingClientRect().top+scrollY-74,behavior:"smooth"})}}));
 
 /* ===================== TRỢ LÝ THÔNG MINH + GIỌNG NÓI ===================== */
@@ -1516,7 +1522,7 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
     if(mv){const v=toVND(mv[1],mv[2]),t=wkTier(v);
       return{h:t?`📊 Tổng hoá đơn ${vnd(v)}/tháng → chiết khấu <b>${t[2]}%</b> (đơn trung bình ${t[3].toLowerCase()}).\n${t[4]}.\n💰 Tiết kiệm ước tính ≈ <b>${vnd(Math.round(v*t[2]/100))}</b>/tháng.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`
         :`Tổng hoá đơn ${vnd(v)}/tháng chưa đạt mức chiết khấu đại lý (từ 10 triệu/tháng → 3%). Bạn vẫn nhập sỉ bình thường, đơn tối thiểu 1.000.000đ online.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
-    return{h:`🌟 Chính sách chiết khấu đại lý (dành cho khách <b>đã có cửa hàng</b>), áp dụng <b>tất cả sản phẩm</b>, tính theo tổng hoá đơn trong 1 tháng:\n${tb}\nCho mình biết tổng hoá đơn dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
+    return{h:`🌟 Chính sách chiết khấu đại lý (dành cho khách <b>đã có cửa hàng</b>), áp dụng tất cả sản phẩm, tính theo tổng hoá đơn trong 1 tháng:\n${tb}\nCho mình biết tổng hoá đơn dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
   /* ngân sách mở shop */
   const bud=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/);
   if(bud&&has(/(mo|shop|cua hang|kinh doanh|von|setup|dau tu|ngan sach)/)){const v=toVND(bud[1],bud[2]),num=s=>parseFloat(s)*1e6;
@@ -1535,7 +1541,7 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   if(has(/(hoa don|vat|chung tu)/))return{h:"🧾 Công ty có xuất hóa đơn đỏ."};
   if(has(/(bao hanh|doi tra|\bhong\b|\bbi loi\b)/))return{h:"🔧 Bảo hành trọn đời miễn phí cho sản phẩm WK Design. Sản phẩm khác theo chính sách bảo hành của công ty – gửi mã sản phẩm qua Zalo để được hướng dẫn."+ZL};
   if(has(/(thanh toan|chuyen khoan|\bcod\b|tra tien)/))return{h:"💳 Thanh toán chuyển khoản hoặc thỏa thuận khi chốt đơn. Đơn trên 5 triệu thanh toán trước được hỗ trợ ship."+ZL};
-  if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+STORES.filter(s=>!s.partner).map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n🤝 Đối tác chiến lược: Thế Giới Di Động, Viettel Store, CellphoneS\n"+btn("Xem chi tiết","sec:cua-hang")};
+  if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong|doi tac)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+STORES.map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n"+btn("Xem đối tác","sec:cua-hang")};
   if(has(/(doi tac|doc quyen|thuong hieu|chinh hang|hang that)/))return{h:"🏆 Nhà phân phối độc quyền PICOM, đối tác chiến lược lâu dài của WK Design và WEKOME. Phân phối 64 tỉnh thành."+btn("Xem đồng hồ PICOM","cat:dc")};
   if(has(/(ban chay|chu luc|hot nhat|noi bat)/))return{h:"⭐ Sản phẩm chủ lực:\n"+MAIN.map(p=>`• ${p.name} – <b>${p.price}</b>`).join("\n")+"\n"+btn("Xem dạng 3D","sec:chu-luc")};
   /* so sánh */
@@ -1670,7 +1676,7 @@ function voiceGo(text,alts=[]){
   const tries=[text,...alts].map(nm);let cat=null;for(const t of tries){cat=detectCat(t);if(cat)break}
   const q=tries[0];
   if(/(chinh sach|hop tac|goi mo|mo shop|mo cua hang)/.test(q)){document.getElementById("hop-tac").scrollIntoView({behavior:"smooth"});return toast("📄 Chính sách hợp tác")}
-  if(/(dia chi|cua hang|chi duong)/.test(q)&&!cat){document.getElementById("cua-hang").scrollIntoView({behavior:"smooth"});return toast("📍 Hệ thống cửa hàng")}
+  if(/(dia chi|cua hang|chi duong|doi tac)/.test(q)&&!cat){document.getElementById("cua-hang").scrollIntoView({behavior:"smooth"});return toast("📍 Văn phòng & đối tác")}
   if(/(chu luc|ban chay|san pham chinh)/.test(q)){document.getElementById("chu-luc").scrollIntoView({behavior:"smooth"});return toast("⭐ Sản phẩm chủ lực")}
   const hit=search(q,{cat});
   if(cat&&(!hit.length||hit[0].c===cat&&q.replace(/\s/g,"").length<16)){goCat(cat);return toast(`🎤 “${text}” → mở danh mục <b>${catName[cat]}</b>`)}
@@ -1693,7 +1699,7 @@ function vsOpen(cb){VS_CB=cb;vsDoneF=false;vsIn.value="";clearTimeout(vsT);VS.cl
 let VREC=null;
 function vsAI(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return vsFail("Trình duyệt này không cho dùng micro. Hãy mở bằng Safari / Chrome.",true);
   const C=window.AudioContext||window.webkitAudioContext;let ac;try{ac=new C();ac.resume()}catch(e){return vsFail("Không mở được âm thanh trên trình duyệt này.",true)}   /* tạo NGAY trong lần chạm (iPhone bắt buộc) */
-  aiLoad();VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe… hãy nói tên sản phẩm<br><small>Ngừng nói là tự dừng – hoặc chạm vòng micro để dừng sớm</small>";const eq=[...$$("#vsEq i")];
+  aiLoad();VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe…<br><small>Ngừng nói là tự dừng</small>";const eq=[...$$("#vsEq i")];
   navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}}).then(st=>{
     const src=ac.createMediaStreamSource(st),pr=ac.createScriptProcessor(4096,1,1),bufs=[],SRt=ac.sampleRate;let spoke=false,silent=0,el=0,floor=0,nF=0,stopped=false;
     const stop=(why)=>{if(stopped)return;stopped=true;try{pr.disconnect();src.disconnect()}catch(e){}st.getTracks().forEach(t=>t.stop());try{ac.close()}catch(e){}VREC=null;VS.classList.remove("live");
@@ -1703,7 +1709,7 @@ function vsAI(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia
       if(el<.35){floor+=rms;nF++}const thr=Math.max(.012,(nF?floor/nF:0)*2.6);
       eq.forEach((b,k)=>{b.style.height=Math.min(30,5+rms*(260+((k*37)%9)*40))+"px"});
       if(rms>thr){spoke=true;silent=0}else if(spoke)silent+=dt;
-      if((spoke&&silent>1.15)||el>9||(!spoke&&el>6))stop()};
+      if((spoke&&silent>0.8)||el>7||(!spoke&&el>4))stop()};
     src.connect(pr);pr.connect(ac.destination)})
   .catch(err=>{try{ac.close()}catch(e){}VS.classList.remove("live");const n=err&&err.name;
     vsFail(n==="NotAllowedError"||n==="SecurityError"?(isIOS?"Micro đang bị chặn. Bấm <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro: Cho phép</b>, rồi bấm Nói lại.":"Micro đang bị chặn. Bấm biểu tượng 🔒 cạnh địa chỉ web → <b>Quyền → Micro: Cho phép</b>, rồi bấm Nói lại.")
@@ -1725,8 +1731,8 @@ async function aiTranscribe(b64){if(DEMO||!FIREBASE||!FIREBASE.apiKey)throw new 
       const r=await model.generateContent([{inlineData:{mimeType:"audio/wav",data:b64}},{text:AI_PROMPT}]);return String(r.response.text()||"").trim().replace(/^["“'”]+|["“'”.]+$/g,"")}
     catch(e){last=e;if(!/(not.?found|404|is not supported|unknown model|not available)/i.test(String(e&&(e.message||e))))break}}
   throw last}
-async function vsRecog(b64){VS.classList.add("busy");vsSt.innerHTML="⏳ Đang nhận dạng giọng nói…";
-  try{const t=await withTimeout(aiTranscribe(b64),15000);VS.classList.remove("busy");
+async function vsRecog(b64){VS.classList.add("busy");vsSt.innerHTML="⚡ Đang nhận dạng…";
+  try{const t=await withTimeout(aiTranscribe(b64),10000);VS.classList.remove("busy");
     if(!t){vsSt.innerHTML="Chưa nghe rõ – bấm <b>Nói lại</b>";$("#vsAgain").hidden=false;return}vsIn.value=t;vsDone(t)}
   catch(e){VS.classList.remove("busy");console.warn("AI giọng nói:",e);const m=String(e&&(e.code||e.message||e));
     if(/no-firebase/i.test(m)){vsSt.innerHTML='<b>Micro hoạt động!</b> Nhưng cần admin bật <b>Firebase AI Logic</b> (miễn phí) để chuyển giọng nói thành chữ.<br><small>Firebase Console → AI Logic → Get started → Gemini Developer API</small>';$("#vsAgain").hidden=false;return}
@@ -1735,7 +1741,7 @@ async function vsRecog(b64){VS.classList.add("busy");vsSt.innerHTML="⏳ Đang n
 function vsFail(msg,showOpen,allowAlt){vsSt.innerHTML=msg;$("#vsAgain").hidden=false;$("#vsAlt").hidden=!(allowAlt&&SR&&!inApp&&window.isSecureContext);$("#vsOpen").hidden=!(showOpen&&inApp)}
 function vsListen(){try{vsRec&&vsRec.abort()}catch(e){}let r;try{r=new SR()}catch(e){return vsAI()}
   vsRec=r;r.lang="vi-VN";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;let got="";
-  VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe… hãy nói tên sản phẩm";
+  VS.classList.add("live");vsSt.innerHTML="🔴 Đang nghe…";
   r.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;got=t;vsIn.value=t;if(e.results[e.results.length-1].isFinal)vsDone(t)};
   r.onerror=e=>{VS.classList.remove("live");if(vsDoneF)return;const c=e.error||"";if(c==="aborted")return;
     if(c==="no-speech"){vsSt.innerHTML="Chưa nghe rõ – bấm <b>Nói lại</b>";$("#vsAgain").hidden=false;return}
@@ -1743,7 +1749,7 @@ function vsListen(){try{vsRec&&vsRec.abort()}catch(e){}let r;try{r=new SR()}catc
   r.onend=()=>{VS.classList.remove("live");if(!vsDoneF&&got.trim())vsDone(got)};
   try{r.start()}catch(e){VS.classList.remove("live");vsAI()}}
 function vsDone(t){t=String(t||"").trim();if(!t||vsDoneF)return;vsDoneF=true;clearTimeout(vsT);vsSt.innerHTML=`✅ “${esc(t)}” – đang tìm…`;const cb=VS_CB;
-  setTimeout(()=>{vsClose();cb&&cb(t,[])},350)}
+  setTimeout(()=>{vsClose();cb&&cb(t,[])},200)}
 function vsClose(){try{vsRec&&vsRec.abort()}catch(e){}try{VREC&&VREC.stop("cancel")}catch(e){}VS.classList.remove("on","live");clearTimeout(vsT);try{vsIn.blur()}catch(e){}}
 /* micro bàn phím gõ chữ dần → tự tìm sau khi ngừng nói 1,8 giây */
 vsIn.addEventListener("input",()=>{if(VS.classList.contains("live")||VS.classList.contains("busy"))return;clearTimeout(vsT);const v=vsIn.value.trim();
@@ -1830,7 +1836,23 @@ $("#admOut").onclick=async()=>{await FB.A.signOut(FB.auth);location.hash="";loca
 $("#admLogin").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button");
   busy(b,true);try{await FB.A.signInWithEmailAndPassword(FB.auth,f.email.value.trim(),f.pass.value)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=>x.classList.toggle("on",x===b));
-  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList()});
+  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin()});
+/* ---- quản lý ảnh đối tác ---- */
+function renderPartnerAdmin(){const el=$("#ptList");if(!el)return;
+  const partners=STORES.filter(s=>s.partner);
+  el.innerHTML=partners.map(s=>{const img=PIMG[s.pkey];
+    return`<div class="adm-card" style="margin-bottom:12px"><h4>${s.name}</h4>
+      ${img?`<img src="${img}" style="max-width:280px;max-height:160px;border-radius:12px;margin:8px 0;display:block" onerror="this.style.display='none'">`:'<p style="color:var(--muted);font-size:13px">Chưa có ảnh</p>'}
+      <div class="adm-row" style="margin-top:8px"><label class="btn btn-gold" style="font-size:13px">📷 ${img?"Đổi ảnh":"Thêm ảnh"}<input type="file" accept="image/*" hidden data-pk="${s.pkey}"></label>
+      ${img?`<button class="btn btn-ghost" style="font-size:13px;color:#ff8c7a" data-rm="${s.pkey}">🗑 Xóa ảnh</button>`:""}</div></div>`}).join("");
+  el.querySelectorAll("input[type=file]").forEach(inp=>inp.onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;const pk=inp.dataset.pk;
+    try{const b64=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)});
+      const {F,db}=FB;await F.setDoc(F.doc(db,"partners",pk),{img:b64,updated:Date.now()},{merge:true});
+      PIMG[pk]=b64;renderStores();renderPartnerAdmin();aToast("✅ Đã lưu ảnh "+pk)}catch(err){aToast("❌ Lỗi: "+err.message)}});
+  el.querySelectorAll("[data-rm]").forEach(btn=>btn.onclick=async()=>{const pk=btn.dataset.rm;
+    if(!confirm("Xóa ảnh "+pk+"?"))return;
+    try{const {F,db}=FB;await F.deleteDoc(F.doc(db,"partners",pk));delete PIMG[pk];renderStores();renderPartnerAdmin();aToast("✅ Đã xóa ảnh")}catch(err){aToast("❌ Lỗi: "+err.message)}})}
 /* ---- đơn hàng (realtime) ---- */
 const OST={new:["🆕","Đơn mới"],ok:["✅","Đã xác nhận"],done:["🚚","Đã giao"],cancel:["✖","Đã huỷ"]};
 AD.ord=[];let ordOn=false,ordFirst=true;
