@@ -919,10 +919,11 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 </div></div>
 <div id="ordBill" role="dialog" aria-modal="true"><div class="cart-box"><div class="pe-h"><h3 id="obT">🧾 Bill</h3><button type="button" id="obX" aria-label="Đóng">×</button></div>
   <div class="bl-imgs" id="obImgs"></div>
-  <a class="btn btn-gold" id="obKt" href="https://zalo.me/" target="_blank" rel="noopener">➡️ Chuyển bill cho kế toán qua Zalo</a>
+  <button class="btn btn-gold" type="button" id="obShare" hidden>📤 Chia sẻ ảnh bill JPG – chọn người nhận</button>
+  <a class="btn btn-gold" id="obKt" href="https://zalo.me/" target="_blank" rel="noopener">💬 Gửi vào Zalo kế toán (SĐT đã lưu)</a>
   <p class="bl-hint" id="obHow"></p>
   <div class="bl-row"><button class="btn btn-ghost" type="button" id="obCopy">📋 Chép ảnh bill</button><button class="btn btn-ghost" type="button" id="obTxt">📝 Chép nội dung</button></div>
-  <div class="bl-row"><button class="btn btn-ghost" type="button" id="obShare">📤 Chia sẻ…</button><button class="btn btn-ghost" type="button" id="obSave">⬇️ Lưu ảnh</button></div></div></div>
+  <div class="bl-row"><button class="btn btn-ghost" type="button" id="obSave">⬇️ Lưu ảnh</button></div></div></div>
 <div id="ordAlert" role="alert" hidden><div class="oa-in"><b>🔔 CÓ ĐƠN MỚI!</b><span id="oaTxt"></span><button type="button" class="btn btn-gold" id="oaView">Xem đơn</button><button type="button" class="oa-x" id="oaX" aria-label="Tắt">×</button></div></div>
 <div id="vsheet" role="dialog" aria-modal="true" aria-label="Tìm bằng giọng nói"><div class="vs-box">
   <div class="vs-top"><div class="vs-mic"><span></span><span></span><b>🎤</b></div><div><h3>Nói tên sản phẩm</h3><p id="vsSt">Đang chuẩn bị…</p></div><button type="button" class="vs-x" id="vsX" aria-label="Đóng">×</button></div>
@@ -1959,7 +1960,7 @@ $("#oList").addEventListener("click",async e=>{const card=e.target.closest(".oc"
   const kt=e.target.closest("[data-kt]");
   if(e.target.closest("[data-bill]")||kt){const ob=$("#ordBill");$("#obT").textContent="🧾 "+o.code;$("#obImgs").innerHTML='<div class="ci-empty">⏳ Đang vẽ bill…</div>';ob.classList.add("on");
     try{const B=await withTimeout(makeBill(o.cus||{},o.items||[],{code:o.code,date:o.at?new Date(tms(o.at)):new Date()}),20000);if(OB)OB.urls.forEach(u=>URL.revokeObjectURL(u));OB=B;OB.o=o;
-      $("#obImgs").innerHTML=B.urls.map(u=>`<figure><img src="${u}" alt=""></figure>`).join("");obPrep(!!kt)}catch(err){console.warn(err);$("#obImgs").innerHTML='<div class="ci-empty">❌ Không vẽ được bill. Đóng rồi bấm lại.</div>'}}});
+      $("#obImgs").innerHTML=B.urls.map(u=>`<figure><img src="${u}" alt=""></figure>`).join("");obPrep(!!kt);if(kt&&canShareFiles(B.files))try{navigator.share({files:B.files,title:"Đơn "+o.code}).catch(()=>{})}catch(_){}}catch(err){console.warn(err);$("#obImgs").innerHTML='<div class="ci-empty">❌ Không vẽ được bill. Đóng rồi bấm lại.</div>'}}});
 /* ---- sửa bill (đơn hàng) + sửa tài khoản: khung chỉnh sửa chung ---- */
 {const g=document.createElement("div");g.id="gEdit";g.setAttribute("role","dialog");g.innerHTML='<div class="ge-box"><div class="pe-h"><h3 id="geT"></h3><button type="button" id="geX" aria-label="Đóng">×</button></div><div id="geB"></div><div class="ge-tot" id="geTot"></div><div id="geErr" style="color:#ff8a8a;font-size:13px"></div><button class="btn btn-gold" type="button" id="geOk">💾 Lưu</button></div>';document.body.appendChild(g);
   $("#geX").onclick=()=>g.classList.remove("on");g.onclick=e=>{if(e.target===g)g.classList.remove("on")}}
@@ -1986,7 +1987,7 @@ const ktNum=()=>{try{return localStorage.getItem("ktZalo")||""}catch(e){return""
 $("#ktZalo").value=ktNum();
 $("#ktSave").onclick=()=>{const v=normPhone($("#ktZalo").value);if(!/^0\d{9,10}$/.test(v))return atoast("❌ Số Zalo kế toán chưa đúng");try{localStorage.setItem("ktZalo",v)}catch(e){}$("#ktZalo").value=v;atoast("✅ Đã lưu Zalo kế toán "+v)};
 function obPrep(focusKt){const k=ktNum(),a=$("#obKt");a.href=k?"https://zalo.me/"+k:"#";a.classList.toggle("pulse",focusKt);
-  $("#obHow").innerHTML=k?`Bấm nút trên → Zalo mở chat kế toán (<b>${k}</b>), ảnh bill đã chép sẵn → <b>chạm giữ ô soạn tin → Dán → Gửi</b>.`:`⚠️ Chưa có số Zalo kế toán – nhập ở mục <b>➡️ Zalo kế toán</b> phía trên danh sách đơn.`;
+  $("#obHow").innerHTML=k?`✅ Đã tạo ảnh bill JPG. <b>Cách 1:</b> bấm <b>Chia sẻ</b> để chọn người nhận bất kỳ. <b>Cách 2:</b> bấm <b>Gửi vào Zalo kế toán</b> (<b>${k}</b>) → Zalo mở chat, ảnh bill đã chép sẵn → <b>chạm giữ ô soạn tin → Dán → Gửi</b>.`:`✅ Đã tạo ảnh bill JPG – bấm <b>Chia sẻ</b> để chọn người nhận. (Muốn gửi thẳng Zalo kế toán: nhập SĐT ở mục <b>➡️ Zalo kế toán</b> phía trên danh sách đơn.)`;
   $("#obShare").hidden=!canShareFiles(OB.files)}
 const clipImg=()=>{if(!(OB&&OB.png&&window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write))return Promise.reject();return navigator.clipboard.write([new ClipboardItem({"image/png":OB.png})])};
 $("#obKt").onclick=e=>{if(!OB){e.preventDefault();return}const k=ktNum();
