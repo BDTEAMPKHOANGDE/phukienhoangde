@@ -616,7 +616,7 @@ body.adm-on .cart-fab{display:none!important}
 .ai-box{height:320px;overflow:auto;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px}
 .ai-m{max-width:88%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.55;white-space:pre-wrap}.ai-m.u{align-self:flex-end;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1408}.ai-m.b{align-self:flex-start;background:rgba(255,255,255,.08);color:#f1e9d8}
 .ai-tb{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.ai-tb button{border:1px solid var(--gold3);background:transparent;color:var(--gold2);border-radius:999px;padding:5px 11px;font:700 12px 'Be Vietnam Pro';cursor:pointer}
-.ai-m textarea{width:100%;min-height:110px;padding:8px;border-radius:10px;border:1px solid var(--gold3);background:rgba(0,0,0,.5);color:#fff;font:500 14px/1.5 'Be Vietnam Pro'}
+.ai-m.ed{max-width:100%;width:100%;align-self:stretch}.ai-m textarea{width:100%;min-height:260px;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(0,0,0,.6);color:#fff;font:500 16px/1.6 'Be Vietnam Pro';resize:vertical}.ai-box{height:auto!important;min-height:320px;max-height:78svh}
 .ai-sp{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;font-size:13px;display:flex;gap:8px;justify-content:space-between}.ai-sp small{color:var(--muted);display:block}.ai-sp button{border:0;background:transparent;color:#ff8a8a;font-size:18px;cursor:pointer;flex:none}
 .ai-f{display:flex;gap:8px;margin-top:8px}.ai-f input{flex:1;min-width:0;padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.4);color:#fff;font:600 14px 'Be Vietnam Pro'}
 #gEdit{position:fixed;inset:0;z-index:310;background:rgba(5,4,6,.9);display:flex;align-items:center;justify-content:center;padding:10px;opacity:0;pointer-events:none;visibility:hidden;transition:opacity .3s,visibility 0s linear .3s}
@@ -1176,11 +1176,11 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
           <div class="adm-row"><button class="btn btn-ghost" type="button" id="aiView">👁 Xem dữ liệu đang nạp cho AI</button></div>
           <pre class="ai-pre" id="aiPre" hidden></pre></div>
         <div class="adm-card"><h3>🎭 Nhân cách & giọng điệu (Tone of voice)</h3>
-          <textarea id="aiTone" rows="5" class="ai-ta" placeholder="Ví dụ: Xưng 'mình', gọi khách là 'anh/chị'…"></textarea>
+          <textarea id="aiTone" rows="7" class="ai-ta" placeholder="Ví dụ: Xưng 'mình', gọi khách là 'anh/chị'…"></textarea>
           <h3 style="margin-top:12px">📚 Kiến thức bổ sung (tuỳ chọn)</h3>
-          <textarea id="aiExtra" rows="4" class="ai-ta" placeholder="Chính sách đổi trả, bảo hành, giờ làm việc… (chỉ ghi thông tin THẬT)"></textarea>
-          <div class="ai-rules"><b>🔒 Quy tắc bắt buộc (luôn áp dụng, không sửa được):</b><div id="aiRules"></div></div>
-          <div class="adm-row" style="margin-top:10px"><button class="btn btn-gold" type="button" id="aiSave">💾 Lưu & áp dụng cho khách</button><button class="btn btn-ghost" type="button" id="aiReset">↺ Về giọng điệu mặc định</button></div>
+          <textarea id="aiExtra" rows="9" class="ai-ta" placeholder="Chính sách đổi trả, bảo hành, giờ làm việc… (chỉ ghi thông tin THẬT)"></textarea>
+          <h3 style="margin-top:12px">📜 Quy tắc bắt buộc cho AI</h3><textarea id="aiRulesT" rows="12" class="ai-ta" placeholder="Mỗi dòng một quy tắc"></textarea><div class="ai-rules">Mỗi dòng là một quy tắc, AI luôn tuân theo. Bạn có thể sửa, thêm, xoá. Nên giữ quy tắc <b>không bịa giá/tính năng</b> để AI không tư vấn sai.</div>
+          <div class="adm-row" style="margin-top:10px"><button class="btn btn-gold" type="button" id="aiSave">💾 Lưu & áp dụng cho khách</button><button class="btn btn-ghost" type="button" id="aiReset">↺ Giọng điệu mặc định</button><button class="btn btn-ghost" type="button" id="aiRulesReset">↺ Quy tắc gốc</button></div>
           <div class="adm-out" id="aiOut"></div></div>
         <div class="adm-card"><h3>🎓 Chat huấn luyện – bạn là thầy của AI</h3>
           <p>Chat với AI như khách hàng (chưa cần lưu cấu hình, khách không thấy). Bên dưới mỗi câu trả lời bấm <b>✏️ Sửa & dạy bot</b> → sửa trực tiếp → <b>💾 Lưu mẫu</b>: AI sẽ tự nhớ và trả lời theo mẫu của bạn. Muốn dặn bot điều gì, gõ <b>Ghi nhớ: …</b> (ví dụ: <i>Ghi nhớ: đơn trên 10 triệu tặng thêm 5% cáp</i>).</p>
@@ -1565,7 +1565,8 @@ FB_READY.then(async f=>{if(!f)return;try{const d=await f.F.getDoc(f.F.doc(f.db,"
 function aiCtx(){const rows=ALL.slice(0,700).map(p=>{const v=(p.v||[]).map(x=>x.n).filter(Boolean).join("/"),c=(p.cl||[]).map(x=>x.n).filter(Boolean).join("/");
   return `- ${p.n} | giá sỉ ${vnd(p.p)}${p.o&&p.o>p.p?` (giá gốc ${vnd(p.o)})`:""} | ${catName[p.c]||"Khác"}${p.tag?` | nhãn: ${p.tag}`:""}${p.desc?` | ${String(p.desc).replace(/\s+/g," ").slice(0,160)}`:""}${v?` | loại: ${v}`:""}${c?` | màu: ${c}`:""}`});
   return rows.join("\n")}
-function aiSystem(c){return `Bạn là trợ lý tư vấn bán hàng AI của ${CONFIG.team} – Phụ Kiện Hoàng Đế (bán sỉ phụ kiện điện thoại). Zalo/Hotline: ${CONFIG.zalo}.\n\nGIỌNG ĐIỆU:\n${c.tone||AI_TONE_DEF}\n\nQUY TẮC BẮT BUỘC:\n${AI_RULES.map((r,i)=>`${i+1}. ${r}`).join("\n")}\n${c.extra?`\nKIẾN THỨC BỔ SUNG CỦA CỬA HÀNG:\n${c.extra}\n`:""}${(c.notes||[]).length?`\nĐIỀU ADMIN (CHỦ SHOP) DẶN BẠN GHI NHỚ:\n${c.notes.slice(-40).map(n=>"- "+n).join("\n")}\n`:""}${(c.samples||[]).length?`\nMẪU TRẢ LỜI DO ADMIN DẠY – hãy học cách diễn đạt, giọng điệu và cách xử lý của các mẫu này khi gặp câu hỏi tương tự (giá và thông số vẫn phải lấy đúng từ DANH SÁCH SẢN PHẨM hiện tại, không chép giá cũ từ mẫu):\n${c.samples.slice(-40).map(x=>`Khách: ${x.q}\nBạn: ${x.a}`).join("\n---\n")}\n`:""}\nDANH SÁCH SẢN PHẨM THỰC TẾ (cập nhật ${new Date().toLocaleString("vi-VN")}):\n${c.sync===false?"(Chưa bật đồng bộ – không có dữ liệu sản phẩm, hãy mời khách liên hệ Zalo)":aiCtx()}`}
+const aiRuleList=c=>{const l=String(c.rules||"").split("\n").map(x=>x.replace(/^\s*\d+[.)]\s*/,"").trim()).filter(Boolean);return l.length?l:AI_RULES};
+function aiSystem(c){return `Bạn là trợ lý tư vấn bán hàng AI của ${CONFIG.team} – Phụ Kiện Hoàng Đế (bán sỉ phụ kiện điện thoại). Zalo/Hotline: ${CONFIG.zalo}.\n\nGIỌNG ĐIỆU:\n${c.tone||AI_TONE_DEF}\n\nQUY TẮC BẮT BUỘC:\n${aiRuleList(c).map((r,i)=>`${i+1}. ${r}`).join("\n")}\n${c.extra?`\nKIẾN THỨC BỔ SUNG CỦA CỬA HÀNG:\n${c.extra}\n`:""}${(c.notes||[]).length?`\nĐIỀU ADMIN (CHỦ SHOP) DẶN BẠN GHI NHỚ:\n${c.notes.slice(-40).map(n=>"- "+n).join("\n")}\n`:""}${(c.samples||[]).length?`\nMẪU TRẢ LỜI DO ADMIN DẠY – hãy học cách diễn đạt, giọng điệu và cách xử lý của các mẫu này khi gặp câu hỏi tương tự (giá và thông số vẫn phải lấy đúng từ DANH SÁCH SẢN PHẨM hiện tại, không chép giá cũ từ mẫu):\n${c.samples.slice(-40).map(x=>`Khách: ${x.q}\nBạn: ${x.a}`).join("\n---\n")}\n`:""}\nDANH SÁCH SẢN PHẨM THỰC TẾ (cập nhật ${new Date().toLocaleString("vi-VN")}):\n${c.sync===false?"(Chưa bật đồng bộ – không có dữ liệu sản phẩm, hãy mời khách liên hệ Zalo)":aiCtx()}`}
 async function aiAnswer(t,cfg,hist){const {ai,inst}=await aiLoad(),sys=aiSystem(cfg);let last;
   for(const m of VOICE_AI.models){try{const model=ai.getGenerativeModel(inst,{model:m,systemInstruction:sys,generationConfig:{temperature:.3,maxOutputTokens:700}});
       const ch=model.startChat({history:hist.slice(-8).map(h=>({role:h.r,parts:[{text:h.t}]}))});const r=await ch.sendMessage(t);const a=String(r.response.text()||"").trim();if(!a)throw new Error("empty");
@@ -1919,10 +1920,10 @@ $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=
   $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit()});
 /* ---- AI training: cài đặt admin + sandbox ---- */
 let AIS=[],aiInit=false,aiRenderFn=null;
-function aiForm(){return{on:$("#aiOn").checked,sync:$("#aiSync").checked,tone:$("#aiTone").value.trim()||AI_TONE_DEF,extra:$("#aiExtra").value.trim(),samples:AIC.samples||[],notes:AIC.notes||[]}}
+function aiForm(){return{on:$("#aiOn").checked,sync:$("#aiSync").checked,tone:$("#aiTone").value.trim()||AI_TONE_DEF,extra:$("#aiExtra").value.trim(),rules:(()=>{const v=$("#aiRulesT").value.trim();return v===AI_RULES.join("\n")?"":v})(),samples:AIC.samples||[],notes:AIC.notes||[]}}
 function aiStat(){const n=Math.min(ALL.length,700),ch=$("#aiSync").checked?aiCtx().length:0;
   $("#aiStat").innerHTML=`📦 <b>${n}</b> sản phẩm sẵn sàng nạp • ~<b>${ch.toLocaleString("vi-VN")}</b> ký tự/lần hỏi • Trạng thái khách: <b>${AIC.on?"🟢 AI đang bật":"⚪ AI đang tắt (dùng chatbot cũ)"}</b>${DEMO?" • <span style='color:#ff8c7a'>chế độ demo: chưa nối Firebase</span>":""}`}
-function aiAdminInit(){if(!aiInit){aiInit=true;$("#aiRules").textContent=AI_RULES.map((r,i)=>`${i+1}. ${r}`).join("\n");
+function aiAdminInit(){if(!aiInit){aiInit=true;$("#aiRulesReset").onclick=()=>{$("#aiRulesT").value=AI_RULES.join("\n")};
   $("#aiOn").onchange=$("#aiSync").onchange=aiStat;
   $("#aiView").onclick=()=>{const e=$("#aiPre");e.hidden=!e.hidden;if(!e.hidden)e.textContent=aiSystem(aiForm())};
   $("#aiReset").onclick=()=>{$("#aiTone").value=AI_TONE_DEF};
@@ -1935,9 +1936,9 @@ function aiAdminInit(){if(!aiInit){aiInit=true;$("#aiRules").textContent=AI_RULE
   $("#aiSamples").onclick=async e=>{const bn=e.target.closest("[data-dn]"),bs=e.target.closest("[data-ds]");if(!bn&&!bs)return;if(!confirm("Xoá mục này?"))return;
     try{if(bn)AIC.notes.splice(+bn.dataset.dn,1);else AIC.samples.splice(+bs.dataset.ds,1);await aiPersist();aiRender();atoast("🗑 Đã xoá")}catch(err){atoast("❌ "+authMsg(err))}};
   const addSample=async(q,a)=>{AIC.samples=[...(AIC.samples||[]).filter(x=>x.q!==q),{q:q.slice(0,300),a:a.slice(0,900)}].slice(-60);await aiPersist();aiRender()};
-  const botMsg=(w,q,a)=>{w.dataset.a=a;w.innerHTML=aiHtml(a)+'<div class="ai-tb"><button type="button" data-ok>👍 Lưu làm mẫu</button><button type="button" data-ed>✏️ Sửa & dạy bot</button></div>';
+  const botMsg=(w,q,a)=>{w.classList.remove("ed");w.dataset.a=a;w.innerHTML=aiHtml(a)+'<div class="ai-tb"><button type="button" data-ok>👍 Lưu làm mẫu</button><button type="button" data-ed>✏️ Sửa & dạy bot</button></div>';
     w.onclick=async e=>{const ok=e.target.closest("[data-ok]"),ed=e.target.closest("[data-ed]"),sv=e.target.closest("[data-sv]"),cn=e.target.closest("[data-cn]");
-      if(ed){w.innerHTML=`<textarea>${escH(w.dataset.a)}</textarea><div class="ai-tb"><button type="button" data-sv>💾 Lưu mẫu đã sửa</button><button type="button" data-cn>Huỷ</button></div>`}
+      if(ed){w.classList.add("ed");w.innerHTML=`<textarea>${escH(w.dataset.a)}</textarea><div class="ai-tb"><button type="button" data-sv style="font-size:14px;padding:9px 16px">💾 Lưu mẫu đã sửa</button><button type="button" data-cn style="font-size:14px;padding:9px 16px">Huỷ</button></div>`;const ta=w.querySelector("textarea");ta.focus();ta.style.height=Math.min(ta.scrollHeight+10,520)+"px"}
       else if(cn)botMsg(w,q,w.dataset.a);
       else if(ok||sv){const txt=sv?w.querySelector("textarea").value.trim():w.dataset.a;if(!txt)return;
         try{await addSample(q,txt);for(let i=AIS.length-1;i>=0;i--)if(AIS[i].r==="model"){AIS[i].t=txt;break}botMsg(w,q,txt);w.insertAdjacentHTML("beforeend",'<div style="color:#9be29b;font-size:12.5px;margin-top:6px">✅ Bot đã ghi nhớ mẫu này</div>')}catch(err){atoast("❌ "+authMsg(err))}}}};
@@ -1947,7 +1948,7 @@ function aiAdminInit(){if(!aiInit){aiInit=true;$("#aiRules").textContent=AI_RULE
     const w=mk("⏳ AI đang trả lời…","b");
     try{botMsg(w,q,await withTimeout(aiAnswer(q,aiForm(),AIS),20000))}catch(err){console.warn(err);w.textContent="❌ AI chưa trả lời được: "+(/no-firebase/i.test(String(err.message))?"chưa nối Firebase":/app.?check|401|permission|api.?not|disabled/i.test(String(err.message||err))?"cần bật Firebase AI Logic (xem phần micro AI)":String(err.message||err).slice(0,120))}};
   aiRenderFn=aiRender}
-  if(aiRenderFn)aiRenderFn();$("#aiOn").checked=!!AIC.on;$("#aiSync").checked=AIC.sync!==false;$("#aiTone").value=AIC.tone||AI_TONE_DEF;$("#aiExtra").value=AIC.extra||"";aiStat()}
+  if(aiRenderFn)aiRenderFn();$("#aiOn").checked=!!AIC.on;$("#aiSync").checked=AIC.sync!==false;$("#aiTone").value=AIC.tone||AI_TONE_DEF;$("#aiExtra").value=AIC.extra||"";$("#aiRulesT").value=aiRuleList(AIC).join("\n");aiStat()}
 /* ---- quản lý ảnh đối tác ---- */
 function renderPartnerAdmin(){const el=$("#ptList");if(!el)return;
   el.innerHTML=storeAll().map(s=>{const img=PIMG[s.pkey],k=s.pkey;
