@@ -6,6 +6,13 @@
 document.documentElement.classList.add(m?"dev-mobile":"dev-pc")})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Hoàng Đế – BD Team</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#07060a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hoàng Đế">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
 <style>
 :root{--bg:#07060a;--bg2:#0f0d0b;--card:#16130e;--line:#2e271b;--gold:#d9b25f;--gold2:#f7dc92;--gold3:#a07a33;--text:#f4eee2;--muted:#aaa291;--red:#e2513b}
@@ -194,6 +201,9 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 .store .ty{font-size:11px;letter-spacing:3px;color:var(--gold)}
 .store h4{font-size:18px;margin:4px 0}.store p{font-size:14px;color:#cfc6b4}
 .store a{display:inline-flex;margin-top:10px;font-size:13px;color:var(--gold2);border:1px solid var(--gold3);padding:6px 14px;border-radius:999px}
+.store.has-bg{background-size:cover;background-position:center;min-height:240px}
+.store.has-bg::after{background:linear-gradient(180deg,rgba(7,6,10,.05) 25%,rgba(7,6,10,.86) 100%)}
+.store.has-bg .in{text-shadow:0 1px 8px rgba(0,0,0,.7)}
 .store.empty{border-style:dashed;border-color:var(--gold3);background:rgba(22,19,14,.6)}
 .map-pin{position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,var(--gold2),var(--gold3));animation:bob 2.2s ease-in-out infinite}
 .map-pin::after{content:"";position:absolute;inset:12px;border-radius:50%;background:#1b1408}
@@ -1118,6 +1128,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
         <div class="ord-set">
           <div class="os-r"><b>🔔 Báo đơn mới</b><label class="os-sw"><input type="checkbox" id="almOn"> Bật chuông + giọng</label><button type="button" class="btn btn-gold" id="almTest">🔊 Thử chuông</button></div>
           <div class="os-r"><button type="button" class="btn" id="almRec">🎙️ Ghi giọng “Có đơn Nhật ơi”</button><button type="button" class="btn" id="almClr" hidden>↺ Dùng giọng máy</button><small id="almInfo"></small></div>
+          <div class="os-r"><b>📲 Thông báo đẩy</b><button type="button" class="btn btn-gold" id="pushBtn">🔔 Bật thông báo đẩy</button><button type="button" class="btn" id="pushTest" hidden>🧪 Gửi thử</button><small id="pushInfo"></small></div>
           <div class="os-r"><b>➡️ Zalo kế toán</b><input id="ktZalo" inputmode="tel" maxlength="14" placeholder="SĐT Zalo kế toán"><button type="button" class="btn" id="ktSave">Lưu</button></div>
         </div>
         <div class="adm-stat" id="oStat">Đang tải đơn hàng…</div><div id="oList"></div>
@@ -1128,8 +1139,8 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
         <div class="adm-stat" id="cStat"></div><div id="cList"></div>
       </div>
       <div data-t="partner" hidden>
-        <div class="adm-card"><h3>🤝 Quản lý ảnh đối tác chiến lược</h3>
-          <p>Upload ảnh cho từng đối tác. Ảnh sẽ hiển thị trong phần "Đối tác chiến lược" trên trang khách.</p>
+        <div class="adm-card"><h3>🤝 Văn phòng, kho tổng & đối tác chiến lược</h3>
+          <p>Mỗi ô: tải ảnh nền (hiển thị phủ kín cả ô cho khách), sửa chữ, bật/tắt hiển thị. Nhớ bấm <b>Lưu thông tin</b> sau khi sửa chữ.</p>
           <div id="ptList"></div>
         </div>
       </div>
@@ -1214,8 +1225,8 @@ const SUPPORT=[
 ];
 /* Văn phòng & đối tác chiến lược */
 const STORES=[
- {ty:"KHO TỔNG",name:"Kho tổng Thái Bình",addr:"Tòa nhà số 65 đường số 6, KĐT Petro Thăng Long, TP Thái Bình"},
- {ty:"VĂN PHÒNG MIỀN NAM",name:"Văn phòng TP.HCM",addr:"Tòa nhà số 02 Nguyễn Ngọc Lộc, Phường 14, Quận 10, TP.HCM"},
+ {ty:"KHO TỔNG",name:"Kho tổng Thái Bình",addr:"Tòa nhà số 65 đường số 6, KĐT Petro Thăng Long, TP Thái Bình",pkey:"kho"},
+ {ty:"VĂN PHÒNG MIỀN NAM",name:"Văn phòng TP.HCM",addr:"Tòa nhà số 02 Nguyễn Ngọc Lộc, Phường 14, Quận 10, TP.HCM",pkey:"vphcm"},
  {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"Viettel Store",addr:"Hệ thống cửa hàng Viettel Store toàn quốc",partner:true,pkey:"viettel"},
  {ty:"ĐỐI TÁC CHIẾN LƯỢC",name:"CellphoneS",addr:"Hệ thống CellphoneS toàn quốc",partner:true,pkey:"cellphones"}
 ];
@@ -1371,17 +1382,21 @@ $("#pk").innerHTML=PACKS.map((p,i)=>`<div class="pk ${p.hot?"hot":""} rv d${i}">
 $("#sup").innerHTML=SUPPORT.map((s,i)=>`<div class="sp rv d${i%4}"><div class="ic">${s[0]}</div><h4>${s[1]}</h4><p>${s[2]}</p></div>`).join("");
 const pics=ALL.filter((_,i)=>i%3===1).map(p=>p.i);
 /* partner images: admin uploads via Firestore doc partners/{pkey}.img */
-let PIMG={};
-/* ảnh đối tác lưu trong collection "images" (đã có sẵn quyền) với id "partner-<key>" */
-FB_READY.then(async f=>{if(!f)return;try{await Promise.all(STORES.filter(s=>s.pkey).map(async s=>{const d=await f.F.getDoc(f.F.doc(f.db,"images","partner-"+s.pkey));if(d.exists()&&d.data().d)PIMG[s.pkey]=d.data().d}));renderStores()}catch(e){console.warn("partner imgs:",e)}});
+let PIMG={},SCFG={};   /* PIMG: ảnh nền từng ô • SCFG: {key:{show,ty,name,addr}} admin chỉnh */
+/* lưu trong collection "images" (đã có quyền sẵn): ảnh = "partner-<key>", cấu hình = "storecfg" */
+FB_READY.then(async f=>{if(!f)return;try{const g=id=>f.F.getDoc(f.F.doc(f.db,"images",id));
+  const c=await g("storecfg");if(c.exists()&&c.data().d){try{SCFG=JSON.parse(c.data().d)||{}}catch(e){}}
+  await Promise.all(STORES.filter(s=>s.pkey).map(async s=>{const d=await g("partner-"+s.pkey);if(d.exists()&&d.data().d)PIMG[s.pkey]=d.data().d}));renderStores()}catch(e){console.warn("partner imgs:",e)}});
+const storeAll=()=>STORES.map(s=>({...s,...(SCFG[s.pkey]||{}),show:(SCFG[s.pkey]||{}).show!==false}));   /* gồm cả ô đang ẩn (cho admin) */
+const storeView=()=>storeAll().filter(s=>s.show);
 function renderStores(){
-$("#stores").innerHTML=STORES.map((s,i)=>{
+$("#stores").innerHTML=storeView().map((s,i)=>{
   const pimg=s.pkey&&PIMG[s.pkey];
-  const picHTML=pimg?`<div class="pic"><img src="${pimg}" alt="${s.name}" loading="lazy" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover"></div>`
-    :s.partner?`<div class="pic" style="display:grid;place-items:center;background:rgba(255,255,255,.05);font-size:13px;color:var(--muted);letter-spacing:.04em">Ảnh đối tác<br><small>(admin cập nhật)</small></div>`
+  const picHTML=pimg?"":s.partner?`<div class="pic" style="display:grid;place-items:center;background:rgba(255,255,255,.05);font-size:13px;color:var(--muted);letter-spacing:.04em">Ảnh đối tác<br><small>(admin cập nhật)</small></div>`
     :`<div class="pic">${[0,1,2].map(k=>`<img src="${pics[(i*3+k)%pics.length]}" alt="" loading="lazy" onerror="this.remove()">`).join("")}</div>`;
   const link=s.partner?`<a href="${zalo}" target="_blank" rel="noopener">Liên hệ hợp tác →</a>`:`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.addr)}" target="_blank" rel="noopener">📍 Chỉ đường</a>`;
-  return`<div class="store rv d${i%3}">${picHTML}<span class="map-pin"></span><div class="in"><div class="ty">${s.ty}</div><h4>${s.name}</h4><p>${s.addr}</p>${link}</div></div>`}).join("")}
+  return`<div class="store ${pimg?"has-bg":""} rv d${i%3}" ${pimg?`style="background-image:url('${pimg}')"`:""}>${picHTML}<span class="map-pin"></span><div class="in"><div class="ty">${escH(s.ty)}</div><h4>${escH(s.name)}</h4><p>${escH(s.addr)}</p>${link}</div></div>`}).join("");
+  $$("#stores .rv").forEach(el=>el.classList.add("in"))}
 renderStores();
 /* pointer light + tilt on policy cards */
 $$(".pk").forEach(el=>{el.addEventListener("pointermove",e=>{const b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;
@@ -1542,7 +1557,7 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   if(has(/(hoa don|vat|chung tu)/))return{h:"🧾 Công ty có xuất hóa đơn đỏ."};
   if(has(/(bao hanh|doi tra|\bhong\b|\bbi loi\b)/))return{h:"🔧 Bảo hành trọn đời miễn phí cho sản phẩm WK Design. Sản phẩm khác theo chính sách bảo hành của công ty – gửi mã sản phẩm qua Zalo để được hướng dẫn."+ZL};
   if(has(/(thanh toan|chuyen khoan|\bcod\b|tra tien)/))return{h:"💳 Thanh toán chuyển khoản hoặc thỏa thuận khi chốt đơn. Đơn trên 5 triệu thanh toán trước được hỗ trợ ship."+ZL};
-  if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong|doi tac)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+STORES.map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n"+btn("Xem đối tác","sec:cua-hang")};
+  if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong|doi tac)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+storeView().map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n"+btn("Xem đối tác","sec:cua-hang")};
   if(has(/(doi tac|doc quyen|thuong hieu|chinh hang|hang that)/))return{h:"🏆 Nhà phân phối độc quyền PICOM, đối tác chiến lược lâu dài của WK Design và WEKOME. Phân phối 64 tỉnh thành."+btn("Xem đồng hồ PICOM","cat:dc")};
   if(has(/(ban chay|chu luc|hot nhat|noi bat)/))return{h:"⭐ Sản phẩm chủ lực:\n"+MAIN.map(p=>`• ${p.name} – <b>${p.price}</b>`).join("\n")+"\n"+btn("Xem dạng 3D","sec:chu-luc")};
   /* so sánh */
@@ -1829,7 +1844,7 @@ function adminRoute(){if(location.hash!=="#admin"){adm.hidden=true;document.body
   adm.hidden=false;document.body.classList.add("adm-on");scrollTo(0,0);
   if(DEMO){admShow("demo");return}if(!FB){admShow("err");return}
   if(!FB.auth.currentUser){admShow("login");return}if(!IS_ADMIN){admShow("deny");return}
-  admShow("app");if(!AD.loaded)admLoad();ordWatch()}
+  admShow("app");if(!AD.loaded)admLoad();ordWatch();try{pushUI();pushOpenOrder()}catch(e){}}
 addEventListener("hashchange",adminRoute);window.__adminRoute=adminRoute;
 function admShow(v){$("#admin").classList.toggle("lg-mode",v==="login");$$("#admin [data-v]").forEach(el=>el.hidden=el.dataset.v!==v);$("#admTabs").hidden=v!=="app";$("#admOut").hidden=!(v==="app"||v==="deny")}
 $("#admExit").onclick=()=>{location.hash="";location.reload()};
@@ -1840,20 +1855,63 @@ $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=
   $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin()});
 /* ---- quản lý ảnh đối tác ---- */
 function renderPartnerAdmin(){const el=$("#ptList");if(!el)return;
-  const partners=STORES.filter(s=>s.partner);
-  el.innerHTML=partners.map(s=>{const img=PIMG[s.pkey];
-    return`<div class="adm-card" style="margin-bottom:12px"><h4>${s.name}</h4>
-      ${img?`<img src="${img}" style="max-width:280px;max-height:160px;border-radius:12px;margin:8px 0;display:block" onerror="this.style.display='none'">`:'<p style="color:var(--muted);font-size:13px">Chưa có ảnh</p>'}
-      <div class="adm-row" style="margin-top:8px"><label class="btn btn-gold" style="font-size:13px">📷 ${img?"Đổi ảnh":"Thêm ảnh"}<input type="file" accept="image/*" hidden data-pk="${s.pkey}"></label>
-      ${img?`<button class="btn btn-ghost" style="font-size:13px;color:#ff8c7a" data-rm="${s.pkey}">🗑 Xóa ảnh</button>`:""}</div></div>`}).join("");
+  el.innerHTML=storeAll().map(s=>{const img=PIMG[s.pkey],k=s.pkey;
+    return`<div class="adm-card" style="margin-bottom:14px" data-k="${k}"><h4 style="margin-bottom:8px">${escH(s.name)} ${s.show?"":'<small style="color:#ff8c7a">(đang ẩn)</small>'}</h4>
+      ${img?`<div style="height:130px;max-width:340px;border-radius:14px;background:url('${img}') center/cover;border:1px solid var(--line);margin-bottom:8px"></div>`:'<p style="color:var(--muted);font-size:13px">Chưa có ảnh nền</p>'}
+      <div class="adm-row" style="margin-bottom:10px"><label class="btn btn-gold" style="font-size:13px">📷 ${img?"Đổi ảnh nền":"Thêm ảnh nền"}<input type="file" accept="image/*" hidden data-pk="${k}"></label>
+      ${img?`<button type="button" class="btn btn-ghost" style="font-size:13px;color:#ff8c7a" data-rm="${k}">🗑 Xóa ảnh</button>`:""}</div>
+      <label>Nhãn nhỏ<input data-f="ty" value="${escH(s.ty)}" maxlength="40"></label>
+      <label>Tên hiển thị<input data-f="name" value="${escH(s.name)}" maxlength="60"></label>
+      <label>Địa chỉ / mô tả<input data-f="addr" value="${escH(s.addr)}" maxlength="160"></label>
+      <label class="au-ck"><input type="checkbox" data-f="show" ${s.show?"checked":""}> 👁 Hiển thị cho khách xem</label>
+      <button type="button" class="btn btn-gold" data-save="${k}" style="margin-top:8px">💾 Lưu thông tin</button></div>`}).join("");
   el.querySelectorAll("input[type=file]").forEach(inp=>inp.onchange=async e=>{
     const f=e.target.files[0];if(!f)return;const pk=inp.dataset.pk;
-    try{if(!FB)throw new Error("Chưa kết nối Firebase");atoast("⏳ Đang tải ảnh lên…");const r=await compress(f,900);
+    try{if(!FB)throw new Error("Chưa kết nối Firebase");atoast("⏳ Đang tải ảnh lên…");const r=await compress(f,1200);
       const {F,db}=FB;await F.setDoc(F.doc(db,"images","partner-"+pk),{d:r.data});
-      PIMG[pk]=r.data;renderStores();renderPartnerAdmin();atoast("✅ Đã lưu ảnh đối tác")}catch(err){console.warn(err);atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}});
+      PIMG[pk]=r.data;renderStores();renderPartnerAdmin();atoast("✅ Đã lưu ảnh nền")}catch(err){console.warn(err);atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}});
   el.querySelectorAll("[data-rm]").forEach(btn=>btn.onclick=async()=>{const pk=btn.dataset.rm;
-    if(!confirm("Xóa ảnh "+pk+"?"))return;
-    try{const {F,db}=FB;await F.deleteDoc(F.doc(db,"images","partner-"+pk));delete PIMG[pk];renderStores();renderPartnerAdmin();atoast("✅ Đã xóa ảnh")}catch(err){atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}})}
+    if(!confirm("Xóa ảnh nền này?"))return;
+    try{const {F,db}=FB;await F.deleteDoc(F.doc(db,"images","partner-"+pk));delete PIMG[pk];renderStores();renderPartnerAdmin();atoast("✅ Đã xóa ảnh")}catch(err){atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}});
+  el.querySelectorAll("[data-save]").forEach(btn=>btn.onclick=async()=>{const k=btn.dataset.save,card=btn.closest("[data-k]"),v={};
+    card.querySelectorAll("[data-f]").forEach(i=>{v[i.dataset.f]=i.type==="checkbox"?i.checked:i.value.trim()});
+    const base=STORES.find(x=>x.pkey===k)||{};["ty","name","addr"].forEach(f=>{if(!v[f])v[f]=base[f]});
+    try{const {F,db}=FB;const next={...SCFG,[k]:v};await F.setDoc(F.doc(db,"images","storecfg"),{d:JSON.stringify(next)});
+      SCFG=next;renderStores();renderPartnerAdmin();atoast("✅ Đã lưu")}catch(err){atoast("❌ "+(typeof authMsg==="function"?authMsg(err):err.message))}})}
+/* ===================================================================
+   THÔNG BÁO ĐẨY (Web Push) – điện thoại admin nhận báo "có đơn mới" kể cả khi đã thoát app / khoá màn hình
+   Máy chủ gửi: Cloudflare Worker (PUSH.api). Khoá công khai VAPID bên dưới KHÔNG bí mật.
+   =================================================================== */
+const PUSH={api:"https://hoangde-push.nhatnguyennhu3008.workers.dev",pub:"BOfq1QsuSPOHx3nKvdpzbAgPPpMdds-7Tr0KO6cPVBp7yUWu4mmJS9T_SR9A5Nx7IiXhkbKkw8sf3d56ACCsFxk"};
+const b64uToU8=v=>{v=v.replace(/-/g,"+").replace(/_/g,"/");v+="=".repeat((4-v.length%4)%4);const r=atob(v);return Uint8Array.from(r,c=>c.charCodeAt(0))};
+const isStandalone=()=>navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
+async function pushCall(path,obj){const r=await fetch(PUSH.api+path,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(obj)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||("Lỗi "+r.status));return j}
+const pushReg=()=>Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error("Chưa tải được sw.js – hãy tải file sw.js lên cùng thư mục với trang")),5000))]);
+if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(e=>console.warn("sw.js:",e)));
+async function pushUI(){const b=$("#pushBtn"),i=$("#pushInfo"),t=$("#pushTest");if(!b)return;
+  if(!("serviceWorker" in navigator)||!("PushManager" in window)||!("Notification" in window)){b.disabled=true;t.hidden=true;
+    i.innerHTML=/iPhone|iPad|iPod/.test(navigator.userAgent)&&!isStandalone()?"📱 iPhone: hãy mở web bằng icon trên <b>Màn hình chính</b> (Safari → Chia sẻ → Thêm vào Màn hình chính) rồi bật thông báo":"⚠️ Trình duyệt này chưa hỗ trợ thông báo đẩy";return}
+  b.disabled=false;let sub=null;try{sub=await (await pushReg()).pushManager.getSubscription()}catch(e){i.textContent="⚠️ "+e.message}
+  const on=!!sub&&Notification.permission==="granted";b.textContent=on?"🔕 Tắt thông báo đẩy":"🔔 Bật thông báo đẩy";t.hidden=!on;
+  if(Notification.permission==="denied")i.innerHTML="🚫 Đã bị chặn – vào <b>Cài đặt iPhone → Thông báo → Hoàng Đế</b> để cho phép";
+  else if(on)i.textContent="✅ Thiết bị này đang nhận thông báo đẩy";else if(!i.textContent.startsWith("⚠️"))i.textContent="Chưa bật trên thiết bị này"}
+$("#pushBtn").onclick=async()=>{const b=$("#pushBtn");b.disabled=true;
+  try{const u=FB&&FB.auth.currentUser;if(!u||!IS_ADMIN)throw new Error("Hãy đăng nhập tài khoản admin");
+    const reg=await pushReg(),old=await reg.pushManager.getSubscription();
+    if(old){try{await pushCall("/unsubscribe",{idToken:await u.getIdToken(),endpoint:old.endpoint})}catch(e){}await old.unsubscribe();atoast("🔕 Đã tắt thông báo đẩy trên thiết bị này")}
+    else{const perm=await Notification.requestPermission();if(perm!=="granted")throw new Error("Bạn chưa cho phép thông báo");
+      const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64uToU8(PUSH.pub)});
+      try{await pushCall("/subscribe",{idToken:await u.getIdToken(),subscription:sub.toJSON()})}catch(e){try{await sub.unsubscribe()}catch(_){}throw e}
+      atoast("✅ Đã bật thông báo đẩy – bấm Gửi thử để kiểm tra")}
+  }catch(e){atoast("❌ "+(e.message||e))}
+  b.disabled=false;pushUI()};
+$("#pushTest").onclick=async()=>{const t=$("#pushTest");t.disabled=true;try{const r=await pushCall("/test",{idToken:await FB.auth.currentUser.getIdToken()});
+  atoast(r.sent?`✅ Đã gửi thử tới ${r.sent} thiết bị – kiểm tra điện thoại`:`⚠️ Chưa gửi được (${r.devices} thiết bị, lỗi ${r.failed}, đã xoá ${r.removed})`)}catch(e){atoast("❌ "+(e.message||e))}t.disabled=false;pushUI()};
+/* bấm vào thông báo → mở đúng đơn hàng */
+function pushOpenOrder(code){if(!code){try{const q=new URLSearchParams(location.search);code=q.get("order");if(code)history.replaceState(null,"",location.pathname+location.hash)}catch(e){}}
+  if(!code)return;if(location.hash!=="#admin")location.hash="#admin";
+  setTimeout(()=>{const t=document.querySelector('#admTabs button[data-tab="ord"]');if(t)t.click();const q=$("#oQ");if(q){q.value=code;q.dispatchEvent(new Event("input",{bubbles:true}))}},600)}
+if("serviceWorker" in navigator)navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.type==="open-order")e.data.code?pushOpenOrder(e.data.code):(location.hash!=="#admin"&&(location.hash="#admin"))});
 /* ---- đơn hàng (realtime) ---- */
 const OST={new:["🆕","Đơn mới"],ok:["✅","Đã xác nhận"],done:["🚚","Đã giao"],cancel:["✖","Đã huỷ"]};
 AD.ord=[];let ordOn=false,ordFirst=true;
@@ -2303,7 +2361,9 @@ $("#blSend").onclick=()=>{if(!BILL)return;
 /* lưu đơn lên Firebase → BD Team nhận ngay trong trang quản trị (tab Đơn hàng) */
 async function saveOrder(cus,rows,B){if(!FB||DEMO)return false;
   try{const {F,db}=FB;await withTimeout(F.setDoc(F.doc(db,"orders",B.code),{code:B.code,at:F.serverTimestamp(),status:"new",uid:(FB.auth.currentUser&&FB.auth.currentUser.uid)||"",
-      cus:{name:cus.name,phone:cus.phone,shop:cus.shop||"",address:cus.address,note:cus.note||""},items:rows.slice(0,300).map(r=>({n:r.n,q:r.q,u:r.u,vn:r.vn||"",cn:r.cn||""})),tot:B.tot,qty:B.qty}),8000);return true}
+      cus:{name:cus.name,phone:cus.phone,shop:cus.shop||"",address:cus.address,note:cus.note||""},items:rows.slice(0,300).map(r=>({n:r.n,q:r.q,u:r.u,vn:r.vn||"",cn:r.cn||""})),tot:B.tot,qty:B.qty}),8000);
+    try{fetch(PUSH.api+"/notify",{method:"POST",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify({code:B.code,tot:B.tot})}).catch(()=>{})}catch(e){}   /* báo điện thoại admin (Web Push) */
+    return true}
   catch(e){console.warn("Lưu đơn:",e);return false}}
 async function makeBill(cus,it,meta={}){
   const FF='"Be Vietnam Pro",Arial,Helvetica,sans-serif';try{await Promise.all(["400","600","800"].map(w=>document.fonts.load(`${w} 28px "Be Vietnam Pro"`,"Đơn hàng")))}catch(e){}
