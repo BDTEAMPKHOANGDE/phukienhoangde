@@ -919,8 +919,8 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 </div></div>
 <div id="ordBill" role="dialog" aria-modal="true"><div class="cart-box"><div class="pe-h"><h3 id="obT">🧾 Bill</h3><button type="button" id="obX" aria-label="Đóng">×</button></div>
   <div class="bl-imgs" id="obImgs"></div>
-  <button class="btn btn-gold" type="button" id="obShare" hidden>📤 Chia sẻ ảnh bill JPG – chọn người nhận</button>
-  <a class="btn btn-gold" id="obKt" href="https://zalo.me/" target="_blank" rel="noopener">💬 Gửi vào Zalo kế toán (SĐT đã lưu)</a>
+  <button class="btn btn-gold" style="width:100%;min-height:54px;font-size:15px;margin:0" type="button" id="obShare" hidden>📤 Chia sẻ ảnh bill JPG</button>
+  <a class="btn btn-gold" style="width:100%;min-height:54px;font-size:15px;margin:0" id="obKt" href="https://zalo.me/" target="_blank" rel="noopener">💬 Gửi vào Zalo kế toán (SĐT đã lưu)</a>
   <p class="bl-hint" id="obHow"></p>
   <div class="bl-row"><button class="btn btn-ghost" type="button" id="obCopy">📋 Chép ảnh bill</button><button class="btn btn-ghost" type="button" id="obTxt">📝 Chép nội dung</button></div>
   <div class="bl-row"><button class="btn btn-ghost" type="button" id="obSave">⬇️ Lưu ảnh</button></div></div></div>
@@ -1986,7 +1986,7 @@ function copyText(t,msg){const ok=()=>atoast(msg||"📋 Đã chép");if(navigato
 const ktNum=()=>{try{return localStorage.getItem("ktZalo")||""}catch(e){return""}};
 $("#ktZalo").value=ktNum();
 $("#ktSave").onclick=()=>{const v=normPhone($("#ktZalo").value);if(!/^0\d{9,10}$/.test(v))return atoast("❌ Số Zalo kế toán chưa đúng");try{localStorage.setItem("ktZalo",v)}catch(e){}$("#ktZalo").value=v;atoast("✅ Đã lưu Zalo kế toán "+v)};
-function obPrep(focusKt){const k=ktNum(),a=$("#obKt");a.href=k?"https://zalo.me/"+k:"#";a.classList.toggle("pulse",focusKt);
+function obPrep(focusKt){const k=ktNum(),a=$("#obKt");a.href=k?"https://zalo.me/"+k:"#";a.classList.remove("pulse");
   $("#obHow").innerHTML=k?`✅ Đã tạo ảnh bill JPG. <b>Cách 1:</b> bấm <b>Chia sẻ</b> để chọn người nhận bất kỳ. <b>Cách 2:</b> bấm <b>Gửi vào Zalo kế toán</b> (<b>${k}</b>) → Zalo mở chat, ảnh bill đã chép sẵn → <b>chạm giữ ô soạn tin → Dán → Gửi</b>.`:`✅ Đã tạo ảnh bill JPG – bấm <b>Chia sẻ</b> để chọn người nhận. (Muốn gửi thẳng Zalo kế toán: nhập SĐT ở mục <b>➡️ Zalo kế toán</b> phía trên danh sách đơn.)`;
   $("#obShare").hidden=!canShareFiles(OB.files)}
 const clipImg=()=>{if(!(OB&&OB.png&&window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write))return Promise.reject();return navigator.clipboard.write([new ClipboardItem({"image/png":OB.png})])};
@@ -2422,7 +2422,7 @@ async function makeBill(cus,it,meta={}){
   const wrap=(t,font,w)=>{mc.font=font;const out=[];let line="";for(const word of String(t).split(/\s+/)){let wd=word;
       while(mc.measureText(wd).width>w){let k=wd.length;while(k>1&&mc.measureText(wd.slice(0,k)).width>w)k--;if(line){out.push(line);line=""}out.push(wd.slice(0,k));wd=wd.slice(k)}
       const tt=line?line+" "+wd:wd;if(mc.measureText(tt).width>w&&line){out.push(line);line=wd}else line=tt}if(line)out.push(line);return out.length?out:[""]};
-  const C={nx:PX+70,nw:470,q:722,u:880,t:W-PX};
+  const C={nx:PX+70,nw:415,q:640,u:800,t:W-PX};
   const fName=`600 27px ${FF}`,fSub=`400 22px ${FF}`;
   const rows=it.map(({n:pn,q,u,vn,cn},i)=>{const ln=wrap(pn,fName,C.nw),sub=[vn&&"Loại: "+vn,cn&&"Màu: "+cn].filter(Boolean).join(" • "),sl=sub?wrap(sub,fSub,C.nw):[];
     return{i:i+1,ln,sl,q,u,h:22+ln.length*36+sl.length*30+16}});
