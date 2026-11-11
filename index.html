@@ -217,6 +217,7 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 
 /* ===== ALL PRODUCTS ===== */
 .chips{position:sticky;top:57px;z-index:20;background:rgba(7,6,10,.96);padding:10px 0;margin-bottom:18px;border-block:1px solid var(--line)}
+.lhide,.lhide-a{display:none!important}
 .chips-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px}.chips-row::-webkit-scrollbar{display:none}
 @media (hover:hover) and (pointer:fine){.chips-row{scrollbar-width:thin;scrollbar-color:var(--gold3) rgba(255,255,255,.06);padding-bottom:10px;cursor:grab}.chips-row::-webkit-scrollbar{display:block;height:9px}.chips-row::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:9px}.chips-row::-webkit-scrollbar-thumb{background:linear-gradient(90deg,var(--gold3),var(--gold));border-radius:9px}.chips-row.drag{cursor:grabbing;user-select:none}}
 .chip{flex:0 0 auto;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font:500 13px 'Be Vietnam Pro';cursor:pointer}
@@ -613,6 +614,10 @@ body.adm-on .cart-fab{display:none!important}
 .bl-ok{font-size:13.5px;color:#a7f3d0;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.4);border-radius:12px;padding:10px 12px;text-align:center}
 #blZalo{text-align:center;text-decoration:none;font-size:16px;padding:15px}
 .bl-steps{margin:0;padding:10px 12px 10px 30px;border-radius:12px;background:rgba(255,255,255,.04);font-size:13px;color:#e6dccb;display:grid;gap:4px}
+.la-r{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px dashed var(--line)}.la-r span{flex:1;font-size:14px;color:#fff}.la-r.off span{opacity:.45;text-decoration:line-through}.la-r button{border:1px solid var(--gold3);background:transparent;color:var(--gold2);border-radius:9px;width:36px;height:36px;font-size:15px;cursor:pointer}.la-r button:disabled{opacity:.3}
+.ft-it{display:grid;grid-template-columns:1fr auto;gap:6px 8px;padding:9px 0;border-bottom:1px dashed var(--line);align-items:center}.ft-it b{font-size:13.5px;color:#fff}.ft-it input{grid-column:1/2;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(0,0,0,.4);color:#fff;font:600 13px 'Be Vietnam Pro'}
+.ft-it .ft-b{display:flex;gap:4px;grid-row:1/3;grid-column:2}.ft-b button{border:1px solid var(--gold3);background:transparent;color:var(--gold2);border-radius:9px;width:34px;height:34px;font-size:15px;cursor:pointer}
+.ft-r{padding:9px 10px;border:1px solid var(--line);border-radius:12px;margin-top:6px;cursor:pointer;font-size:13.5px;display:flex;justify-content:space-between;gap:8px}.ft-r small{color:var(--muted)}
 .ai-sw{display:flex!important;flex-direction:row!important;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);cursor:pointer}.ai-sw input{width:22px!important;height:22px;min-width:22px;margin-top:3px;padding:0!important;accent-color:#d9b25f;flex:none}.ai-sw small{display:block;color:var(--muted);font-size:12.5px}
 .ai-st{margin:10px 0;font-size:13.5px;color:#e6dccb}.ai-pre{max-height:260px;overflow:auto;white-space:pre-wrap;font:12px/1.5 ui-monospace,monospace;background:rgba(0,0,0,.45);border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;color:#cfc6b2}
 .ai-ta{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.4);color:#fff;font:500 14px/1.5 'Be Vietnam Pro';resize:vertical;margin-bottom:6px}
@@ -993,7 +998,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 </section>
 
 <!-- BRANDS -->
-<section class="sec hasbg"><div class="sbg bg-lux"></div><div class="scrim"></div><div class="wrap">
+<section class="sec hasbg" id="blk-brands"><div class="sbg bg-lux"></div><div class="scrim"></div><div class="wrap">
   <div class="sec-h rv"><div class="tag">Thương hiệu</div><h2 class="serif">Độc quyền & <span class="gold">đối tác chiến lược</span></h2></div>
   <div class="brands" id="brands"></div>
 </div></section>
@@ -1059,7 +1064,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 </div></section>
 
 <!-- STATS -->
-<section class="sec hasbg" style="padding-top:20px"><div class="sbg bg-net"></div><div class="scrim"></div><div class="wrap"><div class="stats">
+<section class="sec hasbg" id="blk-stats" style="padding-top:20px"><div class="sbg bg-net"></div><div class="scrim"></div><div class="wrap"><div class="stats">
   <div class="st rv"><b data-n="3000" data-s="+">0</b><span>Đại lý toàn quốc</span></div>
   <div class="st rv d1"><b data-n="500" data-s="+">0</b><span>Mã hàng hot trend</span></div>
   <div class="st rv d2"><b data-n="64" data-s="">0</b><span>Tỉnh thành phân phối</span></div>
@@ -1133,7 +1138,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <div id="admin" hidden><div class="lg-scene adm-scene" aria-hidden="true"><b class="lg-amb a1"></b><b class="lg-amb a2"></b><b class="lg-amb a3"></b><span class="lg-gridtop"></span><span class="lg-floor"><span></span></span><span class="lg-dust"><i style="--x:8%;--d:0s;--t:9s;--s:2px"></i><i style="--x:16%;--d:3s;--t:11s;--s:3px"></i><i style="--x:24%;--d:1.5s;--t:8s;--s:2px"></i><i style="--x:33%;--d:5s;--t:12s;--s:2px"></i><i style="--x:41%;--d:2s;--t:10s;--s:3px"></i><i style="--x:49%;--d:6s;--t:9s;--s:2px"></i><i style="--x:57%;--d:0.8s;--t:13s;--s:2px"></i><i style="--x:64%;--d:4s;--t:10s;--s:3px"></i><i style="--x:72%;--d:2.6s;--t:9s;--s:2px"></i><i style="--x:80%;--d:5.5s;--t:12s;--s:2px"></i><i style="--x:88%;--d:1.2s;--t:11s;--s:3px"></i><i style="--x:94%;--d:3.6s;--t:8s;--s:2px"></i><i style="--x:12%;--d:7s;--t:14s;--s:2px"></i><i style="--x:28%;--d:8s;--t:10s;--s:2px"></i><i style="--x:52%;--d:9s;--t:12s;--s:3px"></i><i style="--x:70%;--d:7.5s;--t:9s;--s:2px"></i><i style="--x:86%;--d:8.6s;--t:13s;--s:2px"></i><i style="--x:38%;--d:10s;--t:11s;--s:2px"></i></span></div>
   <div class="adm-top"><div class="adm-brand">👑 Quản trị <span>BD Team</span></div>
     <div class="adm-act"><button class="btn btn-ghost" id="admExit">Xem trang khách</button><button class="btn" id="admOut" hidden>Đăng xuất</button></div></div>
-  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="ai">🤖 AI training</button></div>
+  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="lay">🧭 Sắp xếp vị trí</button><button data-tab="feat">⭐ Chủ lực</button><button data-tab="ai">🤖 AI training</button></div>
   <div class="adm-in">
     <div data-v="demo" hidden class="adm-card"><h3>Chưa kết nối Firebase</h3><p>Trang quản trị sẽ hoạt động sau khi bạn dán cấu hình Firebase và email admin vào file (xem HUONG-DAN-CAI-DAT). Hiện website đang chạy với 68 sản phẩm mẫu.</p></div>
     <div data-v="err" hidden class="adm-card"><h3>Không kết nối được Firebase</h3><p>Kiểm tra lại mạng hoặc cấu hình Firebase trong file.</p></div>
@@ -1172,6 +1177,26 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
           <p>Mỗi ô: tải ảnh nền (hiển thị phủ kín cả ô cho khách), sửa chữ, bật/tắt hiển thị. Nhớ bấm <b>Lưu thông tin</b> sau khi sửa chữ.</p>
           <div id="ptList"></div>
         </div>
+      </div>
+      <div data-t="lay" hidden>
+        <div class="adm-card"><h3>🧭 Sắp xếp vị trí toàn diện</h3>
+          <p>Chọn thứ tự và ẩn/hiện các cụm khách nhìn thấy. Dùng <b>▲ ▼</b> để đổi chỗ, <b>👁</b> để ẩn/hiện. Bấm <b>Lưu & áp dụng</b> để cập nhật cho khách.</p></div>
+        <div class="adm-card"><h3>🏠 Trang chủ (từ trên xuống dưới)</h3><div id="laMain"></div></div>
+        <div class="adm-card"><h3>📄 Trang chi tiết sản phẩm</h3><p>Thứ tự các khối trong cửa sổ chi tiết. Phần chọn màu / số lượng / nút Thêm vào giỏ luôn nằm cố định ở dưới cùng để khách dễ đặt hàng.</p><div id="laPd"></div></div>
+        <div class="adm-card"><div class="adm-row"><button class="btn btn-gold" type="button" id="laSave">💾 Lưu & áp dụng</button><button class="btn btn-ghost" type="button" id="laReset">↺ Về thứ tự mặc định</button></div><div class="adm-out" id="laOut"></div></div>
+      </div>
+      <div data-t="feat" hidden>
+        <div class="adm-card"><h3>⭐ Sản phẩm chủ lực (khu vực đầu trang)</h3>
+          <p>Chỉnh nội dung và chọn đúng những sản phẩm khách thấy đầu tiên khi lướt trang. Bấm <b>Lưu & áp dụng</b> để cập nhật ngay cho khách.</p>
+          <label class="ai-sw"><input type="checkbox" id="ftShow"> <span><b>Hiển thị khu vực này trên web</b><small>Tắt = ẩn cả khu vực Sản phẩm chủ lực.</small></span></label>
+          <label style="display:block;margin-top:10px">Dòng nhãn nhỏ<input id="ftTag" class="ai-ta" style="margin-bottom:8px" placeholder="Sản phẩm chủ lực"></label>
+          <div style="display:flex;gap:8px"><label style="flex:1">Tiêu đề<input id="ftH" class="ai-ta" style="margin-bottom:0" placeholder="Vuốt để"></label><label style="flex:1">Chữ nổi vàng<input id="ftG" class="ai-ta" style="margin-bottom:0" placeholder="khám phá"></label></div></div>
+        <div class="adm-card"><h3>📦 Chọn sản phẩm (tối đa 10)</h3>
+          <p id="ftMode" class="ai-st"></p>
+          <div id="ftList"></div>
+          <input id="ftQ" class="ai-ta" placeholder="🔍 Gõ tên sản phẩm để thêm vào khu vực chủ lực…" autocomplete="off"><div id="ftRes"></div>
+          <div class="adm-row" style="margin-top:10px"><button class="btn btn-gold" type="button" id="ftSave">💾 Lưu & áp dụng</button><button class="btn btn-ghost" type="button" id="ftAuto">↺ Về tự động (theo ★)</button></div>
+          <div class="adm-out" id="ftOut"></div></div>
       </div>
       <div data-t="ai" hidden>
         <div class="adm-card"><h3>🤖 AI training – Trợ lý tư vấn & bán hàng</h3>
@@ -1343,9 +1368,11 @@ const prRange=p=>{const a=(p.v&&p.v.length?p.v.map(x=>x.p||p.p):[p.p]);return[Ma
 const prTxt=p=>{const[a,b]=prRange(p);return a===b?vnd(a):`${vnd(a)} – ${vnd(b)}`};
 const toItem=r=>({id:r.id,s:+r.s||0,bs:!!r.bs,show:!!r.show,th:r.imgThumb||"",cr:r.imgCredit||"",c:catName[r.c]?r.c:"khac",n:r.n||"",o:+r.o||0,p:+r.p||0,i:r.img||"",g:(Array.isArray(r.imgs)?r.imgs:[]).filter(Boolean).slice(0,4),cl:(Array.isArray(r.colors)?r.colors:[]).filter(c=>c&&c.n).slice(0,12).map(c=>({n:String(c.n),h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#888888",k:Math.max(0,Math.min(4,+c.k||0))})),v:(Array.isArray(r.vars)?r.vars:[]).filter(x=>x&&x.n).slice(0,12).map(x=>({n:String(x.n),p:+x.p||0,o:+x.o||0})),tag:r.tag||"",desc:r.desc||"",feat:!!r.feat,ord:+r.ord||0,
   off:(+r.o>0&&+r.p>0&&+r.o>+r.p)?Math.round((1-r.p/r.o)*100):0});
-function buildMain(){let f=ALL.filter(p=>p.feat).sort((a,b)=>a.ord-b.ord);
-  if(f.length<5)f=f.concat(ALL.filter(p=>!p.feat).sort((a,b)=>b.off-a.off).slice(0,7-f.length));
-  MAIN=f.slice(0,10).map(p=>({id:p.id,name:p.n,cat:catName[p.c],price:vnd(p.p),tag:p.bs?"🏆 Best Seller":p.tag||(p.off?`-${p.off}%`:"Hot"),img:p.i,th:p.th,
+let FCFG={show:true,tag:"",h:"",g:"",ids:[],tags:{}};   /* cài đặt "Sản phẩm chủ lực" do admin chỉnh (images/featcfg) */
+function buildMain(){let f=(FCFG.ids&&FCFG.ids.length)?FCFG.ids.map(id=>ALL.find(p=>p.id===id)).filter(Boolean):[];
+  if(!f.length){f=ALL.filter(p=>p.feat).sort((a,b)=>a.ord-b.ord);
+  if(f.length<5)f=f.concat(ALL.filter(p=>!p.feat).sort((a,b)=>b.off-a.off).slice(0,7-f.length))}
+  MAIN=f.slice(0,10).map(p=>({id:p.id,name:p.n,cat:catName[p.c],price:vnd(p.p),tag:(FCFG.tags&&FCFG.tags[p.id])||(p.bs?"🏆 Best Seller":p.tag||(p.off?`-${p.off}%`:"Hot")),img:p.i,th:p.th,
     desc:(p.desc||`${catName[p.c]} giá sỉ ${vnd(p.p)}${p.o?`, giá gốc ${vnd(p.o)}`:""}.`)+(p.s?` 🔥 Đã bán ${fmtK(p.s)}+${rankOf(p)<=3?` – Top ${rankOf(p)} bán chạy nhóm ${catName[p.c]}`:""}.`:"")}))}
 function rankOf(p){if(!p.s)return 99;return ALL.filter(x=>x.c===p.c&&x.s>p.s).length+1}
 let FB_DONE=DEMO;
@@ -1357,6 +1384,24 @@ try{const rows=await withTimeout(CAT_READY,4500);
 catch(e){console.warn("Firebase chậm:",e);DATA_SRC="late";
   CAT_READY.then(rows=>{if(rows&&rows.length){ALL=visRows(rows).map(toItem);buildMain();DATA_SRC="db";window.__lateSync&&window.__lateSync()}}).catch(()=>{})}
 if(!ALL.length){ALL=ALL_DEMO;MAIN=MAIN_DEMO}
+function applyFeat(){const sec=$("#chu-luc");if(!sec)return;const off=FCFG.show===false;sec.style.display=off?"none":"";document.querySelectorAll('a[href="#chu-luc"]').forEach(a=>a.style.display=off?"none":"");
+  const tg=sec.querySelector(".sec-h .tag"),h2=sec.querySelector(".sec-h h2");if(tg&&FCFG.tag)tg.textContent=FCFG.tag;if(h2&&(FCFG.h||FCFG.g))h2.innerHTML=`${escH(FCFG.h||"")} <span class="gold">${escH(FCFG.g||"")}</span>`;
+  if((FCFG.ids&&FCFG.ids.length)||Object.keys(FCFG.tags||{}).length){buildMain();try{rebuildMainUI()}catch(e){console.warn(e)}}}
+/* ===== SẮP XẾP VỊ TRÍ: các cụm trang chủ + các khối trang chi tiết (admin chỉnh – images/layoutcfg) ===== */
+const LB_MAIN=[["hero","🏠 Banner đầu trang","#hero",null],["marq","🎞 Dải chữ chạy","body > .marq",null],["chuluc","⭐ Sản phẩm chủ lực","#chu-luc",'a[href="#chu-luc"]'],["brands","🏷 Thương hiệu độc quyền","#blk-brands",null],["policy","📜 Chính sách hợp tác & đại lý","#hop-tac",'a[href="#hop-tac"]'],["stores","🤝 Văn phòng & đối tác","#cua-hang",'a[href="#cua-hang"]'],["stats","📊 Số liệu nổi bật","#blk-stats",null],["all","🛍 Tổng sản phẩm","#tat-ca",'a[href="#tat-ca"]'],["contact","📞 Liên hệ","#lien-he",'a[href="#lien-he"]']];
+const LB_PD=[["gal","🖼 Ảnh sản phẩm"],["name","🏷 Danh mục & tên"],["price","💰 Giá"],["sold","🔥 Đã bán / Top"],["desc","📄 Mô tả sản phẩm"],["perf","⚡ Hiệu suất"],["info","📋 Bảng thông tin"],["credit","📷 Nguồn ảnh"]];
+let LCFG={main:[],hide:{},pd:[],pdHide:{}};
+try{const c=JSON.parse(localStorage.getItem("bdLayout")||"null");if(c)LCFG={...LCFG,...c}}catch(e){}
+const lbOrder=(saved,def)=>{const keys=def.map(x=>x[0]),o=(saved||[]).filter(k=>keys.includes(k));return o.concat(keys.filter(k=>!o.includes(k)))};
+function applyLayout(){try{const ft=document.querySelector("body > footer");if(!ft)return;
+  lbOrder(LCFG.main,LB_MAIN).forEach(k=>{const b=LB_MAIN.find(x=>x[0]===k),el=document.querySelector(b[2]);if(!el)return;ft.parentNode.insertBefore(el,ft);
+    el.classList.toggle("lhide",!!(LCFG.hide||{})[k]);if(b[3])document.querySelectorAll(".menu "+b[3]).forEach(a=>a.classList.toggle("lhide-a",!!(LCFG.hide||{})[k]))})}catch(e){console.warn("layout",e)}}
+const pdKey=el=>{const c=el.classList;return c.contains("pd-gal")||c.contains("pd-thumbs")?"gal":c.contains("pd-ct")||c.contains("pd-n")?"name":c.contains("pd-pr")?"price":c.contains("pd-sold")?"sold":c.contains("pd-cr")?"credit":c.contains("pd-sec")?(/Mô tả/.test(el.textContent.slice(0,12))?"desc":/Hiệu suất/.test(el.textContent.slice(0,14))?"perf":"info"):""};
+function pdLayout(){try{const box=$("#pdBody"),kids=[...box.children],g={};kids.forEach(el=>{const k=pdKey(el);(g[k]=g[k]||[]).push(el)});
+  lbOrder(LCFG.pd,LB_PD).forEach(k=>(g[k]||[]).forEach(el=>{box.appendChild(el);el.classList.toggle("lhide",!!(LCFG.pdHide||{})[k])}))}catch(e){console.warn("pdLayout",e)}}
+applyLayout();
+const FEAT_READY=FB_READY.then(async f=>{if(!f)return;try{const d=await f.F.getDoc(f.F.doc(f.db,"images","featcfg"));if(d.exists()&&d.data().d)FCFG={...FCFG,...JSON.parse(d.data().d)}}catch(e){console.warn("featcfg:",e)}applyFeat();
+  try{const d=await f.F.getDoc(f.F.doc(f.db,"images","layoutcfg"));if(d.exists()&&d.data().d){LCFG={...LCFG,...JSON.parse(d.data().d)};try{localStorage.setItem("bdLayout",JSON.stringify(LCFG))}catch(e){}applyLayout()}}catch(e){console.warn("layoutcfg:",e)}});
 
 /* ảnh lưu trong cơ sở dữ liệu ("db:ID") – chỉ tải khi sắp hiện trên màn hình */
 const IMGC=new Map(),IMGP=new Map();
@@ -1961,7 +2006,39 @@ $("#admOut").onclick=async()=>{await FB.A.signOut(FB.auth);location.hash="";loca
 $("#admLogin").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button");
   busy(b,true);try{await FB.A.signInWithEmailAndPassword(FB.auth,f.email.value.trim(),f.pass.value)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=>x.classList.toggle("on",x===b));
-  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit()});
+  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit();if(b.dataset.tab==="feat")featAdminInit();if(b.dataset.tab==="lay")layAdminInit()});
+/* ---- Sắp xếp vị trí: cài đặt admin ---- */
+let LA=null,laInit=false;
+function laRender(){const draw=(el,key,hk,def)=>{const o=LA[key];el.innerHTML=o.map((k,i)=>{const lb=def.find(x=>x[0]===k)[1],off=!!LA[hk][k];return `<div class="la-r ${off?"off":""}" data-k="${k}"><span>${i+1}. ${escH(lb)}</span><button type="button" data-up ${i?"":"disabled"}>▲</button><button type="button" data-dn ${i<o.length-1?"":"disabled"}>▼</button><button type="button" data-eye>${off?"🙈":"👁"}</button></div>`}).join("")};
+  draw($("#laMain"),"main","hide",LB_MAIN);draw($("#laPd"),"pd","pdHide",LB_PD)}
+function layAdminInit(){if(!laInit){laInit=true;
+  const hnd=(sel,key,hk)=>$(sel).addEventListener("click",e=>{const r=e.target.closest(".la-r");if(!r)return;const o=LA[key],i=o.indexOf(r.dataset.k);
+    if(e.target.closest("[data-up]")&&i>0)[o[i-1],o[i]]=[o[i],o[i-1]];else if(e.target.closest("[data-dn]")&&i<o.length-1)[o[i+1],o[i]]=[o[i],o[i+1]];else if(e.target.closest("[data-eye]"))LA[hk][r.dataset.k]=!LA[hk][r.dataset.k];else return;laRender()});
+  hnd("#laMain","main","hide");hnd("#laPd","pd","pdHide");
+  $("#laReset").onclick=()=>{LA={main:LB_MAIN.map(x=>x[0]),hide:{},pd:LB_PD.map(x=>x[0]),pdHide:{}};laRender()};
+  $("#laSave").onclick=async()=>{const o=$("#laOut"),c={main:LA.main.slice(),hide:{...LA.hide},pd:LA.pd.slice(),pdHide:{...LA.pdHide}};o.textContent="Đang lưu…";
+    try{const {F,db}=FB;await F.setDoc(F.doc(db,"images","layoutcfg"),{d:JSON.stringify(c)});LCFG=c;try{localStorage.setItem("bdLayout",JSON.stringify(c))}catch(e){}applyLayout();o.textContent="✅ Đã lưu – khách sẽ thấy bố cục mới.";atoast("✅ Đã lưu bố cục")}catch(err){o.textContent="❌ "+authMsg(err)}}}
+  LA={main:lbOrder(LCFG.main,LB_MAIN),hide:{...(LCFG.hide||{})},pd:lbOrder(LCFG.pd,LB_PD),pdHide:{...(LCFG.pdHide||{})}};laRender()}
+/* ---- Sản phẩm chủ lực: cài đặt admin ---- */
+let FA={ids:[],tags:{}},ftInit=false;
+const ftRows=()=>visRows(AD.items||[]);
+function featRender(){const rows=ftRows(),by=Object.fromEntries(rows.map(p=>[p.id,p]));FA.ids=FA.ids.filter(id=>by[id]);
+  $("#ftMode").innerHTML=FA.ids.length?`✋ Đang chọn <b>thủ công</b>: ${FA.ids.length}/10 sản phẩm`:"🤖 Đang <b>tự động</b>: lấy sản phẩm gắn ★ trong kho (thiếu thì bổ sung hàng giảm giá nhiều nhất). Thêm sản phẩm bên dưới để chuyển sang chọn thủ công.";
+  $("#ftList").innerHTML=FA.ids.map((id,i)=>{const p=by[id];return `<div class="ft-it" data-i="${i}"><b>${i+1}. ${escH(p.n)}</b><input data-tg placeholder="Nhãn trên thẻ (để trống = tự động)" value="${escH(FA.tags[id]||"")}"><div class="ft-b"><button type="button" data-up ${i?"":"disabled"}>▲</button><button type="button" data-dn ${i<FA.ids.length-1?"":"disabled"}>▼</button><button type="button" data-rm style="color:#ff8a8a">✕</button></div></div>`}).join("")||'<div class="aempty">Chưa chọn sản phẩm thủ công.</div>'}
+function featAdminInit(){const run=()=>{if(!ftInit){ftInit=true;
+    $("#ftList").addEventListener("input",e=>{const r=e.target.closest(".ft-it");if(!r||!e.target.matches("[data-tg]"))return;const id=FA.ids[+r.dataset.i],v=e.target.value.trim();if(v)FA.tags[id]=v;else delete FA.tags[id]});
+    $("#ftList").addEventListener("click",e=>{const r=e.target.closest(".ft-it");if(!r)return;const i=+r.dataset.i;
+      if(e.target.closest("[data-up]")&&i>0)[FA.ids[i-1],FA.ids[i]]=[FA.ids[i],FA.ids[i-1]];
+      else if(e.target.closest("[data-dn]")&&i<FA.ids.length-1)[FA.ids[i+1],FA.ids[i]]=[FA.ids[i],FA.ids[i+1]];
+      else if(e.target.closest("[data-rm]")){delete FA.tags[FA.ids[i]];FA.ids.splice(i,1)}else return;featRender()});
+    $("#ftQ").oninput=()=>{const q=nm($("#ftQ").value.trim());if(!q){$("#ftRes").innerHTML="";return}
+      $("#ftRes").innerHTML=ftRows().filter(p=>!FA.ids.includes(p.id)&&nm(p.n).includes(q)).slice(0,8).map(p=>`<div class="ft-r" data-id="${p.id}"><span>${escH(p.n)}</span><small>${vnd(+p.p||0)}</small></div>`).join("")||'<div class="aempty">Không thấy sản phẩm.</div>'};
+    $("#ftRes").onclick=e=>{const r=e.target.closest(".ft-r");if(!r)return;if(FA.ids.length>=10){$("#ftOut").textContent="⚠️ Tối đa 10 sản phẩm.";return}FA.ids.push(r.dataset.id);$("#ftQ").value="";$("#ftRes").innerHTML="";$("#ftOut").textContent="";featRender()};
+    $("#ftAuto").onclick=()=>{FA={ids:[],tags:{}};featRender()};
+    $("#ftSave").onclick=async()=>{const o=$("#ftOut"),c={show:$("#ftShow").checked,tag:$("#ftTag").value.trim(),h:$("#ftH").value.trim(),g:$("#ftG").value.trim(),ids:FA.ids.slice(),tags:Object.fromEntries(FA.ids.filter(id=>FA.tags[id]).map(id=>[id,FA.tags[id]]))};
+      o.textContent="Đang lưu…";try{const {F,db}=FB;await F.setDoc(F.doc(db,"images","featcfg"),{d:JSON.stringify(c)});FCFG={...FCFG,...c};applyFeat();o.textContent="✅ Đã lưu – khách sẽ thấy khu vực chủ lực mới.";atoast("✅ Đã lưu sản phẩm chủ lực")}catch(err){o.textContent="❌ "+authMsg(err)}}}
+    $("#ftShow").checked=FCFG.show!==false;$("#ftTag").value=FCFG.tag||"";$("#ftH").value=FCFG.h||"";$("#ftG").value=FCFG.g||"";FA={ids:(FCFG.ids||[]).slice(),tags:{...(FCFG.tags||{})}};featRender()};
+  if(AD.loaded)run();else{$("#ftList").innerHTML='<div class="aempty">Đang tải kho…</div>';const t=setInterval(()=>{if(AD.loaded){clearInterval(t);run()}},400);setTimeout(()=>clearInterval(t),20000)}}
 /* ---- AI training: cài đặt admin + sandbox ---- */
 let AIS=[],AIA=[],aiInit=false,aiRenderFn=null;
 function aiForm(){return{on:$("#aiOn").checked,sync:$("#aiSync").checked,tone:$("#aiTone").value.trim()||AI_TONE_DEF,extra:$("#aiExtra").value.trim(),rules:(()=>{const v=$("#aiRulesT").value.trim();return v===AI_RULES.join("\n")?"":v})(),samples:AIC.samples||[],notes:AIC.notes||[]}}
@@ -2676,7 +2753,7 @@ function openDetail(id){const p=ALL.find(x=>x.id===id);if(!p)return;PDP=p;PDQ=1;
      <tr><td>Giá sỉ</td><td><b class="g">${prTxt(p)}</b></td></tr>${p.o&&!(p.v&&p.v.length)?`<tr><td>Giá gốc</td><td>${vnd(p.o)} (giảm ${p.off}%)</td></tr>`:""}
      ${p.s?`<tr><td>Đã bán</td><td>${fmtK(p.s)}+</td></tr><tr><td>Mức bán chạy</td><td>${rk<=3?`Top ${rk} nhóm ${catName[p.c]}`:`Hạng ${rk} trong nhóm`}</td></tr>`:""}</table></div>
    ${p.cr?`<div class="pd-cr">📷 Ảnh: ${escH(p.cr)}</div>`:""}`);
-  galInit(gal.length);if(p.cl&&p.cl.length===1)PDC=0;pdOpt();pd.classList.add("on");pd.querySelector(".pd-box").scrollTop=0}
+  pdLayout();galInit(gal.length);if(p.cl&&p.cl.length===1)PDC=0;pdOpt();pd.classList.add("on");pd.querySelector(".pd-box").scrollTop=0}
 /* vuốt trái/phải để xem ảnh khác */
 let GAL=null;
 function galInit(n){const g=$("#pdGal"),tr=g.querySelector(".pd-track"),box=$("#pdBody");
