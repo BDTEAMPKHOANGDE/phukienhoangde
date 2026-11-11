@@ -218,6 +218,7 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 /* ===== ALL PRODUCTS ===== */
 .chips{position:sticky;top:57px;z-index:20;background:rgba(7,6,10,.96);padding:10px 0;margin-bottom:18px;border-block:1px solid var(--line)}
 .chips-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px}.chips-row::-webkit-scrollbar{display:none}
+@media (hover:hover) and (pointer:fine){.chips-row{scrollbar-width:thin;scrollbar-color:var(--gold3) rgba(255,255,255,.06);padding-bottom:10px;cursor:grab}.chips-row::-webkit-scrollbar{display:block;height:9px}.chips-row::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:9px}.chips-row::-webkit-scrollbar-thumb{background:linear-gradient(90deg,var(--gold3),var(--gold));border-radius:9px}.chips-row.drag{cursor:grabbing;user-select:none}}
 .chip{flex:0 0 auto;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font:500 13px 'Be Vietnam Pro';cursor:pointer}
 .chip.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1408;border-color:transparent}
 .search{display:flex;align-items:center;gap:10px;max-width:520px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 18px}
@@ -228,7 +229,7 @@ header.solid{background:rgba(7,6,10,.95);border-bottom:1px solid var(--line);pad
 .pc{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;position:relative;opacity:0;transform:translateY(40px) rotateX(-25deg);transform-origin:top;transition:opacity .8s,transform .9s cubic-bezier(.16,1,.3,1),border-color .3s}
 .pc.in{opacity:1;transform:none}.pc:hover{border-color:var(--gold3)}
 .pc .im{aspect-ratio:1;background:#fff;overflow:hidden}.pc .im img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.pc:hover .im img{transform:scale(1.07)}
-.pc .bg{position:absolute;top:9px;left:9px;background:var(--red);color:#fff;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+.pc .bg{z-index:4;position:absolute;top:9px;left:9px;background:var(--red);color:#fff;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
 .pc .bd2{padding:11px 12px 13px}
 .pc .ct{font-size:10.5px;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
 .pc .nm{font-weight:600;font-size:14px;line-height:1.45;margin:4px 0 8px;min-height:2.9em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -442,6 +443,7 @@ body.adm-on .cart-fab{display:none!important}
 .ashow{height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);font:600 12.5px 'Be Vietnam Pro';cursor:pointer}
 .ashow.on{border-color:#6fdc9a;color:#6fdc9a;background:rgba(111,220,154,.1)}
 .qadd.q4{grid-template-columns:repeat(4,1fr);gap:4px}.qadd.q4 button{font-size:12px;padding:7px 0}
+#cartSend:disabled{opacity:.55;cursor:not-allowed;filter:grayscale(.5)}
 .pdbtn{width:100%;margin-top:6px;padding:8px;border-radius:10px;border:0;background:none;color:#efe6d4;font:600 12.5px 'Be Vietnam Pro';text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .pc .im,.pc .nm{cursor:pointer}
 #pdet{position:fixed;inset:0;z-index:184;background:rgba(5,4,6,.88);display:flex;align-items:flex-end;justify-content:center;padding:10px;opacity:0;pointer-events:none;transition:opacity .3s}
@@ -551,7 +553,9 @@ body.adm-on .cart-fab{display:none!important}
 .pe-oh{display:flex;align-items:center;justify-content:space-between;gap:8px}.pe-oh .btn{padding:7px 12px;font-size:13px;min-height:0}
 .pe-r{display:grid;grid-template-columns:42px 1fr 1fr 30px;gap:6px;align-items:center;margin-top:8px}
 .pe-r.v{grid-template-columns:1fr 1fr 30px;padding-top:8px;border-top:1px dashed var(--line)}.pe-r.v [data-f=n]{grid-column:1/-1}
-.pe-box .pe-r input,.pe-box .pe-r select{margin:0;min-width:0;padding:10px}.pe-r input[type=color]{width:42px;height:40px;padding:2px;border-radius:10px;cursor:pointer}
+.pe-box .pe-r input,.pe-box .pe-r select{margin:0;min-width:0;padding:10px}.pe-pal{display:flex;flex-wrap:wrap;gap:7px;margin:-2px 0 10px;padding:0 2px}.pe-pal i{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.55);cursor:pointer}.pe-pal i:active{transform:scale(.9)}
+.adots{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle}.adots i{width:11px;height:11px;border-radius:50%;border:1.5px solid rgba(255,255,255,.8)}
+.pe-r input[type=color]{width:42px;height:40px;padding:2px;border-radius:10px;cursor:pointer}
 .pe-r .x{width:30px;height:30px;border-radius:50%;border:0;background:#c0392b;color:#fff;cursor:pointer;padding:0}
 .pe-empty{font-size:12.5px;color:var(--muted);margin-top:6px}
 
@@ -904,7 +908,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <div id="pdet" role="dialog" aria-modal="true"><div class="pd-box"><button type="button" class="au-x" id="pdClose" aria-label="Đóng">×</button><div id="pdBody"></div>
   <div class="pd-buy"><div id="pdOpts"></div><div class="pd-ql">Số lượng</div><div class="pd-q" id="pdQ"><button data-q="1">1</button><button data-q="10">10</button><button data-q="50">50</button><button data-q="100">100</button>
     <span class="pd-in"><button data-d="-1" aria-label="Bớt">−</button><input id="pdIn" inputmode="numeric" aria-label="Nhập số lượng"><button data-d="1" aria-label="Thêm">+</button></span></div>
-    <div class="pd-tot">Thành tiền: <b id="pdTot"></b></div><button class="btn btn-gold" id="pdAdd">🛒 Thêm vào giỏ hàng</button></div></div></div>
+    <div class="pd-tot">Thành tiền: <b id="pdTot"></b></div><button class="btn btn-gold" id="pdAdd">🛒 Thêm vào giỏ hàng</button><button class="btn" id="pdGo" type="button" style="width:100%;margin-top:8px">➡️ Đi tới giỏ hàng</button></div></div></div>
 <div id="cart" role="dialog" aria-modal="true"><div class="cart-box"><div class="pe-h"><h3>🛒 Giỏ hàng</h3><button type="button" id="cartClose" aria-label="Đóng">×</button></div><div id="cartList"></div><div id="cartSum"></div><div id="myOrd" class="my-ord" hidden></div></div></div>
 <div id="bill" role="dialog" aria-modal="true"><div class="cart-box">
   <div class="pe-h"><h3 id="blT">📝 Thông tin nhận hàng</h3><button type="button" id="blClose" aria-label="Đóng">×</button></div>
@@ -1006,7 +1010,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="sup" id="sup"></div>
   <div class="buy">
     <div class="panel rv"><h3>Chính sách mua sỉ</h3>
-      <div class="pol"><span>Đơn tối thiểu (online)</span><b>1.000.000đ</b></div>
+      <div class="pol"><span>Đơn tối thiểu (online)</span><b>500.000đ</b></div>
       <div class="pol"><span>Đơn tối thiểu (tại kho)</span><b>500.000đ</b></div>
       <div class="pol"><span>Số lượng mỗi mã</span><b>Không giới hạn</b></div>
       <div class="pol"><span>Hỗ trợ phí vận chuyển</span><b>Đơn trên 5 triệu (thanh toán trước)</b></div>
@@ -1331,7 +1335,8 @@ async function loadCatalog(){const {F,db}=FB;const meta=await F.getDoc(F.doc(db,
   const n=meta.data().parts||1;const parts=await Promise.all(Array.from({length:n},(_,k)=>F.getDoc(F.doc(db,"catalog","p"+k))));
   return parts.flatMap((d,k)=>(d.exists()?d.data().items||[]:[]).map(r=>({...r,_part:k})))}
 const escH=v=>String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const fmtK=n=>n>=1000?(Math.floor(n/100)/10).toLocaleString("vi-VN")+"k":String(n);
+const MIN_ORD=500000;
+const fmtK=n=>n>=1e6?(Math.floor(n/1e5)/10).toLocaleString("vi-VN")+"B":n>=1000?(Math.floor(n/100)/10).toLocaleString("vi-VN")+"K":String(n);
 const visRows=rows=>rows.some(r=>r.show)?rows.filter(r=>r.show):rows;
 /* khoảng giá khi có biến thể */
 const prRange=p=>{const a=(p.v&&p.v.length?p.v.map(x=>x.p||p.p):[p.p]);return[Math.min(...a),Math.max(...a)]};
@@ -1460,12 +1465,17 @@ $$(".pk").forEach(el=>{el.addEventListener("pointermove",e=>{const b=el.getBound
 /* ========== 6. ALL PRODUCTS ========== */
 let cur="all",shown=24;
 $("#chips").innerHTML=`<button class="chip on" data-c="all">Tất cả (${ALL.length})</button>`+CATS.map(c=>`<button class="chip" data-c="${c[0]}">${c[1]}</button>`).join("");
+{const cr=document.querySelector(".chips-row");if(cr){cr.addEventListener("wheel",e=>{if(cr.scrollWidth<=cr.clientWidth||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;e.preventDefault();cr.scrollLeft+=e.deltaY},{passive:false});
+  let dn=false,sx=0,sl=0,mv=false;cr.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse")return;dn=true;mv=false;sx=e.clientX;sl=cr.scrollLeft});
+  addEventListener("pointermove",e=>{if(!dn)return;const dx=e.clientX-sx;if(Math.abs(dx)>5){mv=true;cr.classList.add("drag")}if(mv)cr.scrollLeft=sl-dx});
+  addEventListener("pointerup",()=>{dn=false;setTimeout(()=>cr.classList.remove("drag"),0)});cr.addEventListener("click",e=>{if(mv){e.stopPropagation();e.preventDefault();mv=false}},true)}}
 $("#chips").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;$$(".chip").forEach(x=>x.classList.remove("on"));b.classList.add("on");cur=b.dataset.c;shown=24;render()};
 $("#q").oninput=()=>{shown=24;render()};$("#more").onclick=()=>{shown+=24;render()};
 const gio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");gio.unobserve(e.target)}}),{threshold:.1});
+const offOf=p=>p.off||(p.v&&p.v.length?Math.max(0,...p.v.map(x=>x.o>x.p&&x.p?Math.round((1-x.p/x.o)*100):0)):0);
 function render(){const q=nm($("#q").value.trim());
   const list=ALL.filter(p=>(cur==="all"||p.c===cur)&&(!q||nm(p.n+" "+catName[p.c]).includes(q)));
-  $("#grid").innerHTML=list.slice(0,shown).map((p,i)=>`<div class="pc" data-id="${p.id}" style="transition-delay:${(i%4)*70}ms">${p.off?`<span class="bg">-${p.off}%</span>`:""}${p.bs?'<span class="bsr">🏆 BEST SELLER</span>':""}<div class="im">${IMG(p.i,p.n,p.th)}${p.g&&p.g.length?`<span class="nimg">📷 ${p.g.length+1}</span>`:""}${p.cl&&p.cl.length?`<span class="cdots">${p.cl.slice(0,6).map(c=>`<i style="background:${c.h}" title="${escH(c.n)}"></i>`).join("")}</span>`:""}</div>
+  $("#grid").innerHTML=list.slice(0,shown).map((p,i)=>`<div class="pc" data-id="${p.id}" style="transition-delay:${(i%4)*70}ms">${offOf(p)?`<span class="bg">-${offOf(p)}%</span>`:""}${p.bs?'<span class="bsr">🏆 BEST SELLER</span>':""}<div class="im">${IMG(p.i,p.n,p.th)}${p.g&&p.g.length?`<span class="nimg">📷 ${p.g.length+1}</span>`:""}${p.cl&&p.cl.length?`<span class="cdots">${p.cl.slice(0,6).map(c=>`<i style="background:${c.h}" title="${escH(c.n)}"></i>`).join("")}</span>`:""}</div>
    <div class="bd2"><div class="ct">${catName[p.c]}</div><div class="nm">${p.n}</div>${p.s?`<div class="sold">🔥 Đã bán ${fmtK(p.s)}+${rankOf(p)<=3?` · <b>Top ${rankOf(p)}</b>`:""}</div>`:""}${p.cr?`<div class="crd">📷 ${escH(p.cr)}</div>`:""}<div class="pr">${p.v&&p.v.length?`<b><small>từ </small>${vnd(prRange(p)[0])}</b><em class="nvar">${p.v.length} phân loại</em>`:`<b>${vnd(p.p)}</b>${p.o?`<s>${vnd(p.o)}</s>`:""}`}</div><div class="qadd q4" data-id="${p.id}"><button data-q="1">+1</button><button data-q="10">+10</button><button data-q="50">+50</button><button data-q="100">+100</button></div><button class="pdbtn">📄 Chi tiết sản phẩm</button></div></div>`).join("");
   $("#count").textContent=`Hiển thị ${Math.min(shown,list.length)} / ${list.length} sản phẩm`;
   $("#emptyM").style.display=list.length?"none":"block";$("#more").style.display=list.length>shown?"inline-flex":"none";
@@ -1568,7 +1578,7 @@ const btn=(label,act)=>`<button type="button" class="act" data-act="${act}">${la
 const card=p=>`<button type="button" class="mini" data-act="prod:${p.id}"><img ${srcA(p.i)} alt="" onerror="this.style.visibility='hidden'"><div>${p.n}<br><b>${vnd(p.p)}</b>${p.off?` <small class="off">-${p.off}%</small>`:""}<span class="go">Xem ›</span></div></button>`;
 /* ===================== AI TRAINING: kho tri thức tự động từ danh sách sản phẩm + Gemini ===================== */
 const AI_TONE_DEF="Xưng \"mình\", gọi khách là \"anh/chị\". Giọng thân thiện, chuyên nghiệp, ngắn gọn, nói tiếng Việt có dấu. Chủ động hỏi nhu cầu (số lượng, ngân sách) và gợi ý chốt đơn qua Zalo.";
-const AI_RULES=["Chỉ được tư vấn và cung cấp thông tin dựa trên DANH SÁCH SẢN PHẨM THỰC TẾ của cửa hàng bên dưới.","Tuyệt đối KHÔNG bịa đặt giá, tính năng, thông số, màu sắc, khuyến mãi hay tồn kho không có trong dữ liệu. Không chắc thì nói rõ là chưa có thông tin và mời khách liên hệ Zalo.","Sản phẩm khách hỏi không có trong danh sách: nói thật là hiện chưa thấy mẫu đó, gợi ý mẫu gần nhất CÓ trong danh sách.","Báo giá đúng số trong danh sách; tính tiền chính xác = số lượng × đơn giá.","Đơn online tối thiểu 1.000.000₫; đơn trên 5.000.000₫ (thanh toán trước) được hỗ trợ phí vận chuyển.","Chỉ nói về phụ kiện điện thoại và dịch vụ của cửa hàng; chủ đề khác thì lịch sự từ chối.","Trả lời ngắn gọn (dưới 120 từ), tiếng Việt, không dùng bảng hay markdown phức tạp."];
+const AI_RULES=["Chỉ được tư vấn và cung cấp thông tin dựa trên DANH SÁCH SẢN PHẨM THỰC TẾ của cửa hàng bên dưới.","Tuyệt đối KHÔNG bịa đặt giá, tính năng, thông số, màu sắc, khuyến mãi hay tồn kho không có trong dữ liệu. Không chắc thì nói rõ là chưa có thông tin và mời khách liên hệ Zalo.","Sản phẩm khách hỏi không có trong danh sách: nói thật là hiện chưa thấy mẫu đó, gợi ý mẫu gần nhất CÓ trong danh sách.","Báo giá đúng số trong danh sách; tính tiền chính xác = số lượng × đơn giá.","Đơn online tối thiểu 500.000₫ (không nhận đơn dưới mức này); đơn trên 5.000.000₫ (thanh toán trước) được hỗ trợ phí vận chuyển.","Chỉ nói về phụ kiện điện thoại và dịch vụ của cửa hàng; chủ đề khác thì lịch sự từ chối.","Trả lời ngắn gọn (dưới 120 từ), tiếng Việt, không dùng bảng hay markdown phức tạp."];
 let AIC={on:false,sync:true,tone:AI_TONE_DEF,extra:"",samples:[],notes:[],kb:[]},AIH=[];
 FB_READY.then(async f=>{if(!f)return;try{const d=await f.F.getDoc(f.F.doc(f.db,"images","aicfg"));if(d.exists()&&d.data().d)AIC={...AIC,...JSON.parse(d.data().d)}}catch(e){console.warn("aicfg:",e)}});
 function aiCtx(){const rows=ALL.slice(0,700).map(p=>{const v=(p.v||[]).map(x=>x.n).filter(Boolean).join("/"),c=(p.cl||[]).map(x=>x.n).filter(Boolean).join("/");
@@ -1636,13 +1646,13 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
     const mv=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/),tb=WK_TIERS.map(t=>`• ${wkRange(t)}/tháng → <b>${t[2]}%</b> (đơn TB ${t[3].toLowerCase()}; ${t[4].toLowerCase()})`).join("\n");
     if(mv){const v=toVND(mv[1],mv[2]),t=wkTier(v);
       return{h:t?`📊 Tổng hoá đơn ${vnd(v)}/tháng → chiết khấu <b>${t[2]}%</b> (đơn trung bình ${t[3].toLowerCase()}).\n${t[4]}.\n💰 Tiết kiệm ước tính ≈ <b>${vnd(Math.round(v*t[2]/100))}</b>/tháng.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`
-        :`Tổng hoá đơn ${vnd(v)}/tháng chưa đạt mức chiết khấu đại lý (từ 10 triệu/tháng → 3%). Bạn vẫn nhập sỉ bình thường, đơn tối thiểu 1.000.000đ online.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
+        :`Tổng hoá đơn ${vnd(v)}/tháng chưa đạt mức chiết khấu đại lý (từ 10 triệu/tháng → 3%). Bạn vẫn nhập sỉ bình thường, đơn tối thiểu 500.000đ online.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
     return{h:`🌟 Chính sách chiết khấu đại lý (dành cho khách <b>đã có cửa hàng</b>), áp dụng tất cả sản phẩm, tính theo tổng hoá đơn trong 1 tháng:\n${tb}\nCho mình biết tổng hoá đơn dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
   /* ngân sách mở shop */
   const bud=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/);
   if(bud&&has(/(mo|shop|cua hang|kinh doanh|von|setup|dau tu|ngan sach)/)){const v=toVND(bud[1],bud[2]),num=s=>parseFloat(s)*1e6;
     const ok=PACKS.filter(p=>num(p.money)<=v),best=ok[ok.length-1];
-    if(!best)return{h:`Với ${vnd(v)}, bạn chưa đủ gói thấp nhất (Khởi nghiệp từ 60 triệu). Bạn vẫn có thể bắt đầu nhập sỉ lẻ, đơn tối thiểu chỉ 1.000.000đ online.${ZL}`};
+    if(!best)return{h:`Với ${vnd(v)}, bạn chưa đủ gói thấp nhất (Khởi nghiệp từ 60 triệu). Bạn vẫn có thể bắt đầu nhập sỉ lẻ, đơn tối thiểu chỉ 500.000đ online.${ZL}`};
     return{h:`💡 Với khoảng ${vnd(v)}, gói phù hợp nhất là <b>${best.nm}</b> (từ ${best.money}):\n${best.items.map(i=>"• "+i).join("\n")}${ok.length>1?`\nCác gói khác vừa ngân sách: ${ok.slice(0,-1).map(p=>p.nm).join(", ")}.`:""}\n${btn("Xem chính sách hợp tác","sec:hop-tac")}${ZL}`,qk:["Hỗ trợ đại lý","Nên nhập mặt hàng gì?","Quy trình hợp tác"]}}
   if(has(/(nen nhap|moi mo|goi y nhap|tu van nhap|nhap gi|mat hang gi)/)){
     const pick=["cap","cu","kinh","op","bt","sdp"].map(c=>ALL.filter(p=>p.c===c).sort((a,b)=>b.off-a.off)[0]);ctx.last=pick;
@@ -1651,7 +1661,7 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   if(has(/(quy trinh|cac buoc|lam the nao de|bat dau)/))return{h:"🧭 Quy trình: 1) Liên hệ BD Team → 2) Khảo sát tận nơi → 3) Chọn gói & setup → 4) Khai trương & đồng hành."+ZL};
   if(has(/(ho tro|quyen loi|uu dai dai ly|chinh sach dai ly|dao tao|marketing|bien hieu)/))return{h:"🤝 Đại lý được hỗ trợ:\n"+SUPPORT.map(s=>`${s[0]} <b>${s[1]}</b>: ${s[2]}`).join("\n")+"\n"+btn("Xem chính sách","sec:hop-tac")};
   if(has(/(bao ve gia|giam gia hang|tang gia)/))return{h:"🛡️ Bảo vệ giá: hỗ trợ khi hãng giảm giá (xác minh trong 30 ngày), báo trước tối thiểu 15 ngày khi tăng giá."};
-  if(has(/(toi thieu|it nhat bao nhieu|don nho nhat)/))return{h:"📦 Đơn tối thiểu: 1.000.000đ (online), 500.000đ (mua tại kho). Không giới hạn số lượng mỗi mã."+ZL};
+  if(has(/(toi thieu|it nhat bao nhieu|don nho nhat)/))return{h:"📦 Đơn tối thiểu: 500.000đ (không nhận đặt đơn dưới mức này). Không giới hạn số lượng mỗi mã."+ZL};
   if(has(/(ship|van chuyen|giao hang|phi giao|freeship)/))return{h:"🚚 Hỗ trợ phí vận chuyển toàn quốc với đơn trên 5 triệu (thanh toán trước). Đơn nhỏ hơn BD Team báo phí theo tỉnh."+ZL};
   if(has(/(hoa don|vat|chung tu)/))return{h:"🧾 Công ty có xuất hóa đơn đỏ."};
   if(has(/(bao hanh|doi tra|\bhong\b|\bbi loi\b)/))return{h:"🔧 Bảo hành trọn đời miễn phí cho sản phẩm WK Design. Sản phẩm khác theo chính sách bảo hành của công ty – gửi mã sản phẩm qua Zalo để được hướng dẫn."+ZL};
@@ -1694,7 +1704,7 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   return{h:"Mình chưa hiểu ý bạn lắm 😅 Bạn thử hỏi theo kiểu:\n• tên sản phẩm (\"tai nghe DL10\")\n• khoảng giá (\"củ sạc dưới 20k\")\n• chính sách (\"gói mở shop\", \"ship\")\nHoặc nhắn trực tiếp BD Team nhé."+ZL};
 }
 function order(p,qty){const tot=p.p*qty;ctx.last=[p];
-  return{h:`🧮 Tạm tính: <b>${qty} × ${p.n}</b>\n= ${qty} × ${vnd(p.p)} = <b>${vnd(tot)}</b>\n${tot<1e6?`⚠️ Còn thiếu ${vnd(1e6-tot)} để đạt đơn tối thiểu online 1.000.000đ – thêm mặt hàng khác nhé.`:tot>=5e6?"✅ Đơn trên 5 triệu, được hỗ trợ phí ship (thanh toán trước).":"✅ Đạt đơn tối thiểu."}\n<small>Giá sỉ tham khảo, BD Team xác nhận khi chốt đơn.</small>`+card(p)+ZL,qk:["Gợi ý mua kèm","Có hỗ trợ ship không?","Tôi muốn mở đại lý"]}}
+  return{h:`🧮 Tạm tính: <b>${qty} × ${p.n}</b>\n= ${qty} × ${vnd(p.p)} = <b>${vnd(tot)}</b>\n${tot<MIN_ORD?`⚠️ Còn thiếu ${vnd(MIN_ORD-tot)} để đạt đơn tối thiểu 500.000đ – thêm mặt hàng khác nhé.`:tot>=5e6?"✅ Đơn trên 5 triệu, được hỗ trợ phí ship (thanh toán trước).":"✅ Đạt đơn tối thiểu."}\n<small>Giá sỉ tham khảo, BD Team xác nhận khi chốt đơn.</small>`+card(p)+ZL,qk:["Gợi ý mua kèm","Có hỗ trợ ship không?","Tôi muốn mở đại lý"]}}
 
 /* ---------- GIỌNG NÓI ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -2191,7 +2201,7 @@ function admList(){const l=admFiltered(),per=40,pages=Math.max(1,Math.ceil(l.len
       h=`<div class="agh"><div><b>${catName[p.c]||p.c}</b><small>${g.length} sản phẩm • 👁 ${gs} đang show</small></div><button class="agb ${gs===g.length?"on":""}" data-g="${p.c}">${gs===g.length?"Ẩn cả nhóm":"Show cả nhóm"}</button></div>`}
     return h+`<div class="ar ${AD.sel.has(p.id)?"sel":""} ${p.show?"":"off"}" data-id="${p.id}"><input type="checkbox" class="ack" aria-label="Chọn" ${AD.sel.has(p.id)?"checked":""}>
     <div class="ath">${p.img?`<img ${srcA(p.img)} referrerpolicy="no-referrer" alt="" onerror="this.style.visibility='hidden'">`:'<span>＋</span>'}${p.imgs&&p.imgs.length?`<i class="ath-n">${p.imgs.length+1}</i>`:""}</div>
-    <div class="ainf"><b>${esc(p.n)}</b><small>${catName[p.c]||p.c} • <span class="g">${vnd(+p.p||0)}</span>${+p.o?` <s>${vnd(+p.o)}</s>`:""}</small>
+    <div class="ainf"><b>${esc(p.n)}</b><small>${catName[p.c]||p.c} • <span class="g">${vnd(+p.p||0)}</span>${p.colors&&p.colors.length?`<span class="adots">${p.colors.slice(0,6).map(c=>`<i style="background:${/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#888"}"></i>`).join("")}</span>`:""}${+p.o?` <s>${vnd(+p.o)}</s>`:""}</small>
       <div class="abtn"><button class="ashow ${p.show?"on":""}" data-a="show">${p.show?"👁 Đang show":"🚫 Chưa show"}</button><button class="astar ${p.feat?"on":""}" data-a="feat" title="Sản phẩm chính">★</button><button class="abs ${p.bs?"on":""}" data-a="bs" title="Best Seller">🏆</button><button class="aed" data-a="edit">Sửa</button></div></div></div>`}).join("")
     :`<div class="aempty">${AD.items.length?"Không tìm thấy sản phẩm.":"Kho trống. Vào tab <b>Dữ liệu</b> để nhập Excel hoặc 68 sản phẩm mẫu, hoặc bấm <b>＋ Thêm</b>."}</div>`;
   selUI();$("#aPg").innerHTML=pages>1?`<button data-p="${AD.page-1}" ${AD.page?"":"disabled"}>‹</button><span>Trang ${AD.page+1}/${pages}</span><button data-p="${AD.page+1}" ${AD.page<pages-1?"":"disabled"}>›</button>`:""}
@@ -2235,9 +2245,11 @@ $("#peGal").onclick=e=>{const b=e.target.closest("button");if(!b)return;const S=
 function peAddUrl(u){u=String(u||"").trim();if(!/^https?:\/\//.test(u))return false;if(AD.slots.length>=PE_MAX){$("#peInfo").textContent="❌ Đã đủ 5 ảnh. Bỏ bớt một ảnh trước.";return false}
   AD.slots.push({ref:u,data:null});peRender();return true}
 const num=x=>Math.round(+String(x||"").replace(/[^\d]/g,""))||0;
+const PAL=[["Đen","#111111"],["Trắng","#ffffff"],["Xám","#8a8a8a"],["Bạc","#c8ccd0"],["Vàng gold","#d4af37"],["Đỏ","#e53935"],["Hồng","#f48fb1"],["Cam","#fb8c00"],["Vàng","#fdd835"],["Xanh lá","#43a047"],["Xanh dương","#1e88e5"],["Xanh navy","#1a237e"],["Tím","#8e24aa"],["Nâu","#6d4c41"]];
+$("#peCl").addEventListener("click",e=>{const d=e.target.closest(".pe-pal i");if(!d)return;const i=+d.parentNode.dataset.i,c=AD.cl[i];if(!c)return;c.h=d.dataset.h;if(!String(c.n||"").trim())c.n=d.dataset.nm;peClDraw()});
 function peClDraw(){const n=AD.slots.length;
   $("#peCl").innerHTML=AD.cl.map((c,i)=>`<div class="pe-r" data-i="${i}"><input type="color" data-f="h" value="${c.h}" aria-label="Màu"><input data-f="n" value="${escH(c.n)}" maxlength="24" placeholder="Tên màu (vd: Hồng)">
-    <select data-f="k" aria-label="Ảnh">${Array.from({length:5},(_,j)=>`<option value="${j}" ${c.k===j?"selected":""}>Ảnh ${j+1}${j?"":" ★"}${j>=n?" (chưa có)":""}</option>`).join("")}</select><button type="button" class="x" data-del="${i}" aria-label="Bỏ">✕</button></div>`).join("")||'<div class="pe-empty">Chưa có màu.</div>'}
+    <select data-f="k" aria-label="Ảnh">${Array.from({length:5},(_,j)=>`<option value="${j}" ${c.k===j?"selected":""}>Ảnh ${j+1}${j?"":" ★"}${j>=n?" (chưa có)":""}</option>`).join("")}</select><button type="button" class="x" data-del="${i}" aria-label="Bỏ">✕</button></div><div class="pe-pal" data-i="${i}">${PAL.map(([nm_,h])=>`<i data-h="${h}" data-nm="${nm_}" style="background:${h}" title="${nm_}"></i>`).join("")}</div>`).join("")||'<div class="pe-empty">Chưa có màu.</div>'}
 function peVrDraw(){$("#peVr").innerHTML=AD.vr.map((v,i)=>`<div class="pe-r v" data-i="${i}"><input data-f="n" value="${escH(v.n)}" maxlength="40" placeholder="Tên biến thể (vd: Chân iPhone)">
     <input data-f="p" value="${v.p||""}" inputmode="numeric" placeholder="Giá sỉ (₫)"><input data-f="o" value="${v.o||""}" inputmode="numeric" placeholder="Giá gốc (₫)"><button type="button" class="x" data-del="${i}" aria-label="Bỏ">✕</button></div>`).join("")||'<div class="pe-empty">Chưa có biến thể.</div>'}
 [["#peCl","cl",peClDraw],["#peVr","vr",peVrDraw]].forEach(([sel,key,draw])=>{const el=$(sel);
@@ -2245,7 +2257,7 @@ function peVrDraw(){$("#peVr").innerHTML=AD.vr.map((v,i)=>`<div class="pe-r v" d
   el.addEventListener("change",e=>{const r=e.target.closest(".pe-r");if(r&&e.target.dataset.f==="k")AD[key][+r.dataset.i].k=+e.target.value});
   el.addEventListener("click",e=>{const b=e.target.closest("[data-del]");if(b){AD[key].splice(+b.dataset.del,1);draw()}});
   el.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT")e.preventDefault()})});
-$("#peAddC").onclick=()=>{if(AD.cl.length>=12)return;AD.cl.push({n:"",h:"#000000",k:Math.min(AD.cl.length,4)});peClDraw();$("#peCl").querySelector(".pe-r:last-child [data-f=n]").focus()};
+$("#peAddC").onclick=()=>{if(AD.cl.length>=12)return;AD.cl.push({n:"",h:"#000000",k:Math.min(AD.cl.length,4)});peClDraw();{const f=$("#peCl").querySelector(".pe-r:nth-last-child(2) [data-f=n]");f&&f.focus()}};
 $("#peAddV").onclick=()=>{if(AD.vr.length>=12)return;AD.vr.push({n:"",p:0,o:0});peVrDraw();$("#peVr").querySelector(".pe-r:last-child [data-f=n]").focus()};
 function openEdit(p){AD.edit=p;AD.newImg=null;AD.cl=(p&&p.colors||[]).map(c=>({n:c.n||"",h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#000000",k:+c.k||0}));AD.vr=(p&&p.vars||[]).map(v=>({n:v.n||"",p:+v.p||0,o:+v.o||0}));peVrDraw();AD.slots=p?[p.img,...(p.imgs||[])].filter(Boolean).slice(0,PE_MAX).map(ref=>({ref,data:null})):[];$("#peT").textContent=p?"Sửa sản phẩm":"Thêm sản phẩm mới";$("#peDel").hidden=!p;
   pf.n.value=p?.n||"";pf.c.value=p?.c||"cap";pf.p.value=p?.p||"";pf.o.value=p?.o||"";pf.tag.value=p?.tag||"";pf.desc.value=p?.desc||"";pf.sold.value=p?.s||"";pf.show.checked=p?!!p.show:true;pf.feat.checked=!!p?.feat;
@@ -2483,11 +2495,11 @@ function renderCart(){const it=cartItems(),tot=it.reduce((a,x)=>a+x.q*x.u,0),n=i
       <span class="ci-ch"><button data-s="10">10</button><button data-s="50">50</button><button data-s="100">100</button></span></div></div>
     <div class="ci-r"><b>${vnd(u*q)}</b><button class="ci-x" aria-label="Xóa">🗑</button></div></div>`).join("")
     :`<div class="ci-empty">Giỏ hàng trống.<br>Bấm <b>+10 / +50 / +100</b> ở mỗi sản phẩm để thêm nhanh.</div>`;
-  const pct=Math.min(100,tot/1e6*100),pct5=Math.min(100,tot/5e6*100);
+  const pct=Math.min(100,tot/MIN_ORD*100),pct5=Math.min(100,tot/5e6*100);
   $("#cartSum").innerHTML=it.length?`<div class="cs-row"><span>${it.length} mã hàng • ${n.toLocaleString("vi-VN")} sản phẩm</span><b>${vnd(tot)}</b></div>
-    <div class="cs-bar"><i style="width:${pct}%"></i></div><div class="cs-note">${tot<1e6?`Thêm <b>${vnd(1e6-tot)}</b> để đạt đơn tối thiểu online 1.000.000₫`:"✅ Đạt đơn tối thiểu online"}</div>
+    <div class="cs-bar"><i style="width:${pct}%"></i></div><div class="cs-note">${tot<MIN_ORD?`⛔ Chưa thể đặt hàng – thêm <b>${vnd(MIN_ORD-tot)}</b> để đạt đơn tối thiểu 500.000₫`:"✅ Đạt đơn tối thiểu 500.000₫"}</div>
     <div class="cs-bar g"><i style="width:${pct5}%"></i></div><div class="cs-note">${tot<5e6?`Thêm <b>${vnd(5e6-tot)}</b> để được hỗ trợ phí ship (đơn trên 5 triệu, thanh toán trước)`:"🚚 Được hỗ trợ phí vận chuyển"}</div>
-    <button class="btn btn-gold" id="cartSend">📝 Đặt hàng – nhập thông tin nhận hàng</button><button class="btn" id="cartClear">Xóa giỏ hàng</button>
+    <button class="btn btn-gold" id="cartSend" ${tot<MIN_ORD?"disabled":""}>${tot<MIN_ORD?"⛔ Đơn tối thiểu 500.000₫ mới đặt được":"📝 Đặt hàng – nhập thông tin nhận hàng"}</button><button class="btn" id="cartClear">Xóa giỏ hàng</button>
     <div class="cs-foot">Giá sỉ tham khảo, BD Team xác nhận lại khi chốt đơn.</div>`:"";
   renderMyOrd();
   if(it.length){$("#cartSend").onclick=openBill;$("#cartClear").onclick=()=>{if(confirm("Xóa toàn bộ giỏ hàng?")){CART={};saveCart();renderCart();cartBadge()}}}}
@@ -2503,7 +2515,8 @@ function sendCart(){const it=cartItems(),tot=it.reduce((a,x)=>a+x.q*x.u,0);
   if(navigator.clipboard&&isSecureContext)navigator.clipboard.writeText(txt).then(go,()=>fallbackCopy(txt,go));else fallbackCopy(txt,go)}
 /* ---------- ĐẶT HÀNG: nhập thông tin → tạo bill JPG (tự chia nhiều ảnh) → gửi Zalo ---------- */
 const bill=$("#bill"),blF=$("#blForm");let BILL=null;
-function openBill(){let c={};try{c=JSON.parse(localStorage.getItem("bdCus")||"{}")||{}}catch(e){}
+function cartTotal(){return cartItems().reduce((a,x)=>a+x.q*x.u,0)}
+function openBill(){if(cartTotal()<MIN_ORD){toast("⛔ Đơn hàng tối thiểu "+vnd(MIN_ORD)+" mới đặt được");return}let c={};try{c=JSON.parse(localStorage.getItem("bdCus")||"{}")||{}}catch(e){}
   const pf=PROFILE||{};["name","phone","shop","address"].forEach(k=>{if(!blF[k].value)blF[k].value=c[k]||pf[k]||""});
   blF.hidden=false;$("#blView").hidden=true;$("#blT").textContent="📝 Thông tin nhận hàng";$("#blErr").textContent="";closeCart();bill.classList.add("on")}
 const closeBill=()=>bill.classList.remove("on");
@@ -2516,6 +2529,7 @@ blF.onsubmit=async e=>{e.preventDefault();const er=$("#blErr"),d={};["name","pho
   if(d.address.length<8)return er.textContent="❌ Nhập địa chỉ nhận hàng đầy đủ.";
   d.phone=ph;er.textContent="";try{localStorage.setItem("bdCus",JSON.stringify({name:d.name,phone:d.phone,shop:d.shop,address:d.address}))}catch(_){}
   const it=cartItems();if(!it.length){closeBill();return toast("Giỏ hàng trống")}
+  if(it.reduce((a,x)=>a+x.q*x.u,0)<MIN_ORD)return er.textContent="⛔ Đơn hàng tối thiểu "+vnd(MIN_ORD)+" mới đặt được. Vui lòng thêm sản phẩm.";
   const b=$("#blMake");b.disabled=true;b.textContent="Đang tạo bill…";
   const rows=it.map(x=>({id:x.p.id,n:x.p.n,q:x.q,u:x.u,vn:x.vn,cn:x.cn}));
   try{const old=BILL;BILL=await makeBill(d,rows);if(old)old.urls.forEach(u=>URL.revokeObjectURL(u));BILL.saved=await saveOrder(d,rows,BILL);if(BILL.saved){addMyOrder(BILL,rows);CART={};saveCart();cartBadge()}showBill()}catch(err){console.warn(err);er.textContent="❌ Không tạo được ảnh bill trên trình duyệt này. Thử lại hoặc dùng Chrome / Safari."}
@@ -2594,7 +2608,7 @@ async function makeBill(cus,it,meta={}){
     if(last){y+=34;x.fillStyle="#1a140b";x.fillRect(PX-16,y,W-PX*2+32,TOTH-60);
       x.fillStyle="#e9dcc0";x.font=`500 25px ${FF}`;x.fillText(`Số mã hàng: ${it.length}`,PX+10,y+50);x.fillText(`Tổng số lượng: ${qty.toLocaleString("vi-VN")}`,PX+10,y+92);
       x.textAlign="right";x.fillStyle="#bfae8c";x.font=`600 24px ${FF}`;x.fillText("TỔNG CỘNG",W-PX-10,y+50);x.fillStyle="#f7dc92";x.font=`800 52px ${FF}`;x.fillText(vnd(tot),W-PX-10,y+118);x.textAlign="left";
-      x.fillStyle="#bfae8c";x.font=`400 20px ${FF}`;x.fillText(tot<1e6?"⚠ Chưa đạt đơn tối thiểu online 1.000.000₫":tot>=5e6?"✓ Được hỗ trợ phí vận chuyển (thanh toán trước)":"✓ Đạt đơn tối thiểu online",PX+10,y+150);y+=TOTH-60}
+      x.fillStyle="#bfae8c";x.font=`400 20px ${FF}`;x.fillText(tot<MIN_ORD?"⚠ Chưa đạt đơn tối thiểu 500.000₫":tot>=5e6?"✓ Được hỗ trợ phí vận chuyển (thanh toán trước)":"✓ Đạt đơn tối thiểu online",PX+10,y+150);y+=TOTH-60}
     x.fillStyle="#8a7650";x.font=`400 20px ${FF}`;x.textAlign="center";
     x.fillText(`Giá sỉ tham khảo – BD Team sẽ gọi xác nhận đơn${N>1?` • Ảnh ${pi+1}/${N}`:""}`,W/2,H-34);x.textAlign="left";
     cvs.push(cv);const blob=await new Promise((res,rej)=>cv.toBlob(b=>b?res(b):rej(new Error("toBlob")),"image/jpeg",.92));
@@ -2654,13 +2668,13 @@ function openDetail(id){const p=ALL.find(x=>x.id===id);if(!p)return;PDP=p;PDQ=1;
   $("#pdOpts").innerHTML=`${p.cl&&p.cl.length?`<div class="pd-opt"><h5>Màu sắc: <b id="pdCn"></b></h5><div class="pd-chips" id="pdCl">${p.cl.map((c,i)=>`<button type="button" data-ci="${i}"><i style="background:${c.h}"></i>${escH(c.n)}</button>`).join("")}</div></div>`:""}
    ${p.v&&p.v.length?`<div class="pd-opt"><h5>Phân loại: <b id="pdVn"></b></h5><div class="pd-chips" id="pdVr">${p.v.map((x,i)=>`<button type="button" data-vi="${i}">${escH(x.n)}<small>${vnd(x.p||p.p)}</small></button>`).join("")}</div></div>`:""}`;
   $("#pdBody").insertAdjacentHTML("beforeend",`
-   ${p.s?`<div class="pd-sold">🔥 Đã bán <b>${p.s.toLocaleString("vi-VN")}+</b>${rk<=3?` • <b>Top ${rk}</b> bán chạy nhóm ${catName[p.c]}`:""}</div>`:""}
+   ${p.s?`<div class="pd-sold">🔥 Đã bán <b>${fmtK(p.s)}+</b>${rk<=3?` • <b>Top ${rk}</b> bán chạy nhóm ${catName[p.c]}`:""}</div>`:""}
    <div class="pd-sec"><h4>📄 Mô tả sản phẩm</h4><p>${escH(bodyOf(p))}</p></div>
    ${perf.length?`<div class="pd-sec"><h4>⚡ Hiệu suất</h4><ul>${perf.map(x=>`<li>${escH(x.charAt(0).toUpperCase()+x.slice(1))}</li>`).join("")}</ul></div>`:""}
    <div class="pd-sec"><h4>📋 Thông tin</h4><table>
      <tr><td>Danh mục</td><td>${catName[p.c]}</td></tr>${br?`<tr><td>Thương hiệu</td><td>${escH(br)}</td></tr>`:""}
      <tr><td>Giá sỉ</td><td><b class="g">${prTxt(p)}</b></td></tr>${p.o&&!(p.v&&p.v.length)?`<tr><td>Giá gốc</td><td>${vnd(p.o)} (giảm ${p.off}%)</td></tr>`:""}
-     ${p.s?`<tr><td>Đã bán</td><td>${p.s.toLocaleString("vi-VN")}+</td></tr><tr><td>Mức bán chạy</td><td>${rk<=3?`Top ${rk} nhóm ${catName[p.c]}`:`Hạng ${rk} trong nhóm`}</td></tr>`:""}</table></div>
+     ${p.s?`<tr><td>Đã bán</td><td>${fmtK(p.s)}+</td></tr><tr><td>Mức bán chạy</td><td>${rk<=3?`Top ${rk} nhóm ${catName[p.c]}`:`Hạng ${rk} trong nhóm`}</td></tr>`:""}</table></div>
    ${p.cr?`<div class="pd-cr">📷 Ảnh: ${escH(p.cr)}</div>`:""}`);
   galInit(gal.length);if(p.cl&&p.cl.length===1)PDC=0;pdOpt();pd.classList.add("on");pd.querySelector(".pd-box").scrollTop=0}
 /* vuốt trái/phải để xem ảnh khác */
@@ -2697,6 +2711,7 @@ $("#pdIn").oninput=e=>{const v=Math.round(+e.target.value.replace(/\D/g,""));if(
 $("#pdAdd").onclick=()=>{if(!PDP)return;const hasC=PDP.cl&&PDP.cl.length,hasV=PDP.v&&PDP.v.length;
   if(hasC&&PDC<0){toast("🎨 Vui lòng chọn màu sắc");const c=$("#pdCl");c.classList.remove("need");void c.offsetWidth;c.classList.add("need");return}
   addCart(PDP.id,PDQ,hasC||hasV?{v:hasV?PDP.v[PDV].n:"",c:hasC?PDP.cl[PDC].n:""}:null);pd.classList.remove("on")};
+$("#pdGo").onclick=()=>{pd.classList.remove("on");openCart()};
 $("#pdClose").onclick=()=>pd.classList.remove("on");pd.onclick=e=>{if(e.target===pd)pd.classList.remove("on")};
 $("#grid").addEventListener("click",e=>{if(e.target.closest(".qadd"))return;const c=e.target.closest(".pc");if(c&&(e.target.closest(".im,.nm,.pdbtn")))openDetail(c.dataset.id)});
 $("#cf").addEventListener("click",e=>{const c=e.target.closest(".cf-card.on");if(c&&!moved){const m=MAIN[cards.indexOf(c)];if(m&&m.id&&ALL.some(x=>x.id===m.id))openDetail(m.id)}});
