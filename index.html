@@ -2270,9 +2270,10 @@ pf.onsubmit=async e=>{e.preventDefault();const b=pf.querySelector("button[type=s
   try{if(isNew){p={id:uid36(),img:"",_part:nextPart(),ord:Date.now()};}
     if(pf.url.value.trim())peAddUrl(pf.url.value);
     const oldImg=p.img,oldIds=dbIds(p),refs=[];
-    for(const x of AD.slots){if(x.data){const id=p.id+"-"+uid36(),v=id+"@"+Date.now().toString(36);await F.setDoc(F.doc(db,"images",id),{d:x.data});IMGC.set(v,x.data);x.ref="db:"+v;x.data=null}refs.push(x.ref)}
+    await Promise.all(AD.slots.filter(x=>x.data).map(async x=>{const id=p.id+"-"+uid36(),v=id+"@"+Date.now().toString(36);await F.setDoc(F.doc(db,"images",id),{d:x.data});IMGC.set(v,x.data);x.ref="db:"+v;x.data=null}));
+    for(const x of AD.slots)refs.push(x.ref);
     p.img=refs[0]||"";p.imgs=refs.slice(1);if(p.img!==oldImg){p.imgThumb="";p.imgCredit=""}
-    const keep=new Set(dbIds(p));for(const id of oldIds)if(!keep.has(id))await F.deleteDoc(F.doc(db,"images",id)).catch(()=>{});
+    const keep=new Set(dbIds(p));Promise.all(oldIds.filter(id=>!keep.has(id)).map(id=>F.deleteDoc(F.doc(db,"images",id)).catch(()=>{})));
     Object.assign(p,d);
     p.colors=AD.cl.filter(c=>c.n.trim()).map(c=>({n:c.n.trim(),h:c.h,k:Math.max(0,Math.min(4,+c.k||0))}));
     p.vars=AD.vr.filter(v=>v.n.trim()).map(v=>({n:v.n.trim(),p:num(v.p),o:num(v.o)}));
@@ -2281,7 +2282,7 @@ pf.onsubmit=async e=>{e.preventDefault();const b=pf.querySelector("button[type=s
     pe.classList.remove("on");admList();atoast(isNew?"✅ Đã thêm sản phẩm":"✅ Đã lưu thay đổi")}
   catch(err){if(isNew)AD.items=AD.items.filter(x=>x!==p);info.textContent="❌ Lưu thất bại: "+authMsg(err)}finally{busy(b,false)}};
 $("#peDel").onclick=async()=>{const p=AD.edit;if(!p||!confirm(`Xóa vĩnh viễn "${p.n}"? Không thể hoàn tác.`))return;
-  try{AD.items=AD.items.filter(x=>x!==p);await savePart(p._part);for(const id of dbIds(p))await FB.F.deleteDoc(FB.F.doc(FB.db,"images",id)).catch(()=>{});
+  try{AD.items=AD.items.filter(x=>x!==p);await savePart(p._part);Promise.all(dbIds(p).map(id=>FB.F.deleteDoc(FB.F.doc(FB.db,"images",id)).catch(()=>{})));
     pe.classList.remove("on");admList();atoast("🗑️ Đã xóa sản phẩm")}catch(err){AD.items.push(p);atoast("❌ "+authMsg(err))}};
 function atoast(t){const el=$("#atoast");el.innerHTML=t;el.classList.add("on");clearTimeout(atoast.t);atoast.t=setTimeout(()=>el.classList.remove("on"),2800)}
 /* ---- khách hàng ---- */
@@ -2436,6 +2437,7 @@ function refreshAfterSync(){rebuildMainUI();IDX=buildIDX();$$(".chip")[0].textCo
 FB_READY.then(f=>{if(!f||!f.F.onSnapshot)return;let liveKey=null;
   FB.F.onSnapshot(FB.F.doc(FB.db,"catalog","meta"),async snap=>{if(!snap.exists())return;const k=JSON.stringify(snap.data().updated||null)+snap.data().count;
     if(liveKey===null){liveKey=k;return}if(k===liveKey)return;liveKey=k;
+    if(document.body.classList.contains("adm-on"))return;/* admin đang thao tác: bỏ qua tải lại + dựng lại giao diện khách (rất nặng) */
     try{const rows=await loadCatalog();if(!rows.length)return;ALL=visRows(rows).map(toItem);buildMain();DATA_SRC="db";refreshAfterSync()}catch(e){console.warn(e)}},()=>{})});
 window.__lateSync=()=>{rebuildMainUI();IDX=buildIDX();$$(".chip")[0].textContent=`Tất cả (${ALL.length})`;render()};
 
