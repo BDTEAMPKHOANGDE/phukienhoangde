@@ -1886,8 +1886,12 @@ const PUSH={api:"https://hoangde-push.nhatnguyennhu3008.workers.dev",pub:"BOfq1Q
 const b64uToU8=v=>{v=v.replace(/-/g,"+").replace(/_/g,"/");v+="=".repeat((4-v.length%4)%4);const r=atob(v);return Uint8Array.from(r,c=>c.charCodeAt(0))};
 const isStandalone=()=>navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
 async function pushCall(path,obj){const r=await fetch(PUSH.api+path,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(obj)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||("Lỗi "+r.status));return j}
-const pushReg=()=>Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error("Chưa tải được sw.js – hãy tải file sw.js lên cùng thư mục với trang")),5000))]);
-if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(e=>console.warn("sw.js:",e)));
+/* đăng ký service worker NGAY (không chờ sự kiện load) và báo rõ lý do nếu lỗi */
+let swErr="";
+const swRegister=()=>("serviceWorker" in navigator)?navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>{swErr="";return r}).catch(e=>{swErr=(e&&e.message)||String(e);console.warn("sw.js:",e);throw e}):Promise.reject(new Error("không hỗ trợ service worker"));
+const pushReg=async()=>{try{await swRegister()}catch(e){throw new Error("Không đăng ký được sw.js ("+swErr+")")}
+  return await Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error("sw.js đã tải nhưng chưa kích hoạt – hãy đóng hẳn app rồi mở lại")),10000))])};
+swRegister().catch(()=>{});
 async function pushUI(){const b=$("#pushBtn"),i=$("#pushInfo"),t=$("#pushTest");if(!b)return;
   if(!("serviceWorker" in navigator)||!("PushManager" in window)||!("Notification" in window)){b.disabled=true;t.hidden=true;
     i.innerHTML=/iPhone|iPad|iPod/.test(navigator.userAgent)&&!isStandalone()?"📱 iPhone: hãy mở web bằng icon trên <b>Màn hình chính</b> (Safari → Chia sẻ → Thêm vào Màn hình chính) rồi bật thông báo":"⚠️ Trình duyệt này chưa hỗ trợ thông báo đẩy";return}
