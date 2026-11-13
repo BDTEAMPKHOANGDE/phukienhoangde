@@ -1425,7 +1425,7 @@ function monHtml(it){const cur=it.map(x=>({n:x.p.n,q:x.q,u:x.u,nd:x.nd,bg:x.bg})
   gs.forEach(g=>{const b=B[g],t=b.tier,nx=b.next;
     h+=`<div class="mon-r"><b>${POL[g].n}</b><span>Đã mua trong tháng ${vnd(A[g]?A[g].tot:0)} + giỏ này ${vnd(C[g].tot)} = <b>${vnd(b.tot)}</b></span>`
       +(t?(t[2]==null?'<span class="g">Trên 500 triệu – vui lòng liên hệ BD Team</span>':`<span>Mốc <b class="g">${pctStr(t[2])}</b>${t[3]?` (${t[3]})`:""} • hoàn lại dự kiến <b class="g">${vnd(b.rebate)}</b>${b.exc?` • ${vnd(b.exc)} là hàng không chiết khấu`:""}</span>`):`<span>Chưa đạt mốc đầu tiên (${pctStr(POL[g].t[0][2])} từ ${mTr(POL[g].t[0][0])} triệu)</span>`)
-      +(nx?`<span class="mut">Mua thêm <b>${vnd(nx[0]-b.tot)}</b> để lên mốc ${nx[2]==null?"liên hệ":pctStr(nx[2])}</span>`:"")+"</div>"});
+      +(nx?`<span class="mut">Mua thêm <b>${vnd(nx[0]-b.tot)}</b> ${({wk:"thương hiệu WEKOME",pw:"đồng hồ PICOM",po:"sản phẩm PICOM (trừ đồng hồ)"})[g]} để lên mốc ${nx[2]==null?"liên hệ BD Team":pctStr(nx[2])}</span>`:"")+"</div>"});
   if(MON.anon)h+='<div class="cs-note">🔑 Đăng nhập tài khoản để cộng dồn các đơn đã xác nhận trong tháng.</div>';else if(MON.err)h+='<div class="cs-note">Chưa tải được các đơn trong tháng – số liệu trên chỉ tính giỏ hàng này.</div>';
   return h+'<div class="cs-note">Chiết khấu được tổng kết cuối tháng và hoàn lại bằng tiền hoặc sản phẩm. Chỉ tính các đơn BD Team đã xác nhận; sang tháng mới tự tính lại từ đầu.</div>'}
 const PH=`<div style="width:100%;height:100%;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#1d1810,#1d1810 12px,#231c12 12px,#231c12 24px);color:#d9b25f;font-size:12px;letter-spacing:2px;text-align:center">＋<br>ẢNH SẢN PHẨM</div>`;
