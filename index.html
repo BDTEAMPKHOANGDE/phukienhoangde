@@ -921,6 +921,12 @@ body{padding-left:var(--sal);padding-right:var(--sar)}
 @media(min-width:761px){.pl-wg{grid-template-columns:repeat(4,1fr)}}@media(max-width:760px){.dl-r.t3{grid-template-columns:1fr auto}}
 .cs-mon{margin:8px 0;padding:10px 12px;border-radius:14px;border:1px solid rgba(247,220,146,.3);background:rgba(247,220,146,.06);display:grid;gap:8px}.mon-h{font-weight:800;color:var(--gold2);font-size:14px}.mon-r{display:grid;gap:2px;font-size:13px;color:#f3ead6}.mon-r>b{color:#fff}.mon-r .g{color:var(--gold2)}.mon-r .mut{color:var(--muted)}
 .mn-r{padding:12px 14px;margin:10px 0;border:1px solid var(--line);border-radius:14px;background:var(--card);display:grid;gap:6px}.mn-h b{color:var(--gold2)}.mn-g{font-size:13.5px;line-height:1.5}.mn-g b{color:#fff}.mn-f{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:8px}.mn-ok{color:#10b981;font-weight:700;font-size:13px}.mn-w{color:#f59e0b;font-size:12px}
+#ndList .nd-r{display:flex!important;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;margin:8px 0;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+#ndList .nd-r.ck{border-color:rgba(16,185,129,.45)}#ndList .nd-r.nd{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.08)}
+#ndList .nd-i{flex:1 1 100%;min-width:0}#ndList .nd-i b{display:block;color:#fff;font-size:14px;word-break:break-word}#ndList .nd-i small{color:var(--muted);font-size:12px}
+#ndList .nd-b{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;flex:1 1 140px;padding:9px 12px;border-radius:12px;border:1px solid var(--line);cursor:pointer;font-size:13.5px;font-weight:700;margin:0;color:var(--muted)}
+#ndList .nd-b input{width:22px!important;height:22px!important;min-width:22px;padding:0!important;margin:0!important;flex:0 0 auto}#ndList .nd-b.ck input{accent-color:#10b981}#ndList .nd-b.no input{accent-color:#ef4444}#ndList .nd-b i{font-style:normal}
+#ndList .nd-r.ck .nd-b.ck{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.5);color:#6ee7b7}#ndList .nd-r.nd .nd-b.no{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.5);color:#fca5a5}
 </style>
 </head>
 <body class="loading">
@@ -1231,9 +1237,9 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
       </div>
       <div data-t="nd" hidden>
         <div class="adm-card"><h3>🚫 Sản phẩm không được chiết khấu</h3>
-          <p>Tích chọn những sản phẩm <b>không áp dụng chiết khấu đại lý</b> (ví dụ: kính cường lực). Khi tổng kết cuối tháng, các sản phẩm này sẽ <b>không được tính chiết khấu</b> (hãy đánh dấu toàn bộ cường lực ở đây). Mỗi lần tích là tự lưu và đồng bộ mọi thiết bị.</p>
-          <div class="adm-bar"><input id="ndQ" placeholder="🔍 Tìm theo tên hoặc mã sản phẩm…"><select id="ndF"><option value="all">Tất cả sản phẩm</option><option value="on">🚫 Đã đánh dấu</option><option value="off">Chưa đánh dấu</option></select></div>
-          <div class="adm-row"><button class="btn btn-gold" type="button" id="ndAll">☑ Đánh dấu tất cả kết quả đang hiện</button><button class="btn btn-ghost" type="button" id="ndNone">☐ Bỏ đánh dấu tất cả kết quả đang hiện</button></div>
+          <p>Mỗi sản phẩm có <b>2 ô tích</b>: <b>✅ Chiết khấu</b> (được tính vào chính sách) và <b>🚫 Không chiết khấu</b> (ví dụ kính cường lực). Sản phẩm có chữ WK / WEKOME / PICOM sẽ <b>tự nhận diện và tự tích ô Chiết khấu</b>. Sản phẩm chưa nhận diện được (ví dụ WDC) bạn tự tích ô Chiết khấu và chọn chính sách áp dụng. Mỗi lần tích là tự lưu và đồng bộ mọi thiết bị.</p>
+          <div class="adm-bar"><input id="ndQ" placeholder="🔍 Tìm theo tên hoặc mã sản phẩm…"><select id="ndF"><option value="all">Tất cả sản phẩm</option><option value="ck">✅ Có chiết khấu</option><option value="nd">🚫 Không chiết khấu</option><option value="none">⚪ Chưa có chính sách</option></select><select id="ndS"><option value="all">Show + chưa show</option><option value="on">👁 Đang show shop</option><option value="off">🚫 Chưa show shop</option></select></div>
+          <div class="adm-row"><button class="btn btn-gold" type="button" id="ndCk">✅ Tích Chiết khấu cho kết quả</button><button class="btn" type="button" id="ndAll">🚫 Tích Không chiết khấu cho kết quả</button><button class="btn btn-ghost" type="button" id="ndNone">↺ Bỏ tích thủ công (về tự nhận diện)</button></div>
           <div class="adm-stat" id="ndStat"></div><div id="ndList"></div><div class="adm-pg" id="ndPg"></div>
         </div>
       </div>
@@ -1399,7 +1405,7 @@ const exOf=x=>x.nd!==undefined&&x.nd!==null?!!x.nd:isCL(x.n);   /* sản phẩm 
 const pctStr=p=>String(p).replace(".",",")+"%",mTr=v=>Math.round(v/1e6);
 const polRange=(g,t)=>!t[1]?(t[0]>500e6?"Trên 500 triệu":`Từ ${mTr(t[0])} triệu trở lên`):(t[1]===500e6+1?`${mTr(t[0])} – 500 triệu`:`${mTr(t[0])} – dưới ${mTr(t[1])} triệu`);
 function polCalc(items){const R={};
-  items.forEach(x=>{const g=grpOf(x.n);if(!g)return;const r=R[g]=R[g]||{tot:0,list:[]};r.tot+=x.q*x.u;r.list.push(x)});
+  items.forEach(x=>{const g=x.bg||grpOf(x.n);if(!g)return;const r=R[g]=R[g]||{tot:0,list:[]};r.tot+=x.q*x.u;r.list.push(x)});
   for(const g in R){const r=R[g];r.tier=polTier(g,r.tot);r.next=polNext(g,r.tot);let rb=0;r.exc=0;
     r.list.forEach(x=>{const a=x.q*x.u;if(exOf(x)){r.exc+=a;return}if(r.tier&&r.tier[2]!=null){let k=r.tier[2];if(g==="wk"&&isPB(x.n)&&k>7)k=7;rb+=a*k/100}});
     r.rebate=Math.round(rb);r.warn=g==="wk"?r.list.filter(x=>!exOf(x)&&isCL(x.n)).length:0}
@@ -1410,10 +1416,10 @@ const ymNow=()=>{const d=new Date();return d.getFullYear()*100+d.getMonth()+1};
 async function monLoad(){if(MON.busy)return;const u=FB&&FB.auth&&FB.auth.currentUser;
   if(!u||(typeof IS_ADMIN!=="undefined"&&IS_ADMIN)){MON={items:[],ok:false,anon:!u,err:0};const e0=$("#csMon");if(e0)e0.innerHTML=monHtml(cartItems());return}
   MON.busy=1;try{const {F,db}=FB,ym=ymNow(),items=[];const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"orders"),F.where("uid","==",u.uid))),8000);
-    sn.forEach(d=>{const o=d.data(),st=o.status||"new";if(st!=="ok"&&st!=="done")return;const t=o.at&&o.at.toDate?o.at.toDate():null;if(!t||t.getFullYear()*100+t.getMonth()+1!==ym)return;(o.items||[]).forEach(x=>items.push({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd}))});
+    sn.forEach(d=>{const o=d.data(),st=o.status||"new";if(st!=="ok"&&st!=="done")return;const t=o.at&&o.at.toDate?o.at.toDate():null;if(!t||t.getFullYear()*100+t.getMonth()+1!==ym)return;(o.items||[]).forEach(x=>items.push({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd,bg:x.bg}))});
     MON={items,ok:true,anon:false,err:0}}catch(e){console.warn("monLoad",e);MON={items:[],ok:false,anon:false,err:1}}
   const el=$("#csMon");if(el)el.innerHTML=monHtml(cartItems())}
-function monHtml(it){const cur=it.map(x=>({n:x.p.n,q:x.q,u:x.u,nd:x.nd})),A=polCalc(MON.items),C=polCalc(cur),B=polCalc(MON.items.concat(cur)),gs=["wk","pw","po"].filter(g=>C[g]);
+function monHtml(it){const cur=it.map(x=>({n:x.p.n,q:x.q,u:x.u,nd:x.nd,bg:x.bg})),A=polCalc(MON.items),C=polCalc(cur),B=polCalc(MON.items.concat(cur)),gs=["wk","pw","po"].filter(g=>C[g]);
   let h='<div class="mon-h">🎁 Chiết khấu cuối tháng (tạm tính)</div>';
   if(!gs.length)h+='<div class="cs-note">Sản phẩm trong giỏ không thuộc thương hiệu có chính sách chiết khấu (WEKOME, PICOM).</div>';
   gs.forEach(g=>{const b=B[g],t=b.tier,nx=b.next;
@@ -1430,7 +1436,7 @@ function renderPolicy(){const b=$("#plBody");if(!b)return;const g=PLG;$$("#plTab
   const perk={wk:["✅ Hàng WEKOME chính hãng"],pw:["🎁 Tặng VAT miễn phí","✅ Hàng chính hãng 100%","🔄 Đổi trả hỗ trợ nhanh","🎧 Hỗ trợ marketing đại lý"],po:["🧾 Xuất VAT miễn phí","✅ Hàng chính hãng","📦 Sẵn kho Bắc Nam","🚚 Ship COD toàn quốc","🛡 Bảo hành uy tín"]}[g];
   let h=`<p class="pl-intro">${intro}</p><div class="dl-head t3"><span>${g==="pw"?"Cấp đại lý / doanh số tháng":"Doanh số trong tháng"}</span><span>Chiết khấu</span><span>Lưu ý</span></div>`
     +POL[g].t.map((t,i)=>`<div class="dl-r t3" data-i="${i}"><span class="r"><small>Doanh số / tháng</small>${t[3]?`<b>${t[3]}</b><br>`:""}${polRange(g,t)}</span><span class="p"><b>${t[2]==null?"LH":pctStr(t[2])}</b></span><span class="n">${t[4]||(g==="pw"?"Giá bán buôn × (100% − tỷ lệ chiết khấu)":"Chiết khấu hoàn lại cuối tháng")}</span></div>`).join("");
-  if(g==="pw"){const vis=WATCHES.filter(w=>ALL.some(p=>grpOf(p.n)==="pw"&&nmw(p.n).includes(" "+w[2])));
+  if(g==="pw"){const vis=WATCHES.filter(w=>ALL.some(p=>(p.bg||grpOf(p.n))==="pw"&&nmw(p.n).includes(" "+w[2])));
     h+=`<div class="pl-w"><h4>⌚ Giá đồng hồ theo từng cấp</h4>${vis.map(w=>`<div class="pl-wc"><b>${w[0]}</b><small>Giá bán buôn ${vnd(w[1])}</small><div class="pl-wg">${POL.pw.t.map(t=>`<span><small>${t[3].replace("Nhà phân phối độc quyền","NPP độc quyền")} • ${pctStr(t[2])}</small><b>${vnd(Math.round(w[1]*(100-t[2])/100))}</b></span>`).join("")}</div></div>`).join("")||'<p class="mut">Các mẫu đồng hồ sẽ hiển thị tại đây khi được mở bán.</p>'}</div>`}
   b.innerHTML=h+`<div class="pl-perk">${perk.map(x=>`<span>${x}</span>`).join("")}</div>`}
 function dlCalc(){const v=Math.round(+String($("#dlIn").value).replace(/\D/g,"")),g=$("#dlG").value,o=$("#dlOut");$$("#plBody .dl-r").forEach(r=>r.classList.remove("on"));
@@ -1481,7 +1487,7 @@ const visRows=rows=>rows.some(r=>r.show)?rows.filter(r=>r.show):rows;
 /* khoảng giá khi có biến thể */
 const prRange=p=>{const a=(p.v&&p.v.length?p.v.map(x=>x.p||p.p):[p.p]);return[Math.min(...a),Math.max(...a)]};
 const prTxt=p=>{const[a,b]=prRange(p);return a===b?vnd(a):`${vnd(a)} – ${vnd(b)}`};
-const toItem=r=>({id:r.id,s:+r.s||0,bs:!!r.bs,show:!!r.show,th:r.imgThumb||"",cr:r.imgCredit||"",c:catName[r.c]?r.c:"khac",n:r.n||"",o:+r.o||0,p:+r.p||0,i:r.img||"",g:(Array.isArray(r.imgs)?r.imgs:[]).filter(Boolean).slice(0,4),cl:(Array.isArray(r.colors)?r.colors:[]).filter(c=>c&&c.n).slice(0,12).map(c=>({n:String(c.n),h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#888888",k:Math.max(0,Math.min(4,+c.k||0))})),v:(Array.isArray(r.vars)?r.vars:[]).filter(x=>x&&x.n).slice(0,12).map(x=>({n:String(x.n),p:+x.p||0,o:+x.o||0})),tag:r.tag||"",nt:String(r.nt||"").slice(0,300),nd:!!r.nd,desc:r.desc||"",feat:!!r.feat,ord:+r.ord||0,
+const toItem=r=>({id:r.id,s:+r.s||0,bs:!!r.bs,show:!!r.show,th:r.imgThumb||"",cr:r.imgCredit||"",c:catName[r.c]?r.c:"khac",n:r.n||"",o:+r.o||0,p:+r.p||0,i:r.img||"",g:(Array.isArray(r.imgs)?r.imgs:[]).filter(Boolean).slice(0,4),cl:(Array.isArray(r.colors)?r.colors:[]).filter(c=>c&&c.n).slice(0,12).map(c=>({n:String(c.n),h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#888888",k:Math.max(0,Math.min(4,+c.k||0))})),v:(Array.isArray(r.vars)?r.vars:[]).filter(x=>x&&x.n).slice(0,12).map(x=>({n:String(x.n),p:+x.p||0,o:+x.o||0})),tag:r.tag||"",nt:String(r.nt||"").slice(0,300),nd:!!r.nd,bg:["wk","pw","po"].includes(r.bg)?r.bg:"",desc:r.desc||"",feat:!!r.feat,ord:+r.ord||0,
   off:(+r.o>0&&+r.p>0&&+r.o>+r.p)?Math.round((1-r.p/r.o)*100):0});
 let FCFG={show:true,tag:"",h:"",g:"",ids:[],tags:{},n0:"",sets:[]};   /* cài đặt "Sản phẩm chủ lực" + các tab do admin chỉnh (images/featcfg) */
 const CF_DEF=["⭐ Sản phẩm chủ lực","💰 Sản phẩm giá tốt","🔥 Bán chạy","🆕 Hàng mới về"];
@@ -2147,7 +2153,7 @@ $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=
 const MN={rows:[],reb:{},ym:"",on:false};
 async function mnLoad(){const v=$("#mnM").value;if(!v)return;const [y,m]=v.split("-").map(Number),a=new Date(y,m-1,1),b=new Date(y,m,1),{F,db}=FB;$("#mnStat").textContent="Đang tải đơn trong tháng…";
   try{const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"orders"),F.where("at",">=",a),F.where("at","<",b))),15000),by=new Map();
-    sn.forEach(d=>{const o=d.data(),st=o.status||"new";if(st!=="ok"&&st!=="done")return;const c=o.cus||{},ph=normPhone(c.phone)||("uid:"+(o.uid||d.id));let r=by.get(ph);if(!r){r={ph,name:c.name||"",shop:c.shop||"",n:0,items:[]};by.set(ph,r)}r.n++;r.name=c.name||r.name;(o.items||[]).forEach(x=>r.items.push({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd}))});
+    sn.forEach(d=>{const o=d.data(),st=o.status||"new";if(st!=="ok"&&st!=="done")return;const c=o.cus||{},ph=normPhone(c.phone)||("uid:"+(o.uid||d.id));let r=by.get(ph);if(!r){r={ph,name:c.name||"",shop:c.shop||"",n:0,items:[]};by.set(ph,r)}r.n++;r.name=c.name||r.name;(o.items||[]).forEach(x=>r.items.push({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd,bg:x.bg}))});
     MN.rows=[...by.values()].map(r=>({...r,R:polCalc(r.items)}));MN.rows.forEach(r=>r.sum=Object.values(r.R).reduce((t,g)=>t+g.rebate,0));MN.rows.sort((a,b)=>b.sum-a.sum);MN.reb={};MN.rebErr=0;
     try{const rs=await withTimeout(F.getDocs(F.query(F.collection(db,"rebates"),F.where("ym","==",v))),8000);rs.forEach(d=>MN.reb[d.id]=d.data())}catch(e){MN.rebErr=1}
     MN.ym=v;mnDraw()}catch(err){$("#mnStat").innerHTML="❌ "+esc(authMsg(err))}}
@@ -2167,24 +2173,37 @@ function mnInit(){if(!MN.on){MN.on=true;const d=new Date();$("#mnM").value=`${d.
       const d={ym:MN.ym,phone:r.ph,name:r.name||"",form:$("#rb_f").value,amount:Math.round(+String($("#rb_a").value).replace(/\D/g,""))||0,note:$("#rb_n").value.trim(),at:F.serverTimestamp()};
       await F.setDoc(F.doc(db,"rebates",k),d);MN.reb[k]={...d};mnDraw();atoast("✅ Đã ghi nhận chiết khấu")})}}
   if(!MN.ym)mnLoad()}
-/* ---- Sản phẩm không chiết khấu (admin) ---- */
-let ND={q:"",f:"all",page:0,busy:0,dirty:new Set(),t:0};
-const ndFiltered=()=>AD.items.filter(p=>(!ND.q||nm(p.n+" "+p.id+" "+(catName[p.c]||"")).includes(ND.q))&&(ND.f==="all"||(ND.f==="on")===!!p.nd)).sort((a,b)=>(a.c>b.c?1:a.c<b.c?-1:0)||String(a.n).localeCompare(String(b.n),"vi"));
-function ndDraw(){const l=ndFiltered(),per=40,pages=Math.max(1,Math.ceil(l.length/per));ND.page=Math.min(ND.page,pages-1);const mk=AD.items.filter(p=>p.nd).length;
-  $("#ndStat").innerHTML=`<b>${mk}</b> sản phẩm không chiết khấu / ${AD.items.length} • đang hiện <b>${l.length}</b>${ND.busy?" • ⏳ Đang lưu…":ND.dirty.size?" • ⏳ Chờ lưu…":" • ✅ Đã lưu"}`;
-  $("#ndList").innerHTML=l.slice(ND.page*per,ND.page*per+per).map(p=>`<label class="nd-r ${p.nd?"on":""}" data-id="${esc(p.id)}"><input type="checkbox" ${p.nd?"checked":""}><span><b>${esc(p.n)}</b><small>${catName[p.c]||p.c} • ${vnd(+p.p||0)}${p.show?"":" • chưa show"}</small></span><em>${p.nd?"🚫 Không CK":"Có CK"}</em></label>`).join("")||`<div class="aempty">${AD.items.length?"Không tìm thấy sản phẩm.":"Kho trống – vào tab Kho hàng để nhập sản phẩm."}</div>`;
+/* ---- Chiết khấu từng sản phẩm (admin): ô 1 = Chiết khấu • ô 2 = Không chiết khấu ---- */
+let ND={q:"",f:"all",s:"all",page:0,busy:0,dirty:new Set(),t:0};
+const GN={wk:"WEKOME",pw:"Đồng hồ PICOM",po:"PICOM khác"},gOf=p=>p.bg||grpOf(p.n),ndSt=p=>p.nd?"nd":gOf(p)?"ck":"none";
+const ndFiltered=()=>AD.items.filter(p=>(!ND.q||nm(p.n+" "+p.id+" "+(catName[p.c]||"")).includes(ND.q))&&(ND.f==="all"||ndSt(p)===ND.f)&&(ND.s==="all"||(ND.s==="on")===!!p.show)).sort((a,b)=>(a.c>b.c?1:a.c<b.c?-1:0)||String(a.n).localeCompare(String(b.n),"vi"));
+function ndDraw(){const l=ndFiltered(),per=40,pages=Math.max(1,Math.ceil(l.length/per));ND.page=Math.min(ND.page,pages-1);const c={ck:0,nd:0,none:0};AD.items.forEach(p=>c[ndSt(p)]++);
+  $("#ndStat").innerHTML=`✅ <b>${c.ck}</b> có chiết khấu • 🚫 <b>${c.nd}</b> không chiết khấu • ⚪ <b>${c.none}</b> chưa có chính sách • đang hiện <b>${l.length}</b>${ND.busy?" • ⏳ Đang lưu…":ND.dirty.size?" • ⏳ Chờ lưu…":" • ✅ Đã lưu"}`;
+  $("#ndList").innerHTML=l.slice(ND.page*per,ND.page*per+per).map(p=>{const st=ndSt(p),g=gOf(p);return`<div class="nd-r ${st}" data-id="${esc(p.id)}"><div class="nd-i"><b>${esc(p.n)}</b><small>${catName[p.c]||p.c} • ${vnd(+p.p||0)}${p.show?"":" • chưa show"} • ${g?(p.bg?`✋ thủ công: ${GN[g]}`:`🤖 tự nhận diện: ${GN[g]}`):"⚪ chưa thuộc chính sách nào"}</small></div><label class="nd-b ck"><input type="checkbox" data-k="ck" ${st==="ck"?"checked":""}><i>✅ Chiết khấu</i></label><label class="nd-b no"><input type="checkbox" data-k="nd" ${st==="nd"?"checked":""}><i>🚫 Không chiết khấu</i></label></div>`}).join("")||`<div class="aempty">${AD.items.length?"Không tìm thấy sản phẩm.":"Kho trống – vào tab Kho hàng để nhập sản phẩm."}</div>`;
   $("#ndPg").innerHTML=pages>1?`<button data-p="${ND.page-1}" ${ND.page?"":"disabled"}>‹</button><span>Trang ${ND.page+1}/${pages}</span><button data-p="${ND.page+1}" ${ND.page<pages-1?"":"disabled"}>›</button>`:""}
 async function ndFlush(){if(ND.busy||!ND.dirty.size)return;ND.busy=1;ndDraw();const parts=[...ND.dirty];ND.dirty.clear();
-  try{await Promise.all(parts.map(k=>savePart(k)));ALL.forEach(a=>{const sp=AD.items.find(x=>x.id===a.id);if(sp)a.nd=!!sp.nd});try{render();renderCart()}catch(e){}atoast("✅ Đã lưu thiết lập không chiết khấu")}
+  try{await Promise.all(parts.map(k=>savePart(k)));ALL.forEach(a=>{const sp=AD.items.find(x=>x.id===a.id);if(sp){a.nd=!!sp.nd;a.bg=sp.bg||""}});try{render();renderCart();renderPolicy()}catch(e){}atoast("✅ Đã lưu thiết lập chiết khấu")}
   catch(err){parts.forEach(k=>ND.dirty.add(k));atoast("❌ Chưa lưu được: "+authMsg(err))}
   ND.busy=0;ndDraw();if(ND.dirty.size)ndFlush()}
 const ndQueue=()=>{clearTimeout(ND.t);ND.t=setTimeout(ndFlush,700)};
-function ndSet(list,v){list.forEach(p=>{if(!!p.nd!==v){p.nd=v;ND.dirty.add(p._part??0)}});ndDraw();ndQueue()}
+const ndAsk=n=>new Promise(res=>geOpen(`Chọn chính sách cho ${n} sản phẩm`,'<label>Áp dụng chính sách chiết khấu của<select id="ndg"><option value="wk">WEKOME</option><option value="pw">Đồng hồ PICOM</option><option value="po">PICOM (trừ đồng hồ)</option></select></label>',async()=>{res($("#ndg").value)}));
+async function ndApply(list,kind){if(!list.length)return;
+  if(kind==="ck"){const need=list.filter(p=>!gOf(p));let g="";if(need.length){ndDraw();g=await ndAsk(need.length)}
+    list.forEach(p=>{if(!gOf(p)&&g)p.bg=g;p.nd=false;ND.dirty.add(p._part??0)})}
+  else if(kind==="nd")list.forEach(p=>{p.nd=true;ND.dirty.add(p._part??0)})
+  else if(kind==="un")list.forEach(p=>{p.nd=false;ND.dirty.add(p._part??0)})
+  else list.forEach(p=>{p.nd=false;p.bg="";ND.dirty.add(p._part??0)});
+  ndDraw();ndQueue()}
 let ndOn=false;function ndInit(){if(!ndOn){ndOn=true;
-  $("#ndQ").oninput=e=>{ND.q=nm(e.target.value);ND.page=0;ndDraw()};$("#ndF").onchange=e=>{ND.f=e.target.value;ND.page=0;ndDraw()};
-  $("#ndList").onchange=e=>{const r=e.target.closest(".nd-r");if(!r)return;const p=AD.items.find(x=>x.id===r.dataset.id);if(p)ndSet([p],e.target.checked)};
-  $("#ndAll").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Đánh dấu KHÔNG chiết khấu cho ${l.length} sản phẩm đang hiện?`))ndSet(l,true)};
-  $("#ndNone").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Bỏ đánh dấu cho ${l.length} sản phẩm đang hiện?`))ndSet(l,false)};
+  $("#ndQ").oninput=e=>{ND.q=nm(e.target.value);ND.page=0;ndDraw()};$("#ndF").onchange=e=>{ND.f=e.target.value;ND.page=0;ndDraw()};$("#ndS").onchange=e=>{ND.s=e.target.value;ND.page=0;ndDraw()};
+  $("#ndList").onchange=e=>{const r=e.target.closest(".nd-r"),k=e.target.dataset.k;if(!r||!k)return;const p=AD.items.find(x=>x.id===r.dataset.id);if(!p)return;
+    if(k==="nd")ndApply([p],e.target.checked?"nd":"un");
+    else if(e.target.checked)ndApply([p],"ck");
+    else if(p.bg){p.bg="";if(grpOf(p.n))p.nd=true;ND.dirty.add(p._part??0);ndDraw();ndQueue()}
+    else ndApply([p],"nd")};
+  $("#ndCk").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Tích CHIẾT KHẤU cho ${l.length} sản phẩm đang hiện?`))ndApply(l,"ck")};
+  $("#ndAll").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Tích KHÔNG CHIẾT KHẤU cho ${l.length} sản phẩm đang hiện?`))ndApply(l,"nd")};
+  $("#ndNone").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Bỏ mọi tích thủ công của ${l.length} sản phẩm đang hiện (về lại tự nhận diện)?`))ndApply(l,"reset")};
   $("#ndPg").onclick=e=>{const b=e.target.closest("[data-p]");if(b&&!b.disabled){ND.page=+b.dataset.p;ndDraw()}}}
   ndDraw()}
 /* ---- Sắp xếp vị trí: cài đặt admin ---- */
@@ -2382,7 +2401,7 @@ function editBill(o){const c=o.cus||{};let it=(o.items||[]).map(x=>({...x}));
   const legacy=!o.pct,sum=()=>{const D=discCalc(it,legacy?0:undefined);$("#geTot").textContent=`${it.reduce((a,x)=>a+x.q,0).toLocaleString("vi-VN")} sp • ${D.amt?`${vnd(D.gross)} − CK ${D.pct}% (${vnd(D.amt)}) = ${vnd(D.net)}`:vnd(D.gross)}`};
   geOpen("✏️ Sửa bill "+o.code,"",async()=>{const cus={name:$("#eb_name").value.trim(),phone:$("#eb_phone").value.trim(),shop:$("#eb_shop").value.trim(),address:$("#eb_addr").value.trim(),note:$("#eb_note").value.trim()};
       if(cus.name.length<2)throw new Error("Nhập họ tên");if(!it.length)throw new Error("Bill cần ít nhất 1 sản phẩm");
-      const items=it.map(x=>({n:x.n,q:x.q,u:x.u,vn:x.vn||"",cn:x.cn||"",nd:x.nd?1:0})),D=discCalc(items,legacy?0:undefined),tot=D.net,qty=items.reduce((a,x)=>a+x.q,0);
+      const items=it.map(x=>({n:x.n,q:x.q,u:x.u,vn:x.vn||"",cn:x.cn||"",nd:x.nd?1:0,bg:x.bg||""})),D=discCalc(items,legacy?0:undefined),tot=D.net,qty=items.reduce((a,x)=>a+x.q,0);
       await FB.F.updateDoc(FB.F.doc(FB.db,"orders",o.id),legacy?{cus,items,tot,qty}:{cus,items,tot,qty,gross:D.gross,disc:D.amt,pct:D.pct});atoast("✅ Đã lưu bill "+o.code)},
     e=>{const r=e&&e.target&&e.target.closest&&e.target.closest(".ge-it");if(r&&e.target.dataset.f){const x=it[+r.dataset.i];x[e.target.dataset.f]=num(e.target.value)}sum()});
   draw();$("#geB").onclick=e=>{const b=e.target.closest("[data-x]");if(!b)return;it.splice(+b.closest(".ge-it").dataset.i,1);draw()}}
@@ -2734,7 +2753,7 @@ const saveCart=()=>{try{localStorage.setItem("bdCart",JSON.stringify(CART))}catc
 const ckey=(id,v,c)=>v||c?[id,v||"",c||""].map(encodeURIComponent).join("|"):id;
 const cartItems=()=>Object.entries(CART).map(([k,q])=>{const[id,v="",c=""]=k.split("|").map(x=>{try{return decodeURIComponent(x)}catch(e){return x}});
   const p=ALL.find(x=>x.id===id);if(!p)return null;const vr=(p.v||[]).find(x=>x.n===v),cl=(p.cl||[]).find(x=>x.n===c);
-  return{k,p,q,nd:!!p.nd,u:vr&&vr.p?vr.p:p.p,vn:vr?vr.n:"",cn:cl?cl.n:"",im:(cl&&[p.i,...(p.g||[])][cl.k])||p.i}}).filter(x=>x&&x.q>0);
+  return{k,p,q,nd:!!p.nd,bg:p.bg||"",u:vr&&vr.p?vr.p:p.p,vn:vr?vr.n:"",cn:cl?cl.n:"",im:(cl&&[p.i,...(p.g||[])][cl.k])||p.i}}).filter(x=>x&&x.q>0);
 function addCart(id,q,opt){const p=ALL.find(x=>x.id===id);if(!p)return;
   if(!opt&&((p.v&&p.v.length)||(p.cl&&p.cl.length))){openDetail(id);toast("👉 Sản phẩm có nhiều phân loại / màu – chọn loại bạn muốn rồi bấm Thêm vào giỏ");return}
   const vr=opt&&(p.v||[]).find(x=>x.n===opt.v),u=vr&&vr.p?vr.p:p.p,k=ckey(id,opt&&opt.v,opt&&opt.c);
@@ -2800,7 +2819,7 @@ blF.onsubmit=async e=>{e.preventDefault();const er=$("#blErr"),d={};["name","pho
   const it=cartItems();if(!it.length){closeBill();return toast("Giỏ hàng trống")}
   if(it.reduce((a,x)=>a+x.q*x.u,0)<MIN_ORD)return er.textContent="⛔ Đơn hàng tối thiểu "+vnd(MIN_ORD)+" mới đặt được. Vui lòng thêm sản phẩm.";
   const b=$("#blMake");b.disabled=true;b.textContent="Đang tạo bill…";
-  const rows=it.map(x=>({id:x.p.id,n:x.p.n,q:x.q,u:x.u,vn:x.vn,cn:x.cn,nd:x.nd?1:0}));
+  const rows=it.map(x=>({id:x.p.id,n:x.p.n,q:x.q,u:x.u,vn:x.vn,cn:x.cn,nd:x.nd?1:0,bg:x.bg||""}));
   try{const old=BILL;BILL=await makeBill(d,rows);if(old)old.urls.forEach(u=>URL.revokeObjectURL(u));BILL.saved=await saveOrder(d,rows,BILL);if(BILL.saved){addMyOrder(BILL,rows);CART={};saveCart();cartBadge()}showBill()}catch(err){console.warn(err);er.textContent="❌ Không tạo được ảnh bill trên trình duyệt này. Thử lại hoặc dùng Chrome / Safari."}
   finally{b.disabled=false;b.textContent="🧾 Tạo bill"}};
 function showBill(){const ok=$("#blOk");ok.hidden=!BILL.saved;ok.innerHTML=`✅ Đơn <b>${BILL.code}</b> đã được gửi tự động tới BD Team. Gửi thêm ảnh bill qua Zalo để được xác nhận nhanh hơn.`;
@@ -2826,7 +2845,7 @@ $("#blSend").onclick=()=>{if(!BILL)return;
 /* lưu đơn lên Firebase → BD Team nhận ngay trong trang quản trị (tab Đơn hàng) */
 async function saveOrder(cus,rows,B){if(!FB||DEMO)return false;
   try{const {F,db}=FB;await withTimeout(F.setDoc(F.doc(db,"orders",B.code),{code:B.code,at:F.serverTimestamp(),status:"new",uid:(FB.auth.currentUser&&FB.auth.currentUser.uid)||"",
-      cus:{name:cus.name,phone:cus.phone,shop:cus.shop||"",address:cus.address,note:cus.note||""},items:rows.slice(0,300).map(r=>({n:r.n,q:r.q,u:r.u,vn:r.vn||"",cn:r.cn||"",nd:r.nd?1:0})),tot:B.tot,gross:B.gross||B.tot,disc:B.disc||0,pct:B.pct||0,qty:B.qty}),8000);
+      cus:{name:cus.name,phone:cus.phone,shop:cus.shop||"",address:cus.address,note:cus.note||""},items:rows.slice(0,300).map(r=>({n:r.n,q:r.q,u:r.u,vn:r.vn||"",cn:r.cn||"",nd:r.nd?1:0,bg:r.bg||""})),tot:B.tot,gross:B.gross||B.tot,disc:B.disc||0,pct:B.pct||0,qty:B.qty}),8000);
     try{fetch(PUSH.api+"/notify",{method:"POST",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify({code:B.code,tot:B.tot})}).catch(()=>{})}catch(e){}   /* báo điện thoại admin (Web Push) */
     return true}
   catch(e){console.warn("Lưu đơn:",e);return false}}
