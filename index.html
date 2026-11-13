@@ -650,7 +650,7 @@ body.adm-on .cart-fab{display:none!important}
 .ord-n{font-style:normal;background:#e74c3c;color:#fff;border-radius:999px;padding:0 7px;font-size:11.5px;margin-left:4px}
 #oSt{max-width:170px}
 .oc{border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;background:var(--card);display:grid;gap:10px;border-left:4px solid var(--gold)}
-.oc.st-new{border-left-color:#ff6fae;box-shadow:0 0 0 1px rgba(255,111,174,.25)}.oc.st-ok{border-left-color:#22d3ee}.oc.st-done{border-left-color:#10b981;opacity:.85}.oc.st-cancel{border-left-color:#666;opacity:.6}
+.oc.st-new{border-left-color:#ff6fae;box-shadow:0 0 0 1px rgba(255,111,174,.25)}.oc.st-wait{border-left-color:#f59e0b}.oc.st-ok{border-left-color:#22d3ee}.oc.st-done{border-left-color:#10b981;opacity:.85}.oc.st-cancel{border-left-color:#666;opacity:.6}
 .oc-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.oc-h b{color:var(--gold2);font-size:16px}.oc-h span{font-size:12.5px;color:var(--muted);flex:1}
 .oc-h select{width:auto!important;padding:7px 10px!important;font-size:13px!important}
 .oc-c{display:grid;gap:2px;font-size:14px}.oc-c small{color:var(--muted);font-size:12.5px}.oc .g{color:var(--gold2)}
@@ -890,6 +890,37 @@ html.dev-mobile #admin input,html.dev-mobile #admin select,html.dev-mobile #admi
 #vsheet.busy .vs-eq i{opacity:.6;animation:vsEq .7s ease-in-out infinite}
 .vs-mic{cursor:pointer}
 .cs-dc b{color:#7ee0a8}.cs-pay{font-size:1.05em}.cs-pay b{color:var(--gold,#f7dc92);font-size:1.15em}.cs-dn{margin:6px 0}
+
+/* ===== Vùng an toàn iPhone (tai thỏ / Dynamic Island / thanh Home) ===== */
+:root{--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px)}
+header{padding-top:calc(12px + var(--sat));padding-left:var(--sal);padding-right:var(--sar)}header.solid{padding-top:calc(8px + var(--sat))}
+#hero{padding-top:calc(90px + var(--sat))}.chips{top:calc(57px + var(--sat))}
+#toast{top:calc(72px + var(--sat))}#atoast{bottom:calc(24px + var(--sab))}#ordAlert{padding-top:calc(10px + var(--sat))}
+.fab{right:calc(14px + var(--sar));bottom:calc(16px + var(--sab))}.chat{right:calc(14px + var(--sar));bottom:calc(16px + var(--sab));height:min(600px,calc(100svh - 32px - var(--sat) - var(--sab)))}
+.adm-fab,.cart-fab{left:calc(14px + var(--sal));bottom:calc(16px + var(--sab))}
+#auth,#pedit,#rep,#cart,#pdet,#bill,#gEdit,#ordBill,#micAsk,#voice{padding-top:calc(10px + var(--sat));padding-bottom:calc(10px + var(--sab));padding-left:calc(10px + var(--sal));padding-right:calc(10px + var(--sar))}
+.cart-box,.pd-box{max-height:calc(100svh - 20px - var(--sat) - var(--sab))}.au-box,.pe-box{max-height:calc(100svh - 24px - var(--sat) - var(--sab))}
+.adm-top{padding-top:calc(12px + var(--sat));padding-left:calc(16px + var(--sal));padding-right:calc(16px + var(--sar))}.adm-tabs{top:calc(61px + var(--sat));padding-left:calc(16px + var(--sal));padding-right:calc(16px + var(--sar))}
+#admin{padding-bottom:calc(60px + var(--sab))}
+body{padding-left:var(--sal);padding-right:var(--sar)}
+/* ===== Trạng thái đơn hàng ===== */
+.oc-badge{font-style:normal;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.oc-badge.b-new{color:#ff6fae;background:rgba(255,111,174,.12)}.oc-badge.b-wait{color:#f59e0b;background:rgba(245,158,11,.12)}.oc-badge.b-ok{color:#22d3ee;background:rgba(34,211,238,.12)}.oc-badge.b-done{color:#10b981;background:rgba(16,185,129,.12)}.oc-badge.b-cancel{color:#9a9a9a}
+.btn.btn-ok{background:linear-gradient(135deg,#22d3ee,#10b981);color:#04141a;border-color:transparent;font-weight:800}
+.pnote{margin:4px 0 2px;padding:5px 8px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);color:#fcd9a0;font-size:12px;line-height:1.35;font-weight:600}
+.ndb{display:inline-block;margin:3px 0;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:800;color:#fca5a5;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35)}
+.pd-note{margin:8px 0;padding:9px 12px;border-radius:12px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);color:#fcd9a0;font-size:13.5px;line-height:1.45;font-weight:600}.pd-note.nd{color:#fca5a5;background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4)}
+.ci-b .pnote,.ci-b .nd-t{display:block;font-style:normal}.nd-t{font-size:11.5px;font-weight:800;color:#fca5a5;margin-top:2px}.cs-nd{color:#fca5a5}
+.nd-r{display:flex;align-items:center;gap:12px;padding:10px 12px;margin:6px 0;border:1px solid var(--line);border-radius:14px;background:var(--card);cursor:pointer}.nd-r.on{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.08)}
+.nd-r input{width:22px;height:22px;flex:0 0 auto;accent-color:#ef4444}.nd-r span{flex:1;min-width:0}.nd-r b{display:block;font-size:14px;color:#fff;word-break:break-word}.nd-r small{color:var(--muted);font-size:12px}.nd-r em{font-style:normal;font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap}.nd-r.on em{color:#fca5a5}
+.pe-ck{display:flex!important;flex-direction:row!important;align-items:center;gap:10px}.pe-ck input{width:22px;height:22px;flex:0 0 auto;accent-color:#ef4444}
+.pl-tabs{display:flex;gap:8px;overflow-x:auto;margin:6px 0 14px;padding-bottom:2px}.pl-tabs button{flex:0 0 auto;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:999px;padding:9px 16px;font:700 13.5px 'Be Vietnam Pro';cursor:pointer}.pl-tabs button.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1408;border-color:transparent}
+.dl-head.t3,.dl-r.t3{grid-template-columns:1.4fr .8fr 1.8fr}.pl-intro{font-size:13.5px;line-height:1.55;color:#e6dccb;margin:0 0 12px}.dl-r .r em{font-style:normal;color:var(--muted);font-size:12.5px;font-weight:500}
+.pl-perk{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}.pl-perk span{font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#f3ead6}
+.pl-w{margin-top:16px}.pl-w h4{margin:0 0 10px;color:var(--gold2)}.pl-wc{padding:12px;margin-bottom:10px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.25)}.pl-wc>b{display:block;color:#fff}.pl-wc>small{color:var(--muted)}.pl-wg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.pl-wg span{padding:8px 10px;border-radius:10px;background:rgba(247,220,146,.08)}.pl-wg small{display:block;font-size:11px;color:var(--muted)}.pl-wg b{color:var(--gold2);font-size:15px}
+@media(min-width:761px){.pl-wg{grid-template-columns:repeat(4,1fr)}}@media(max-width:760px){.dl-r.t3{grid-template-columns:1fr auto}}
+.cs-mon{margin:8px 0;padding:10px 12px;border-radius:14px;border:1px solid rgba(247,220,146,.3);background:rgba(247,220,146,.06);display:grid;gap:8px}.mon-h{font-weight:800;color:var(--gold2);font-size:14px}.mon-r{display:grid;gap:2px;font-size:13px;color:#f3ead6}.mon-r>b{color:#fff}.mon-r .g{color:var(--gold2)}.mon-r .mut{color:var(--muted)}
+.mn-r{padding:12px 14px;margin:10px 0;border:1px solid var(--line);border-radius:14px;background:var(--card);display:grid;gap:6px}.mn-h b{color:var(--gold2)}.mn-g{font-size:13.5px;line-height:1.5}.mn-g b{color:#fff}.mn-f{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:8px}.mn-ok{color:#10b981;font-weight:700;font-size:13px}.mn-w{color:#f59e0b;font-size:12px}
 </style>
 </head>
 <body class="loading">
@@ -1041,19 +1072,20 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
     <div class="sec-h rv"><div class="tag">Đã có cửa hàng</div><h2 class="serif">🌟 Chính sách chiết khấu <span class="gold">đại lý</span></h2>
       <p>Kính gửi Quý Đối tác và Chủ cửa hàng phụ kiện điện thoại,<br>nhằm mở rộng mạng lưới phân phối và hỗ trợ tối đa cho các đại lý kinh doanh hiệu quả, Phụ Kiện Hoàng Đế trân trọng gửi tới Quý đối tác bảng chính sách chiết khấu dành cho <b>tất cả sản phẩm</b>. Chiết khấu tính theo tổng giá trị hoá đơn trong tháng (tất cả sản phẩm cộng lại), giúp tối ưu biên độ lợi nhuận cho từng mô hình cửa hàng.</p></div>
     <div class="panel dl-tb rv"><h3>📊 Bảng chính sách chiết khấu đại lý</h3>
-      <div class="dl-head"><span>Tổng đơn hàng<br><small>(trong 1 tháng)</small></span><span>Chiết khấu</span><span>Giá trị đơn<br>trung bình</span><span>Lưu ý / Quy định áp dụng</span></div>
-      <div id="dlRows"></div>
-      <p class="dl-note">⚠️ Điều kiện đăng ký đại lý phân phối: đạt <b>tổng đơn hàng trong tháng</b> và <b>giá trị đơn hàng trung bình</b> theo mức tương ứng. Chiết khấu áp dụng cho các đơn hàng trong 1 tháng.</p>
+      <div class="pl-tabs" id="plTabs"><button type="button" data-g="wk" class="on">WEKOME</button><button type="button" data-g="pw">PICOM • Đồng hồ</button><button type="button" data-g="po">PICOM • Sản phẩm khác</button></div>
+      <div id="plBody"></div>
+      <p class="dl-note">⚠️ Chiết khấu <b>cộng dồn doanh số trong tháng</b>: khách có thể đặt nhiều đơn (mỗi đơn từ 500.000₫). Cuối tháng BD Team tổng kết, đạt mốc nào sẽ được <b>hoàn lại bằng tiền hoặc sản phẩm</b>; sang tháng mới tự tính lại từ đầu. Thương hiệu khác không áp dụng chiết khấu.</p>
     </div>
     <div class="dl-calc panel rv"><h3>🧮 Tính nhanh chiết khấu của bạn</h3>
-      <label>Tổng giá trị hoá đơn dự kiến mỗi tháng<div class="dl-in"><input id="dlIn" inputmode="numeric" placeholder="vd: 35.000.000"><span>₫</span></div></label>
+      <label>Nhóm sản phẩm<select id="dlG"><option value="wk">WEKOME</option><option value="pw">PICOM • Đồng hồ</option><option value="po">PICOM • Sản phẩm khác</option></select></label>
+      <label>Doanh số dự kiến trong tháng<div class="dl-in"><input id="dlIn" inputmode="numeric" placeholder="vd: 35.000.000"><span>₫</span></div></label>
       <div class="dl-qk"><button type="button" data-v="15">15 tr</button><button type="button" data-v="25">25 tr</button><button type="button" data-v="40">40 tr</button><button type="button" data-v="70">70 tr</button><button type="button" data-v="120">120 tr</button></div>
       <div class="dl-out" id="dlOut"></div>
     </div>
     <div class="dl-ben">
       <div class="panel rv"><i>💎</i><h4>Hơn 500 mã hàng chính hãng</h4><p>PICOM, WK Design, WEKOME, Denmen, Kingston… đa dạng danh mục, dễ phối hàng và thu hút khách.</p></div>
-      <div class="panel rv d1"><i>📈</i><h4>Chiết khấu hấp dẫn, luỹ tiến theo tháng</h4><p>Doanh số càng cao, chiết khấu càng lớn (tối đa 10%) – giảm giá vốn đầu vào, tăng lợi nhuận ròng.</p></div>
-      <div class="panel rv d2"><i>🤝</i><h4>Chính sách hỗ trợ linh hoạt</h4><p>Hỗ trợ đơn hàng nhỏ gọn theo tuần/tháng với giá trị đơn trung bình hợp lý (từ trên 2 triệu đến trên 5 triệu).</p></div>
+      <div class="panel rv d1"><i>📈</i><h4>Chiết khấu hấp dẫn, luỹ tiến theo tháng</h4><p>Cộng dồn doanh số trong tháng, doanh số càng cao chiết khấu càng lớn (tối đa 15% với PICOM) – giảm giá vốn đầu vào, tăng lợi nhuận ròng.</p></div>
+      <div class="panel rv d2"><i>🤝</i><h4>Chính sách hỗ trợ linh hoạt</h4><p>Đặt nhiều đơn nhỏ theo tuần/tháng, mỗi đơn từ 500.000₫, vẫn được cộng dồn để tính chiết khấu cuối tháng.</p></div>
     </div>
     <div class="dl-cta rv"><h3>🚀 Hành động ngay hôm nay để tối ưu lợi nhuận!</h3>
       <p>Đừng bỏ lỡ cơ hội gia tăng biên độ lợi nhuận cùng thương hiệu phụ kiện hàng đầu. Liên hệ Hotline/Zalo để được tư vấn gói đại lý phù hợp nhất với nguồn vốn của cửa hàng.</p>
@@ -1143,7 +1175,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <div id="admin" hidden><div class="lg-scene adm-scene" aria-hidden="true"><b class="lg-amb a1"></b><b class="lg-amb a2"></b><b class="lg-amb a3"></b><span class="lg-gridtop"></span><span class="lg-floor"><span></span></span><span class="lg-dust"><i style="--x:8%;--d:0s;--t:9s;--s:2px"></i><i style="--x:16%;--d:3s;--t:11s;--s:3px"></i><i style="--x:24%;--d:1.5s;--t:8s;--s:2px"></i><i style="--x:33%;--d:5s;--t:12s;--s:2px"></i><i style="--x:41%;--d:2s;--t:10s;--s:3px"></i><i style="--x:49%;--d:6s;--t:9s;--s:2px"></i><i style="--x:57%;--d:0.8s;--t:13s;--s:2px"></i><i style="--x:64%;--d:4s;--t:10s;--s:3px"></i><i style="--x:72%;--d:2.6s;--t:9s;--s:2px"></i><i style="--x:80%;--d:5.5s;--t:12s;--s:2px"></i><i style="--x:88%;--d:1.2s;--t:11s;--s:3px"></i><i style="--x:94%;--d:3.6s;--t:8s;--s:2px"></i><i style="--x:12%;--d:7s;--t:14s;--s:2px"></i><i style="--x:28%;--d:8s;--t:10s;--s:2px"></i><i style="--x:52%;--d:9s;--t:12s;--s:3px"></i><i style="--x:70%;--d:7.5s;--t:9s;--s:2px"></i><i style="--x:86%;--d:8.6s;--t:13s;--s:2px"></i><i style="--x:38%;--d:10s;--t:11s;--s:2px"></i></span></div>
   <div class="adm-top"><div class="adm-brand">👑 Quản trị <span>BD Team</span></div>
     <div class="adm-act"><button class="btn btn-ghost" id="admExit">Xem trang khách</button><button class="btn" id="admOut" hidden>Đăng xuất</button></div></div>
-  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="lay">🧭 Sắp xếp vị trí</button><button data-tab="feat">⭐ Chủ lực</button><button data-tab="ai">🤖 AI training</button></div>
+  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="lay">🧭 Sắp xếp vị trí</button><button data-tab="feat">⭐ Chủ lực</button><button data-tab="nd">🚫 Không chiết khấu</button><button data-tab="mon">📅 Tổng kết tháng</button><button data-tab="ai">🤖 AI training</button></div>
   <div class="adm-in">
     <div data-v="demo" hidden class="adm-card"><h3>Chưa kết nối Firebase</h3><p>Trang quản trị sẽ hoạt động sau khi bạn dán cấu hình Firebase và email admin vào file (xem HUONG-DAN-CAI-DAT). Hiện website đang chạy với 68 sản phẩm mẫu.</p></div>
     <div data-v="err" hidden class="adm-card"><h3>Không kết nối được Firebase</h3><p>Kiểm tra lại mạng hoặc cấu hình Firebase trong file.</p></div>
@@ -1163,7 +1195,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
         <p class="adm-tip">👁 Show shop = hiển thị cho khách • ★ = sản phẩm chính (xúc xắc & vuốt ngang) • 🏆 = nhãn BEST SELLER</p>
       </div>
       <div data-t="ord" hidden>
-        <div class="adm-bar"><input id="oQ" placeholder="🔍 Tìm mã đơn, tên, SĐT…"><select id="oSt"><option value="all">Tất cả đơn</option><option value="new">🆕 Đơn mới</option><option value="ok">✅ Đã xác nhận</option><option value="done">🚚 Đã giao</option><option value="cancel">✖ Đã huỷ</option></select></div>
+        <div class="adm-bar"><input id="oQ" placeholder="🔍 Tìm mã đơn, tên, SĐT…"><select id="oSt"><option value="all">Tất cả đơn</option><option value="new">🆕 Đơn mới</option><option value="wait">⏳ Chờ xác nhận</option><option value="ok">✅ Đã xác nhận</option><option value="done">🚚 Đã giao</option><option value="cancel">✖ Đã huỷ</option></select></div>
         <div class="ord-set">
           <div class="os-r"><b>🔔 Báo đơn mới</b><label class="os-sw"><input type="checkbox" id="almOn"> Bật chuông + giọng</label><button type="button" class="btn btn-gold" id="almTest">🔊 Thử chuông</button></div>
           <div class="os-r"><button type="button" class="btn" id="almRec">🎙️ Ghi giọng “Có đơn Nhật ơi”</button><button type="button" class="btn" id="almClr" hidden>↺ Dùng giọng máy</button><small id="almInfo"></small></div>
@@ -1189,6 +1221,21 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
         <div class="adm-card"><h3>🏠 Trang chủ (từ trên xuống dưới)</h3><div id="laMain"></div></div>
         <div class="adm-card"><h3>📄 Trang chi tiết sản phẩm</h3><p>Thứ tự các khối trong cửa sổ chi tiết. Phần chọn màu / số lượng / nút Thêm vào giỏ luôn nằm cố định ở dưới cùng để khách dễ đặt hàng.</p><div id="laPd"></div></div>
         <div class="adm-card"><div class="adm-row"><button class="btn btn-gold" type="button" id="laSave">💾 Lưu & áp dụng</button><button class="btn btn-ghost" type="button" id="laReset">↺ Về thứ tự mặc định</button></div><div class="adm-out" id="laOut"></div></div>
+      </div>
+      <div data-t="mon" hidden>
+        <div class="adm-card"><h3>📅 Tổng kết chiết khấu tháng</h3>
+          <p>Cộng dồn các đơn <b>đã xác nhận</b> (và đã giao) trong tháng theo <b>số điện thoại</b> khách, tính mốc riêng cho WEKOME, đồng hồ PICOM và PICOM khác, rồi ra số tiền cần hoàn lại. Sang tháng mới tự tính lại từ đầu. Bấm <b>Ghi nhận</b> sau khi đã hoàn tiền hoặc tặng sản phẩm.</p>
+          <div class="adm-bar"><input type="month" id="mnM"><input id="mnQ" placeholder="🔍 Tìm tên, SĐT, shop…"><button class="btn btn-gold" type="button" id="mnGo">🔄 Tải</button><button class="btn" type="button" id="mnCsv">⬇ Excel</button></div>
+          <div class="adm-stat" id="mnStat"></div><div id="mnList"></div>
+        </div>
+      </div>
+      <div data-t="nd" hidden>
+        <div class="adm-card"><h3>🚫 Sản phẩm không được chiết khấu</h3>
+          <p>Tích chọn những sản phẩm <b>không áp dụng chiết khấu đại lý</b> (ví dụ: kính cường lực). Khi tổng kết cuối tháng, các sản phẩm này sẽ <b>không được tính chiết khấu</b> (hãy đánh dấu toàn bộ cường lực ở đây). Mỗi lần tích là tự lưu và đồng bộ mọi thiết bị.</p>
+          <div class="adm-bar"><input id="ndQ" placeholder="🔍 Tìm theo tên hoặc mã sản phẩm…"><select id="ndF"><option value="all">Tất cả sản phẩm</option><option value="on">🚫 Đã đánh dấu</option><option value="off">Chưa đánh dấu</option></select></div>
+          <div class="adm-row"><button class="btn btn-gold" type="button" id="ndAll">☑ Đánh dấu tất cả kết quả đang hiện</button><button class="btn btn-ghost" type="button" id="ndNone">☐ Bỏ đánh dấu tất cả kết quả đang hiện</button></div>
+          <div class="adm-stat" id="ndStat"></div><div id="ndList"></div><div class="adm-pg" id="ndPg"></div>
+        </div>
       </div>
       <div data-t="feat" hidden>
         <div class="adm-card"><h3>⭐ Sản phẩm chủ lực (khu vực đầu trang)</h3>
@@ -1274,6 +1321,8 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="pe-opt"><div class="pe-oh"><b>🔀 Biến thể & giá riêng</b><button type="button" class="btn btn-ghost" id="peAddV">＋ Thêm biến thể</button></div>
     <p class="pe-note">vd: Chân iPhone, Chân Type-C, Chân Micro. Mỗi biến thể một giá sỉ riêng (bỏ trống = dùng giá sỉ chung). Biến thể đầu tiên được chọn sẵn.</p><div id="peVr"></div></div>
   <label>Nhãn (vd: Bán chạy, -50%, Mới)<input name="tag" maxlength="20"></label>
+  <label>📢 Ghi chú hiển thị cạnh sản phẩm (khách và nhân viên đều thấy – để trống = không hiện)<textarea name="nt" rows="2" maxlength="300" placeholder="vd: Hàng sắp về – đặt trước giảm 2%; Chỉ bán tối thiểu 10 cái…"></textarea></label>
+  <label class="pe-ck"><input type="checkbox" name="nd"> 🚫 Sản phẩm <b>không được chiết khấu</b> (ví dụ kính cường lực)</label>
   <label>Mô tả sản phẩm (không giới hạn số chữ)<textarea name="desc" rows="9" style="min-height:160px;resize:vertical"></textarea><small id="peDescN" style="color:var(--muted)"></small></label>
   <label>Đã bán (số lượng, để tính mức bán chạy)<input name="sold" inputmode="numeric" placeholder="vd: 1200"></label>
   <label class="au-ck"><input type="checkbox" name="show"> 👁 Show shop (hiển thị cho khách xem)</label>
@@ -1332,21 +1381,71 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),lerp=(a,b,t)=>a+(b-a)*t;
 const vnd=n=>n.toLocaleString("vi-VN")+"₫",nm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d");
 const catName=Object.fromEntries(CATS),zalo="https://zalo.me/"+CONFIG.zalo;
-/* CHIẾT KHẤU ĐẠI LÝ: [từ (triệu), dưới (triệu, 0 = trở lên), chiết khấu %, giá trị đơn trung bình, lưu ý] – áp dụng tất cả sản phẩm, tính theo tổng hoá đơn/tháng */
-const WK_TIERS=[[10,20,3,"Trên 2 triệu","Trừ cường lực"],[20,30,7,"Trên 2 triệu","Trừ cường lực"],[30,50,8,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"],[50,100,9,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"],[100,0,10,"Trên 5 triệu","Sạc dự phòng 7%, không áp dụng cường lực"]];
-const wkTier=v=>{const m=v/1e6;return WK_TIERS.find(t=>m>=t[0]&&(!t[1]||m<t[1]))||null};
-const wkRange=t=>t[1]?`${t[0]} – < ${t[1]} triệu`:`${t[0]} triệu trở lên`;
+/* ===== CHÍNH SÁCH CHIẾT KHẤU CỘNG DỒN THEO THÁNG =====
+   Nhóm: wk = WEKOME (tên có WK/WEKOME) • pw = Đồng hồ PICOM • po = sản phẩm PICOM khác (tên có PICOM hoặc PC). Thương hiệu khác: không chiết khấu.
+   Cộng dồn các đơn admin đã xác nhận trong tháng (theo SĐT), tổng kết cuối tháng, hoàn tiền hoặc sản phẩm, sang tháng tự tính lại.
+   Mỗi bậc: [từ (đ), dưới (đ, 0 = không giới hạn), %, nhãn cấp, lưu ý] */
+const POL={
+ wk:{n:"WEKOME",t:[[10e6,20e6,3,"","Trừ cường lực"],[20e6,30e6,7,"","Trừ cường lực"],[30e6,50e6,8,"","Sạc dự phòng 7%, không áp dụng cường lực"],[50e6,100e6,9,"","Sạc dự phòng 7%, không áp dụng cường lực"],[100e6,0,10,"","Sạc dự phòng 7%, không áp dụng cường lực"]]},
+ pw:{n:"Đồng hồ PICOM",t:[[20e6,50e6,3.5,"Đại lý cấp 4",""],[50e6,100e6,5,"Đại lý cấp 3",""],[100e6,500e6+1,7,"Đại lý cấp 2",""],[500e6+1,0,9,"Nhà phân phối độc quyền",""]]},
+ po:{n:"PICOM (trừ đồng hồ)",t:[[5e6,10e6,3,"",""],[10e6,20e6,5,"",""],[20e6,50e6,7,"",""],[50e6,100e6,10,"",""],[100e6,500e6+1,15,"",""],[500e6+1,0,null,"","Trên 500 triệu: liên hệ"]]}};
+const WATCHES=[["Đồng hồ Picom P88 ultra",1015000,"p88"],["Đồng hồ Picom P95",479000,"p95"],["Đồng hồ Picom P93",532000,"p93"],["Đồng hồ Picom P90",459000,"p90"],["Đồng hồ Picom P60",362000,"p60"],["Đồng hồ Picom P68 Plus",436000,"p68"]];
+const nmw=n=>" "+nm(String(n||"")).replace(/[^a-z0-9]+/g," ")+" ";
+const grpOf=n=>{const t=nmw(n);if(/ (wk|wekome) /.test(t))return"wk";if(/ (picom|pc) /.test(t))return/ dong ho /.test(t)?"pw":"po";return""};
+const polTier=(g,v)=>POL[g].t.find(t=>v>=t[0]&&(!t[1]||v<t[1]))||null;
+const polNext=(g,v)=>POL[g].t.find(t=>t[0]>v)||null;
+const isPB=n=>/ sac du phong /.test(nmw(n)),isCL=n=>/ cuong luc /.test(nmw(n));
+const exOf=x=>x.nd!==undefined&&x.nd!==null?!!x.nd:isCL(x.n);   /* sản phẩm không chiết khấu: cờ admin, đơn cũ chưa có cờ thì theo tên "cường lực" */
+const pctStr=p=>String(p).replace(".",",")+"%",mTr=v=>Math.round(v/1e6);
+const polRange=(g,t)=>!t[1]?(t[0]>500e6?"Trên 500 triệu":`Từ ${mTr(t[0])} triệu trở lên`):(t[1]===500e6+1?`${mTr(t[0])} – 500 triệu`:`${mTr(t[0])} – dưới ${mTr(t[1])} triệu`);
+function polCalc(items){const R={};
+  items.forEach(x=>{const g=grpOf(x.n);if(!g)return;const r=R[g]=R[g]||{tot:0,list:[]};r.tot+=x.q*x.u;r.list.push(x)});
+  for(const g in R){const r=R[g];r.tier=polTier(g,r.tot);r.next=polNext(g,r.tot);let rb=0;r.exc=0;
+    r.list.forEach(x=>{const a=x.q*x.u;if(exOf(x)){r.exc+=a;return}if(r.tier&&r.tier[2]!=null){let k=r.tier[2];if(g==="wk"&&isPB(x.n)&&k>7)k=7;rb+=a*k/100}});
+    r.rebate=Math.round(rb);r.warn=g==="wk"?r.list.filter(x=>!exOf(x)&&isCL(x.n)).length:0}
+  return R}
+/* tiến độ chiết khấu tháng của khách (đọc các đơn đã xác nhận của chính khách trong tháng) */
+let MON={items:[],ok:false,anon:false,err:0};
+const ymNow=()=>{const d=new Date();return d.getFullYear()*100+d.getMonth()+1};
+async function monLoad(){if(MON.busy)return;const u=FB&&FB.auth&&FB.auth.currentUser;
+  if(!u||(typeof IS_ADMIN!=="undefined"&&IS_ADMIN)){MON={items:[],ok:false,anon:!u,err:0};const e0=$("#csMon");if(e0)e0.innerHTML=monHtml(cartItems());return}
+  MON.busy=1;try{const {F,db}=FB,ym=ymNow(),items=[];const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"orders"),F.where("uid","==",u.uid))),8000);
+    sn.forEach(d=>{const o=d.data(),st=o.status||"new";if(st!=="ok"&&st!=="done")return;const t=o.at&&o.at.toDate?o.at.toDate():null;if(!t||t.getFullYear()*100+t.getMonth()+1!==ym)return;(o.items||[]).forEach(x=>items.push({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd}))});
+    MON={items,ok:true,anon:false,err:0}}catch(e){console.warn("monLoad",e);MON={items:[],ok:false,anon:false,err:1}}
+  const el=$("#csMon");if(el)el.innerHTML=monHtml(cartItems())}
+function monHtml(it){const cur=it.map(x=>({n:x.p.n,q:x.q,u:x.u,nd:x.nd})),A=polCalc(MON.items),C=polCalc(cur),B=polCalc(MON.items.concat(cur)),gs=["wk","pw","po"].filter(g=>C[g]);
+  let h='<div class="mon-h">🎁 Chiết khấu cuối tháng (tạm tính)</div>';
+  if(!gs.length)h+='<div class="cs-note">Sản phẩm trong giỏ không thuộc thương hiệu có chính sách chiết khấu (WEKOME, PICOM).</div>';
+  gs.forEach(g=>{const b=B[g],t=b.tier,nx=b.next;
+    h+=`<div class="mon-r"><b>${POL[g].n}</b><span>Đã mua trong tháng ${vnd(A[g]?A[g].tot:0)} + giỏ này ${vnd(C[g].tot)} = <b>${vnd(b.tot)}</b></span>`
+      +(t?(t[2]==null?'<span class="g">Trên 500 triệu – vui lòng liên hệ BD Team</span>':`<span>Mốc <b class="g">${pctStr(t[2])}</b>${t[3]?` (${t[3]})`:""} • hoàn lại dự kiến <b class="g">${vnd(b.rebate)}</b>${b.exc?` • ${vnd(b.exc)} là hàng không chiết khấu`:""}</span>`):`<span>Chưa đạt mốc đầu tiên (${pctStr(POL[g].t[0][2])} từ ${mTr(POL[g].t[0][0])} triệu)</span>`)
+      +(nx?`<span class="mut">Mua thêm <b>${vnd(nx[0]-b.tot)}</b> để lên mốc ${nx[2]==null?"liên hệ":pctStr(nx[2])}</span>`:"")+"</div>"});
+  if(MON.anon)h+='<div class="cs-note">🔑 Đăng nhập tài khoản để cộng dồn các đơn đã xác nhận trong tháng.</div>';else if(MON.err)h+='<div class="cs-note">Chưa tải được các đơn trong tháng – số liệu trên chỉ tính giỏ hàng này.</div>';
+  return h+'<div class="cs-note">Chiết khấu được tổng kết cuối tháng và hoàn lại bằng tiền hoặc sản phẩm. Chỉ tính các đơn BD Team đã xác nhận; sang tháng mới tự tính lại từ đầu.</div>'}
 const PH=`<div style="width:100%;height:100%;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#1d1810,#1d1810 12px,#231c12 12px,#231c12 24px);color:#d9b25f;font-size:12px;letter-spacing:2px;text-align:center">＋<br>ẢNH SẢN PHẨM</div>`;
 const IMG=(src,alt="",fb="")=>src?`<img ${srcA(src)} alt="${alt}" loading="lazy" referrerpolicy="no-referrer" ${fb?`data-fb="${fb}"`:""} onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.removeAttribute('data-fb')}else this.outerHTML=PH_HTML">`:PH;window.PH_HTML=PH;
-$("#dlRows").innerHTML=WK_TIERS.map((t,i)=>`<div class="dl-r" data-i="${i}"><span class="r"><small>Tổng đơn/tháng</small>${wkRange(t)}</span><span class="p"><b>${t[2]}%</b></span><span class="a"><small>Đơn trung bình</small>${t[3]}</span><span class="n">${t[4]}</span></div>`).join("");
-function dlCalc(){const v=Math.round(+String($("#dlIn").value).replace(/\D/g,"")),o=$("#dlOut");$$("#dlRows .dl-r").forEach(r=>r.classList.remove("on"));
-  if(!v){o.innerHTML='<span class="mut">Nhập doanh số để xem mức chiết khấu và số tiền tiết kiệm mỗi tháng.</span>';return}
-  const t=wkTier(v),nx=WK_TIERS.find(x=>x[0]*1e6>v);
-  if(!t){o.innerHTML=`Tổng hoá đơn <b>${vnd(v)}</b>/tháng chưa đạt mức chiết khấu đại lý (từ <b>10 triệu/tháng</b>). Còn thiếu <b class="g">${vnd(1e7-v)}</b> để hưởng chiết khấu <b>3%</b>.`;return}
-  $(`#dlRows .dl-r[data-i="${WK_TIERS.indexOf(t)}"]`).classList.add("on");
-  o.innerHTML=`Mức của bạn: <b class="g">${t[2]}%</b> (${wkRange(t)}) • đơn trung bình ${t[3].toLowerCase()}<br>💰 Tiết kiệm ước tính: <b class="g">${vnd(Math.round(v*t[2]/100))}</b>/tháng ≈ <b>${vnd(Math.round(v*t[2]/100)*12)}</b>/năm<br><small>${t[4]}.${nx?` Nhập thêm ${vnd(nx[0]*1e6-v)}/tháng để lên mức ${nx[2]}%.`:""} Số tiền ước tính trên toàn bộ doanh số – thực tế tuỳ cơ cấu hàng.</small>`}
+let PLG="wk";
+function renderPolicy(){const b=$("#plBody");if(!b)return;const g=PLG;$$("#plTabs button").forEach(x=>x.classList.toggle("on",x.dataset.g===g));
+  const intro={wk:"Áp dụng cho sản phẩm <b>WEKOME</b> chính hãng. <b>Cường lực không được chiết khấu.</b> Sạc dự phòng chỉ hưởng tối đa <b>7%</b> khi doanh số đạt từ 30 triệu.",pw:"Áp dụng cho <b>đồng hồ PICOM</b>. Giá hiển thị bên dưới đã tính theo đúng tỷ lệ % của từng cấp.",po:"Áp dụng cho <b>toàn bộ sản phẩm PICOM trừ đồng hồ</b>."}[g];
+  const perk={wk:["✅ Hàng WEKOME chính hãng"],pw:["🎁 Tặng VAT miễn phí","✅ Hàng chính hãng 100%","🔄 Đổi trả hỗ trợ nhanh","🎧 Hỗ trợ marketing đại lý"],po:["🧾 Xuất VAT miễn phí","✅ Hàng chính hãng","📦 Sẵn kho Bắc Nam","🚚 Ship COD toàn quốc","🛡 Bảo hành uy tín"]}[g];
+  let h=`<p class="pl-intro">${intro}</p><div class="dl-head t3"><span>${g==="pw"?"Cấp đại lý / doanh số tháng":"Doanh số trong tháng"}</span><span>Chiết khấu</span><span>Lưu ý</span></div>`
+    +POL[g].t.map((t,i)=>`<div class="dl-r t3" data-i="${i}"><span class="r"><small>Doanh số / tháng</small>${t[3]?`<b>${t[3]}</b><br>`:""}${polRange(g,t)}</span><span class="p"><b>${t[2]==null?"LH":pctStr(t[2])}</b></span><span class="n">${t[4]||(g==="pw"?"Giá bán buôn × (100% − tỷ lệ chiết khấu)":"Chiết khấu hoàn lại cuối tháng")}</span></div>`).join("");
+  if(g==="pw"){const vis=WATCHES.filter(w=>ALL.some(p=>grpOf(p.n)==="pw"&&nmw(p.n).includes(" "+w[2])));
+    h+=`<div class="pl-w"><h4>⌚ Giá đồng hồ theo từng cấp</h4>${vis.map(w=>`<div class="pl-wc"><b>${w[0]}</b><small>Giá bán buôn ${vnd(w[1])}</small><div class="pl-wg">${POL.pw.t.map(t=>`<span><small>${t[3].replace("Nhà phân phối độc quyền","NPP độc quyền")} • ${pctStr(t[2])}</small><b>${vnd(Math.round(w[1]*(100-t[2])/100))}</b></span>`).join("")}</div></div>`).join("")||'<p class="mut">Các mẫu đồng hồ sẽ hiển thị tại đây khi được mở bán.</p>'}</div>`}
+  b.innerHTML=h+`<div class="pl-perk">${perk.map(x=>`<span>${x}</span>`).join("")}</div>`}
+function dlCalc(){const v=Math.round(+String($("#dlIn").value).replace(/\D/g,"")),g=$("#dlG").value,o=$("#dlOut");$$("#plBody .dl-r").forEach(r=>r.classList.remove("on"));
+  if(!v){o.innerHTML='<span class="mut">Nhập doanh số dự kiến trong tháng để xem mức chiết khấu và số tiền được hoàn lại.</span>';return}
+  const t=polTier(g,v),nx=polNext(g,v),f=POL[g].t[0];
+  if(!t){o.innerHTML=`Doanh số <b>${vnd(v)}</b>/tháng chưa đạt mức chiết khấu đầu tiên của ${POL[g].n} (từ <b>${mTr(f[0])} triệu/tháng</b>). Còn thiếu <b class="g">${vnd(f[0]-v)}</b> để hưởng <b>${pctStr(f[2])}</b>.`;return}
+  if(PLG===g){const r=$(`#plBody .dl-r[data-i="${POL[g].t.indexOf(t)}"]`);r&&r.classList.add("on")}
+  if(t[2]==null){o.innerHTML=`Doanh số <b>${vnd(v)}</b>/tháng thuộc mức <b class="g">trên 500 triệu</b> – vui lòng liên hệ BD Team để có chính sách riêng.`;return}
+  const est=Math.round(v*t[2]/100);
+  o.innerHTML=`Mức của bạn: <b class="g">${pctStr(t[2])}</b> (${polRange(g,t)}${t[3]?` • ${t[3]}`:""})<br>💰 Chiết khấu hoàn lại cuối tháng ước tính: <b class="g">${vnd(est)}</b><br><small>${t[4]?t[4]+". ":""}${nx?`Mua thêm ${vnd(nx[0]-v)}/tháng để lên mức ${nx[2]==null?"liên hệ":pctStr(nx[2])}. `:""}Ước tính trên toàn bộ doanh số – thực tế không tính sản phẩm không chiết khấu.</small>`}
 $("#dlIn").addEventListener("input",e=>{const d=e.target.value.replace(/\D/g,"");e.target.value=d?(+d).toLocaleString("vi-VN"):"";dlCalc()});
-$$(".dl-qk button").forEach(b=>b.onclick=()=>{$("#dlIn").value=(+b.dataset.v*1e6).toLocaleString("vi-VN");dlCalc()});dlCalc();
+$$(".dl-qk button").forEach(b=>b.onclick=()=>{$("#dlIn").value=(+b.dataset.v*1e6).toLocaleString("vi-VN");dlCalc()});
+$("#plTabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;PLG=b.dataset.g;$("#dlG").value=PLG;renderPolicy();dlCalc()};
+$("#dlG").onchange=e=>{PLG=e.target.value;renderPolicy();dlCalc()};
+renderPolicy();dlCalc();
 $$(".js-zalo").forEach(a=>a.href=zalo);$$(".js-call").forEach(a=>a.href="tel:"+CONFIG.phone);
 $$(".js-phone").forEach(e=>e.textContent=CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3"));
 $("#logo").src=U+"2022/04/logo-pkhd.jpg";$$(".js-logo").forEach(i=>i.src=$("#logo").src);
@@ -1375,12 +1474,14 @@ const DISC=[[1e8,10],[5e7,9],[3e7,8],[2e7,7],[1e7,3]];
 const discPct=t=>{for(const [m,k] of DISC)if(t>=m)return k;return 0};
 const discNext=t=>{const l=DISC.slice().reverse().find(([m])=>t<m);return l?{m:l[0],k:l[1]}:null};
 const discAmt=(t,k)=>Math.round(t*k/100);
+/* Chiết khấu chỉ tính trên các sản phẩm KHÔNG bị admin đánh dấu "không chiết khấu" (x.nd). Mốc % vẫn xét theo tổng đơn. */
+const discCalc=(items,pctForce)=>{const gross=items.reduce((a,x)=>a+x.q*x.u,0),base=items.filter(x=>!x.nd).reduce((a,x)=>a+x.q*x.u,0),pct=pctForce!==undefined?pctForce:discPct(gross),amt=pct?discAmt(base,pct):0;return{gross,base,ndAmt:gross-base,pct,amt,net:gross-amt}};
 const fmtK=n=>n>=1e6?(Math.floor(n/1e5)/10).toLocaleString("vi-VN")+"B":n>=1000?(Math.floor(n/100)/10).toLocaleString("vi-VN")+"K":String(n);
 const visRows=rows=>rows.some(r=>r.show)?rows.filter(r=>r.show):rows;
 /* khoảng giá khi có biến thể */
 const prRange=p=>{const a=(p.v&&p.v.length?p.v.map(x=>x.p||p.p):[p.p]);return[Math.min(...a),Math.max(...a)]};
 const prTxt=p=>{const[a,b]=prRange(p);return a===b?vnd(a):`${vnd(a)} – ${vnd(b)}`};
-const toItem=r=>({id:r.id,s:+r.s||0,bs:!!r.bs,show:!!r.show,th:r.imgThumb||"",cr:r.imgCredit||"",c:catName[r.c]?r.c:"khac",n:r.n||"",o:+r.o||0,p:+r.p||0,i:r.img||"",g:(Array.isArray(r.imgs)?r.imgs:[]).filter(Boolean).slice(0,4),cl:(Array.isArray(r.colors)?r.colors:[]).filter(c=>c&&c.n).slice(0,12).map(c=>({n:String(c.n),h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#888888",k:Math.max(0,Math.min(4,+c.k||0))})),v:(Array.isArray(r.vars)?r.vars:[]).filter(x=>x&&x.n).slice(0,12).map(x=>({n:String(x.n),p:+x.p||0,o:+x.o||0})),tag:r.tag||"",desc:r.desc||"",feat:!!r.feat,ord:+r.ord||0,
+const toItem=r=>({id:r.id,s:+r.s||0,bs:!!r.bs,show:!!r.show,th:r.imgThumb||"",cr:r.imgCredit||"",c:catName[r.c]?r.c:"khac",n:r.n||"",o:+r.o||0,p:+r.p||0,i:r.img||"",g:(Array.isArray(r.imgs)?r.imgs:[]).filter(Boolean).slice(0,4),cl:(Array.isArray(r.colors)?r.colors:[]).filter(c=>c&&c.n).slice(0,12).map(c=>({n:String(c.n),h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#888888",k:Math.max(0,Math.min(4,+c.k||0))})),v:(Array.isArray(r.vars)?r.vars:[]).filter(x=>x&&x.n).slice(0,12).map(x=>({n:String(x.n),p:+x.p||0,o:+x.o||0})),tag:r.tag||"",nt:String(r.nt||"").slice(0,300),nd:!!r.nd,desc:r.desc||"",feat:!!r.feat,ord:+r.ord||0,
   off:(+r.o>0&&+r.p>0&&+r.o>+r.p)?Math.round((1-r.p/r.o)*100):0});
 let FCFG={show:true,tag:"",h:"",g:"",ids:[],tags:{},n0:"",sets:[]};   /* cài đặt "Sản phẩm chủ lực" + các tab do admin chỉnh (images/featcfg) */
 const CF_DEF=["⭐ Sản phẩm chủ lực","💰 Sản phẩm giá tốt","🔥 Bán chạy","🆕 Hàng mới về"];
@@ -1399,7 +1500,7 @@ function buildMain(){const dof=p=>p.off||(p.v&&p.v.length?Math.max(0,...p.v.map(
     return f.slice(0,10).map(mk(c.tags))};
   MAINSETS=[0,1,2,3].map(pick);MAIN=MAINSETS[0];
   CFTABS=[0,1,2,3].filter(i=>i===0||(cfCfg(i).on!==false&&MAINSETS[i].length)).map(i=>({i,name:cfCfg(i).name}));
-  if(!CFTABS.some(t=>t.i===CFT))CFT=0}
+  if(!CFTABS.some(t=>t.i===CFT))CFT=0;try{renderPolicy()}catch(e){}}
 function rankOf(p){if(!p.s)return 99;return ALL.filter(x=>x.c===p.c&&x.s>p.s).length+1}
 let FB_DONE=DEMO;
 const FB_READY=(DEMO?Promise.resolve(null):initFB()).catch(e=>{console.warn("Firebase:",e);return null});
@@ -1423,7 +1524,7 @@ const lbOrder=(saved,def)=>{const keys=def.map(x=>x[0]),o=(saved||[]).filter(k=>
 function applyLayout(){try{const ft=document.querySelector("body > footer");if(!ft)return;
   lbOrder(LCFG.main,LB_MAIN).forEach(k=>{const b=LB_MAIN.find(x=>x[0]===k),el=document.querySelector(b[2]);if(!el)return;ft.parentNode.insertBefore(el,ft);
     el.classList.toggle("lhide",!!(LCFG.hide||{})[k]);if(b[3])document.querySelectorAll(".menu "+b[3]).forEach(a=>a.classList.toggle("lhide-a",!!(LCFG.hide||{})[k]))})}catch(e){console.warn("layout",e)}}
-const pdKey=el=>{const c=el.classList;return c.contains("pd-gal")||c.contains("pd-thumbs")?"gal":c.contains("pd-ct")||c.contains("pd-n")?"name":c.contains("pd-pr")?"price":c.contains("pd-sold")?"sold":c.contains("pd-cr")?"credit":c.contains("pd-sec")?(/Mô tả/.test(el.textContent.slice(0,12))?"desc":/Hiệu suất/.test(el.textContent.slice(0,14))?"perf":"info"):""};
+const pdKey=el=>{const c=el.classList;return c.contains("pd-gal")||c.contains("pd-thumbs")?"gal":c.contains("pd-ct")||c.contains("pd-n")||c.contains("pd-note")?"name":c.contains("pd-pr")?"price":c.contains("pd-sold")?"sold":c.contains("pd-cr")?"credit":c.contains("pd-sec")?(/Mô tả/.test(el.textContent.slice(0,12))?"desc":/Hiệu suất/.test(el.textContent.slice(0,14))?"perf":"info"):""};
 function pdLayout(){try{const box=$("#pdBody"),kids=[...box.children],g={};kids.forEach(el=>{const k=pdKey(el);(g[k]=g[k]||[]).push(el)});
   lbOrder(LCFG.pd,LB_PD).forEach(k=>(g[k]||[]).forEach(el=>{box.appendChild(el);el.classList.toggle("lhide",!!(LCFG.pdHide||{})[k])}))}catch(e){console.warn("pdLayout",e)}}
 applyLayout();
@@ -1556,7 +1657,7 @@ const offOf=p=>p.off||(p.v&&p.v.length?Math.max(0,...p.v.map(x=>x.o>x.p&&x.p?Mat
 function render(){const q=nm($("#q").value.trim());
   const pri=p=>(p.bs?1:0)+(offOf(p)>0?1:0),list=ALL.filter(p=>(cur==="all"||p.c===cur)&&(!q||nm(p.n+" "+catName[p.c]).includes(q))).map((p,i)=>[p,i]).sort((a,b)=>pri(b[0])-pri(a[0])||(b[0].s||0)-(a[0].s||0)||a[1]-b[1]).map(x=>x[0]);   /* Best Seller + đang giảm giá + bán nhiều lên đầu */
   $("#grid").innerHTML=list.slice(0,shown).map((p,i)=>`<div class="pc" data-id="${p.id}" style="transition-delay:${(i%4)*70}ms">${offOf(p)?`<span class="bg">-${offOf(p)}%</span>`:""}${p.bs?'<span class="bsr">🏆 BEST SELLER</span>':""}<div class="im">${IMG(p.i,p.n,p.th)}${p.g&&p.g.length?`<span class="nimg">📷 ${p.g.length+1}</span>`:""}${p.cl&&p.cl.length?`<span class="cdots">${p.cl.slice(0,6).map(c=>`<i style="background:${c.h}" title="${escH(c.n)}"></i>`).join("")}</span>`:""}</div>
-   <div class="bd2"><div class="ct">${catName[p.c]}</div><div class="nm">${p.n}</div>${p.s?`<div class="sold">🔥 Đã bán ${fmtK(p.s)}+${rankOf(p)<=3?` · <b>Top ${rankOf(p)}</b>`:""}</div>`:""}${p.cr?`<div class="crd">📷 ${escH(p.cr)}</div>`:""}<div class="pr">${p.v&&p.v.length?`<b><small>từ </small>${vnd(prRange(p)[0])}</b><em class="nvar">${p.v.length} phân loại</em>`:`<b>${vnd(p.p)}</b>${p.o?`<s>${vnd(p.o)}</s>`:""}`}</div><div class="qadd q4" data-id="${p.id}"><button data-q="1">+1</button><button data-q="10">+10</button><button data-q="50">+50</button><button data-q="100">+100</button></div><button class="pdbtn">📄 Chi tiết sản phẩm</button></div></div>`).join("");
+   <div class="bd2"><div class="ct">${catName[p.c]}</div><div class="nm">${p.n}</div>${p.nt?`<div class="pnote">📢 ${escH(p.nt)}</div>`:""}${p.nd?'<div class="ndb">🚫 Không chiết khấu</div>':""}${p.s?`<div class="sold">🔥 Đã bán ${fmtK(p.s)}+${rankOf(p)<=3?` · <b>Top ${rankOf(p)}</b>`:""}</div>`:""}${p.cr?`<div class="crd">📷 ${escH(p.cr)}</div>`:""}<div class="pr">${p.v&&p.v.length?`<b><small>từ </small>${vnd(prRange(p)[0])}</b><em class="nvar">${p.v.length} phân loại</em>`:`<b>${vnd(p.p)}</b>${p.o?`<s>${vnd(p.o)}</s>`:""}`}</div><div class="qadd q4" data-id="${p.id}"><button data-q="1">+1</button><button data-q="10">+10</button><button data-q="50">+50</button><button data-q="100">+100</button></div><button class="pdbtn">📄 Chi tiết sản phẩm</button></div></div>`).join("");
   $("#count").textContent=`Hiển thị ${Math.min(shown,list.length)} / ${list.length} sản phẩm`;
   $("#emptyM").style.display=list.length?"none":"block";$("#more").style.display=list.length>shown?"inline-flex":"none";
   $$(".pc").forEach(el=>gio.observe(el))}
@@ -1721,13 +1822,13 @@ function reply(raw){
     return{h:`Cảm ơn bạn! Để BD Team nhận được số ${ph[0]}, bạn bấm sao chép rồi gửi qua Zalo giúp mình nhé (trang này không tự gửi tin được).
 ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="copy" data-text="${escH(msg)}"`)}${ZL}`}}
   if(has(/(nhan vien|tu van vien|nguoi that|goi lai|hotline|so dien thoai|lien he|gap ai)/))return{h:`📞 Gọi/Zalo BD Team: <b>${CONFIG.phone}</b>\nHoặc để lại số điện thoại tại đây, mình soạn sẵn tin nhắn cho bạn gửi.${ZL}`};
-  /* chiết khấu đại lý (tất cả sản phẩm) */
-  if(has(/(chiet khau|wekome|dai ly phan phoi|da co (cua hang|shop)|co san (cua hang|shop)|doanh so|dang ky dai ly|lam dai ly|\bck\b)/)){
-    const mv=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/),tb=WK_TIERS.map(t=>`• ${wkRange(t)}/tháng → <b>${t[2]}%</b> (đơn TB ${t[3].toLowerCase()}; ${t[4].toLowerCase()})`).join("\n");
-    if(mv){const v=toVND(mv[1],mv[2]),t=wkTier(v);
-      return{h:t?`📊 Tổng hoá đơn ${vnd(v)}/tháng → chiết khấu <b>${t[2]}%</b> (đơn trung bình ${t[3].toLowerCase()}).\n${t[4]}.\n💰 Tiết kiệm ước tính ≈ <b>${vnd(Math.round(v*t[2]/100))}</b>/tháng.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`
-        :`Tổng hoá đơn ${vnd(v)}/tháng chưa đạt mức chiết khấu đại lý (từ 10 triệu/tháng → 3%). Bạn vẫn nhập sỉ bình thường, đơn tối thiểu 500.000đ online.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
-    return{h:`🌟 Chính sách chiết khấu đại lý (dành cho khách <b>đã có cửa hàng</b>), áp dụng tất cả sản phẩm, tính theo tổng hoá đơn trong 1 tháng:\n${tb}\nCho mình biết tổng hoá đơn dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
+  /* chiết khấu đại lý (cộng dồn theo tháng, theo thương hiệu) */
+  if(has(/(chiet khau|wekome|picom|dai ly phan phoi|da co (cua hang|shop)|co san (cua hang|shop)|doanh so|dang ky dai ly|lam dai ly|\bck\b)/)){
+    const mv=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/),G=g=>POL[g].t.map(t=>`• ${polRange(g,t)}${t[3]?` (${t[3]})`:""} → <b>${t[2]==null?"liên hệ":pctStr(t[2])}</b>${t[4]?` – ${t[4].toLowerCase()}`:""}`).join("\n"),
+      tail="\n⚠️ Chiết khấu cộng dồn doanh số trong tháng (nhiều đơn, mỗi đơn từ 500.000đ), tổng kết cuối tháng và hoàn lại bằng tiền hoặc sản phẩm; sang tháng mới tự tính lại. Thương hiệu khác không áp dụng chiết khấu.";
+    if(mv){const v=toVND(mv[1],mv[2]);
+      return{h:`📊 Với doanh số ${vnd(v)}/tháng:\n`+["wk","pw","po"].map(g=>{const t=polTier(g,v);return`• ${POL[g].n}: ${t?(t[2]==null?"liên hệ BD Team":`<b>${pctStr(t[2])}</b> ≈ ${vnd(Math.round(v*t[2]/100))} hoàn lại`):"chưa đạt mức đầu tiên"}`}).join("\n")+tail+`\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Gói setup shop","Đơn tối thiểu?"]}}
+    return{h:`🌟 Chính sách chiết khấu đại lý theo thương hiệu (tính theo doanh số cộng dồn trong tháng):\n<b>WEKOME</b>\n${G("wk")}\n<b>Đồng hồ PICOM</b>\n${G("pw")}\n<b>PICOM (trừ đồng hồ)</b>\n${G("po")}${tail}\nCho mình biết doanh số dự kiến (vd "doanh số 40 triệu") để tính mức chiết khấu nhé.\n${btn("Xem chính sách đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chưa có cửa hàng thì sao?"]}}
   /* ngân sách mở shop */
   const bud=q.match(/(\d+(?:[.,]\d+)?)\s*(trieu|tr|cu)\b/);
   if(bud&&has(/(mo|shop|cua hang|kinh doanh|von|setup|dau tu|ngan sach)/)){const v=toVND(bud[1],bud[2]),num=s=>parseFloat(s)*1e6;
@@ -2041,7 +2142,51 @@ $("#admOut").onclick=async()=>{await FB.A.signOut(FB.auth);location.hash="";loca
 $("#admLogin").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button");
   busy(b,true);try{await FB.A.signInWithEmailAndPassword(FB.auth,f.email.value.trim(),f.pass.value)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=>x.classList.toggle("on",x===b));
-  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit();if(b.dataset.tab==="feat")featAdminInit();if(b.dataset.tab==="lay")layAdminInit()});
+  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit();if(b.dataset.tab==="feat")featAdminInit();if(b.dataset.tab==="nd")ndInit();if(b.dataset.tab==="mon")mnInit();if(b.dataset.tab==="lay")layAdminInit()});
+/* ---- Tổng kết chiết khấu tháng (admin) ---- */
+const MN={rows:[],reb:{},ym:"",on:false};
+async function mnLoad(){const v=$("#mnM").value;if(!v)return;const [y,m]=v.split("-").map(Number),a=new Date(y,m-1,1),b=new Date(y,m,1),{F,db}=FB;$("#mnStat").textContent="Đang tải đơn trong tháng…";
+  try{const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"orders"),F.where("at",">=",a),F.where("at","<",b))),15000),by=new Map();
+    sn.forEach(d=>{const o=d.data(),st=o.status||"new";if(st!=="ok"&&st!=="done")return;const c=o.cus||{},ph=normPhone(c.phone)||("uid:"+(o.uid||d.id));let r=by.get(ph);if(!r){r={ph,name:c.name||"",shop:c.shop||"",n:0,items:[]};by.set(ph,r)}r.n++;r.name=c.name||r.name;(o.items||[]).forEach(x=>r.items.push({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd}))});
+    MN.rows=[...by.values()].map(r=>({...r,R:polCalc(r.items)}));MN.rows.forEach(r=>r.sum=Object.values(r.R).reduce((t,g)=>t+g.rebate,0));MN.rows.sort((a,b)=>b.sum-a.sum);MN.reb={};MN.rebErr=0;
+    try{const rs=await withTimeout(F.getDocs(F.query(F.collection(db,"rebates"),F.where("ym","==",v))),8000);rs.forEach(d=>MN.reb[d.id]=d.data())}catch(e){MN.rebErr=1}
+    MN.ym=v;mnDraw()}catch(err){$("#mnStat").innerHTML="❌ "+esc(authMsg(err))}}
+function mnDraw(){const q=nm($("#mnQ").value||""),l=MN.rows.filter(r=>!q||nm([r.name,r.ph,r.shop].join(" ")).includes(q)),tot=l.reduce((a,r)=>a+r.sum,0),done=l.filter(r=>MN.reb[MN.ym+"_"+r.ph]).length;
+  $("#mnStat").innerHTML=`<b>${MN.rows.length}</b> khách có đơn đã xác nhận • tổng chiết khấu cần hoàn <b class="g">${vnd(tot)}</b> • đã ghi nhận <b>${done}</b>/${l.length}${MN.rebErr?' • ⚠️ chưa đọc được mục <b>rebates</b> (cần cập nhật quy tắc Firestore)':""}`;
+  $("#mnList").innerHTML=l.map(r=>{const k=MN.ym+"_"+r.ph,rb=MN.reb[k];
+    return`<div class="mn-r" data-ph="${esc(r.ph)}"><div class="mn-h"><b>${esc(r.name||"(chưa có tên)")}</b>${r.shop?` • ${esc(r.shop)}`:""} • ${r.ph.startsWith("uid:")?"chưa có SĐT":`<a href="tel:${esc(r.ph)}">${esc(r.ph)}</a>`} <small>• ${r.n} đơn</small></div>`
+      +(["wk","pw","po"].filter(g=>r.R[g]).map(g=>{const x=r.R[g],t=x.tier;return`<div class="mn-g"><b>${POL[g].n}</b>: ${vnd(x.tot)} → ${t?(t[2]==null?"<b>liên hệ</b> (trên 500 triệu)":`mốc <b>${pctStr(t[2])}</b>${t[3]?` (${t[3]})`:""} • hoàn <b>${vnd(x.rebate)}</b>`):"chưa đạt mốc"}${x.exc?` • ${vnd(x.exc)} không chiết khấu`:""}${x.warn?` <span class="mn-w">⚠️ ${x.warn} dòng "cường lực" chưa được đánh dấu không chiết khấu</span>`:""}</div>`}).join("")||'<div class="mn-g">Chỉ có sản phẩm thương hiệu khác (không chiết khấu).</div>')
+      +`<div class="mn-f"><span>Tổng hoàn: <b class="g">${vnd(r.sum)}</b></span>${rb?`<span class="mn-ok">✅ Đã ${esc(rb.form||"chiết khấu")} ${vnd(+rb.amount||0)}${rb.note?" – "+esc(rb.note):""}</span><button type="button" class="btn" data-rbx>↩ Bỏ ghi nhận</button>`:`<button type="button" class="btn btn-gold" data-rb>✔ Ghi nhận đã chiết khấu</button>`}</div></div>`}).join("")||'<div class="aempty">Chưa có đơn đã xác nhận trong tháng này.</div>'}
+function mnInit(){if(!MN.on){MN.on=true;const d=new Date();$("#mnM").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+  $("#mnM").onchange=mnLoad;$("#mnGo").onclick=mnLoad;$("#mnQ").oninput=()=>mnDraw();
+  $("#mnCsv").onclick=()=>{if(!MN.rows.length)return atoast("Chưa có dữ liệu");const g3=r=>["wk","pw","po"].flatMap(g=>{const x=r.R[g];return x?[x.tot,x.tier?(x.tier[2]==null?"LH":x.tier[2]+"%"):"",x.rebate]:["","",""]});
+    dl(`tong-ket-chiet-khau-${MN.ym}.csv`,[["Tháng","Tên","SĐT","Shop","Số đơn","WEKOME doanh số","WEKOME %","WEKOME hoàn","Đồng hồ PICOM doanh số","Đồng hồ %","Đồng hồ hoàn","PICOM khác doanh số","PICOM khác %","PICOM khác hoàn","Tổng hoàn","Đã chiết khấu"],...MN.rows.map(r=>{const rb=MN.reb[MN.ym+"_"+r.ph];return[MN.ym,r.name,r.ph,r.shop,r.n,...g3(r),r.sum,rb?`${rb.form} ${rb.amount}`:""]})])};
+  $("#mnList").onclick=e=>{const row=e.target.closest(".mn-r");if(!row)return;const r=MN.rows.find(x=>x.ph===row.dataset.ph);if(!r)return;const k=MN.ym+"_"+r.ph,{F,db}=FB;
+    if(e.target.closest("[data-rbx]")){if(!confirm("Bỏ ghi nhận chiết khấu của khách này?"))return;F.deleteDoc(F.doc(db,"rebates",k)).then(()=>{delete MN.reb[k];mnDraw();atoast("↩ Đã bỏ ghi nhận")}).catch(err=>atoast("❌ "+authMsg(err)));return}
+    if(e.target.closest("[data-rb]"))geOpen(`✔ Ghi nhận chiết khấu – ${r.name||r.ph}`,`<label>Hình thức<select id="rb_f"><option value="hoàn tiền">Hoàn tiền</option><option value="tặng sản phẩm">Tặng sản phẩm</option></select></label><label>Giá trị (₫)<input id="rb_a" inputmode="numeric" value="${r.sum}"></label><label>Ghi chú (sản phẩm tặng, ngày chuyển khoản…)<input id="rb_n"></label>`,async()=>{
+      const d={ym:MN.ym,phone:r.ph,name:r.name||"",form:$("#rb_f").value,amount:Math.round(+String($("#rb_a").value).replace(/\D/g,""))||0,note:$("#rb_n").value.trim(),at:F.serverTimestamp()};
+      await F.setDoc(F.doc(db,"rebates",k),d);MN.reb[k]={...d};mnDraw();atoast("✅ Đã ghi nhận chiết khấu")})}}
+  if(!MN.ym)mnLoad()}
+/* ---- Sản phẩm không chiết khấu (admin) ---- */
+let ND={q:"",f:"all",page:0,busy:0,dirty:new Set(),t:0};
+const ndFiltered=()=>AD.items.filter(p=>(!ND.q||nm(p.n+" "+p.id+" "+(catName[p.c]||"")).includes(ND.q))&&(ND.f==="all"||(ND.f==="on")===!!p.nd)).sort((a,b)=>(a.c>b.c?1:a.c<b.c?-1:0)||String(a.n).localeCompare(String(b.n),"vi"));
+function ndDraw(){const l=ndFiltered(),per=40,pages=Math.max(1,Math.ceil(l.length/per));ND.page=Math.min(ND.page,pages-1);const mk=AD.items.filter(p=>p.nd).length;
+  $("#ndStat").innerHTML=`<b>${mk}</b> sản phẩm không chiết khấu / ${AD.items.length} • đang hiện <b>${l.length}</b>${ND.busy?" • ⏳ Đang lưu…":ND.dirty.size?" • ⏳ Chờ lưu…":" • ✅ Đã lưu"}`;
+  $("#ndList").innerHTML=l.slice(ND.page*per,ND.page*per+per).map(p=>`<label class="nd-r ${p.nd?"on":""}" data-id="${esc(p.id)}"><input type="checkbox" ${p.nd?"checked":""}><span><b>${esc(p.n)}</b><small>${catName[p.c]||p.c} • ${vnd(+p.p||0)}${p.show?"":" • chưa show"}</small></span><em>${p.nd?"🚫 Không CK":"Có CK"}</em></label>`).join("")||`<div class="aempty">${AD.items.length?"Không tìm thấy sản phẩm.":"Kho trống – vào tab Kho hàng để nhập sản phẩm."}</div>`;
+  $("#ndPg").innerHTML=pages>1?`<button data-p="${ND.page-1}" ${ND.page?"":"disabled"}>‹</button><span>Trang ${ND.page+1}/${pages}</span><button data-p="${ND.page+1}" ${ND.page<pages-1?"":"disabled"}>›</button>`:""}
+async function ndFlush(){if(ND.busy||!ND.dirty.size)return;ND.busy=1;ndDraw();const parts=[...ND.dirty];ND.dirty.clear();
+  try{await Promise.all(parts.map(k=>savePart(k)));ALL.forEach(a=>{const sp=AD.items.find(x=>x.id===a.id);if(sp)a.nd=!!sp.nd});try{render();renderCart()}catch(e){}atoast("✅ Đã lưu thiết lập không chiết khấu")}
+  catch(err){parts.forEach(k=>ND.dirty.add(k));atoast("❌ Chưa lưu được: "+authMsg(err))}
+  ND.busy=0;ndDraw();if(ND.dirty.size)ndFlush()}
+const ndQueue=()=>{clearTimeout(ND.t);ND.t=setTimeout(ndFlush,700)};
+function ndSet(list,v){list.forEach(p=>{if(!!p.nd!==v){p.nd=v;ND.dirty.add(p._part??0)}});ndDraw();ndQueue()}
+let ndOn=false;function ndInit(){if(!ndOn){ndOn=true;
+  $("#ndQ").oninput=e=>{ND.q=nm(e.target.value);ND.page=0;ndDraw()};$("#ndF").onchange=e=>{ND.f=e.target.value;ND.page=0;ndDraw()};
+  $("#ndList").onchange=e=>{const r=e.target.closest(".nd-r");if(!r)return;const p=AD.items.find(x=>x.id===r.dataset.id);if(p)ndSet([p],e.target.checked)};
+  $("#ndAll").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Đánh dấu KHÔNG chiết khấu cho ${l.length} sản phẩm đang hiện?`))ndSet(l,true)};
+  $("#ndNone").onclick=()=>{const l=ndFiltered();if(l.length&&confirm(`Bỏ đánh dấu cho ${l.length} sản phẩm đang hiện?`))ndSet(l,false)};
+  $("#ndPg").onclick=e=>{const b=e.target.closest("[data-p]");if(b&&!b.disabled){ND.page=+b.dataset.p;ndDraw()}}}
+  ndDraw()}
 /* ---- Sắp xếp vị trí: cài đặt admin ---- */
 let LA=null,laInit=false;
 function laRender(){const draw=(el,key,hk,def)=>{const o=LA[key];el.innerHTML=o.map((k,i)=>{const lb=def.find(x=>x[0]===k)[1],off=!!LA[hk][k];return `<div class="la-r ${off?"off":""}" data-k="${k}"><span>${i+1}. ${escH(lb)}</span><button type="button" data-up ${i?"":"disabled"}>▲</button><button type="button" data-dn ${i<o.length-1?"":"disabled"}>▼</button><button type="button" data-eye>${off?"🙈":"👁"}</button></div>`}).join("")};
@@ -2192,7 +2337,7 @@ function pushOpenOrder(code){if(!code){try{const q=new URLSearchParams(location.
   setTimeout(()=>{const t=document.querySelector('#admTabs button[data-tab="ord"]');if(t)t.click();const q=$("#oQ");if(q){q.value=code;q.dispatchEvent(new Event("input",{bubbles:true}))}},600)}
 if("serviceWorker" in navigator)navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.type==="open-order")e.data.code?pushOpenOrder(e.data.code):(location.hash!=="#admin"&&(location.hash="#admin"))});
 /* ---- đơn hàng (realtime) ---- */
-const OST={new:["🆕","Đơn mới"],ok:["✅","Đã xác nhận"],done:["🚚","Đã giao"],cancel:["✖","Đã huỷ"]};
+const OST={new:["🆕","Đơn mới"],wait:["⏳","Chờ xác nhận"],ok:["✅","Đã xác nhận"],done:["🚚","Đã giao"],cancel:["✖","Đã huỷ"]};
 AD.ord=[];let ordOn=false,ordFirst=true;
 function ordWatch(){if(ordOn||!FB||!FB.F.onSnapshot)return;ordOn=true;const {F,db}=FB;
   const qy=F.query?F.query(F.collection(db,"orders"),F.orderBy("at","desc"),F.limit(300)):F.collection(db,"orders");
@@ -2206,22 +2351,24 @@ $("#oQ").oninput=ordList;$("#oSt").onchange=ordList;
 function ordList(){const nNew=AD.ord.filter(o=>(o.status||"new")==="new").length,b=$("#ordN");b.hidden=!nNew;b.textContent=nNew;
   document.title=(nNew?`(${nNew}) `:"")+document.title.replace(/^\(\d+\) /,"");
   const q=nm($("#oQ").value||""),st=$("#oSt").value,l=AD.ord.filter(o=>(st==="all"||(o.status||"new")===st)&&(!q||nm([o.code,o.cus&&o.cus.name,o.cus&&o.cus.phone,o.cus&&o.cus.shop].join(" ")).includes(q)));
-  $("#oStat").innerHTML=`<b>${AD.ord.length}</b> đơn • <b>${nNew}</b> đơn mới chưa xử lý`;
+  $("#oStat").innerHTML=`<b>${AD.ord.length}</b> đơn • <b>${nNew}</b> đơn mới • <b>${AD.ord.filter(o=>o.status==="wait").length}</b> chờ xác nhận • <b>${AD.ord.filter(o=>o.status==="ok").length}</b> đã xác nhận`;
   $("#oList").innerHTML=l.map(o=>{const c=o.cus||{},s=o.status||"new",it=o.items||[];
     return`<div class="oc st-${s}" data-id="${esc(o.id)}"><div class="oc-h"><b>${esc(o.code)}</b><span>${o.at?new Date(tms(o.at)).toLocaleString("vi-VN"):""}</span>
-      <select data-st>${Object.entries(OST).map(([k,v])=>`<option value="${k}" ${k===s?"selected":""}>${v[0]} ${v[1]}</option>`).join("")}</select></div>
+      <em class="oc-badge b-${s}">${OST[s]?OST[s][0]+" "+OST[s][1]:s}${s==="ok"&&o.okAt?" • "+new Date(tms(o.okAt)).toLocaleString("vi-VN",{hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit"}):""}</em><select data-st>${Object.entries(OST).map(([k,v])=>`<option value="${k}" ${k===s?"selected":""}>${v[0]} ${v[1]}</option>`).join("")}</select></div>
       <div class="oc-c"><b>${esc(c.name)}</b>${c.shop?` <span class="g">• ${esc(c.shop)}</span>`:""}<small>📍 ${esc(c.address)}</small>${c.note?`<small>📝 ${esc(c.note)}</small>`:""}</div>
       <div class="oc-i">${it.slice(0,6).map(x=>`<div><span>${esc(x.n)}${x.vn||x.cn?` <em>(${esc([x.vn,x.cn].filter(Boolean).join(" • "))})</em>`:""}</span><b>× ${x.q}</b></div>`).join("")}${it.length>6?`<small>+ ${it.length-6} mã hàng khác…</small>`:""}</div>
       <div class="oc-f"><span>${(o.qty||0).toLocaleString("vi-VN")} sp • <b class="g">${vnd(o.tot||0)}</b>${o.disc?` <em>(CK ${o.pct}%)</em>`:""}</span>
-        <span class="oc-b"><button type="button" class="btn btn-gold" data-bill>🧾 Bill</button><button type="button" class="btn" data-editb>✏️ Sửa bill</button><button type="button" class="btn" data-kt>➡️ Kế toán</button><a class="btn" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a><a class="btn" href="https://zalo.me/${esc(c.phone)}" target="_blank" rel="noopener">Zalo</a><button type="button" class="btn" data-del title="Xoá đơn">🗑</button></span></div></div>`}).join("")||'<div class="aempty">Chưa có đơn hàng nào.</div>'}
-$("#oList").addEventListener("change",async e=>{if(!e.target.matches("[data-st]"))return;const id=e.target.closest(".oc").dataset.id;
-  try{await FB.F.updateDoc(FB.F.doc(FB.db,"orders",id),{status:e.target.value});atoast("✅ Đã cập nhật trạng thái")}catch(err){atoast("❌ "+authMsg(err))}});
+        <span class="oc-b">${s==="new"||s==="wait"?`<button type="button" class="btn btn-ok" data-ok>✅ Đã xác nhận đơn hàng</button>`:""}${s==="new"?`<button type="button" class="btn" data-wait>⏳ Chờ xác nhận</button>`:""}<button type="button" class="btn btn-gold" data-bill>🧾 Bill</button><button type="button" class="btn" data-editb>✏️ Sửa bill</button><button type="button" class="btn" data-kt>➡️ Kế toán</button><a class="btn" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a><a class="btn" href="https://zalo.me/${esc(c.phone)}" target="_blank" rel="noopener">Zalo</a><button type="button" class="btn" data-del title="Xoá đơn">🗑</button></span></div></div>`}).join("")||'<div class="aempty">Chưa có đơn hàng nào.</div>'}
+const ordSet=async(id,st)=>{const d={status:st};if(st==="ok")d.okAt=FB.F.serverTimestamp();try{await FB.F.updateDoc(FB.F.doc(FB.db,"orders",id),d);atoast(st==="ok"?"✅ Đã xác nhận đơn hàng":"✅ Đã cập nhật trạng thái")}catch(err){atoast("❌ "+authMsg(err))}};
+$("#oList").addEventListener("change",async e=>{if(!e.target.matches("[data-st]"))return;ordSet(e.target.closest(".oc").dataset.id,e.target.value)});
 $("#oList").addEventListener("click",async e=>{const card=e.target.closest(".oc");if(!card)return;const o=AD.ord.find(x=>x.id===card.dataset.id);if(!o)return;
   if(e.target.closest("[data-del]")){if(!confirm(`Xoá đơn ${o.code}?`))return;try{await FB.F.deleteDoc(FB.F.doc(FB.db,"orders",o.id));atoast("🗑 Đã xoá đơn")}catch(err){atoast("❌ "+authMsg(err))}return}
+  if(e.target.closest("[data-ok]")){if(confirm(`Xác nhận đơn ${o.code} của ${(o.cus&&o.cus.name)||"khách"}?`))ordSet(o.id,"ok");return}
+  if(e.target.closest("[data-wait]")){ordSet(o.id,"wait");return}
   if(e.target.closest("[data-editb]")){editBill(o);return}
   const kt=e.target.closest("[data-kt]");
   if(e.target.closest("[data-bill]")||kt){const ob=$("#ordBill");$("#obT").textContent="🧾 "+o.code;$("#obImgs").innerHTML='<div class="ci-empty">⏳ Đang vẽ bill…</div>';ob.classList.add("on");
-    try{const B=await withTimeout(makeBill(o.cus||{},o.items||[],{code:o.code,pct:o.pct||0,date:o.at?new Date(tms(o.at)):new Date()}),20000);if(OB)OB.urls.forEach(u=>URL.revokeObjectURL(u));OB=B;OB.o=o;
+    try{const B=await withTimeout(makeBill(o.cus||{},o.items||[],{code:o.code,pct:o.pct||0,disc:o.disc||0,date:o.at?new Date(tms(o.at)):new Date()}),20000);if(OB)OB.urls.forEach(u=>URL.revokeObjectURL(u));OB=B;OB.o=o;
       $("#obImgs").innerHTML=B.urls.map(u=>`<figure><img src="${u}" alt=""></figure>`).join("");obPrep(!!kt);if(kt&&canShareFiles(B.files))try{navigator.share({files:B.files,title:"Đơn "+o.code}).catch(()=>{})}catch(_){}}catch(err){console.warn(err);$("#obImgs").innerHTML='<div class="ci-empty">❌ Không vẽ được bill. Đóng rồi bấm lại.</div>'}}});
 /* ---- sửa bill (đơn hàng) + sửa tài khoản: khung chỉnh sửa chung ---- */
 {const g=document.createElement("div");g.id="gEdit";g.setAttribute("role","dialog");g.innerHTML='<div class="ge-box"><div class="pe-h"><h3 id="geT"></h3><button type="button" id="geX" aria-label="Đóng">×</button></div><div id="geB"></div><div class="ge-tot" id="geTot"></div><div id="geErr" style="color:#ff8a8a;font-size:13px"></div><button class="btn btn-gold" type="button" id="geOk">💾 Lưu</button></div>';document.body.appendChild(g);
@@ -2232,11 +2379,11 @@ function editBill(o){const c=o.cus||{};let it=(o.items||[]).map(x=>({...x}));
   const draw=()=>{$("#geB").innerHTML=`<label>Họ tên<input id="eb_name" value="${esc(c.name||"")}"></label><label>SĐT<input id="eb_phone" inputmode="tel" value="${esc(c.phone||"")}"></label><label>Shop<input id="eb_shop" value="${esc(c.shop||"")}"></label><label>Địa chỉ<input id="eb_addr" value="${esc(c.address||"")}"></label><label>Ghi chú<textarea id="eb_note" rows="2">${esc(c.note||"")}</textarea></label>
     <b style="color:var(--gold2)">Sản phẩm</b>`+it.map((x,i)=>`<div class="ge-it" data-i="${i}"><b>${esc(x.n)}</b><input data-f="q" inputmode="numeric" value="${x.q}" aria-label="Số lượng"><input data-f="u" inputmode="numeric" value="${x.u}" aria-label="Đơn giá"><button type="button" data-x aria-label="Xoá">🗑</button>${x.vn||x.cn?`<small>${esc([x.vn,x.cn].filter(Boolean).join(" • "))}</small>`:""}</div>`).join("")||'<div class="aempty">Chưa có sản phẩm.</div>';sum()};
   const num=v=>Math.max(0,Math.round(+String(v).replace(/\D/g,""))||0);
-  const sum=()=>{$("#geTot").textContent=`${it.reduce((a,x)=>a+x.q,0).toLocaleString("vi-VN")} sp • ${vnd(it.reduce((a,x)=>a+x.q*x.u,0))}`};
+  const legacy=!o.pct,sum=()=>{const D=discCalc(it,legacy?0:undefined);$("#geTot").textContent=`${it.reduce((a,x)=>a+x.q,0).toLocaleString("vi-VN")} sp • ${D.amt?`${vnd(D.gross)} − CK ${D.pct}% (${vnd(D.amt)}) = ${vnd(D.net)}`:vnd(D.gross)}`};
   geOpen("✏️ Sửa bill "+o.code,"",async()=>{const cus={name:$("#eb_name").value.trim(),phone:$("#eb_phone").value.trim(),shop:$("#eb_shop").value.trim(),address:$("#eb_addr").value.trim(),note:$("#eb_note").value.trim()};
       if(cus.name.length<2)throw new Error("Nhập họ tên");if(!it.length)throw new Error("Bill cần ít nhất 1 sản phẩm");
-      const items=it.map(x=>({n:x.n,q:x.q,u:x.u,vn:x.vn||"",cn:x.cn||""})),tot=items.reduce((a,x)=>a+x.q*x.u,0),qty=items.reduce((a,x)=>a+x.q,0);
-      await FB.F.updateDoc(FB.F.doc(FB.db,"orders",o.id),{cus,items,tot,qty});atoast("✅ Đã lưu bill "+o.code)},
+      const items=it.map(x=>({n:x.n,q:x.q,u:x.u,vn:x.vn||"",cn:x.cn||"",nd:x.nd?1:0})),D=discCalc(items,legacy?0:undefined),tot=D.net,qty=items.reduce((a,x)=>a+x.q,0);
+      await FB.F.updateDoc(FB.F.doc(FB.db,"orders",o.id),legacy?{cus,items,tot,qty}:{cus,items,tot,qty,gross:D.gross,disc:D.amt,pct:D.pct});atoast("✅ Đã lưu bill "+o.code)},
     e=>{const r=e&&e.target&&e.target.closest&&e.target.closest(".ge-it");if(r&&e.target.dataset.f){const x=it[+r.dataset.i];x[e.target.dataset.f]=num(e.target.value)}sum()});
   draw();$("#geB").onclick=e=>{const b=e.target.closest("[data-x]");if(!b)return;it.splice(+b.closest(".ge-it").dataset.i,1);draw()}}
 /* nội dung đơn dạng chữ (chép / gửi kế toán) */
@@ -2380,7 +2527,7 @@ function peVrDraw(){$("#peVr").innerHTML=AD.vr.map((v,i)=>`<div class="pe-r v" d
 $("#peAddC").onclick=()=>{if(AD.cl.length>=12)return;AD.cl.push({n:"",h:"#000000",k:Math.min(AD.cl.length,4)});peClDraw();{const f=$("#peCl").querySelector(".pe-r:nth-last-child(2) [data-f=n]");f&&f.focus()}};
 $("#peAddV").onclick=()=>{if(AD.vr.length>=12)return;AD.vr.push({n:"",p:0,o:0});peVrDraw();$("#peVr").querySelector(".pe-r:last-child [data-f=n]").focus()};
 function openEdit(p){AD.edit=p;AD.newImg=null;AD.cl=(p&&p.colors||[]).map(c=>({n:c.n||"",h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#000000",k:+c.k||0}));AD.vr=(p&&p.vars||[]).map(v=>({n:v.n||"",p:+v.p||0,o:+v.o||0}));peVrDraw();AD.slots=p?[p.img,...(p.imgs||[])].filter(Boolean).slice(0,PE_MAX).map(ref=>({ref,data:null})):[];$("#peT").textContent=p?"Sửa sản phẩm":"Thêm sản phẩm mới";$("#peDel").hidden=!p;
-  pf.n.value=p?.n||"";pf.c.value=p?.c||"cap";pf.p.value=p?.p||"";pf.o.value=p?.o||"";pf.tag.value=p?.tag||"";pf.desc.value=p?.desc||"";pf.desc.dispatchEvent(new Event("input"));pf.sold.value=p?.s||"";pf.show.checked=p?!!p.show:true;pf.feat.checked=!!p?.feat;
+  pf.n.value=p?.n||"";pf.c.value=p?.c||"cap";pf.p.value=p?.p||"";pf.o.value=p?.o||"";pf.tag.value=p?.tag||"";pf.nt.value=p?.nt||"";pf.nd.checked=!!p?.nd;pf.desc.value=p?.desc||"";pf.desc.dispatchEvent(new Event("input"));pf.sold.value=p?.s||"";pf.show.checked=p?!!p.show:true;pf.feat.checked=!!p?.feat;
   pf.url.value="";pf.file.value="";peRender();
   $("#peInfo").textContent="";pe.classList.add("on")}
 $("#peClose").onclick=()=>pe.classList.remove("on");pe.onclick=e=>{if(e.target===pe)pe.classList.remove("on")};
@@ -2397,7 +2544,7 @@ async function compress(file,max=800){let bmp;try{bmp=await createImageBitmap(fi
   const x=cv.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(bmp,0,0,w,h);
   for(const q of[.8,.7,.6,.5]){let d=cv.toDataURL("image/webp",q);if(!d.startsWith("data:image/webp"))d=cv.toDataURL("image/jpeg",q);if(d.length<700000||q===.5)return{data:d,w,h}}}
 pf.onsubmit=async e=>{e.preventDefault();const b=pf.querySelector("button[type=submit]"),info=$("#peInfo");
-  const d={n:pf.n.value.trim(),c:pf.c.value,p:Math.round(+String(pf.p.value).replace(/[^\d]/g,"")),o:Math.round(+String(pf.o.value).replace(/[^\d]/g,""))||0,tag:pf.tag.value.trim(),desc:pf.desc.value.trim(),feat:pf.feat.checked,show:pf.show.checked,s:Math.round(+String(pf.sold.value).replace(/[^\d]/g,""))||0};if(AD.edit&&d.desc!==AD.edit.desc)AD.edit.descAuto=false;
+  const d={n:pf.n.value.trim(),c:pf.c.value,p:Math.round(+String(pf.p.value).replace(/[^\d]/g,"")),o:Math.round(+String(pf.o.value).replace(/[^\d]/g,""))||0,tag:pf.tag.value.trim(),nt:pf.nt.value.trim(),nd:pf.nd.checked,desc:pf.desc.value.trim(),feat:pf.feat.checked,show:pf.show.checked,s:Math.round(+String(pf.sold.value).replace(/[^\d]/g,""))||0};if(AD.edit&&d.desc!==AD.edit.desc)AD.edit.descAuto=false;
   if(d.n.length<2)return info.textContent="❌ Nhập tên sản phẩm.";if(!d.p)return info.textContent="❌ Nhập giá sỉ.";
   busy(b,true,"Đang lưu…");const {F,db}=FB;let p=AD.edit,isNew=!p;
   try{if(isNew){p={id:uid36(),img:"",_part:nextPart(),ord:Date.now()};}
@@ -2587,7 +2734,7 @@ const saveCart=()=>{try{localStorage.setItem("bdCart",JSON.stringify(CART))}catc
 const ckey=(id,v,c)=>v||c?[id,v||"",c||""].map(encodeURIComponent).join("|"):id;
 const cartItems=()=>Object.entries(CART).map(([k,q])=>{const[id,v="",c=""]=k.split("|").map(x=>{try{return decodeURIComponent(x)}catch(e){return x}});
   const p=ALL.find(x=>x.id===id);if(!p)return null;const vr=(p.v||[]).find(x=>x.n===v),cl=(p.cl||[]).find(x=>x.n===c);
-  return{k,p,q,u:vr&&vr.p?vr.p:p.p,vn:vr?vr.n:"",cn:cl?cl.n:"",im:(cl&&[p.i,...(p.g||[])][cl.k])||p.i}}).filter(x=>x&&x.q>0);
+  return{k,p,q,nd:!!p.nd,u:vr&&vr.p?vr.p:p.p,vn:vr?vr.n:"",cn:cl?cl.n:"",im:(cl&&[p.i,...(p.g||[])][cl.k])||p.i}}).filter(x=>x&&x.q>0);
 function addCart(id,q,opt){const p=ALL.find(x=>x.id===id);if(!p)return;
   if(!opt&&((p.v&&p.v.length)||(p.cl&&p.cl.length))){openDetail(id);toast("👉 Sản phẩm có nhiều phân loại / màu – chọn loại bạn muốn rồi bấm Thêm vào giỏ");return}
   const vr=opt&&(p.v||[]).find(x=>x.n===opt.v),u=vr&&vr.p?vr.p:p.p,k=ckey(id,opt&&opt.v,opt&&opt.c);
@@ -2600,10 +2747,10 @@ function cartBadge(bump){const it=cartItems(),n=it.reduce((a,x)=>a+x.q,0),tot=it
 $("#grid").addEventListener("click",e=>{const b=e.target.closest(".qadd button");if(!b)return;addCart(b.parentNode.dataset.id,+b.dataset.q)});
 $("#cfinfo").addEventListener("click",e=>{const b=e.target.closest(".qadd button");if(!b)return;addCart(b.parentNode.dataset.id,+b.dataset.q)});
 const cartEl=$("#cart");
-function openCart(){renderCart();cartEl.classList.add("on")}function closeCart(){cartEl.classList.remove("on")}
+function openCart(){renderCart();cartEl.classList.add("on");try{monLoad()}catch(e){}}function closeCart(){cartEl.classList.remove("on")}
 $("#cartFab").onclick=openCart;$("#cartClose").onclick=closeCart;cartEl.onclick=e=>{if(e.target===cartEl)closeCart()};
 const myOrders=()=>{try{return JSON.parse(localStorage.getItem("bdOrders")||"[]").filter(o=>o&&o.code&&Date.now()-o.t<30*864e5)}catch(e){return[]}};
-const MOST={new:"🆕 Chờ xác nhận",ok:"✅ Đã xác nhận",done:"🚚 Đã giao",cancel:"✖ Đã huỷ"};
+const MOST={new:"🆕 Đã gửi đơn",wait:"⏳ Chờ xác nhận",ok:"✅ Đã xác nhận",done:"🚚 Đã giao",cancel:"✖ Đã huỷ"};
 function addMyOrder(B,rows){try{const l=myOrders().filter(o=>o.code!==B.code);l.unshift({code:B.code,t:Date.now(),tot:B.tot,qty:B.qty,n:rows.length,st:"new"});localStorage.setItem("bdOrders",JSON.stringify(l.slice(0,30)))}catch(e){}}
 function renderMyOrd(){const l=myOrders(),el=$("#myOrd");el.hidden=!l.length;if(!l.length)return;
   el.innerHTML='<h4>📦 Các đơn đang đặt</h4>'+l.map(o=>`<div class="mo"><div><b>${escH(o.code)}</b><small>${new Date(o.t).toLocaleString("vi-VN")} • ${o.n} mã • ${(o.qty||0).toLocaleString("vi-VN")} sp</small><small>${vnd(o.tot||0)}</small></div><span class="mo-s">${MOST[o.st]||MOST.new}</span></div>`).join("");
@@ -2611,15 +2758,14 @@ function renderMyOrd(){const l=myOrders(),el=$("#myOrd");el.hidden=!l.length;if(
     if(ch){const keep=myOrders().map(x=>{const f=all.find(y=>y.code===x.code);return f?{...x,st:f.st}:x});localStorage.setItem("bdOrders",JSON.stringify(keep))}}catch(e){}renderMyOrd.busy=0;if(ch)renderMyOrd()})()}}
 function renderCart(){const it=cartItems(),tot=it.reduce((a,x)=>a+x.q*x.u,0),n=it.reduce((a,x)=>a+x.q,0);
   $("#cartList").innerHTML=it.length?it.map(({k,p,q,u,vn,cn,im})=>`<div class="ci" data-k="${escH(k)}"><div class="ci-im">${IMG(im,p.n,im===p.i?p.th:"")}</div>
-    <div class="ci-b"><b>${escH(p.n)}</b>${vn||cn?`<em class="ci-v">${[vn,cn].filter(Boolean).map(escH).join(" • ")}</em>`:""}<small>${vnd(u)} / cái</small>
+    <div class="ci-b"><b>${escH(p.n)}</b>${vn||cn?`<em class="ci-v">${[vn,cn].filter(Boolean).map(escH).join(" • ")}</em>`:""}<small>${vnd(u)} / cái</small>${p.nd?'<em class="nd-t">🚫 Không chiết khấu</em>':""}${p.nt?`<em class="pnote">📢 ${escH(p.nt)}</em>`:""}
       <div class="ci-q"><button data-d="-1" aria-label="Bớt">−</button><input value="${q}" inputmode="numeric" aria-label="Số lượng"><button data-d="1" aria-label="Thêm">+</button>
       <span class="ci-ch"><button data-s="10">10</button><button data-s="50">50</button><button data-s="100">100</button></span></div></div>
     <div class="ci-r"><b>${vnd(u*q)}</b><button class="ci-x" aria-label="Xóa">🗑</button></div></div>`).join("")
     :`<div class="ci-empty">Giỏ hàng trống.<br>Bấm <b>+10 / +50 / +100</b> ở mỗi sản phẩm để thêm nhanh.</div>`;
-  const pct=Math.min(100,tot/MIN_ORD*100),pct5=Math.min(100,tot/5e6*100),dk=discPct(tot),dn=discNext(tot),da=discAmt(tot,dk);
+  const pct=Math.min(100,tot/MIN_ORD*100),pct5=Math.min(100,tot/5e6*100);
   $("#cartSum").innerHTML=it.length?`<div class="cs-row"><span>${it.length} mã hàng • ${n.toLocaleString("vi-VN")} sản phẩm</span><b>${vnd(tot)}</b></div>
-    ${dk?`<div class="cs-row cs-dc"><span>🎁 Chiết khấu đại lý <b>${dk}%</b></span><b>− ${vnd(da)}</b></div><div class="cs-row cs-pay"><span>Thanh toán</span><b>${vnd(tot-da)}</b></div>`:""}
-    ${dn&&tot>=MIN_ORD?`<div class="cs-note cs-dn">💡 Thêm <b>${vnd(dn.m-tot)}</b> để được chiết khấu <b>${dn.k}%</b> (đơn từ ${vnd(dn.m)})</div>`:""}
+    <div class="cs-mon" id="csMon">${monHtml(it)}</div>
     <div class="cs-bar"><i style="width:${pct}%"></i></div><div class="cs-note">${tot<MIN_ORD?`⛔ Chưa thể đặt hàng – thêm <b>${vnd(MIN_ORD-tot)}</b> để đạt đơn tối thiểu 500.000₫`:"✅ Đạt đơn tối thiểu 500.000₫"}</div>
     <div class="cs-bar g"><i style="width:${pct5}%"></i></div><div class="cs-note">${tot<5e6?`Thêm <b>${vnd(5e6-tot)}</b> để được hỗ trợ phí ship (đơn trên 5 triệu, thanh toán trước)`:"🚚 Được hỗ trợ phí vận chuyển"}</div>
     <button class="btn btn-gold" id="cartSend" ${tot<MIN_ORD?"disabled":""}>${tot<MIN_ORD?"⛔ Đơn tối thiểu 500.000₫ mới đặt được":"📝 Đặt hàng – nhập thông tin nhận hàng"}</button><button class="btn" id="cartClear">Xóa giỏ hàng</button>
@@ -2633,7 +2779,7 @@ $("#cartList").addEventListener("change",e=>{if(e.target.tagName!=="INPUT")retur
   if(v>0)CART[id]=v;else delete CART[id];saveCart();renderCart();cartBadge()});
 function sendCart(){const it=cartItems(),tot=it.reduce((a,x)=>a+x.q*x.u,0);
   const txt=`ĐƠN ĐẶT HÀNG – BD Team Phụ Kiện Hoàng Đế\n${PROFILE?`Khách: ${PROFILE.name} – ${PROFILE.shop}\nSĐT: ${PROFILE.phone}\nĐịa chỉ: ${PROFILE.address}\n`:""}`+
-    it.map(({p,q,u,vn,cn},i)=>`${i+1}. ${p.n}${vn||cn?` (${[vn&&"Loại: "+vn,cn&&"Màu: "+cn].filter(Boolean).join(", ")})`:""} – SL ${q} × ${vnd(u)} = ${vnd(u*q)}`).join("\n")+`\nTỔNG TẠM TÍNH: ${vnd(tot)}`+(discPct(tot)?`\nChiết khấu ${discPct(tot)}%: -${vnd(discAmt(tot,discPct(tot)))}\nTHANH TOÁN: ${vnd(tot-discAmt(tot,discPct(tot)))}`:"");
+    it.map(({p,q,u,vn,cn},i)=>`${i+1}. ${p.n}${vn||cn?` (${[vn&&"Loại: "+vn,cn&&"Màu: "+cn].filter(Boolean).join(", ")})`:""} – SL ${q} × ${vnd(u)} = ${vnd(u*q)}`).join("\n")+`\nTỔNG TẠM TÍNH: ${vnd(tot)}`+(()=>{const D=discCalc(it,0);return D.amt?`\nChiết khấu ${D.pct}%: -${vnd(D.amt)}\nTHANH TOÁN: ${vnd(D.net)}`:""})();
   const go=()=>{toast("📋 Đã sao chép đơn hàng – mở Zalo và <b>dán</b> vào tin nhắn gửi BD Team");setTimeout(()=>window.open(zalo,"_blank","noopener"),900)};
   if(navigator.clipboard&&isSecureContext)navigator.clipboard.writeText(txt).then(go,()=>fallbackCopy(txt,go));else fallbackCopy(txt,go)}
 /* ---------- ĐẶT HÀNG: nhập thông tin → tạo bill JPG (tự chia nhiều ảnh) → gửi Zalo ---------- */
@@ -2654,7 +2800,7 @@ blF.onsubmit=async e=>{e.preventDefault();const er=$("#blErr"),d={};["name","pho
   const it=cartItems();if(!it.length){closeBill();return toast("Giỏ hàng trống")}
   if(it.reduce((a,x)=>a+x.q*x.u,0)<MIN_ORD)return er.textContent="⛔ Đơn hàng tối thiểu "+vnd(MIN_ORD)+" mới đặt được. Vui lòng thêm sản phẩm.";
   const b=$("#blMake");b.disabled=true;b.textContent="Đang tạo bill…";
-  const rows=it.map(x=>({id:x.p.id,n:x.p.n,q:x.q,u:x.u,vn:x.vn,cn:x.cn}));
+  const rows=it.map(x=>({id:x.p.id,n:x.p.n,q:x.q,u:x.u,vn:x.vn,cn:x.cn,nd:x.nd?1:0}));
   try{const old=BILL;BILL=await makeBill(d,rows);if(old)old.urls.forEach(u=>URL.revokeObjectURL(u));BILL.saved=await saveOrder(d,rows,BILL);if(BILL.saved){addMyOrder(BILL,rows);CART={};saveCart();cartBadge()}showBill()}catch(err){console.warn(err);er.textContent="❌ Không tạo được ảnh bill trên trình duyệt này. Thử lại hoặc dùng Chrome / Safari."}
   finally{b.disabled=false;b.textContent="🧾 Tạo bill"}};
 function showBill(){const ok=$("#blOk");ok.hidden=!BILL.saved;ok.innerHTML=`✅ Đơn <b>${BILL.code}</b> đã được gửi tự động tới BD Team. Gửi thêm ảnh bill qua Zalo để được xác nhận nhanh hơn.`;
@@ -2680,7 +2826,7 @@ $("#blSend").onclick=()=>{if(!BILL)return;
 /* lưu đơn lên Firebase → BD Team nhận ngay trong trang quản trị (tab Đơn hàng) */
 async function saveOrder(cus,rows,B){if(!FB||DEMO)return false;
   try{const {F,db}=FB;await withTimeout(F.setDoc(F.doc(db,"orders",B.code),{code:B.code,at:F.serverTimestamp(),status:"new",uid:(FB.auth.currentUser&&FB.auth.currentUser.uid)||"",
-      cus:{name:cus.name,phone:cus.phone,shop:cus.shop||"",address:cus.address,note:cus.note||""},items:rows.slice(0,300).map(r=>({n:r.n,q:r.q,u:r.u,vn:r.vn||"",cn:r.cn||""})),tot:B.tot,gross:B.gross||B.tot,disc:B.disc||0,pct:B.pct||0,qty:B.qty}),8000);
+      cus:{name:cus.name,phone:cus.phone,shop:cus.shop||"",address:cus.address,note:cus.note||""},items:rows.slice(0,300).map(r=>({n:r.n,q:r.q,u:r.u,vn:r.vn||"",cn:r.cn||"",nd:r.nd?1:0})),tot:B.tot,gross:B.gross||B.tot,disc:B.disc||0,pct:B.pct||0,qty:B.qty}),8000);
     try{fetch(PUSH.api+"/notify",{method:"POST",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify({code:B.code,tot:B.tot})}).catch(()=>{})}catch(e){}   /* báo điện thoại admin (Web Push) */
     return true}
   catch(e){console.warn("Lưu đơn:",e);return false}}
@@ -2698,7 +2844,7 @@ async function makeBill(cus,it,meta={}){
   const rows=it.map(({n:pn,q,u,vn,cn},i)=>{const ln=wrap(pn,fName,C.nw),sub=[vn&&"Loại: "+vn,cn&&"Màu: "+cn].filter(Boolean).join(" • "),sl=sub?wrap(sub,fSub,C.nw):[];
     return{i:i+1,ln,sl,q,u,h:22+ln.length*36+sl.length*30+16}});
   const cusL=[["Khách hàng",cus.name],["Điện thoại",cus.phone],cus.shop&&["Shop",cus.shop],["Địa chỉ",cus.address],cus.note&&["Ghi chú",cus.note]].filter(Boolean).map(([k,v])=>({k,ln:wrap(v,`500 26px ${FF}`,W-PX*2-190)}));
-  const gross=it.reduce((a,x)=>a+x.q*x.u,0),dpct=meta.pct!==undefined?(+meta.pct||0):discPct(gross),damt=dpct?discAmt(gross,dpct):0;
+  const DC=discCalc(it,+meta.pct||0),gross=DC.gross,dpct=DC.pct,damt=meta.disc!==undefined?(+meta.disc||0):DC.amt;
   const HEAD=210,CUSH=40+cusL.reduce((a,x)=>a+x.ln.length*36+10,0)+24,TH=60,FOOT=80,TOTH=damt?300:230;
   const pages=[];let cur={rows:[],first:true},used=HEAD+CUSH+TH;
   for(const r of rows){if(used+r.h+FOOT>MAXH&&cur.rows.length){pages.push(cur);cur={rows:[]};used=HEAD+TH}cur.rows.push(r);used+=r.h}
@@ -2730,7 +2876,7 @@ async function makeBill(cus,it,meta={}){
         x.font=`500 24px ${FF}`;x.fillStyle="#3d3427";x.fillText(vnd(r.u),C.u,ty);x.font=`700 25px ${FF}`;x.fillStyle="#1d1810";x.fillText(vnd(r.q*r.u),C.t,ty);x.textAlign="left";
         y+=r.h;x.fillStyle="#e6dcc6";x.fillRect(PX-16,y-1,W-PX*2+32,1)})}
     if(last){y+=34;x.fillStyle="#1a140b";x.fillRect(PX-16,y,W-PX*2+32,TOTH-60);
-      x.fillStyle="#e9dcc0";x.font=`500 25px ${FF}`;x.fillText(`Số mã hàng: ${it.length}`,PX+10,y+50);x.fillText(`Tổng số lượng: ${qty.toLocaleString("vi-VN")}`,PX+10,y+92);
+      x.fillStyle="#e9dcc0";x.font=`500 25px ${FF}`;x.fillText(`Số mã hàng: ${it.length}`,PX+10,y+50);x.fillText(`Tổng số lượng: ${qty.toLocaleString("vi-VN")}`,PX+10,y+92);if(damt&&DC.ndAmt){x.fillStyle="#bfae8c";x.font=`400 22px ${FF}`;x.fillText(`SP không chiết khấu: ${vnd(DC.ndAmt)}`,PX+10,y+134);x.fillStyle="#e9dcc0";x.font=`500 25px ${FF}`}
       const dy=damt?70:0;
       if(damt){x.textAlign="right";x.fillStyle="#e9dcc0";x.font=`500 24px ${FF}`;x.fillText(`Tạm tính: ${vnd(gross)}`,W-PX-10,y+44);x.fillStyle="#7ee0a8";x.font=`700 26px ${FF}`;x.fillText(`Chiết khấu ${dpct}%: − ${vnd(damt)}`,W-PX-10,y+82);x.textAlign="left"}
       x.textAlign="right";x.fillStyle="#bfae8c";x.font=`600 24px ${FF}`;x.fillText(damt?"THANH TOÁN":"TỔNG CỘNG",W-PX-10,y+50+dy);x.fillStyle="#f7dc92";x.font=`800 52px ${FF}`;x.fillText(vnd(tot),W-PX-10,y+118+dy);x.textAlign="left";
@@ -2790,6 +2936,7 @@ function openDetail(id){const p=ALL.find(x=>x.id===id);if(!p)return;PDP=p;PDQ=1;
    ${gal.length>1?`<button type="button" class="pg-nav l" data-g="-1" aria-label="Ảnh trước">‹</button><button type="button" class="pg-nav r" data-g="1" aria-label="Ảnh sau">›</button><span class="pg-cnt">1/${gal.length}</span><div class="pg-dots">${gal.map(()=>"<i></i>").join("")}</div>`:""}</div>
    ${gal.length>1?`<div class="pd-thumbs">${gal.map((src,k)=>`<button type="button" data-k="${k}" aria-label="Ảnh ${k+1}">${IMG(src,"")}</button>`).join("")}</div>`:""}
    <div class="pd-ct">${catName[p.c]}${br?` • ${escH(br)}`:""}</div><h3 class="pd-n">${escH(p.n)}</h3>
+   ${p.nt?`<div class="pd-note">📢 ${escH(p.nt)}</div>`:""}${p.nd?'<div class="pd-note nd">🚫 Sản phẩm không áp dụng chiết khấu đại lý</div>':""}
    <div class="pd-pr" id="pdPr"></div>`;
   $("#pdOpts").innerHTML=`${p.cl&&p.cl.length?`<div class="pd-opt"><h5>Màu sắc: <b id="pdCn"></b></h5><div class="pd-chips" id="pdCl">${p.cl.map((c,i)=>`<button type="button" data-ci="${i}"><i style="background:${c.h}"></i>${escH(c.n)}</button>`).join("")}</div></div>`:""}
    ${p.v&&p.v.length?`<div class="pd-opt"><h5>Phân loại: <b id="pdVn"></b></h5><div class="pd-chips" id="pdVr">${p.v.map((x,i)=>`<button type="button" data-vi="${i}">${escH(x.n)}<small>${vnd(x.p||p.p)}</small></button>`).join("")}</div></div>`:""}`;
