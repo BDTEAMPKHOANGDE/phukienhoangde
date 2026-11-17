@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="vi">
 <head>
+<script>try{var t=localStorage.getItem("bdTheme");if(t==="light"||t==="warm")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <meta charset="utf-8">
 <script>/* nhận biết thiết bị trước khi vẽ trang */(function(){var u=navigator.userAgent,m=/Android|iPhone|iPod|Mobile|Windows Phone|Opera Mini|IEMobile/i.test(u)||(navigator.maxTouchPoints>1&&/Macintosh/.test(u)&&screen.width<1100)||(navigator.maxTouchPoints>0&&Math.min(screen.width,screen.height)<700);
 document.documentElement.classList.add(m?"dev-mobile":"dev-pc")})()</script>
@@ -330,6 +331,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:28px
 /* account button */
 .hd-r{display:flex;align-items:center;gap:8px}
 .acct{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:999px;border:1px solid var(--gold3);background:rgba(22,19,14,.8);color:var(--gold2);font:600 13px 'Be Vietnam Pro';cursor:pointer;white-space:nowrap}
+.acg{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;margin-right:6px;border-radius:50%;border:1px solid var(--gold3);background:rgba(22,19,14,.8);color:var(--gold2);font-size:17px;line-height:1;cursor:pointer;flex:0 0 auto}.acg[hidden]{display:none}.acg:active{transform:scale(.94)}
 .acct.in{background:rgba(217,178,95,.16);border-color:var(--gold)}
 @media(max-width:480px){.hd-r .js-zalo{display:none}.acct{padding:0 12px}}
 .fadm{display:inline-block;margin-top:10px;color:var(--muted);font-size:12px;opacity:.6;text-decoration:underline}
@@ -927,6 +929,46 @@ body{padding-left:var(--sal);padding-right:var(--sar)}
 #ndList .nd-b{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;flex:1 1 140px;padding:9px 12px;border-radius:12px;border:1px solid var(--line);cursor:pointer;font-size:13.5px;font-weight:700;margin:0;color:var(--muted)}
 #ndList .nd-b input{width:22px!important;height:22px!important;min-width:22px;padding:0!important;margin:0!important;flex:0 0 auto}#ndList .nd-b.ck input{accent-color:#10b981}#ndList .nd-b.no input{accent-color:#ef4444}#ndList .nd-b i{font-style:normal}
 #ndList .nd-r.ck .nd-b.ck{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.5);color:#6ee7b7}#ndList .nd-r.nd .nd-b.no{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.5);color:#fca5a5}
+#auth .au-pol{border:1px solid rgba(246,200,106,.35);border-radius:12px;background:rgba(255,255,255,.04);margin:2px 0}
+#auth .au-pol summary{cursor:pointer;padding:10px 12px;font:600 12.5px 'Be Vietnam Pro',Inter,system-ui,sans-serif;color:#f6c86a;list-style:none;line-height:1.4}
+#auth .au-pol summary::-webkit-details-marker{display:none}
+#auth .au-pol[open] summary{border-bottom:1px solid rgba(246,200,106,.2)}
+#auth .au-pol-b{max-height:210px;overflow:auto;padding:8px 12px 10px;-webkit-overflow-scrolling:touch}
+#auth .au-pol-b p{margin:0 0 8px;font:400 12px/1.55 'Be Vietnam Pro',Inter,system-ui,sans-serif;color:#cfc8e6;text-transform:none;letter-spacing:0}
+#auth .au-pol-b b{color:#fff}
+html[data-theme=light]{filter:invert(.95) hue-rotate(180deg) brightness(.97)}
+html[data-theme=warm]{filter:invert(.94) hue-rotate(180deg) sepia(.32) saturate(1.05) brightness(.96)}
+html[data-theme]{--muted:#c4bca8;--line:#4a412f;--gold2:#fff0c0;--gold:#f2d27e}
+html[data-theme] img,html[data-theme] video,html[data-theme] canvas,html[data-theme] .fab>*{filter:invert(1) hue-rotate(180deg)}
+html[data-theme] .fab>.ai{filter:none}
+html[data-theme] .sbg{background-image:none}html[data-theme] .sbg::before{display:none}
+html[data-theme] .gold{background-image:linear-gradient(100deg,#f6dc95,#eab957 45%,#f6dc95 80%)}
+html[data-theme] .sec-h::before,html[data-theme] .hero-txt::before,html[data-theme] .cf-info::before{opacity:.35}
+html[data-theme] .sec-h h2,html[data-theme] .hero-txt h1,html[data-theme] .contact h2,html[data-theme] .cf-info h3{text-shadow:none}
+#toast{z-index:600}
+#fMe .ac-menu{display:grid;gap:8px;margin-bottom:6px}#fMe .ac-menu button{padding:12px 14px;border-radius:14px;border:1px solid rgba(246,200,106,.45);background:rgba(246,200,106,.08);color:#f6c86a;font:700 14px 'Be Vietnam Pro',Inter,system-ui,sans-serif;text-align:left;cursor:pointer}
+#ac{position:fixed;inset:0;z-index:450;display:none;overflow:auto;-webkit-overflow-scrolling:touch;background:#0a0810;color:var(--text);padding:calc(var(--sat) + 12px) calc(var(--sar) + 14px) calc(var(--sab) + 28px) calc(var(--sal) + 14px);font-family:'Be Vietnam Pro',Inter,system-ui,sans-serif}
+#ac.on{display:block}#ac .ac-w{max-width:680px;margin:0 auto}
+#ac .ac-h{display:flex;align-items:center;justify-content:space-between;margin:4px 0 12px}#ac .ac-h b{font-size:19px;color:#f6c86a}#ac .ac-h button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font-size:22px;cursor:pointer}
+#ac .ac-tabs{display:flex;gap:8px;margin-bottom:12px;position:sticky;top:0;z-index:2;padding:6px 0;background:#0a0810}#ac .ac-tabs button{flex:1;padding:11px 6px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cfc8e6;font:700 13px 'Be Vietnam Pro',Inter,system-ui,sans-serif;cursor:pointer}#ac .ac-tabs button.on{background:linear-gradient(135deg,#f7dc92,#d9b25f);color:#2a1f08;border-color:transparent}
+#ac .ac-card{border:1px solid rgba(246,200,106,.28);background:rgba(255,255,255,.04);border-radius:18px;padding:14px;margin-bottom:12px}#ac h4{margin:0 0 8px;font-size:16px;color:#fff}#ac h5{margin:16px 0 8px;font-size:14px;color:#f6c86a}
+#ac p,#ac .ac-sm{font-size:12.5px;line-height:1.55;color:#bdb6dd;margin:0 0 10px}#ac a{color:#f6c86a}#ac .mut{color:#a49dc4;font-size:12.5px}
+#ac label{display:block;font-size:12px;font-weight:600;color:#bdb6dd;margin-bottom:10px;text-transform:none;letter-spacing:0}#ac input:not([type=radio]),#ac select,#ac textarea{display:block;width:100%;margin-top:5px;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:#fff;font:400 15px 'Be Vietnam Pro',Inter,system-ui,sans-serif;box-sizing:border-box}
+#ac .ac-th{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}#ac .ac-th button{padding:12px 4px;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.04);color:#fff;font:700 13px 'Be Vietnam Pro',Inter,system-ui,sans-serif;cursor:pointer}#ac .ac-th small{display:block;font-weight:400;font-size:11px;color:#a49dc4;margin-top:3px}#ac .ac-th button.on{border-color:#f6c86a;background:rgba(246,200,106,.14)}
+#ac .ac-bar{display:flex;gap:8px;margin-bottom:12px}#ac .ac-bar select{margin-top:0;flex:1}
+#ac .ac-kp{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;margin-bottom:12px}#ac .ac-kp div{border:1px solid var(--line);border-radius:12px;padding:10px;background:rgba(0,0,0,.25)}#ac .ac-kp small{display:block;font-size:11px;color:#a49dc4}#ac .ac-kp b{font-size:15px;color:#f6c86a}
+#ac .ac-g{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;background:rgba(0,0,0,.22)}#ac .ac-gh{display:flex;justify-content:space-between;gap:8px;font-size:14px}#ac .ac-gh span{color:#f6c86a;font-weight:700}
+#ac .ac-pb{height:10px;border-radius:99px;background:rgba(255,255,255,.1);margin:8px 0;overflow:hidden}#ac .ac-pb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#d9b25f,#f7dc92)}#ac .ac-gt{font-size:12.5px;line-height:1.5}#ac .ac-gt.mut{margin-top:2px}
+#ac .ac-ms button{display:grid;grid-template-columns:86px 1fr auto;gap:8px;align-items:center;width:100%;padding:8px 10px;margin-bottom:6px;border-radius:10px;border:1px solid var(--line);background:transparent;color:#cfc8e6;font:500 12px 'Be Vietnam Pro',Inter,system-ui,sans-serif;cursor:pointer;text-align:left}#ac .ac-ms button.on{border-color:#f6c86a;background:rgba(246,200,106,.1)}#ac .ac-ms i{height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}#ac .ac-ms u{display:block;height:100%;background:#d9b25f;text-decoration:none}#ac .ac-ms em{font-style:normal;color:#f6c86a}
+#ac .ac-od{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px}#ac .ac-od small{display:block;color:#a49dc4;font-size:11.5px}#ac .ac-od div:last-child{text-align:right}#ac .ac-od span{display:block;font-size:11.5px}#ac .ac-od.off{opacity:.55}
+#ac .ac-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}#ac .ac-seg label{margin:0}#ac .ac-seg input{position:absolute;opacity:0;width:1px;height:1px}#ac .ac-seg span{display:block;text-align:center;padding:12px 6px;border-radius:12px;border:1.5px solid var(--line);font-weight:700;cursor:pointer;color:#fff;font-size:13px}#ac .ac-seg input:checked+span{border-color:#f6c86a;background:rgba(246,200,106,.14)}
+#ac .ac-wh{margin-bottom:12px}#ac .ac-wh .au-pol-b{max-height:58vh}#ac .wh-t{font-size:14px!important;color:#f6c86a!important}#ac .wh-h{margin-top:12px!important;color:#fff!important}#ac .wh-li{position:relative;padding-left:16px}#ac .wh-li::before{content:"•";position:absolute;left:4px;color:#f6c86a}#ac .wh-l2{padding-left:32px}#ac .wh-l2::before{left:20px;content:"–"}
+#ac .ac-code{font-size:20px;color:#f6c86a;letter-spacing:1px}
+#ac .ac-tk{border-top:1px solid rgba(255,255,255,.1);padding:10px 0;font-size:13px}#ac .ac-tk:first-child{border-top:0}.ac-tkh{display:flex;justify-content:space-between;gap:8px;align-items:center}.ac-tkh span{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.1)}.st-done{color:#6ee7b7}.st-work{color:#fcd34d}.st-rej{color:#fca5a5}
+#ac .ac-rp{margin-top:6px;padding:8px 10px;border-radius:10px;background:rgba(246,200,106,.1);border-left:3px solid #f6c86a;font-size:12.5px}
+#admin .tk-c textarea{width:100%;margin:8px 0;box-sizing:border-box}
+#ac a.btn,#ac a.btn-gold{color:#2a1f08;display:inline-block;text-decoration:none;margin:0 6px 8px 0}#ac .ac-tabs{z-index:20;isolation:isolate}#ac .ac-seg label{position:relative}
+.pe-ai{border:1px dashed rgba(246,200,106,.5);border-radius:14px;padding:10px;margin:2px 0 12px;background:rgba(246,200,106,.05)}.pe-aib{display:flex;gap:8px;flex-wrap:wrap}.pe-ai .pe-note{margin:8px 0 0}.pe-ai a{color:var(--gold2)}
 </style>
 </head>
 <body class="loading">
@@ -1008,7 +1050,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <header id="hdr"><div class="wrap nav">
   <a href="#hero" class="brand"><span class="lg"><img id="logo" alt="" onerror="this.style.display='none'"></span><span>Phụ Kiện Hoàng Đế<small>BD TEAM</small><small class="bdv">Business Development</small></span></a>
   <nav class="menu"><a href="#chu-luc">Sản phẩm chính</a><a href="#hop-tac">Chính sách hợp tác</a><a href="#cua-hang">Đối tác</a><a href="#tat-ca">Tổng sản phẩm</a></nav>
-  <div class="hd-r"><button class="acct" id="acctBtn" aria-label="Tài khoản">👤 <span id="acctName">Đăng nhập</span></button><a class="btn btn-gold js-zalo" target="_blank" rel="noopener">Nhận báo giá</a></div>
+  <div class="hd-r"><button class="acg" id="acGear" aria-label="Cài đặt tài khoản" title="Cài đặt tài khoản" hidden>⚙️</button><button class="acct" id="acctBtn" aria-label="Tài khoản">👤 <span id="acctName">Đăng nhập</span></button><a class="btn btn-gold js-zalo" target="_blank" rel="noopener">Nhận báo giá</a></div>
 </div></header>
 
 <!-- HERO -->
@@ -1162,10 +1204,25 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
     <label>Tên shop<input name="shop" placeholder="Phụ kiện Minh Anh" maxlength="100" required></label>
     <label>Địa chỉ<input name="address" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh" maxlength="200" required></label>
     <label>Mật khẩu (ít nhất 6 ký tự)<input name="pass" type="password" autocomplete="new-password" minlength="6" required></label>
-    <label class="au-ck"><input type="checkbox" name="consent"> Tôi đồng ý cho BD Team – Phụ Kiện Hoàng Đế lưu thông tin trên để liên hệ tư vấn, báo giá.</label>
+    <details class="au-pol"><summary>📜 Chính sách bảo mật &amp; xử lý dữ liệu cá nhân (bấm để xem / thu gọn)</summary>
+      <div class="au-pol-b">
+        <p><b>1. Căn cứ pháp lý.</b> Việc thu thập, xử lý dữ liệu cá nhân tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân, Luật An ninh mạng 2018, Luật Giao dịch điện tử 2023 và Luật Bảo vệ quyền lợi người tiêu dùng 2023.</p>
+        <p><b>2. Đơn vị xử lý dữ liệu.</b> BD Team – Phụ Kiện Hoàng Đế (sau đây gọi là “BD Team”).</p>
+        <p><b>3. Dữ liệu được thu thập.</b> Tên khách hàng, số điện thoại, tên đăng nhập, tên shop, địa chỉ, mật khẩu (được mã hóa, BD Team không xem được), cùng thông tin đơn hàng bạn tạo trên website.</p>
+        <p><b>4. Mục đích sử dụng.</b> Tạo và quản lý tài khoản; xác nhận, xử lý và giao đơn hàng; tư vấn, báo giá; tính và tổng kết chiết khấu theo chính sách đại lý; chăm sóc khách hàng và thông báo về đơn hàng, chương trình ưu đãi.</p>
+        <p><b>5. Sự đồng ý.</b> Dữ liệu chỉ được xử lý khi bạn tích chọn đồng ý khi đăng ký. Bạn có thể rút lại sự đồng ý bất kỳ lúc nào bằng cách liên hệ BD Team.</p>
+        <p><b>6. Chia sẻ dữ liệu.</b> BD Team không bán hay trao đổi dữ liệu cá nhân của bạn. Dữ liệu chỉ được cung cấp cho đơn vị vận chuyển/thanh toán ở mức cần thiết để giao hàng, hoặc cho cơ quan nhà nước có thẩm quyền khi có yêu cầu theo quy định pháp luật.</p>
+        <p><b>7. Lưu trữ và bảo mật.</b> Dữ liệu được lưu trên hạ tầng đám mây có kiểm soát truy cập; chỉ quản trị viên được ủy quyền và chính bạn mới xem được thông tin tài khoản và đơn hàng của bạn. Dữ liệu được lưu trong thời gian tài khoản còn hoạt động hoặc cho đến khi bạn yêu cầu xóa, trừ trường hợp pháp luật yêu cầu phải lưu giữ (ví dụ chứng từ bán hàng).</p>
+        <p><b>8. Quyền của bạn.</b> Bạn có quyền được biết, truy cập, chỉnh sửa, yêu cầu xóa hoặc hạn chế xử lý dữ liệu, phản đối xử lý, rút lại sự đồng ý và khiếu nại theo quy định của pháp luật. Bạn có thể tự chỉnh sửa thông tin trong mục tài khoản.</p>
+        <p><b>9. Người dưới 18 tuổi.</b> Website phục vụ khách hàng kinh doanh. Vui lòng không đăng ký nếu bạn chưa đủ 18 tuổi khi chưa có sự đồng ý của người giám hộ.</p>
+        <p><b>10. Liên hệ.</b> Mọi yêu cầu về dữ liệu cá nhân, vui lòng liên hệ BD Team qua Zalo hoặc số điện thoại hiển thị trên website. Chính sách có thể được cập nhật và sẽ được thông báo trên website.</p>
+      </div>
+    </details>
+    <label class="au-ck"><input type="checkbox" name="consent"> Tôi đã đọc và đồng ý với Chính sách bảo mật, cho phép BD Team – Phụ Kiện Hoàng Đế thu thập, lưu trữ thông tin trên để xử lý đơn hàng, liên hệ tư vấn, báo giá.</label>
     <div class="au-err"></div><button class="btn btn-gold lg-go" type="submit">Tạo tài khoản <span>→</span></button>
   </form>
   <form id="fMe" data-pane="me" hidden>
+    <div class="ac-menu"><button type="button" data-ac="kpi">📊 Doanh số &amp; KPI</button><button type="button" data-ac="sup">🛡 Bảo hành &amp; Khiếu nại</button></div>
     <label>Tên khách hàng<input name="name" maxlength="80" required></label>
     <label>Số điện thoại<input name="phone" disabled></label>
     <label>Tên đăng nhập<input name="user" disabled></label>
@@ -1177,11 +1234,53 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="au-safe">🔒 Thông tin của bạn được BD Team bảo mật</div>
 </div></div>
 
+<!-- ============ TRUNG TÂM TÀI KHOẢN KHÁCH ============ -->
+<div id="ac" role="dialog" aria-modal="true"><div class="ac-w">
+  <div class="ac-h"><b>Trung tâm tài khoản</b><button type="button" id="acX" aria-label="Đóng">×</button></div>
+  <div class="ac-tabs"><button data-at="set">⚙️ Cài đặt</button><button data-at="kpi">📊 KPI</button><button data-at="sup">🛡 Hỗ trợ</button></div>
+
+  <section data-ap="set">
+    <div class="ac-card"><h4>🎨 Giao diện</h4><p>Chọn nền sáng cho dễ nhìn ban ngày. Lựa chọn được ghi nhớ trên thiết bị này.</p>
+      <div class="ac-th"><button type="button" data-th="dark">🌙 Tối<small>Mặc định</small></button><button type="button" data-th="light">☀️ Sáng trắng<small>Rõ nét</small></button><button type="button" data-th="warm">🌤 Sáng vàng<small>Dịu mắt</small></button></div></div>
+    <div class="ac-card"><h4>🔒 Quyền riêng tư &amp; bảo mật</h4>
+      <form id="acPw" autocomplete="off"><label>Mật khẩu hiện tại<input name="cp" type="password" autocomplete="current-password" required></label>
+        <label>Mật khẩu mới (ít nhất 6 ký tự)<input name="np" type="password" autocomplete="new-password" minlength="6" required></label>
+        <label>Nhập lại mật khẩu mới<input name="np2" type="password" autocomplete="new-password" minlength="6" required></label>
+        <div class="au-err"></div><button class="btn btn-gold" type="submit">Đổi mật khẩu</button></form>
+      <div id="acPol"></div>
+      <p class="ac-sm">Muốn rút lại sự đồng ý, chỉnh sửa hoặc xóa dữ liệu cá nhân? Liên hệ BD Team qua <a id="acZ" target="_blank" rel="noopener">Zalo</a> hoặc gọi <a id="acTel">hotline</a>.</p></div>
+    <div class="ac-card"><button type="button" class="btn btn-ghost" id="acOut">Đăng xuất</button></div>
+  </section>
+
+  <section data-ap="kpi" hidden>
+    <div class="ac-card"><h4>📊 Doanh số &amp; KPI chiết khấu</h4>
+      <p class="ac-sm">Chỉ tính các đơn BD Team <b>đã xác nhận</b>. Mỗi tháng tự tính lại từ đầu; WEKOME, đồng hồ PICOM và PICOM khác cộng riêng.</p>
+      <div class="ac-bar"><select id="kM"></select><button type="button" class="btn" id="kR">🔄 Tải lại</button></div>
+      <div id="kBody"><div class="ac-sm">Đang tải…</div></div></div>
+  </section>
+
+  <section data-ap="sup" hidden>
+    <div class="ac-card"><h4>🛡 Hỗ trợ bảo hành &amp; Khiếu nại</h4>
+      <details class="au-pol ac-wh"><summary>📜 Chính sách bảo hành (bấm để xem / thu gọn)</summary><div class="au-pol-b" id="whPol"></div></details>
+      <form id="acTk" autocomplete="off">
+        <div class="ac-seg"><label><input type="radio" name="type" value="bh" checked><span>🛡 Yêu cầu bảo hành</span></label><label><input type="radio" name="type" value="kn"><span>📣 Khiếu nại</span></label></div>
+        <label>Đơn hàng liên quan (không bắt buộc)<select name="order" id="tkOrd"><option value="">— Không chọn —</option></select></label>
+        <label>Sản phẩm<input name="product" maxlength="150" placeholder="Tên hoặc mã sản phẩm" required></label>
+        <label>Số lượng lỗi<input name="qty" type="number" min="1" max="9999" value="1" inputmode="numeric" required></label>
+        <label>Mô tả lỗi / nội dung khiếu nại<textarea name="desc" rows="4" maxlength="1500" placeholder="Mô tả rõ lỗi, thời điểm phát hiện…" required></textarea></label>
+        <label>Số điện thoại liên hệ<input name="phone" inputmode="tel" required></label>
+        <p class="ac-sm">📷 <b>Ảnh / video chứng minh hàng lỗi:</b> sau khi gửi yêu cầu, bấm nút <b>Gửi ảnh/video qua Zalo</b> và gửi kèm <b>mã yêu cầu</b> để BD Team đối chiếu.</p>
+        <div class="au-err"></div><button class="btn btn-gold" type="submit">Gửi yêu cầu</button></form></div>
+    <div class="ac-card" id="tkDone" hidden></div>
+    <div class="ac-card"><h4>📋 Yêu cầu đã gửi</h4><div id="tkList"><div class="ac-sm">Đang tải…</div></div></div>
+  </section>
+</div></div>
+
 <!-- ============ TRANG QUẢN TRỊ ============ -->
 <div id="admin" hidden><div class="lg-scene adm-scene" aria-hidden="true"><b class="lg-amb a1"></b><b class="lg-amb a2"></b><b class="lg-amb a3"></b><span class="lg-gridtop"></span><span class="lg-floor"><span></span></span><span class="lg-dust"><i style="--x:8%;--d:0s;--t:9s;--s:2px"></i><i style="--x:16%;--d:3s;--t:11s;--s:3px"></i><i style="--x:24%;--d:1.5s;--t:8s;--s:2px"></i><i style="--x:33%;--d:5s;--t:12s;--s:2px"></i><i style="--x:41%;--d:2s;--t:10s;--s:3px"></i><i style="--x:49%;--d:6s;--t:9s;--s:2px"></i><i style="--x:57%;--d:0.8s;--t:13s;--s:2px"></i><i style="--x:64%;--d:4s;--t:10s;--s:3px"></i><i style="--x:72%;--d:2.6s;--t:9s;--s:2px"></i><i style="--x:80%;--d:5.5s;--t:12s;--s:2px"></i><i style="--x:88%;--d:1.2s;--t:11s;--s:3px"></i><i style="--x:94%;--d:3.6s;--t:8s;--s:2px"></i><i style="--x:12%;--d:7s;--t:14s;--s:2px"></i><i style="--x:28%;--d:8s;--t:10s;--s:2px"></i><i style="--x:52%;--d:9s;--t:12s;--s:3px"></i><i style="--x:70%;--d:7.5s;--t:9s;--s:2px"></i><i style="--x:86%;--d:8.6s;--t:13s;--s:2px"></i><i style="--x:38%;--d:10s;--t:11s;--s:2px"></i></span></div>
   <div class="adm-top"><div class="adm-brand">👑 Quản trị <span>BD Team</span></div>
     <div class="adm-act"><button class="btn btn-ghost" id="admExit">Xem trang khách</button><button class="btn" id="admOut" hidden>Đăng xuất</button></div></div>
-  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="lay">🧭 Sắp xếp vị trí</button><button data-tab="feat">⭐ Chủ lực</button><button data-tab="nd">🚫 Không chiết khấu</button><button data-tab="mon">📅 Tổng kết tháng</button><button data-tab="ai">🤖 AI training</button></div>
+  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="lay">🧭 Sắp xếp vị trí</button><button data-tab="feat">⭐ Chủ lực</button><button data-tab="nd">🚫 Không chiết khấu</button><button data-tab="mon">📅 Tổng kết tháng</button><button data-tab="tk">🛡 Bảo hành &amp; KN <i class="ord-n" id="tkN" hidden></i></button><button data-tab="ai">🤖 AI training</button></div>
   <div class="adm-in">
     <div data-v="demo" hidden class="adm-card"><h3>Chưa kết nối Firebase</h3><p>Trang quản trị sẽ hoạt động sau khi bạn dán cấu hình Firebase và email admin vào file (xem HUONG-DAN-CAI-DAT). Hiện website đang chạy với 68 sản phẩm mẫu.</p></div>
     <div data-v="err" hidden class="adm-card"><h3>Không kết nối được Firebase</h3><p>Kiểm tra lại mạng hoặc cấu hình Firebase trong file.</p></div>
@@ -1227,6 +1326,12 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
         <div class="adm-card"><h3>🏠 Trang chủ (từ trên xuống dưới)</h3><div id="laMain"></div></div>
         <div class="adm-card"><h3>📄 Trang chi tiết sản phẩm</h3><p>Thứ tự các khối trong cửa sổ chi tiết. Phần chọn màu / số lượng / nút Thêm vào giỏ luôn nằm cố định ở dưới cùng để khách dễ đặt hàng.</p><div id="laPd"></div></div>
         <div class="adm-card"><div class="adm-row"><button class="btn btn-gold" type="button" id="laSave">💾 Lưu & áp dụng</button><button class="btn btn-ghost" type="button" id="laReset">↺ Về thứ tự mặc định</button></div><div class="adm-out" id="laOut"></div></div>
+      </div>
+      <div data-t="tk" hidden>
+        <div class="adm-card"><h3>🛡 Yêu cầu bảo hành &amp; khiếu nại của khách</h3>
+          <p>Khách gửi yêu cầu trong mục <b>Hỗ trợ</b>. Ảnh/video khách gửi qua <b>Zalo</b> kèm mã yêu cầu. Chọn trạng thái, ghi phản hồi rồi bấm <b>Lưu</b> – khách sẽ thấy phản hồi trong tài khoản.</p>
+          <div class="adm-bar"><select id="tkF"><option value="all">Tất cả</option><option value="new">🆕 Mới</option><option value="work">🛠 Đang xử lý</option><option value="done">✅ Đã giải quyết</option><option value="rej">✖ Từ chối</option></select><select id="tkT"><option value="all">Bảo hành + Khiếu nại</option><option value="bh">🛡 Bảo hành</option><option value="kn">📣 Khiếu nại</option></select><button class="btn btn-gold" type="button" id="tkGo">🔄 Tải</button></div>
+          <div class="adm-stat" id="tkStat"></div><div id="tkAdm"></div></div>
       </div>
       <div data-t="mon" hidden>
         <div class="adm-card"><h3>📅 Tổng kết chiết khấu tháng</h3>
@@ -1330,6 +1435,8 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <label>📢 Ghi chú hiển thị cạnh sản phẩm (khách và nhân viên đều thấy – để trống = không hiện)<textarea name="nt" rows="2" maxlength="300" placeholder="vd: Hàng sắp về – đặt trước giảm 2%; Chỉ bán tối thiểu 10 cái…"></textarea></label>
   <label class="pe-ck"><input type="checkbox" name="nd"> 🚫 Sản phẩm <b>không được chiết khấu</b> (ví dụ kính cường lực)</label>
   <label>Mô tả sản phẩm (không giới hạn số chữ)<textarea name="desc" rows="9" style="min-height:160px;resize:vertical"></textarea><small id="peDescN" style="color:var(--muted)"></small></label>
+  <div class="pe-ai"><div class="pe-aib"><button type="button" class="btn btn-gold" id="peAi">✨ Tự nhập mô tả thông minh (AI + Google)</button><button type="button" class="btn btn-ghost" id="peG">🔎 Mở Google</button><button type="button" class="btn btn-ghost" id="peLk">🔗 Sao chép link gửi Zalo</button></div>
+    <div id="peAiSt" class="pe-note">Đọc tên sản phẩm, tra Google lấy thông số rồi viết mô tả bán hàng. Bạn nên đọc lại trước khi bấm Lưu.</div></div>
   <label>Đã bán (số lượng, để tính mức bán chạy)<input name="sold" inputmode="numeric" placeholder="vd: 1200"></label>
   <label class="au-ck"><input type="checkbox" name="show"> 👁 Show shop (hiển thị cho khách xem)</label>
   <label class="au-ck"><input type="checkbox" name="feat"> ★ Sản phẩm chính (hiện trên xúc xắc & phần vuốt ngang)</label>
@@ -1771,10 +1878,8 @@ FB_READY.then(async f=>{if(!f)return;try{const d=await f.F.getDoc(f.F.doc(f.db,"
 function aiCtx(){const rows=ALL.slice(0,700).map(p=>{const v=(p.v||[]).map(x=>x.n).filter(Boolean).join("/"),c=(p.cl||[]).map(x=>x.n).filter(Boolean).join("/");
   return `- ${p.n} | giá sỉ ${vnd(p.p)}${p.o&&p.o>p.p?` (giá gốc ${vnd(p.o)})`:""} | ${catName[p.c]||"Khác"}${p.tag?` | nhãn: ${p.tag}`:""}${p.desc?` | ${String(p.desc).replace(/\s+/g," ").slice(0,500)}`:""}${v?` | loại: ${v}`:""}${c?` | màu: ${c}`:""}`});
   return rows.join("\n")}
-/* Chính sách chiết khấu tháng cho AI – sinh tự động từ bảng POL để luôn khớp web */
-const aiPol=()=>`CHÍNH SÁCH CHIẾT KHẤU THÁNG (chỉ nói đúng như sau, KHÔNG hứa % hay ưu đãi ngoài bảng):\n- Cộng dồn doanh số các đơn được admin xác nhận trong tháng (theo tài khoản/số điện thoại), có thể chia nhiều đơn; mỗi đơn tối thiểu 500.000₫.\n- 3 nhóm tính riêng, không gộp: WEKOME, Đồng hồ PICOM, PICOM (trừ đồng hồ). Thương hiệu khác không có chiết khấu.\n- KHÔNG trừ trực tiếp vào đơn. Cuối tháng admin tổng kết, khách đạt mốc được hoàn bằng tiền hoặc sản phẩm. Sang tháng mới tính lại từ đầu.\n${Object.values(POL).map(g=>`- ${g.n}: `+g.t.map(t=>`${polRange(null,t)}: ${t[2]==null?"liên hệ BD Team":pctStr(t[2])}${t[3]?` (${t[3]})`:""}${t[4]&&t[2]!=null?` – ${t[4]}`:""}`).join("; ")).join("\n")}\n- Sản phẩm chưa rõ thuộc nhóm nào: không tự khẳng định có chiết khấu, mời khách liên hệ Zalo để BD Team xác nhận.\n`;
 const aiRuleList=c=>{const l=String(c.rules||"").split("\n").map(x=>x.replace(/^\s*\d+[.)]\s*/,"").trim()).filter(Boolean);return l.length?l:AI_RULES};
-function aiSystem(c){return `Bạn là trợ lý tư vấn bán hàng AI của ${CONFIG.team} – Phụ Kiện Hoàng Đế (bán sỉ phụ kiện điện thoại). Zalo/Hotline: ${CONFIG.zalo}.\n\nGIỌNG ĐIỆU:\n${c.tone||AI_TONE_DEF}\n\nQUY TẮC BẮT BUỘC:\n${aiRuleList(c).map((r,i)=>`${i+1}. ${r}`).join("\n")}\n\n${aiPol()}${c.extra?`\nKIẾN THỨC BỔ SUNG CỦA CỬA HÀNG:\n${c.extra}\n`:""}${(c.kb||[]).length?`\nKIẾN THỨC CỬA HÀNG ĐÃ HỌC (do admin dạy, đáng tin cậy – dùng để trả lời khách):\n${c.kb.map(k=>`## ${k.t}\n${k.text}`).join("\n\n")}\n`:""}${(c.notes||[]).length?`\nĐIỀU ADMIN (CHỦ SHOP) DẶN BẠN GHI NHỚ:\n${c.notes.slice(-40).map(n=>"- "+n).join("\n")}\n`:""}${(c.samples||[]).length?`\nMẪU TRẢ LỜI DO ADMIN DẠY – hãy học cách diễn đạt, giọng điệu và cách xử lý của các mẫu này khi gặp câu hỏi tương tự (giá và thông số vẫn phải lấy đúng từ DANH SÁCH SẢN PHẨM hiện tại, không chép giá cũ từ mẫu):\n${c.samples.slice(-40).map(x=>`Khách: ${x.q}\nBạn: ${x.a}`).join("\n---\n")}\n`:""}\nDANH SÁCH SẢN PHẨM THỰC TẾ (cập nhật ${new Date().toLocaleString("vi-VN")}):\n${c.sync===false?"(Chưa bật đồng bộ – không có dữ liệu sản phẩm, hãy mời khách liên hệ Zalo)":aiCtx()}`}
+function aiSystem(c){return `Bạn là trợ lý tư vấn bán hàng AI của ${CONFIG.team} – Phụ Kiện Hoàng Đế (bán sỉ phụ kiện điện thoại). Zalo/Hotline: ${CONFIG.zalo}.\n\nGIỌNG ĐIỆU:\n${c.tone||AI_TONE_DEF}\n\nQUY TẮC BẮT BUỘC:\n${aiRuleList(c).map((r,i)=>`${i+1}. ${r}`).join("\n")}\n${c.extra?`\nKIẾN THỨC BỔ SUNG CỦA CỬA HÀNG:\n${c.extra}\n`:""}${(c.kb||[]).length?`\nKIẾN THỨC CỬA HÀNG ĐÃ HỌC (do admin dạy, đáng tin cậy – dùng để trả lời khách):\n${c.kb.map(k=>`## ${k.t}\n${k.text}`).join("\n\n")}\n`:""}${(c.notes||[]).length?`\nĐIỀU ADMIN (CHỦ SHOP) DẶN BẠN GHI NHỚ:\n${c.notes.slice(-40).map(n=>"- "+n).join("\n")}\n`:""}${(c.samples||[]).length?`\nMẪU TRẢ LỜI DO ADMIN DẠY – hãy học cách diễn đạt, giọng điệu và cách xử lý của các mẫu này khi gặp câu hỏi tương tự (giá và thông số vẫn phải lấy đúng từ DANH SÁCH SẢN PHẨM hiện tại, không chép giá cũ từ mẫu):\n${c.samples.slice(-40).map(x=>`Khách: ${x.q}\nBạn: ${x.a}`).join("\n---\n")}\n`:""}\nDANH SÁCH SẢN PHẨM THỰC TẾ (cập nhật ${new Date().toLocaleString("vi-VN")}):\n${c.sync===false?"(Chưa bật đồng bộ – không có dữ liệu sản phẩm, hãy mời khách liên hệ Zalo)":aiCtx()}`}
 function aiPageText(){const out=[];document.querySelectorAll("section:not(#tat-ca),footer").forEach(el=>{const h=el.querySelector("h1,h2,h3"),t=(el.textContent||"").replace(/[ \t\u00a0]+/g," ").replace(/\s*\n\s*/g,"\n").replace(/\n{2,}/g,"\n").trim();if(t.length<25)return;out.push(`### ${h?h.textContent.replace(/\s+/g," ").trim():(el.id||"Phần trang")}\n${t.slice(0,6000)}`)});return out.join("\n\n").slice(0,45000)}
 function aiAdminSystem(c){return `Bạn là AI tư vấn bán hàng của ${CONFIG.team} – Phụ Kiện Hoàng Đế, đang được CHỦ SHOP (admin) huấn luyện qua khung chat này. Hãy đọc hiểu thông minh và làm đúng theo lời admin.
 
@@ -2100,7 +2205,7 @@ function showAuthTab(t){$$("#auth [data-pane]").forEach(p=>p.hidden=p.dataset.pa
   if(t==="me"&&PROFILE){const f=$("#fMe");["name","phone","shop","address"].forEach(k=>f[k].value=PROFILE[k]||"");f.user.value=PROFILE.user||PROFILE.phone||"";f.phone.disabled=true}}
 $$('#auth input[type=password],#admLogin input[type=password]').forEach(i=>{const w=document.createElement("span");w.className="pw";i.parentNode.insertBefore(w,i);w.appendChild(i);
   const b=document.createElement("button");b.type="button";b.className="pw-eye";b.setAttribute("aria-label","Hiện mật khẩu");b.textContent="👁";b.onclick=()=>{const sh=i.type==="password";i.type=sh?"text":"password";b.classList.toggle("on",sh);b.setAttribute("aria-label",sh?"Ẩn mật khẩu":"Hiện mật khẩu")};w.appendChild(b)});
-$("#acctBtn").onclick=()=>openAuth();$("#auClose").onclick=closeAuth;auth.onclick=e=>{if(e.target===auth)closeAuth()};
+$("#acctBtn").onclick=()=>openAuth();$("#acGear").onclick=()=>acOpen("set");$("#auClose").onclick=closeAuth;auth.onclick=e=>{if(e.target===auth)closeAuth()};
 $$("#auth .au-tabs button").forEach(b=>b.onclick=()=>showAuthTab(b.dataset.tab));
 $("#auForgot").onclick=()=>toast(`Liên hệ BD Team (${CONFIG.phone}) để được hỗ trợ đặt lại mật khẩu.`);
 function busy(btn,on,txt){btn.disabled=on;if(on){btn.dataset.t=btn.textContent;btn.textContent=txt||"Đang xử lý…"}else if(btn.dataset.t)btn.textContent=btn.dataset.t}
@@ -2114,7 +2219,7 @@ $("#fReg").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySele
   if(d.shop.length<2)return er.textContent="Vui lòng nhập tên shop.";
   if(d.address.length<5)return er.textContent="Vui lòng nhập địa chỉ.";
   if(f.pass.value.length<6)return er.textContent="Mật khẩu cần ít nhất 6 ký tự.";
-  if(!f.consent.checked)return er.textContent="Vui lòng tích đồng ý để BD Team liên hệ tư vấn.";
+  if(!f.consent.checked)return er.textContent="Vui lòng đọc và tích đồng ý Chính sách bảo mật để tạo tài khoản.";
   busy(b,true);try{const {A,F,auth:au,db}=FB;const cr=await A.createUserWithEmailAndPassword(au,userMail(d.user),f.pass.value);
     await F.setDoc(F.doc(db,"customers",cr.user.uid),{...d,consent:true,createdAt:F.serverTimestamp()});
     PROFILE=d;updateAcct();closeAuth();f.reset();toast(`🎉 Chào mừng ${esc(d.name)} – ${esc(d.shop)}! Tên đăng nhập: <b>${esc(d.user)}</b>`)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
@@ -2127,7 +2232,110 @@ $("#fMe").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelec
   busy(b,true);try{const {F,db,auth:au}=FB;await F.setDoc(F.doc(db,"customers",au.currentUser.uid),{...d,updatedAt:F.serverTimestamp()},{merge:true});
     PROFILE={...PROFILE,...d};updateAcct();toast("✅ Đã lưu thông tin");closeAuth()}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $("#auLogout").onclick=async()=>{await FB.A.signOut(FB.auth);closeAuth();toast("Đã đăng xuất")};
-function updateAcct(){const n=$("#acctName");n.textContent=IS_ADMIN?"Admin":PROFILE?PROFILE.name.split(" ").slice(-1)[0]:"Đăng nhập";$("#acctBtn").classList.toggle("in",!!(PROFILE||IS_ADMIN))}
+
+/* ===================================================================
+   TRUNG TÂM TÀI KHOẢN KHÁCH: cài đặt • KPI theo tháng • bảo hành & khiếu nại
+   =================================================================== */
+const WH_POLICY=`CHÍNH SÁCH BẢO HÀNH SẢN PHẨM
+
+1. Thời hạn bảo hành theo từng dòng sản phẩm
+
+* Phụ kiện Picom (trừ đồng hồ): Bảo hành 18 tháng (tính theo hóa đơn mua hàng gần nhất).
+* Phụ kiện Wekome: Bảo hành 15 tháng (tính theo hóa đơn mua hàng gần nhất).
+* Đồng hồ Picom: Bảo hành 06 tháng (tính theo hóa đơn mua hàng gần nhất).
+* Tất cả các mặt hàng xưởng (Cáp, tai nghe, gậy chụp, kệ đỡ...): Bảo hành 06 tháng (tính theo hóa đơn của từng lô/đơn hàng tương ứng).
+
+2. Quy định chi tiết theo từng loại mặt hàng
+
+* Tai nghe AirPods (Hàng xưởng): Mỗi sản phẩm có mã IMEI riêng theo từng lô nhập. Việc bảo hành được đối chiếu chính xác theo hóa đơn của đơn hàng đã xuất bán sản phẩm đó.
+* Cáp sạc và các mặt hàng xưởng khác: Áp dụng bảo hành tiêu chuẩn 06 tháng.
+* Gậy chụp ảnh, giá đỡ/kệ và phụ kiện cơ khí:
+   * Bảo hành 06 tháng (yêu cầu còn nguyên tem phụ bảo hành của đơn vị cung cấp) và áp dụng theo đúng hóa đơn mua hàng.
+   * Chính sách đổi mới ngay: Khách hàng được đổi mới 1-1 nếu sản phẩm bị gãy hoặc thiếu linh kiện trong trường hợp khách kiểm tra hàng và phản hồi trong vòng 24 giờ kể từ lúc nhận hàng, hoặc đại lý/cửa hàng khi mở hộp bán cho khách lẻ phát hiện gãy, thiếu đồ (yêu cầu bắt buộc có video quay lại quá trình mở hộp).
+* Kính cường lực:
+   * Chỉ hỗ trợ đổi mới đối với các trường hợp nứt, vỡ do vận chuyển hoặc lỗi sản xuất khi được phát hiện trong vòng 24 giờ kể từ lúc nhận hàng, hoặc khi cửa hàng bóc seal bán cho khách lẻ mà bị vỡ sẵn bên trong.
+   * Điều kiện bắt buộc: Phải có video quay liền mạch quá trình mở hộp/bóc seal sản phẩm để làm bằng chứng đối chiếu.
+
+3. Các trường hợp từ chối bảo hành
+
+* Đối với dòng sản phẩm Đồng hồ: Không áp dụng bảo hành đối với các lỗi liên quan đến pin (chai pin, sập nguồn do pin, hỏng pin...).
+* Sản phẩm không có hóa đơn mua hàng hợp lệ hoặc không khớp mã IMEI/lô hàng trên hệ thống.
+* Sản phẩm mất tem bảo hành (đối với các mặt hàng có quy định dán tem phụ).
+* Các trường hợp gãy, vỡ, thiếu phụ kiện nhưng quá thời hạn 24 giờ từ khi nhận hàng và không cung cấp được video mở hộp hợp lệ.`;   /* nội dung chính sách bảo hành – sửa trực tiếp tại đây khi cần */
+const TKS={new:["🆕","Đã gửi"],work:["🛠","Đang xử lý"],done:["✅","Đã giải quyết"],rej:["✖","Từ chối"]},TKT={bh:"🛡 Bảo hành",kn:"📣 Khiếu nại"};
+const acTs=t=>t&&t.toDate?t.toDate():null,fmtDT=d=>d?`${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`:"";
+const AC={ord:null,ym:0,tab:"set"};
+function setTheme(t){const th=t==="light"||t==="warm"?t:"dark";if(th==="dark")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",th);
+  try{localStorage.setItem("bdTheme",th)}catch(e){}$$("#ac [data-th]").forEach(b=>b.classList.toggle("on",b.dataset.th===th))}
+function acThemeMark(){let t="dark";try{t=localStorage.getItem("bdTheme")||"dark"}catch(e){}$$("#ac [data-th]").forEach(b=>b.classList.toggle("on",b.dataset.th===t))}
+async function acOrders(force){if(AC.ord&&!force)return AC.ord;const u=FB&&FB.auth&&FB.auth.currentUser;if(!u)return[];const {F,db}=FB;
+  const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"orders"),F.where("uid","==",u.uid))),10000),L=[];
+  sn.forEach(d=>{const o=d.data();L.push({id:d.id,code:o.code||d.id,st:o.status||"new",at:acTs(o.at),tot:+o.tot||0,items:(o.items||[]).map(x=>({n:x.n,q:+x.q||0,u:+x.u||0,nd:x.nd,bg:x.bg}))})});
+  L.sort((a,b)=>(b.at?b.at.getTime():0)-(a.at?a.at.getTime():0));AC.ord=L;return L}
+const ymOf=d=>d.getFullYear()*100+d.getMonth()+1,ymLbl=y=>`Tháng ${y%100}/${Math.floor(y/100)}`;
+function acKpiDraw(){const L=AC.ord||[],now=ymNow(),set=new Set([now]);L.forEach(o=>{if(o.at)set.add(ymOf(o.at))});
+  const list=[...set].sort((a,b)=>b-a).slice(0,12);if(!AC.ym||!list.includes(AC.ym))AC.ym=now;
+  $("#kM").innerHTML=list.map(y=>`<option value="${y}" ${y===AC.ym?"selected":""}>${ymLbl(y)}</option>`).join("");
+  const inM=L.filter(o=>o.at&&ymOf(o.at)===AC.ym),conf=inM.filter(o=>o.st==="ok"||o.st==="done"),pend=inM.filter(o=>o.st==="new"||o.st==="wait");
+  const items=[];conf.forEach(o=>o.items.forEach(x=>items.push(x)));const R=polCalc(items),tot=conf.reduce((t,o)=>t+o.tot,0);
+  const mt={};L.forEach(o=>{if(!o.at||(o.st!=="ok"&&o.st!=="done"))return;const y=ymOf(o.at);mt[y]=(mt[y]||0)+o.tot});const mx=Math.max(1,...list.map(y=>mt[y]||0));
+  let h=`<div class="ac-kp"><div><small>Doanh số đã xác nhận</small><b>${vnd(tot)}</b></div><div><small>Số đơn đã xác nhận</small><b>${conf.length}</b></div><div><small>Đơn chờ xác nhận</small><b>${pend.length}</b></div></div>`;
+  ["wk","pw","po"].forEach(g=>{const r=R[g]||{tot:0,tier:null,next:polNext(g,0),rebate:0,exc:0},nx=r.next||polNext(g,r.tot),t=r.tier,pc=nx?clamp(r.tot/nx[0],0,1)*100:100;
+    h+=`<div class="ac-g"><div class="ac-gh"><b>${POL[g].n}</b><span>${vnd(r.tot)}</span></div><div class="ac-pb"><i style="width:${pc.toFixed(1)}%"></i></div>`
+      +`<div class="ac-gt">${t?(t[2]==null?"Trên 500 triệu – liên hệ BD Team":`Mốc hiện tại: <b>${pctStr(t[2])}</b>${t[3]?` (${t[3]})`:""} • hoàn lại dự kiến <b>${vnd(r.rebate)}</b>`):"Chưa đạt mốc chiết khấu đầu tiên"}</div>`
+      +`<div class="ac-gt mut">${nx?`Còn thiếu <b>${vnd(Math.max(0,nx[0]-r.tot))}</b> để lên mốc ${nx[2]==null?"liên hệ BD Team":pctStr(nx[2])} (đạt ${Math.round(pc)}% chỉ tiêu)`:"🎉 Đã đạt mốc cao nhất"}${r.exc?` • ${vnd(r.exc)} là hàng không chiết khấu`:""}</div></div>`});
+  h+=`<h5>Doanh số theo tháng</h5><div class="ac-ms">`+list.map(y=>`<button type="button" data-ym="${y}" class="${y===AC.ym?"on":""}"><span>${ymLbl(y)}</span><i><u style="width:${((mt[y]||0)/mx*100).toFixed(1)}%"></u></i><em>${vnd(mt[y]||0)}</em></button>`).join("")+`</div>`;
+  h+=`<h5>Đơn hàng trong ${ymLbl(AC.ym).toLowerCase()}</h5>`+(inM.length?inM.map(o=>{const s=OST[o.st]||OST.new,ok=o.st==="ok"||o.st==="done";return`<div class="ac-od ${ok?"":"off"}"><div><b>${esc(o.code)}</b><small>${fmtDT(o.at)}</small></div><div><span>${s[0]} ${s[1]}</span><b>${vnd(o.tot)}</b></div></div>`}).join(""):'<div class="ac-sm">Chưa có đơn nào trong tháng này.</div>');
+  $("#kBody").innerHTML=h}
+async function acKpi(force){$("#kBody").innerHTML='<div class="ac-sm">Đang tải dữ liệu mua hàng…</div>';try{await acOrders(force);acKpiDraw()}catch(e){$("#kBody").innerHTML=`<div class="au-err">Chưa tải được dữ liệu: ${esc(authMsg(e))}</div>`}}
+async function tkMine(){const el=$("#tkList");try{const {F,db}=FB,u=FB.auth.currentUser;const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"tickets"),F.where("uid","==",u.uid))),10000),L=[];sn.forEach(d=>L.push({id:d.id,...d.data()}));
+    L.sort((a,b)=>(acTs(b.at)?acTs(b.at).getTime():Date.now())-(acTs(a.at)?acTs(a.at).getTime():Date.now()));
+    el.innerHTML=L.length?L.map(t=>{const s=TKS[t.status]||TKS.new;return`<div class="ac-tk"><div class="ac-tkh"><b>${esc(t.code)}</b><span class="st-${esc(t.status||"new")}">${s[0]} ${s[1]}</span></div><small>${TKT[t.type]||""} • ${fmtDT(acTs(t.at))}${t.order?` • Đơn ${esc(t.order)}`:""}</small><div>${esc(t.product)} × ${+t.qty||1}</div><div class="mut">${esc(t.desc)}</div>${t.reply?`<div class="ac-rp">💬 BD Team: ${esc(t.reply)}</div>`:""}</div>`}).join(""):'<div class="ac-sm">Bạn chưa gửi yêu cầu nào.</div>'}
+  catch(e){el.innerHTML=`<div class="au-err">Chưa tải được: ${esc(authMsg(e))}</div>`}}
+async function acSup(){const f=$("#acTk");if(PROFILE&&!f.phone.value)f.phone.value=PROFILE.phone||"";
+  $("#whPol").innerHTML=WH_POLICY.trim()?WH_POLICY.split(/\n/).filter(x=>x.trim()).map((x,i)=>{const t=x.trim(),lv=/^\s{2,}\*/.test(x)?2:t.startsWith("*")?1:0,c=t.replace(/^\*\s*/,"");return lv?`<p class="wh-li wh-l${lv}">${esc(c)}</p>`:`<p class="${i===0?"wh-t":"wh-h"}"><b>${esc(t)}</b></p>`}).join(""):`<p>Chính sách bảo hành đang được BD Team cập nhật. Vui lòng liên hệ Zalo để được tư vấn trước khi gửi yêu cầu.</p>`;
+  try{const L=await acOrders();$("#tkOrd").innerHTML='<option value="">— Không chọn —</option>'+L.slice(0,30).map(o=>`<option value="${esc(o.code)}">${esc(o.code)} • ${fmtDT(o.at).slice(0,10)} • ${vnd(o.tot)}</option>`).join("")}catch(e){}
+  tkMine()}
+function acShow(t){AC.tab=t;$$("#ac [data-ap]").forEach(p=>p.hidden=p.dataset.ap!==t);$$("#ac .ac-tabs button").forEach(b=>b.classList.toggle("on",b.dataset.at===t));$("#ac").scrollTop=0;
+  if(t==="set")acThemeMark();if(t==="kpi")acKpi();if(t==="sup")acSup()}
+function acOpen(t){if(!FB||!FB.auth||!FB.auth.currentUser){openAuth("login");return}
+  const pl=$("#acPol");if(!pl.firstChild){const d=document.querySelector("#fReg .au-pol");if(d){const c=d.cloneNode(true);c.querySelector("summary").textContent="📜 Xem Chính sách bảo mật (bấm để xem / thu gọn)";pl.appendChild(c)}}
+  $("#acZ").href=zalo;$("#acTel").href="tel:"+CONFIG.phone;$("#acTel").textContent=CONFIG.phone;$("#ac").classList.add("on");acShow(t||"set")}
+$$("#fMe [data-ac]").forEach(b=>b.onclick=()=>{closeAuth();acOpen(b.dataset.ac)});
+$("#acX").onclick=()=>$("#ac").classList.remove("on");$$("#ac .ac-tabs button").forEach(b=>b.onclick=()=>acShow(b.dataset.at));
+$$("#ac [data-th]").forEach(b=>b.onclick=()=>setTheme(b.dataset.th));
+$("#acOut").onclick=async()=>{await FB.A.signOut(FB.auth);$("#ac").classList.remove("on");AC.ord=null;toast("Đã đăng xuất")};
+$("#kM").onchange=e=>{AC.ym=+e.target.value;acKpiDraw()};$("#kR").onclick=()=>acKpi(true);
+$("#kBody").onclick=e=>{const b=e.target.closest("[data-ym]");if(b){AC.ym=+b.dataset.ym;acKpiDraw()}};
+$("#acPw").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button[type=submit]");er.textContent="";
+  if(f.np.value.length<6)return er.textContent="Mật khẩu mới cần ít nhất 6 ký tự.";if(f.np.value!==f.np2.value)return er.textContent="Hai lần nhập mật khẩu mới chưa khớp.";if(f.np.value===f.cp.value)return er.textContent="Mật khẩu mới cần khác mật khẩu hiện tại.";
+  busy(b,true);try{const {A,auth:au}=FB,u=au.currentUser;await A.reauthenticateWithCredential(u,A.EmailAuthProvider.credential(u.email,f.cp.value));await A.updatePassword(u,f.np.value);f.reset();toast("✅ Đã đổi mật khẩu")}
+  catch(err){er.textContent=(err&&(err.code==="auth/invalid-credential"||err.code==="auth/wrong-password"))?"Mật khẩu hiện tại chưa đúng.":authMsg(err)}finally{busy(b,false)}};
+$("#acTk").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button[type=submit]");er.textContent="";
+  const type=f.type.value==="kn"?"kn":"bh",product=f.product.value.trim(),desc=f.desc.value.trim(),phone=normPhone(f.phone.value),qty=Math.max(1,Math.min(9999,parseInt(f.qty.value)||1));
+  if(product.length<2)return er.textContent="Vui lòng nhập sản phẩm.";if(desc.length<10)return er.textContent="Vui lòng mô tả rõ hơn (ít nhất 10 ký tự).";if(!/^0\d{9}$/.test(phone))return er.textContent="Số điện thoại cần 10 số, bắt đầu bằng 0.";
+  const d=new Date(),code=(type==="bh"?"BH":"KN")+String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+"-"+String(Math.floor(1000+Math.random()*9000));
+  busy(b,true);try{const {F,db,auth:au}=FB;await F.addDoc(F.collection(db,"tickets"),{uid:au.currentUser.uid,code,type,order:f.order.value||"",product,qty,desc,phone,name:(PROFILE&&PROFILE.name)||"",shop:(PROFILE&&PROFILE.shop)||"",status:"new",reply:"",at:F.serverTimestamp()});
+    const tk=$("#tkDone");tk.hidden=false;tk.innerHTML=`<h4>✅ Đã gửi yêu cầu</h4><p>Mã yêu cầu của bạn: <b class="ac-code">${esc(code)}</b></p><p class="ac-sm">Hãy gửi <b>ảnh / video chứng minh hàng lỗi</b> cho BD Team qua Zalo, nhớ ghi kèm mã trên.</p><a class="btn btn-gold" id="tkZ" target="_blank" rel="noopener" href="${zalo}">📎 Gửi ảnh/video qua Zalo</a> <button type="button" class="btn" id="tkCp">📋 Sao chép mã</button>`;
+    $("#tkCp").onclick=async()=>{try{await navigator.clipboard.writeText(code);toast("Đã sao chép mã "+code)}catch(e){toast("Mã yêu cầu: "+code)}};
+    f.reset();f.qty.value=1;f.phone.value=(PROFILE&&PROFILE.phone)||"";tk.scrollIntoView({behavior:"smooth",block:"center"});tkMine()}
+  catch(err){er.textContent="Chưa gửi được: "+authMsg(err)}finally{busy(b,false)}};
+/* ---- Admin: xử lý bảo hành & khiếu nại ---- */
+const TK={rows:[],on:false};
+async function tkAdmLoad(){const {F,db}=FB;$("#tkStat").textContent="Đang tải…";
+  try{const sn=await withTimeout(F.getDocs(F.query(F.collection(db,"tickets"),F.orderBy("at","desc"),F.limit(200))),12000);TK.rows=[];sn.forEach(d=>TK.rows.push({id:d.id,...d.data()}));tkAdmDraw()}catch(e){$("#tkStat").innerHTML="❌ "+esc(authMsg(e))}}
+function tkAdmDraw(){const f=$("#tkF").value,ty=$("#tkT").value,L=TK.rows.filter(t=>(f==="all"||(t.status||"new")===f)&&(ty==="all"||t.type===ty)),nn=TK.rows.filter(t=>(t.status||"new")==="new").length;
+  $("#tkN").hidden=!nn;$("#tkN").textContent=nn;$("#tkStat").innerHTML=`Tổng <b>${TK.rows.length}</b> yêu cầu • 🆕 <b>${nn}</b> chưa xử lý • đang hiện <b>${L.length}</b>`;
+  $("#tkAdm").innerHTML=L.map(t=>{const s=TKS[t.status||"new"]||TKS.new,ph=normPhone(t.phone);return`<div class="adm-card tk-c" data-id="${esc(t.id)}"><div class="ac-tkh"><b>${esc(t.code)} • ${TKT[t.type]||""}</b><span class="st-${esc(t.status||"new")}">${s[0]} ${s[1]}</span></div>
+    <small>${fmtDT(acTs(t.at))} • ${esc(t.name)} • ${esc(t.shop)} • <a href="tel:${esc(ph)}">${esc(ph)}</a> • <a target="_blank" rel="noopener" href="https://zalo.me/${esc(ph)}">Zalo khách</a>${t.order?` • Đơn ${esc(t.order)}`:""}</small>
+    <div><b>${esc(t.product)}</b> × ${+t.qty||1}</div><div class="mut">${esc(t.desc)}</div>
+    <div class="adm-bar"><select data-k="st">${Object.entries(TKS).map(([k,v])=>`<option value="${k}" ${k===(t.status||"new")?"selected":""}>${v[0]} ${v[1]}</option>`).join("")}</select></div>
+    <textarea data-k="rp" rows="2" maxlength="1000" placeholder="Phản hồi cho khách (khách sẽ thấy)">${esc(t.reply||"")}</textarea><button class="btn btn-gold" type="button" data-save>💾 Lưu</button></div>`}).join("")||'<div class="aempty">Chưa có yêu cầu nào.</div>'}
+function tkAdmInit(){if(!TK.on){TK.on=true;$("#tkGo").onclick=tkAdmLoad;$("#tkF").onchange=tkAdmDraw;$("#tkT").onchange=tkAdmDraw;
+  $("#tkAdm").onclick=async e=>{const b=e.target.closest("[data-save]");if(!b)return;const c=b.closest(".tk-c"),id=c.dataset.id,st=c.querySelector('[data-k=st]').value,rp=c.querySelector('[data-k=rp]').value.trim().slice(0,1000);
+    b.disabled=true;try{const {F,db}=FB;await F.updateDoc(F.doc(db,"tickets",id),{status:st,reply:rp,updatedAt:F.serverTimestamp()});const r=TK.rows.find(x=>x.id===id);if(r){r.status=st;r.reply=rp}atoast("✅ Đã lưu");tkAdmDraw()}catch(err){atoast("❌ "+authMsg(err))}b.disabled=false}}
+  tkAdmLoad()}
+function updateAcct(){const n=$("#acctName");n.textContent=IS_ADMIN?"Admin":PROFILE?PROFILE.name.split(" ").slice(-1)[0]:"Đăng nhập";$("#acctBtn").classList.toggle("in",!!(PROFILE||IS_ADMIN));$("#acGear").hidden=!PROFILE||IS_ADMIN}
 FB_READY.then(f=>{if(!f)return;f.A.onAuthStateChanged(f.auth,async u=>{IS_ADMIN=!!(u&&ADMIN_EMAIL&&u.email&&u.email.toLowerCase()===ADMIN_EMAIL.toLowerCase());PROFILE=null;
   if(u&&!IS_ADMIN){try{const d=await FB.F.getDoc(FB.F.doc(FB.db,"customers",u.uid));if(d.exists())PROFILE=d.data()}catch(e){}}
   updateAcct();$("#admFab").hidden=!IS_ADMIN;if(IS_ADMIN&&location.hash!=="#admin"&&!sessionStorage.getItem("admHint")){sessionStorage.setItem("admHint",1);toast("👑 Bạn đang đăng nhập Admin – bấm nút <b>Quản trị</b> góc trái dưới để sửa sản phẩm")}if(location.hash==="#admin")adminRoute()})});
@@ -2150,7 +2358,7 @@ $("#admOut").onclick=async()=>{await FB.A.signOut(FB.auth);location.hash="";loca
 $("#admLogin").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button");
   busy(b,true);try{await FB.A.signInWithEmailAndPassword(FB.auth,f.email.value.trim(),f.pass.value)}catch(err){er.textContent=authMsg(err)}finally{busy(b,false)}};
 $$("#admTabs button").forEach(b=>b.onclick=()=>{$$("#admTabs button").forEach(x=>x.classList.toggle("on",x===b));
-  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit();if(b.dataset.tab==="feat")featAdminInit();if(b.dataset.tab==="nd")ndInit();if(b.dataset.tab==="mon")mnInit();if(b.dataset.tab==="lay")layAdminInit()});
+  $$("#admin [data-t]").forEach(p=>p.hidden=p.dataset.t!==b.dataset.tab);if(b.dataset.tab==="cust")loadCust();if(b.dataset.tab==="ord")ordList();if(b.dataset.tab==="partner")renderPartnerAdmin();if(b.dataset.tab==="ai")aiAdminInit();if(b.dataset.tab==="feat")featAdminInit();if(b.dataset.tab==="nd")ndInit();if(b.dataset.tab==="mon")mnInit();if(b.dataset.tab==="tk")tkAdmInit();if(b.dataset.tab==="lay")layAdminInit()});
 /* ---- Tổng kết chiết khấu tháng (admin) ---- */
 const MN={rows:[],reb:{},ym:"",on:false};
 async function mnLoad(){const v=$("#mnM").value;if(!v)return;const [y,m]=v.split("-").map(Number),a=new Date(y,m-1,1),b=new Date(y,m,1),{F,db}=FB;$("#mnStat").textContent="Đang tải đơn trong tháng…";
@@ -2380,7 +2588,7 @@ function ordList(){const nNew=AD.ord.filter(o=>(o.status||"new")==="new").length
       <div class="oc-i">${it.slice(0,6).map(x=>`<div><span>${esc(x.n)}${x.vn||x.cn?` <em>(${esc([x.vn,x.cn].filter(Boolean).join(" • "))})</em>`:""}</span><b>× ${x.q}</b></div>`).join("")}${it.length>6?`<small>+ ${it.length-6} mã hàng khác…</small>`:""}</div>
       <div class="oc-f"><span>${(o.qty||0).toLocaleString("vi-VN")} sp • <b class="g">${vnd(o.tot||0)}</b>${o.disc?` <em>(CK ${o.pct}%)</em>`:""}</span>
         <span class="oc-b">${s==="new"||s==="wait"?`<button type="button" class="btn btn-ok" data-ok>✅ Đã xác nhận đơn hàng</button>`:""}${s==="new"?`<button type="button" class="btn" data-wait>⏳ Chờ xác nhận</button>`:""}<button type="button" class="btn btn-gold" data-bill>🧾 Bill</button><button type="button" class="btn" data-editb>✏️ Sửa bill</button><button type="button" class="btn" data-kt>➡️ Kế toán</button><a class="btn" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a><a class="btn" href="https://zalo.me/${esc(c.phone)}" target="_blank" rel="noopener">Zalo</a><button type="button" class="btn" data-del title="Xoá đơn">🗑</button></span></div></div>`}).join("")||'<div class="aempty">Chưa có đơn hàng nào.</div>'}
-const ordSet=async(id,st)=>{const d={status:st};try{await FB.F.updateDoc(FB.F.doc(FB.db,"orders",id),d);atoast(st==="ok"?"✅ Đã xác nhận đơn hàng":"✅ Đã cập nhật trạng thái")}catch(err){atoast("❌ "+authMsg(err))}};
+const ordSet=async(id,st)=>{const d={status:st};if(st==="ok")d.okAt=FB.F.serverTimestamp();try{await FB.F.updateDoc(FB.F.doc(FB.db,"orders",id),d);atoast(st==="ok"?"✅ Đã xác nhận đơn hàng":"✅ Đã cập nhật trạng thái")}catch(err){atoast("❌ "+authMsg(err))}};
 $("#oList").addEventListener("change",async e=>{if(!e.target.matches("[data-st]"))return;ordSet(e.target.closest(".oc").dataset.id,e.target.value)});
 $("#oList").addEventListener("click",async e=>{const card=e.target.closest(".oc");if(!card)return;const o=AD.ord.find(x=>x.id===card.dataset.id);if(!o)return;
   if(e.target.closest("[data-del]")){if(!confirm(`Xoá đơn ${o.code}?`))return;try{await FB.F.deleteDoc(FB.F.doc(FB.db,"orders",o.id));atoast("🗑 Đã xoá đơn")}catch(err){atoast("❌ "+authMsg(err))}return}
@@ -2550,9 +2758,65 @@ $("#peAddV").onclick=()=>{if(AD.vr.length>=12)return;AD.vr.push({n:"",p:0,o:0});
 function openEdit(p){AD.edit=p;AD.newImg=null;AD.cl=(p&&p.colors||[]).map(c=>({n:c.n||"",h:/^#[0-9a-f]{6}$/i.test(c.h)?c.h:"#000000",k:+c.k||0}));AD.vr=(p&&p.vars||[]).map(v=>({n:v.n||"",p:+v.p||0,o:+v.o||0}));peVrDraw();AD.slots=p?[p.img,...(p.imgs||[])].filter(Boolean).slice(0,PE_MAX).map(ref=>({ref,data:null})):[];$("#peT").textContent=p?"Sửa sản phẩm":"Thêm sản phẩm mới";$("#peDel").hidden=!p;
   pf.n.value=p?.n||"";pf.c.value=p?.c||"cap";pf.p.value=p?.p||"";pf.o.value=p?.o||"";pf.tag.value=p?.tag||"";pf.nt.value=p?.nt||"";pf.nd.checked=!!p?.nd;pf.desc.value=p?.desc||"";pf.desc.dispatchEvent(new Event("input"));pf.sold.value=p?.s||"";pf.show.checked=p?!!p.show:true;pf.feat.checked=!!p?.feat;
   pf.url.value="";pf.file.value="";peRender();
-  $("#peInfo").textContent="";pe.classList.add("on")}
+  $("#peInfo").textContent="";peAiSt("Đọc tên sản phẩm, tra Google lấy thông số rồi viết mô tả bán hàng. Bạn nên đọc lại trước khi bấm Lưu.");pe.classList.add("on")}
 $("#peClose").onclick=()=>pe.classList.remove("on");pe.onclick=e=>{if(e.target===pe)pe.classList.remove("on")};
 pf.desc.addEventListener("input",()=>{$("#peDescN").textContent=pf.desc.value.length.toLocaleString("vi-VN")+" ký tự"});
+
+/* ---- Admin: tự nhập mô tả sản phẩm bằng AI (Gemini + trang chính thức Picom/Wekome + tra cứu Google) ---- */
+const peAiSt=h=>{$("#peAiSt").innerHTML=h};
+const OFFICIAL={wk:{name:"WEKOME",host:"wekomevn.com",home:"https://wekomevn.com/",search:q=>"https://wekomevn.com/?s="+encodeURIComponent(q)+"&post_type=product"},
+  pc:{name:"PICOM",host:"picom.vn",home:"https://picom.vn/",search:q=>"https://picom.vn/search?query="+encodeURIComponent(q)}};
+const peBrand=n=>{const g=(AD.edit&&AD.edit.bg)||grpOf(n);return g==="wk"?OFFICIAL.wk:(g==="pw"||g==="po")?OFFICIAL.pc:null};
+function peAiPrompt(n,cat,off){return `Bạn là chuyên gia viết mô tả bán hàng phụ kiện điện thoại cho website bán sỉ, khách là chủ cửa hàng nhập về bán lại và khách lẻ.
+Sản phẩm: "${n}". Nhóm hàng: ${cat}.
+${off?`KẾT QUẢ GOOGLE cho câu hỏi "${off.query}" (${off.engine}):
+${(off.results||[]).map((x,k)=>`[${k+1}] ${x.title}\\n${x.url}\\nTrích đoạn: ${x.snippet||""}`).join("\\n\\n")}
+${(off.srcs||[]).length?`\\nNỘI DUNG ĐỌC TRỰC TIẾP TỪ CÁC TRANG:\\n${off.srcs.map((x,k)=>`### ${x.url}\\n${x.title}\\n<<<\\n${x.text}\\n>>>`).join("\\n\\n")}`:""}
+YÊU CẦU VỀ NGUỒN: chỉ lấy thông tin nói ĐÚNG về model "${n}" (bỏ qua kết quả về model khác). Trước hết hãy tìm TÍNH NĂNG ĐẶC TRƯNG / ĐIỂM KHÁC BIỆT LỚN NHẤT của sản phẩm (thường nằm ngay trong tên hoặc dòng đầu mô tả) và đặt nó LÊN ĐẦU danh sách. Sau đó liệt kê ĐỦ mọi thông số và ưu điểm còn lại có trong nguồn, giữ ĐÚNG từng con số. Nếu nguồn có danh sách "ƯU ĐIỂM NỔI BẬT" hoặc các dòng bắt đầu bằng ✓ / • thì PHẢI đưa đủ từng ý. Sau khi đã đủ ý từ nguồn, bạn được thêm ý bán hàng hợp lý của riêng mình nhưng KHÔNG bịa thông số kỹ thuật.`:`Hãy tra cứu Google để tìm thông số THẬT của đúng sản phẩm này (tìm đúng model, ưu tiên trang của nhà sản xuất hoặc nhà phân phối lớn). Tìm TÍNH NĂNG ĐẶC TRƯNG nhất của sản phẩm và đặt lên đầu danh sách. Nếu không chắc về một tính năng thì KHÔNG ghi.`}
+QUY TẮC BẮT BUỘC:
+0) Mỗi model có tính năng riêng. TUYỆT ĐỐI không lấy tính năng của model khác (cùng hãng, cùng dòng) gán cho sản phẩm này. Một tính năng chỉ được ghi khi nguồn nói rõ nó thuộc về đúng "${n}".
+1)Chỉ ghi thông tin có trong nguồn hoặc tìm thấy rõ ràng. KHÔNG viết ý chung chung hay suy đoán kiểu "tương thích tốt nhiều thiết bị", "chiều dài tiêu chuẩn", "thiết kế chắc chắn bền bỉ", "hàng sẵn số lượng lớn", "giá cạnh tranh" nếu nguồn không nói. Có ít thông tin thật thì viết ít dòng, không độn.
+2) Bảo hành, chính hãng, VAT, xuất xứ: chỉ ghi khi nguồn nói rõ. Không ghi giá.
+3) Viết lại bằng văn bán hàng của riêng bạn, không chép nguyên văn nguồn. Tiếng Việt có dấu, thuyết phục, dễ hiểu.
+4) Cấu trúc đúng như sau, mỗi mục cách nhau một dòng trống:
+- Dòng tiêu đề hấp dẫn kèm 1 emoji (có tên model và tính năng đặc trưng nhất).
+- Đoạn mở đầu 2 câu nêu lợi ích chính, dựa trên nguồn.
+- Dòng "TÍNH NĂNG NỔI BẬT:" rồi mỗi dòng bắt đầu bằng "★ ", liệt kê ĐỦ các tính năng nổi bật có trong nguồn, tính năng đặc trưng nhất đứng ĐẦU TIÊN (tối đa 6 dòng).
+- Dòng "THÔNG SỐ NỔI BẬT:" rồi mỗi dòng bắt đầu bằng "• ", gồm các thông số kỹ thuật có số liệu cụ thể như công suất, chiều dài, chất liệu, cổng kết nối (tối đa 8 dòng).
+- Dòng "ƯU ĐIỂM NỔI BẬT:" rồi mỗi dòng bắt đầu bằng "✔ ", gồm các ưu điểm có trong nguồn (độ bền, tiện dụng, bảo hành, chính hãng, VAT…) viết thành lợi ích cho người dùng và cửa hàng bán lại (tối đa 8 dòng).
+- Dòng "PHÙ HỢP VỚI:" rồi 1 câu.
+- Một câu cuối kêu gọi đặt hàng.
+5) Không dùng markdown (không dấu * hoặc #). Không nhắc tên website hay cửa hàng khác.
+6) Tổng 130–260 từ. Chỉ trả về đúng nội dung mô tả, không giải thích thêm.`}
+async function peSrc(n,brand){try{const u=FB&&FB.auth&&FB.auth.currentUser;if(!u)return{fail:"chưa đăng nhập"};const idToken=await u.getIdToken();
+  const j=await withTimeout(pushCall("/official",{idToken,brand,q:n}),35000);return j&&j.ok?j:{fail:(j&&j.reason)||"không rõ"}}catch(e){return{fail:String(e&&e.message||e)}}}
+async function peAiGen(){const n=pf.n.value.trim(),btn=$("#peAi");
+  if(n.length<3)return peAiSt("⚠️ Hãy nhập tên sản phẩm trước.");
+  if(!AIP&&(DEMO||!FIREBASE||!FIREBASE.apiKey))return peAiSt("⚠️ Chưa kết nối Firebase AI nên chưa dùng được tính năng này.");
+  if(pf.desc.value.trim()&&!confirm("Mô tả hiện có sẽ được thay bằng mô tả AI mới. Tiếp tục?"))return;
+  btn.disabled=true;peAiSt(`⏳ Đang hỏi Google: <b>“thông số kỹ thuật ${esc(n)}”</b> rồi đọc kết quả… (khoảng 15–40 giây)`);
+  let out="",mode="",last,toolErr="";const off0=await peSrc(n,"google"),off=off0.ok?off0:null,gFail=off?"":(off0.fail||"");
+  const chain=off?[["offtext",undefined]]:[["google",[{googleSearch:{}}]],["none",undefined]];
+  try{const {ai,inst}=await aiLoad(),prompt=peAiPrompt(n,catName[pf.c.value]||"Phụ kiện khác",off);
+    outer:for(const m of VOICE_AI.models){for(const [md,tools] of chain){
+      try{const cfg={model:m,generationConfig:{temperature:.5,maxOutputTokens:2000}};if(tools)cfg.tools=tools;
+        const r=await ai.getGenerativeModel(inst,cfg).generateContent(prompt),t=String(r.response.text()||"").trim();
+        if(t.length>60){out=t;mode=md;break outer}}
+      catch(e){last=e;const msg=String(e&&(e.message||e));if(!toolErr&&tools)toolErr=msg.slice(0,160);if(/(not.?found|404|is not supported|unknown model|not available)/i.test(msg)&&!/tool|ground|search|url/i.test(msg))break}}}
+  }catch(e){last=e}
+  btn.disabled=false;
+  if(!out)return peAiSt("❌ Chưa tạo được mô tả: "+esc((last&&(last.message||last.code))||"AI không phản hồi")+". Bạn thử lại sau ít phút.");
+  out=out.replace(/\*\*/g,"").replace(/^#+\s*/gm,"").replace(/^\s*[\*\-]\s+/gm,"• ").replace(/\n{3,}/g,"\n\n").trim();
+  pf.desc.value=out;pf.desc.dispatchEvent(new Event("input"));
+  const how=off?`đã hỏi Google (${esc(off.engine||"")}) và đọc ${(off.results||[]).length} kết quả${(off.srcs||[]).length?`, ${off.srcs.length} trang`:""}`:mode==="google"?"Gemini tự tra Google":`chưa tra được Google – AI viết theo hiểu biết sẵn có, cần kiểm tra thông số kỹ.<br><small>Lý do: ${esc(gFail||"không rõ")}${toolErr?` • Gemini: ${esc(toolErr)}`:""}. Nếu chưa làm, hãy cập nhật Worker Cloudflare bản mới nhất.</small>`;
+  const raw=off?`<details style="margin-top:6px"><summary>🔍 Xem dữ liệu đã lấy từ Google (để kiểm tra)</summary><div style="max-height:220px;overflow:auto;font-size:12px;white-space:pre-wrap;margin-top:6px">${(off.results||[]).map((x,k)=>`<b>[${k+1}] ${esc(x.title)}</b>\n<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.url)}</a>\n${esc(x.snippet||"")}`).join("\n\n")}${(off.srcs||[]).map(x=>`\n\n<b>📄 Nội dung trang ${esc(x.url)}</b>\n${esc(x.text.slice(0,1500))}`).join("")}</div></details>`:"";
+  peAiSt(`✅ Đã điền mô tả (${how}). Hãy đọc lại rồi bấm <b>Lưu</b>.${raw}`)}
+$("#peAi").onclick=peAiGen;
+$("#peG").onclick=()=>{const n=pf.n.value.trim();if(n.length<2)return peAiSt("⚠️ Hãy nhập tên sản phẩm trước.");window.open("https://www.google.com/search?q="+encodeURIComponent("thông số kỹ thuật "+n),"_blank","noopener")};
+$("#peLk").onclick=async()=>{const p=AD.edit;if(!p||!p.id)return peAiSt("⚠️ Hãy <b>lưu sản phẩm</b> trước, rồi mở lại để lấy link gửi Zalo.");
+  const site=location.origin+location.pathname.replace(/index\.html$/,""),link=PUSH.api+"/p/"+encodeURIComponent(p.id)+"?s="+encodeURIComponent(site);
+  let ok=false;try{await navigator.clipboard.writeText(link);ok=true}catch(e){try{const t=document.createElement("textarea");t.value=link;document.body.appendChild(t);t.select();ok=document.execCommand("copy");t.remove()}catch(e2){}}
+  peAiSt(ok?`✅ Đã sao chép link. Dán vào Zalo: khách sẽ thấy hình + tên sản phẩm, bấm vào là mở đúng sản phẩm.<br><small style="word-break:break-all">${esc(link)}</small>`:`Hãy sao chép link này:<br><small style="word-break:break-all">${esc(link)}</small>`)};
 const peUrl=()=>{if(peAddUrl(pf.url.value)){pf.url.value="";$("#peInfo").textContent="✅ Đã thêm ảnh từ link"}};
 pf.url.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();peUrl()}});pf.url.addEventListener("change",peUrl);
 pf.file.onchange=async()=>{const fs=[...pf.file.files];pf.file.value="";if(!fs.length)return;const room=PE_MAX-AD.slots.length;
@@ -3011,7 +3275,7 @@ $("#pdAdd").onclick=()=>{if(!PDP)return;const hasC=PDP.cl&&PDP.cl.length,hasV=PD
 $("#pdGo").onclick=()=>{pd.classList.remove("on");openCart()};
 $("#pdClose").onclick=()=>pd.classList.remove("on");pd.onclick=e=>{if(e.target===pd)pd.classList.remove("on")};
 $("#grid").addEventListener("click",e=>{if(e.target.closest(".qadd"))return;const c=e.target.closest(".pc");if(c&&(e.target.closest(".im,.nm,.pdbtn")))openDetail(c.dataset.id)});
-$("#cf").addEventListener("click",e=>{const c=e.target.closest(".cf-card.on");if(c&&!moved){const m=MAIN[cards.indexOf(c)];if(m&&m.id&&ALL.some(x=>x.id===m.id))openDetail(m.id)}});
+$("#cf").addEventListener("click",e=>{const c=e.target.closest(".cf-card.on");if(c&&!moved){const m=cfl()[cards.indexOf(c)];if(m&&m.id&&ALL.some(x=>x.id===m.id))openDetail(m.id)}});
 
 $("#dStop").onclick=()=>{G_STOP=true;atoast("⏹ Đang dừng sau ảnh hiện tại…")};
 /* bảng báo cáo */
@@ -3031,6 +3295,11 @@ $("#footAdmin").onclick=e=>{e.preventDefault();location.hash="#admin"};
 adminRoute();
 if(DATA_SRC==="empty"&&!DEMO)console.info("Chưa có sản phẩm trong cơ sở dữ liệu – đang hiển thị dữ liệu mẫu. Vào #admin để nhập.");
 window.__t={reply,voiceGo,goCat,openAuth,openEdit,AD,adminRoute};
+/* Link chia sẻ sản phẩm: mở trang với ?sp=<mã> thì tự cuộn tới mục mua hàng và mở đúng sản phẩm đó */
+(function(){let id="";try{id=new URLSearchParams(location.search).get("sp")||""}catch(e){}if(!id)return;let n=0;
+  const t=setInterval(()=>{n++;const p=ALL.find(x=>String(x.id)===id);
+    if(p){clearInterval(t);try{history.replaceState(null,"",location.pathname)}catch(e){}try{const s=$("#tat-ca");s&&s.scrollIntoView()}catch(e){}try{openDetail(p.id)}catch(e){console.warn(e)}}
+    else if(n>48)clearInterval(t)},250)})();
 </script>
 </body>
 </html>
