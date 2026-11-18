@@ -970,6 +970,71 @@ html[data-theme] .sec-h h2,html[data-theme] .hero-txt h1,html[data-theme] .conta
 #ac a.btn,#ac a.btn-gold{color:#2a1f08;display:inline-block;text-decoration:none;margin:0 6px 8px 0}#ac .ac-tabs{z-index:20;isolation:isolate}#ac .ac-seg label{position:relative}
 .pe-ai{border:1px dashed rgba(246,200,106,.5);border-radius:14px;padding:10px;margin:2px 0 12px;background:rgba(246,200,106,.05)}.pe-aib{display:flex;gap:8px;flex-wrap:wrap}.pe-ai .pe-note{margin:8px 0 0}.pe-ai a{color:var(--gold2)}
 </style>
+<style id="hx-css">
+/* ===== v54: đầu trang mới (bộ đôi WEKOME + PICOM, chuỗi cung ứng, thư ngỏ) ===== */
+#dice{display:none!important}
+.hero-txt h1{font-size:clamp(28px,4.1vw,56px);line-height:1.18}
+@media(max-width:820px){.hero-txt .pill{letter-spacing:1.5px;font-size:11px;padding:7px 12px}.hero-txt h1{font-size:clamp(28px,8vw,40px)}}
+.hx-duo{display:grid;gap:16px;position:relative;align-self:center}
+.hx-card{position:relative;border-radius:22px;padding:20px 20px 16px;border:1px solid rgba(217,178,95,.42);background:linear-gradient(150deg,rgba(38,29,17,.9),rgba(14,11,8,.9));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 22px 50px -22px #000;overflow:hidden;animation:hxFloat 7s ease-in-out infinite}
+.hx-card.pc{animation-delay:-3.5s}
+.hx-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 92% 0%,var(--hx),transparent 58%);opacity:.38;pointer-events:none}
+.hx-card.wk{--hx:#8b5cf6}.hx-card.pc{--hx:#d9b25f}
+.hx-brand{font-weight:800;font-size:22px;letter-spacing:.16em;color:#fff;position:relative}
+.hx-tg{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:2px 0 10px;position:relative}
+.hx-card ul{list-style:none;margin:0 0 12px;padding:0;position:relative}
+.hx-card li{position:relative;padding-left:22px;margin:7px 0;font-size:14px;line-height:1.5;color:var(--text)}
+.hx-card li::before{content:"✓";position:absolute;left:0;color:var(--gold2);font-weight:800}
+.hx-lnk{position:relative;color:var(--gold2);font-size:13px;font-weight:700;text-decoration:none;border-bottom:1px dashed rgba(247,220,146,.5)}
+@keyframes hxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+#gioi-thieu{padding:70px 0 40px;position:relative}
+.hx-tl{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}
+.hx-tl::before{content:"";position:absolute;left:8%;right:8%;top:23px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.55}
+.hx-st{position:relative;text-align:center;padding:0 6px}
+.hx-st b{display:grid;place-items:center;width:46px;height:46px;margin:0 auto 12px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold3));color:#1b1408;font-size:18px;box-shadow:0 0 0 6px rgba(217,178,95,.14),0 10px 26px -8px rgba(217,178,95,.7);animation:hxPulse 3s ease-in-out infinite;position:relative}
+.hx-st:nth-child(2) b{animation-delay:-.7s}.hx-st:nth-child(3) b{animation-delay:-1.4s}.hx-st:nth-child(4) b{animation-delay:-2.1s}
+.hx-st h4{margin:0 0 6px;font-size:16px;color:var(--gold2)}
+.hx-st p{margin:0;font-size:13.5px;line-height:1.55;color:var(--muted)}
+@keyframes hxPulse{0%,100%{box-shadow:0 0 0 6px rgba(217,178,95,.14),0 10px 26px -8px rgba(217,178,95,.7)}50%{box-shadow:0 0 0 12px rgba(217,178,95,.05),0 10px 26px -8px rgba(217,178,95,.9)}}
+.hx-perks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 26px}
+.hx-pk{border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;background:rgba(22,19,14,.7)}
+.hx-pk i{font-style:normal;font-size:24px;display:block;margin-bottom:6px}
+.hx-pk b{display:block;color:var(--gold2);margin-bottom:4px;font-size:15px}
+.hx-pk span{font-size:13.5px;line-height:1.55;color:var(--muted)}
+.hx-letter{border:1px solid rgba(217,178,95,.4);border-radius:22px;padding:24px 22px;background:linear-gradient(150deg,rgba(38,29,17,.85),rgba(14,11,8,.85));position:relative;overflow:hidden}
+.hx-letter::before{content:"“";position:absolute;right:16px;top:-14px;font-size:120px;line-height:1;color:rgba(217,178,95,.16);font-family:Georgia,serif}
+.hx-letter p{margin:0 0 12px;font-size:15px;line-height:1.7;color:var(--text);position:relative}
+.hx-sign{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);position:relative}
+.hx-sign b{display:block;font-size:17px;color:var(--gold2)}
+.hx-sign span{display:block;font-size:13px;color:var(--muted);line-height:1.55}
+.hx-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;position:relative}
+.hx-act .btn{font-size:14px}
+@media(max-width:820px){
+ .hx-tl{grid-template-columns:1fr;gap:20px;padding-left:4px}
+ .hx-tl::before{left:27px;right:auto;top:20px;bottom:20px;width:2px;height:auto;background:linear-gradient(180deg,transparent,var(--gold),transparent)}
+ .hx-st{display:grid;grid-template-columns:46px 1fr;column-gap:14px;text-align:left;padding:0}
+ .hx-st b{margin:0;grid-row:1/3}
+ .hx-perks{grid-template-columns:1fr}
+ #gioi-thieu{padding:50px 0 30px}
+}
+@media(prefers-reduced-motion:reduce){.hx-card,.hx-st b{animation:none}}
+</style>
+<style id="hx-css2">
+/* v55: bản đồ phủ sóng động */
+.hero-txt .hx-h{font-family:Inter,"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;letter-spacing:-.025em;line-height:1.22;font-size:clamp(28px,3.7vw,50px);margin:26px 0 22px;text-wrap:balance}
+.hero-txt .hx-h .gold{display:inline-block;margin-top:6px}
+.hero-txt .pill{letter-spacing:.2em}
+.hero-txt p{line-height:1.75;letter-spacing:.01em;max-width:440px;margin:0}
+.hero-txt .cta{gap:16px;margin-top:36px}
+#hfloat{display:none!important}
+.hx-map{position:relative;height:min(64vh,540px);min-height:380px;align-self:center}
+.hx-map canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hx-chips{position:absolute;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.hx-chip{display:flex;align-items:baseline;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid rgba(217,178,95,.45);background:rgba(14,11,8,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.hx-chip b{font-size:18px;color:var(--gold2);font-weight:800}
+.hx-chip span{font-size:12px;color:var(--text);letter-spacing:.04em}
+@media(max-width:820px){.hero-txt .hx-h{font-size:clamp(26px,7.4vw,38px);margin:22px 0 18px}.hero-txt .cta{margin-top:28px}.hx-map{height:min(62vh,430px);min-height:340px;margin-top:6px}.hx-chip{padding:6px 11px}.hx-chip b{font-size:16px}.hx-chip span{font-size:11px}}
+</style>
 </head>
 <body class="loading">
 
@@ -1056,16 +1121,44 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <!-- HERO -->
 <section id="hero" class="hasbg"><div class="sbg bg-hero"></div><div class="scrim"></div><div class="sweep"></div><div class="sparks" id="sparks"></div><div class="hfloat" id="hfloat"></div><div class="wrap hero-in">
   <div class="hero-txt">
-    <span class="pill rv"><i></i>BD TEAM • PHÂN PHỐI 64 TỈNH THÀNH</span>
-    <h1 class="serif rv d1">Phụ kiện<br><span class="gold">giá sỉ tận gốc</span><br>đến tận cửa hàng bạn</h1>
-    <p class="rv d2">Nhà phân phối độc quyền PICOM, đối tác chiến lược lâu dài của WK Design và WEKOME. Hơn 500 mã hàng hot trend cho đại lý toàn quốc.</p>
+    <span class="pill rv"><i></i>BD TEAM • WEKOME &amp; PICOM</span>
+    <h1 class="hx-h rv d1">Nguồn hàng tận gốc,<br><span class="gold">phủ khắp 64 tỉnh thành</span></h1>
+    <p class="rv d2">Nhà phân phối độc quyền PICOM – đối tác chiến lược WEKOME.</p>
     <div class="cta rv d3"><a href="#chu-luc" class="btn btn-gold">Khám phá sản phẩm →</a><a href="#hop-tac" class="btn btn-ghost">Chính sách hợp tác</a></div>
   </div>
-  <div class="dice-zone" id="dice">
+  <div class="hx-map rv d2" aria-label="Bản đồ độ phủ của BD Team trên 64 tỉnh thành">
+    <canvas id="hxMap"></canvas>
+    <div class="hx-chips"><div class="hx-chip"><b id="hxN">64</b><span>tỉnh thành</span></div><div class="hx-chip"><b>500+</b><span>mã hàng</span></div><div class="hx-chip"><b>120+</b><span>quốc gia (WEKOME)</span></div></div>
+  </div>
+  <div class="dice-zone" id="dice" aria-hidden="true" style="display:none">
     <div class="ring3d r2" id="r2"></div><div class="ring3d" id="r1"></div>
     <div class="cube" id="cube"></div>
     <div class="dice-shadow"></div>
     <div class="swipe-hint" id="hint"><b>☝</b> Vuốt để xoay 360°</div>
+  </div>
+</div>
+</div></section>
+
+<!-- GIỚI THIỆU: chuỗi cung ứng + thư ngỏ BD Director -->
+<section id="gioi-thieu" class="sec"><div class="wrap">
+  <div class="sec-h rv"><div class="tag">Chuỗi cung ứng tận gốc</div><h2 class="serif">Từ nhà máy Thâm Quyến <span class="gold">đến tận cửa hàng bạn</span></h2><p>Kết nối trực tiếp từ tổng công ty Shenzhen WK Technology, kết hợp hạ tầng kho vận sẵn có tại Việt Nam của Phụ Kiện Hoàng Đế.</p></div>
+  <div class="hx-tl">
+    <div class="hx-st rv"><b>1</b><h4>Thâm Quyến</h4><p>Tổng công ty Shenzhen WK Technology – thương hiệu WEKOME có mặt tại hơn 120 quốc gia.</p></div>
+    <div class="hx-st rv d1"><b>2</b><h4>Kiểm định QC</h4><p>WEKOME và PICOM chung nhà xưởng, dây chuyền công nghệ và tiêu chuẩn QC khắt khe.</p></div>
+    <div class="hx-st rv d2"><b>3</b><h4>Kho tại Việt Nam</h4><p>Luôn sẵn số lượng lớn, cung ứng kịp thời cho mọi kế hoạch bán hàng.</p></div>
+    <div class="hx-st rv d3"><b>4</b><h4>Đến tay đại lý</h4><p>Nhập trực tiếp không qua trung gian, bảo hành minh bạch, nhanh chóng ngay tại Việt Nam.</p></div>
+  </div>
+  <div class="hx-perks">
+    <div class="hx-pk rv"><i>💰</i><b>Giá vốn tối ưu</b><span>Nhập hàng trực tiếp không qua trung gian, tối đa hóa lợi nhuận kinh doanh.</span></div>
+    <div class="hx-pk rv d1"><i>🛡️</i><b>Bảo vệ &amp; hậu mãi vượt trội</b><span>Chiết khấu linh hoạt, bảo vệ vùng giá nghiêm ngặt, hỗ trợ truyền thông điểm bán.</span></div>
+    <div class="hx-pk rv d2"><i>📦</i><b>Nguồn hàng ổn định</b><span>Kho hàng luôn sẵn số lượng lớn tại Việt Nam, giao hàng kịp thời.</span></div>
+  </div>
+  <div class="hx-letter rv">
+    <p>Kính chào Quý đối tác,</p>
+    <p>Tôi là <b>Nguyễn Nhật Minh</b>, Giám đốc Phát triển Thị trường (BD Director) tại Phụ Kiện Hoàng Đế – đối tác chiến lược phân phối sản phẩm chính hãng WEKOME và nhà phân phối độc quyền thương hiệu PICOM tại Việt Nam; đồng thời là thành viên BD Team thị trường Việt Nam của Shenzhen WK Technology Co., Ltd. (Thâm Quyến, Trung Quốc).</p>
+    <p>Sự cộng hưởng giữa WEKOME và PICOM giúp Quý đối tác phủ kín mọi phân khúc khách hàng từ trung đến cao cấp. Rất mong có cơ hội gửi bảng báo giá, chính sách đại lý chi tiết và kết nối hợp tác cùng Quý đối tác trong thời gian tới!</p>
+    <div class="hx-sign"><b>Nguyễn Nhật Minh</b><span>Giám đốc Phát triển Thị trường (BD Director) – Phụ Kiện Hoàng Đế</span><span>Đại diện BD Team thị trường Việt Nam – WEKOME &amp; PICOM</span><span>Email: wekome.bdteam.vn@gmail.com</span></div>
+    <div class="hx-act"><a class="btn btn-gold js-zalo" href="#" target="_blank" rel="noopener">💬 Nhắn Zalo <span class="js-phone"></span></a><a class="btn btn-ghost js-call" href="#">📞 Gọi ngay</a><a class="btn btn-ghost" href="#hop-tac">Chính sách hợp tác</a></div>
   </div>
 </div></section>
 
@@ -1629,13 +1722,14 @@ function applyFeat(){const sec=$("#chu-luc");if(!sec)return;const off=FCFG.show=
   const tg=sec.querySelector(".sec-h .tag"),h2=sec.querySelector(".sec-h h2");if(tg&&FCFG.tag)tg.textContent=FCFG.tag;if(h2&&(FCFG.h||FCFG.g))h2.innerHTML=`${escH(FCFG.h||"")} <span class="gold">${escH(FCFG.g||"")}</span>`;
   if((FCFG.ids&&FCFG.ids.length)||Object.keys(FCFG.tags||{}).length||FCFG.n0||(FCFG.sets&&FCFG.sets.length)){buildMain();try{rebuildMainUI()}catch(e){console.warn(e)}}}
 /* ===== SẮP XẾP VỊ TRÍ: các cụm trang chủ + các khối trang chi tiết (admin chỉnh – images/layoutcfg) ===== */
-const LB_MAIN=[["hero","🏠 Banner đầu trang","#hero",null],["marq","🎞 Dải chữ chạy","body > .marq",null],["chuluc","⭐ Sản phẩm chủ lực","#chu-luc",'a[href="#chu-luc"]'],["brands","🏷 Thương hiệu độc quyền","#blk-brands",null],["policy","📜 Chính sách hợp tác & đại lý","#hop-tac",'a[href="#hop-tac"]'],["stores","🤝 Văn phòng & đối tác","#cua-hang",'a[href="#cua-hang"]'],["stats","📊 Số liệu nổi bật","#blk-stats",null],["all","🛍 Tổng sản phẩm","#tat-ca",'a[href="#tat-ca"]'],["contact","📞 Liên hệ","#lien-he",'a[href="#lien-he"]']];
+const LB_MAIN=[["hero","🏠 Banner đầu trang","#hero",null],["intro","📖 Giới thiệu & thư ngỏ","#gioi-thieu",null],["marq","🎞 Dải chữ chạy","body > .marq",null],["chuluc","⭐ Sản phẩm chủ lực","#chu-luc",'a[href="#chu-luc"]'],["brands","🏷 Thương hiệu độc quyền","#blk-brands",null],["policy","📜 Chính sách hợp tác & đại lý","#hop-tac",'a[href="#hop-tac"]'],["stores","🤝 Văn phòng & đối tác","#cua-hang",'a[href="#cua-hang"]'],["stats","📊 Số liệu nổi bật","#blk-stats",null],["all","🛍 Tổng sản phẩm","#tat-ca",'a[href="#tat-ca"]'],["contact","📞 Liên hệ","#lien-he",'a[href="#lien-he"]']];
 const LB_PD=[["gal","🖼 Ảnh sản phẩm"],["name","🏷 Danh mục & tên"],["price","💰 Giá"],["sold","🔥 Đã bán / Top"],["desc","📄 Mô tả sản phẩm"],["perf","⚡ Hiệu suất"],["info","📋 Bảng thông tin"],["credit","📷 Nguồn ảnh"]];
 let LCFG={main:[],hide:{},pd:[],pdHide:{}};
 try{const c=JSON.parse(localStorage.getItem("bdLayout")||"null");if(c)LCFG={...LCFG,...c}}catch(e){}
 const lbOrder=(saved,def)=>{const keys=def.map(x=>x[0]),o=(saved||[]).filter(k=>keys.includes(k));return o.concat(keys.filter(k=>!o.includes(k)))};
 function applyLayout(){try{const ft=document.querySelector("body > footer");if(!ft)return;
-  lbOrder(LCFG.main,LB_MAIN).forEach(k=>{const b=LB_MAIN.find(x=>x[0]===k),el=document.querySelector(b[2]);if(!el)return;ft.parentNode.insertBefore(el,ft);
+  let ord=lbOrder(LCFG.main,LB_MAIN);if(!(LCFG.main||[]).includes("intro")){ord=ord.filter(k=>k!=="intro");ord.splice(ord.indexOf("hero")+1,0,"intro")}
+  ord.forEach(k=>{const b=LB_MAIN.find(x=>x[0]===k),el=document.querySelector(b[2]);if(!el)return;ft.parentNode.insertBefore(el,ft);
     el.classList.toggle("lhide",!!(LCFG.hide||{})[k]);if(b[3])document.querySelectorAll(".menu "+b[3]).forEach(a=>a.classList.toggle("lhide-a",!!(LCFG.hide||{})[k]))})}catch(e){console.warn("layout",e)}}
 const pdKey=el=>{const c=el.classList;return c.contains("pd-gal")||c.contains("pd-thumbs")?"gal":c.contains("pd-ct")||c.contains("pd-n")||c.contains("pd-note")?"name":c.contains("pd-pr")?"price":c.contains("pd-sold")?"sold":c.contains("pd-cr")?"credit":c.contains("pd-sec")?(/Mô tả/.test(el.textContent.slice(0,12))?"desc":/Hiệu suất/.test(el.textContent.slice(0,14))?"perf":"info"):""};
 function pdLayout(){try{const box=$("#pdBody"),kids=[...box.children],g={};kids.forEach(el=>{const k=pdKey(el);(g[k]=g[k]||[]).push(el)});
@@ -1732,6 +1826,24 @@ const BR=[{ex:1,lbl:"NHÀ PHÂN PHỐI ĐỘC QUYỀN",h:"PICOM",p:"Đồng hồ
  {lbl:"ĐỐI TÁC CHIẾN LƯỢC",h:"WEKOME",p:"Phụ kiện và đồng hồ thông minh WEKOME, hợp tác lâu dài.",img:U+"2024/12/68-300x300.jpg"}];
 $("#brands").innerHTML=BR.map((b,i)=>`<div class="bd ${b.ex?"ex":""} rv d${i}"><div class="bgi" style="background-image:url('${b.img}')"></div><div><span class="lbl">${b.lbl}</span><h3>${b.h}</h3><p>${b.p}</p></div></div>`).join("");
 $("#pk").innerHTML=PACKS.map((p,i)=>`<div class="pk ${p.hot?"hot":""} rv d${i}">${p.hot?'<span class="ribbon">PHỔ BIẾN</span>':""}<div class="nm">${p.nm}</div><h3>${p.title}</h3><div class="cap">${p.cap}</div><div class="money">${p.money}</div><ul>${p.items.map(t=>`<li>${t}</li>`).join("")}</ul><a class="btn ${p.hot?"btn-gold":"btn-ghost"}" style="width:100%;margin-top:18px" href="${zalo}" target="_blank" rel="noopener">Tư vấn gói này</a></div>`).join("");
+/* Thông báo tạm ngưng nhận lịch setup: bấm vào gói / nút "Tư vấn gói này" thì hiện bảng thông báo (có dấu X, nút sang Zalo) */
+(function(){const st=document.createElement("style");st.textContent=`.stpm{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(5,4,8,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:stpIn .2s ease}
+.stpm[hidden]{display:none}
+.stp-b{position:relative;width:100%;max-width:400px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box;padding:30px 22px 24px;text-align:center;border-radius:22px;background:linear-gradient(160deg,#241c10,#120f0a 60%);border:1px solid rgba(217,178,95,.55);box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(217,178,95,.12);color:var(--text)}
+.stp-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:var(--gold2);font-size:28px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.stp-x:active{background:rgba(255,255,255,.16)}
+.stp-ic{font-size:34px;margin-bottom:6px}
+.stp-b h3{margin:0 24px 12px;font-size:17px;line-height:1.35;letter-spacing:.02em;color:var(--gold2);font-weight:800}
+.stp-b p{margin:0 0 20px;font-size:14.5px;line-height:1.6;color:var(--text)}
+.stp-z{display:flex;width:100%;justify-content:center;box-sizing:border-box}
+@keyframes stpIn{from{opacity:0}to{opacity:1}}`;document.head.appendChild(st);
+  const m=document.createElement("div");m.id="stpm";m.className="stpm";m.hidden=true;m.setAttribute("role","dialog");m.setAttribute("aria-modal","true");
+  m.innerHTML=`<div class="stp-b"><button type="button" class="stp-x" aria-label="Đóng">×</button><div class="stp-ic">🛠️</div><h3>THÔNG BÁO TẠM NGƯNG NHẬN LỊCH SETUP</h3><p>Nhằm đảm bảo chất lượng thi công và dịch vụ tốt nhất trước tình trạng quá tải đơn đăng ký hiện tại, BD Team xin phép tạm đóng các gói setup. Quý khách vui lòng liên hệ trực tiếp qua Zalo để cập nhật thời gian mở lại sớm nhất. Trân trọng cảm ơn!</p><a class="btn btn-gold stp-z" href="${zalo}" target="_blank" rel="noopener">💬 Liên hệ qua Zalo</a></div>`;
+  document.body.appendChild(m);
+  const open=()=>{m.hidden=false;document.body.style.overflow="hidden"},close=()=>{m.hidden=true;document.body.style.overflow=""};
+  m.addEventListener("click",e=>{if(e.target===m||e.target.closest(".stp-x"))close()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!m.hidden)close()});
+  $("#pk").addEventListener("click",e=>{if(!e.target.closest(".pk"))return;e.preventDefault();open()})})();
 $("#sup").innerHTML=SUPPORT.map((s,i)=>`<div class="sp rv d${i%4}"><div class="ic">${s[0]}</div><h4>${s[1]}</h4><p>${s[2]}</p></div>`).join("");
 const pics=ALL.filter((_,i)=>i%3===1).map(p=>p.i);
 /* partner images: admin uploads via Firestore doc partners/{pkey}.img */
@@ -3304,6 +3416,61 @@ window.__t={reply,voiceGo,goCat,openAuth,openEdit,AD,adminRoute};
   const t=setInterval(()=>{n++;const p=ALL.find(x=>String(x.id)===id);
     if(p){clearInterval(t);try{history.replaceState(null,"",location.pathname)}catch(e){}try{const s=$("#tat-ca");s&&s.scrollIntoView()}catch(e){}try{openDetail(p.id)}catch(e){console.warn(e)}}
     else if(n>48)clearInterval(t)},250)})();
+
+/* ===== v55: bản đồ phủ sóng – các chấm sáng lan từ Hà Nội / Đà Nẵng / TP.HCM ra khắp 64 tỉnh thành, đường bay từ Thâm Quyến ===== */
+(function(){const cv=document.getElementById("hxMap");if(!cv)return;const cx=cv.getContext("2d");if(!cx)return;
+  /* Hiệu ứng luôn chạy (không theo cài đặt "giảm chuyển động" của hệ điều hành) vì đây là điểm nhấn của trang */
+  const POLY=[[102.1,22.4],[103.0,22.6],[103.9,22.5],[104.4,23.3],[105.5,23.1],[106.7,22.8],[106.7,22.0],[107.9,21.6],[107.9,21.0],[107.0,20.8],[106.7,20.2],[106.1,19.7],[105.7,19.0],[106.1,18.2],[106.8,17.6],[107.4,16.8],[108.2,16.1],[108.9,15.4],[109.3,14.0],[109.3,12.8],[109.2,11.6],[108.9,11.0],[107.9,10.6],[107.0,10.3],[106.7,9.6],[105.5,8.6],[104.8,8.7],[104.8,9.8],[104.6,10.4],[105.2,10.9],[106.0,11.3],[106.6,11.7],[107.0,12.2],[107.6,12.6],[107.6,13.8],[107.5,14.8],[107.2,15.8],[106.6,16.5],[105.6,17.8],[104.6,18.8],[104.0,19.7],[104.6,20.5],[103.5,20.7],[104.0,21.6],[102.9,21.9]];
+  const HUBS=[["Hưng Yên",106.05,20.65],["TP.HCM",106.7,10.8]],STAT=[],SZ=["Thâm Quyến",114.1,22.55];
+  const ISL=[{n:"Hoàng Sa",p:[112.2,16.5],d:0},{n:"Trường Sa",p:[114.0,9.4],d:600}];
+  const LON0=102,LON1=115.5,LAT0=6.6,LAT1=23.6;let stat=[],isl=[],maxD=1,RS=44,W=0,H=0,dots=[],hubs=[],sz,sc=1,ox=0,oy=0,vis=true,t0=performance.now(),dpr=1;
+  const inside=(x,y)=>{let c=false;for(let i=0,j=POLY.length-1;i<POLY.length;j=i++){const a=POLY[i],b=POLY[j];if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])c=!c}return c};
+  function build(){const r=cv.getBoundingClientRect();W=Math.max(200,r.width);const ch=document.querySelector(".hx-chips");RS=(ch?ch.offsetHeight:36)+14;H=Math.max(200,r.height-RS);dpr=Math.min(window.devicePixelRatio||1,2);cv.width=W*dpr;cv.height=(H+RS)*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    sc=Math.min(H/(LAT1-LAT0),W/((LON1-LON0)*.93));ox=(W-(LON1-LON0)*.93*sc)/2;oy=(H-(LAT1-LAT0)*sc)/2;
+    const P=(lo,la)=>[ox+(lo-LON0)*.93*sc,oy+(LAT1-la)*sc];
+    hubs=HUBS.map(h=>({n:h[0],p:P(h[1],h[2])}));stat=STAT.map(h=>({n:h[0],p:P(h[1],h[2]),R:h[3]}));isl=ISL.map(g=>({n:g.n,d:g.d,p:P(g.p[0],g.p[1])}));sz={n:SZ[0],p:P(SZ[1],SZ[2])};
+    const gap=Math.max(5,Math.round(sc*.25));dots=[];
+    for(let la=LAT1;la>LAT0;la-=gap/sc)for(let lo=LON0;lo<LON1;lo+=gap/(sc*.93)){if(!inside(lo,la))continue;const p=P(lo,la);let d=1e9,bi=0;hubs.forEach((h,hi)=>{const dd=Math.hypot(p[0]-h.p[0],p[1]-h.p[1]);if(dd<d){d=dd;bi=hi}});dots.push({x:p[0],y:p[1],d,h:bi,r:Math.random()})}
+    const m=Math.max(...dots.map(q=>q.d))||1;maxD=m;dots.forEach(q=>{q.k=q.d/m;q.s=Math.min(.96,q.k*.8+q.r*.2)})}
+  const heart=(x,y,z)=>{cx.beginPath();cx.moveTo(x,y+z*.95);cx.bezierCurveTo(x-z*1.7,y-z*.2,x-z*.95,y-z*1.3,x,y-z*.5);cx.bezierCurveTo(x+z*.95,y-z*1.3,x+z*1.7,y-z*.2,x,y+z*.95);cx.closePath()};
+  const CYC=19000,FL=3800,SP=8500,ARR=[FL,FL+700],FLARE=FL+700+SP+200,EMIT=230;
+  function frame(now){requestAnimationFrame(frame);if(!vis||!dots.length)return;const t=(now-t0)%CYC,fade=t>CYC-1500?(CYC-t)/1500:1;
+    cx.clearRect(0,0,W,H+RS);
+    /* chấm nền mờ (bản đồ chưa phủ) */
+    cx.fillStyle="rgba(217,178,95,.12)";dots.forEach(q=>{cx.fillRect(q.x-1,q.y-1,2,2)});
+    /* từng chấm nhỏ lần lượt phát sáng lan ra từ Hà Nội / Đà Nẵng / TP.HCM */
+    let lit=0;dots.forEach(q=>{const dt=t-(ARR[q.h]+SP*q.s);if(dt<=0)return;lit++;const on=Math.min(1,dt/500),pop=Math.max(0,1-dt/950),tw=.82+.18*Math.sin(now/360+q.r*40),a=(.55+.4*tw)*on*fade,rr=1.3+q.r*.5+pop*2.2;
+      cx.fillStyle=pop>.12?`rgba(255,246,205,${Math.min(1,a+.2)})`:`rgba(236,198,108,${a})`;
+      if(pop>.12){cx.shadowColor="#f7dc92";cx.shadowBlur=10*pop}
+      cx.beginPath();cx.arc(q.x,q.y,rr,0,6.283);cx.fill();cx.shadowBlur=0;
+      if(on>=1&&Math.sin(now/170+q.r*97)>.965){cx.fillStyle=`rgba(255,250,225,${.9*fade})`;cx.shadowColor="#f7dc92";cx.shadowBlur=9;cx.beginPath();cx.arc(q.x,q.y,2.5,0,6.283);cx.fill();cx.shadowBlur=0}});
+    /* vòng sóng nhẹ từ mỗi trung tâm trong lúc lan */
+    hubs.forEach((h,i)=>{const pg=(t-ARR[i])/SP;if(pg<=0||pg>=1)return;cx.strokeStyle=`rgba(247,220,146,${.22*(1-pg)})`;cx.lineWidth=1;cx.beginPath();cx.arc(h.p[0],h.p[1],pg*maxD*.6,0,6.283);cx.stroke()});
+    /* đường bay Thâm Quyến → Hưng Yên và TP.HCM; từ hai nơi này các chấm sáng lan ra khắp bản đồ */
+    hubs.forEach((h,i)=>{const a=sz.p,b=h.p,mx=(a[0]+b[0])/2,my=Math.min(a[1],b[1])-40-i*22;
+      cx.strokeStyle="rgba(217,178,95,.30)";cx.lineWidth=1;cx.setLineDash([3,5]);cx.beginPath();cx.moveTo(a[0],a[1]);cx.quadraticCurveTo(mx,my,b[0],b[1]);cx.stroke();cx.setLineDash([]);
+      const bz=u=>[(1-u)*(1-u)*a[0]+2*(1-u)*u*mx+u*u*b[0],(1-u)*(1-u)*a[1]+2*(1-u)*u*my+u*u*b[1]];
+      /* Dòng chảy cung ứng: các hạt sáng tròn, mềm, trôi đều dọc đường cong (không đuôi, không giống đạn) */
+      const off=i*700,endE=off+FL+SP*.92,sa=Math.max(0,Math.min(1,(t-off)/900,(endE+FL*.5-t)/1200))*fade;
+      if(sa>0){cx.save();cx.lineCap="round";
+        cx.strokeStyle=`rgba(247,220,146,${.07*sa})`;cx.lineWidth=7;cx.beginPath();cx.moveTo(a[0],a[1]);cx.quadraticCurveTo(mx,my,b[0],b[1]);cx.stroke();
+        cx.setLineDash([.1,15]);cx.lineDashOffset=-(now/48);cx.strokeStyle=`rgba(255,238,175,${.9*sa})`;cx.lineWidth=3.2;cx.shadowColor="#f7dc92";cx.shadowBlur=9;cx.beginPath();cx.moveTo(a[0],a[1]);cx.quadraticCurveTo(mx,my,b[0],b[1]);cx.stroke();
+        cx.setLineDash([.1,15]);cx.lineDashOffset=-(now/48)-7.5;cx.strokeStyle=`rgba(255,238,175,${.45*sa})`;cx.lineWidth=2;cx.shadowBlur=0;cx.beginPath();cx.moveTo(a[0],a[1]);cx.quadraticCurveTo(mx,my,b[0],b[1]);cx.stroke();cx.restore();
+        if(i===1){const q=bz(.62);cx.save();cx.globalAlpha=.9*sa;cx.font="600 11px Inter,system-ui,sans-serif";try{cx.letterSpacing="1.5px"}catch(e){}cx.fillStyle="#f7dc92";cx.textAlign="left";cx.fillText("DÒNG CHẢY CUNG ỨNG",q[0]+12,q[1]+4);cx.restore()}}
+      const ab=t-ARR[i];if(ab>0&&ab<900){cx.strokeStyle=`rgba(255,244,200,${1-ab/900})`;cx.lineWidth=2;cx.beginPath();cx.arc(b[0],b[1],6+ab/900*32,0,6.283);cx.stroke()}});
+    /* các điểm LUÔN SÁNG: Thâm Quyến, Hưng Yên, TP.HCM, Hà Nội, Đà Nẵng */
+    const lab=(p,n,w,col,L,R)=>{const right=R||(!L&&p[0]>W*.62);cx.font=`${w} 12px Inter,system-ui,sans-serif`;cx.fillStyle=col||"#f4eee2";cx.textAlign=right?"right":"left";cx.fillText(n,p[0]+(right?-14:14),p[1]+4)};
+    const node=(p,n,big,R)=>{const pr=(Math.sin(now/500)+1)/2;cx.fillStyle="rgba(247,220,146,.28)";cx.beginPath();cx.arc(p[0],p[1],(big?9:7)+pr*5,0,6.283);cx.fill();cx.fillStyle="#fff2b8";cx.shadowColor="#f7dc92";cx.shadowBlur=12;cx.beginPath();cx.arc(p[0],p[1],big?4.5:3.6,0,6.283);cx.fill();cx.shadowBlur=0;lab(p,n,600,0,0,R)};
+    node(sz.p,sz.n,true);hubs.forEach(h=>node(h.p,h.n,false,h.n==="Hưng Yên"?0:0));stat.forEach(h=>node(h.p,h.n,false,!!h.R));
+    /* Hoàng Sa & Trường Sa: trái tim luôn sáng; cuối vòng phát sáng thêm (vòng sáng lan ra) */
+    isl.forEach(g=>{const f=Math.max(0,Math.min(1,(t-(FLARE+g.d))/700))*fade,pu=(Math.sin(now/320)+1)/2,z=6+pu*1.2+f*2.2;
+      if(f>0){const ph=((now-t0)/1300+g.d/1000)%1;cx.strokeStyle=`rgba(255,170,190,${.55*(1-ph)*f})`;cx.lineWidth=1.4;cx.beginPath();cx.arc(g.p[0],g.p[1],10+ph*34,0,6.283);cx.stroke()}
+      cx.shadowColor=f>0?"#ff9bb0":"#f7dc92";cx.shadowBlur=10+f*22;heart(g.p[0],g.p[1],z);cx.fillStyle=f>0?"#ffc2cf":"#ff8fa6";cx.fill();cx.shadowBlur=0;
+      lab(g.p,g.n,700,f>0?"#fff2b8":"#f4eee2",g.n==="Hoàng Sa")});
+    const el=document.getElementById("hxN");if(el)el.textContent=t>CYC-1500?64:Math.round(64*lit/Math.max(1,dots.length))}
+  build();let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(build,150)});
+  if("IntersectionObserver" in window)new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(cv);
+  requestAnimationFrame(frame)})();
 </script>
 </body>
 </html>
