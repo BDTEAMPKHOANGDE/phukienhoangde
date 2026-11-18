@@ -1034,6 +1034,7 @@ html[data-theme] .sec-h h2,html[data-theme] .hero-txt h1,html[data-theme] .conta
 .hx-chip b{font-size:18px;color:var(--gold2);font-weight:800}
 .hx-chip span{font-size:12px;color:var(--text);letter-spacing:.04em}
 @media(max-width:820px){.hero-txt .hx-h{font-size:clamp(26px,7.4vw,38px);margin:22px 0 18px}.hero-txt .cta{margin-top:28px}.hx-map{height:min(62vh,430px);min-height:340px;margin-top:6px}.hx-chip{padding:6px 11px}.hx-chip b{font-size:16px}.hx-chip span{font-size:11px}}
+.ai-dbg{margin-top:8px;padding:8px 10px;border-radius:10px;border:1px dashed #e2513b;background:rgba(226,81,59,.1);font-size:12.5px;line-height:1.5;color:#ffb4a6}
 </style>
 </head>
 <body class="loading">
@@ -1950,10 +1951,10 @@ const sim=(a,b)=>{const A=tri(a),B=tri(b);let n=0;A.forEach(x=>B.has(x)&&n++);re
 const buildIDX=()=>ALL.map(p=>{const n=nm(p.n+" "+catName[p.c]);return{p,n,tok:n.split(/\s+/),cmp:n.replace(/[^a-z0-9]/g,"")}});let IDX=buildIDX();
 function search(q,{cat=null,min=0,max=Infinity}={}){
   const words=q.split(/\s+/).filter(w=>w.length>1&&!STOP.has(w)),qc=q.replace(/[^a-z0-9]/g,"");
-  return IDX.filter(o=>(!cat||o.p.c===cat)&&o.p.p>=min&&o.p.p<=max).map(o=>{let s=cat?1:0;
-    words.forEach(w=>{if(o.tok.includes(w))s+=3;else if(o.n.includes(w))s+=2;else if(w.length>3&&o.tok.some(t=>t.length>3&&sim(t,w)>.55))s+=1.5});
-    const codes=q.match(/[a-z]{1,4}\s?-?\d{2,4}[a-z]*/g);if(codes)codes.forEach(c=>{if(o.cmp.includes(c.replace(/[^a-z0-9]/g,"")))s+=6});
-    return{p:o.p,s}}).filter(x=>x.s>(cat?0:1.4)).sort((a,b)=>b.s-a.s).map(x=>x.p)}
+  return IDX.filter(o=>(!cat||o.p.c===cat)&&o.p.p>=min&&o.p.p<=max).map(o=>{let s=cat?1:0,ex=0;
+    words.forEach(w=>{if(o.tok.includes(w)){s+=3;ex++}else if(o.n.includes(w)){s+=2;ex++}else if(w.length>3&&o.tok.some(t=>t.length>3&&sim(t,w)>.55))s+=1.5});
+    const codes=q.match(/[a-z]{1,4}\s?-?\d{2,4}[a-z]*/g);if(codes)codes.forEach(c=>{if(o.cmp.includes(c.replace(/[^a-z0-9]/g,""))){s+=6;ex++}});
+    return{p:o.p,s,ex}}).filter(x=>x.s>(cat?0:1.4)&&(cat||x.ex>0)).sort((a,b)=>b.s-a.s).map(x=>x.p)}
 function toVND(v,u){v=parseFloat(String(v).replace(",","."));if(/^(tr|trieu|cu)/.test(u||""))return v*1e6;if(/^(k|nghin|ngan)/.test(u||""))return v*1e3;return v<1000?v*1e3:v}
 function parsePrice(q){const N="(\\d+(?:[.,]\\d+)?)\\s*(k|nghin|ngan|trieu|tr|cu|dong|d)?\\b";let m;
   if(m=q.match(new RegExp("tu\\s*"+N+"\\s*(?:den|toi|-)\\s*"+N)))return{min:toVND(m[1],m[2]||m[4]),max:toVND(m[3],m[4])};
@@ -1985,13 +1986,62 @@ const card=p=>`<button type="button" class="mini" data-act="prod:${p.id}"><img $
 /* ===================== AI TRAINING: kho tri thức tự động từ danh sách sản phẩm + Gemini ===================== */
 const AI_TONE_DEF="Xưng \"mình\", gọi khách là \"anh/chị\". Giọng thân thiện, chuyên nghiệp, ngắn gọn, nói tiếng Việt có dấu. Chủ động hỏi nhu cầu (số lượng, ngân sách) và gợi ý chốt đơn qua Zalo.";
 const AI_RULES=["Chỉ được tư vấn và cung cấp thông tin dựa trên DANH SÁCH SẢN PHẨM THỰC TẾ của cửa hàng bên dưới.","Tuyệt đối KHÔNG bịa đặt giá, tính năng, thông số, màu sắc, khuyến mãi hay tồn kho không có trong dữ liệu. Không chắc thì nói rõ là chưa có thông tin và mời khách liên hệ Zalo.","Sản phẩm khách hỏi không có trong danh sách: nói thật là hiện chưa thấy mẫu đó, gợi ý mẫu gần nhất CÓ trong danh sách.","Báo giá đúng số trong danh sách; tính tiền chính xác = số lượng × đơn giá.","Đơn online tối thiểu 500.000₫ (không nhận đơn dưới mức này); đơn trên 5.000.000₫ (thanh toán trước) được hỗ trợ phí vận chuyển.","Chỉ nói về phụ kiện điện thoại và dịch vụ của cửa hàng; chủ đề khác thì lịch sự từ chối.","Trả lời ngắn gọn (dưới 120 từ), tiếng Việt, không dùng bảng hay markdown phức tạp."];
-let AIC={on:false,sync:true,tone:AI_TONE_DEF,extra:"",samples:[],notes:[],kb:[]},AIH=[];
+let AIC={on:true,sync:true,tone:AI_TONE_DEF,extra:"",samples:[],notes:[],kb:[]},AIH=[];
 FB_READY.then(async f=>{if(!f)return;try{const d=await f.F.getDoc(f.F.doc(f.db,"images","aicfg"));if(d.exists()&&d.data().d)AIC={...AIC,...JSON.parse(d.data().d)}}catch(e){console.warn("aicfg:",e)}});
 function aiCtx(){const rows=ALL.slice(0,700).map(p=>{const v=(p.v||[]).map(x=>x.n).filter(Boolean).join("/"),c=(p.cl||[]).map(x=>x.n).filter(Boolean).join("/");
   return `- ${p.n} | giá sỉ ${vnd(p.p)}${p.o&&p.o>p.p?` (giá gốc ${vnd(p.o)})`:""} | ${catName[p.c]||"Khác"}${p.tag?` | nhãn: ${p.tag}`:""}${p.desc?` | ${String(p.desc).replace(/\s+/g," ").slice(0,500)}`:""}${v?` | loại: ${v}`:""}${c?` | màu: ${c}`:""}`});
   return rows.join("\n")}
 const aiRuleList=c=>{const l=String(c.rules||"").split("\n").map(x=>x.replace(/^\s*\d+[.)]\s*/,"").trim()).filter(Boolean);return l.length?l:AI_RULES};
-function aiSystem(c){return `Bạn là trợ lý tư vấn bán hàng AI của ${CONFIG.team} – Phụ Kiện Hoàng Đế (bán sỉ phụ kiện điện thoại). Zalo/Hotline: ${CONFIG.zalo}.\n\nGIỌNG ĐIỆU:\n${c.tone||AI_TONE_DEF}\n\nQUY TẮC BẮT BUỘC:\n${aiRuleList(c).map((r,i)=>`${i+1}. ${r}`).join("\n")}\n${c.extra?`\nKIẾN THỨC BỔ SUNG CỦA CỬA HÀNG:\n${c.extra}\n`:""}${(c.kb||[]).length?`\nKIẾN THỨC CỬA HÀNG ĐÃ HỌC (do admin dạy, đáng tin cậy – dùng để trả lời khách):\n${c.kb.map(k=>`## ${k.t}\n${k.text}`).join("\n\n")}\n`:""}${(c.notes||[]).length?`\nĐIỀU ADMIN (CHỦ SHOP) DẶN BẠN GHI NHỚ:\n${c.notes.slice(-40).map(n=>"- "+n).join("\n")}\n`:""}${(c.samples||[]).length?`\nMẪU TRẢ LỜI DO ADMIN DẠY – hãy học cách diễn đạt, giọng điệu và cách xử lý của các mẫu này khi gặp câu hỏi tương tự (giá và thông số vẫn phải lấy đúng từ DANH SÁCH SẢN PHẨM hiện tại, không chép giá cũ từ mẫu):\n${c.samples.slice(-40).map(x=>`Khách: ${x.q}\nBạn: ${x.a}`).join("\n---\n")}\n`:""}\nDANH SÁCH SẢN PHẨM THỰC TẾ (cập nhật ${new Date().toLocaleString("vi-VN")}):\n${c.sync===false?"(Chưa bật đồng bộ – không có dữ liệu sản phẩm, hãy mời khách liên hệ Zalo)":aiCtx()}`}
+const CHAT_MODELS=["gemini-3.6-flash","gemini-2.5-flash","gemini-3.5-flash-lite"];
+const AI_SMART=`CÁCH TƯ VẤN THÔNG MINH (luôn áp dụng):
+1. Đọc hiểu ý khách kể cả khi viết tắt, không dấu, sai chính tả, tiếng lóng (vd "cap ip" = cáp sạc iPhone, "cu 20w" = củ sạc 20W, "dh tre em" = đồng hồ trẻ em, "sdp" = sạc dự phòng).
+2. Xác định nhu cầu: loại hàng, thương hiệu, ngân sách, số lượng, mua để bán lại hay dùng. Thiếu thông tin quan trọng thì hỏi lại ĐÚNG 1 câu ngắn, nhưng vẫn gợi ý trước 2–3 mẫu phù hợp nhất.
+3. Khi nhắc tới sản phẩm: ghi ĐÚNG NGUYÊN VĂN TÊN như trong danh sách (để web hiện thẻ sản phẩm cho khách bấm), kèm giá sỉ và 1 lý do ngắn nên chọn lấy từ mô tả thật.
+4. Tính tiền chính xác = số lượng × đơn giá. Với hàng WEKOME / PICOM / Đồng hồ PICOM, cho biết mức chiết khấu tháng tương ứng với doanh số và gợi ý mua thêm bao nhiêu để lên mốc kế tiếp. Luôn nhắc đơn tối thiểu 500.000₫ nếu đơn nhỏ hơn.
+5. So sánh sản phẩm dựa trên giá và mô tả thật, nói rõ ai hợp với mẫu nào.
+6. Câu hỏi về công ty, chính sách, chiết khấu, bảo hành, đại lý, văn phòng, liên hệ: trả lời đúng theo KIẾN THỨC WEBSITE bên dưới, giữ nguyên số liệu.
+7. Gói setup shop hiện ĐANG TẠM NGƯNG nhận lịch: báo khách lịch sự và mời nhắn Zalo để được báo thời gian mở lại.
+8. Mỗi câu trả lời kết thúc bằng 1 bước tiếp theo rõ ràng (hỏi số lượng, mời chốt đơn qua Zalo, mời xem sản phẩm…).
+9. Văn phong tự nhiên như nhân viên bán hàng giỏi: không chào hỏi dài dòng, không lặp lại câu hỏi của khách. Dùng "•" khi liệt kê. Không dùng bảng.`;
+function aiSiteKB(){const L=[];
+  L.push(`LIÊN HỆ: Hotline/Zalo ${CONFIG.phone} • Email wekome.bdteam.vn@gmail.com`);
+  L.push(`ĐƠN HÀNG: đơn online tối thiểu ${vnd(MIN_ORD)} (không nhận đơn nhỏ hơn); không giới hạn số lượng mỗi mã; đơn trên 5.000.000₫ thanh toán trước được hỗ trợ phí vận chuyển; có xuất hóa đơn đỏ; thanh toán chuyển khoản hoặc thỏa thuận khi chốt đơn.`);
+  try{L.push("CHIẾT KHẤU ĐẠI LÝ – tính theo doanh số CỘNG DỒN trong tháng theo từng thương hiệu (mỗi đơn từ 500.000₫, chỉ tính đơn đã được BD Team xác nhận; tổng kết cuối tháng, hoàn lại bằng tiền hoặc sản phẩm; sang tháng mới tính lại; thương hiệu khác không áp dụng; kính cường lực không chiết khấu; sạc dự phòng WEKOME tối đa 7%):\n"+Object.keys(POL).map(g=>POL[g].n+":\n"+POL[g].t.map(t=>`  • ${polRange(g,t)}${t[3]?` (${t[3]})`:""} → ${t[2]==null?"liên hệ":pctStr(t[2])}${t[4]?` – ${t[4]}`:""}`).join("\n")).join("\n"))}catch(e){}
+  try{L.push("GÓI SETUP SHOP TRỌN GÓI – HIỆN ĐANG TẠM NGƯNG NHẬN LỊCH (quá tải đơn đăng ký; khách liên hệ Zalo để được cập nhật thời gian mở lại):\n"+PACKS.map(x=>`  • ${x.title} (${x.nm}): vốn từ ${x.money} – ${x.items.join(", ")}`).join("\n"))}catch(e){}
+  try{L.push("QUYỀN LỢI HỖ TRỢ ĐẠI LÝ:\n"+SUPPORT.map(x=>`  • ${x[1]}: ${x[2]}`).join("\n"))}catch(e){}
+  try{const st=storeView();if(st.length)L.push("VĂN PHÒNG & ĐỐI TÁC:\n"+st.map(x=>`  • ${x.name||""}: ${x.addr||""}`).join("\n"))}catch(e){}
+  try{L.push(WH_POLICY)}catch(e){}
+  L.push("TÀI KHOẢN KHÁCH HÀNG: khách đăng ký / đăng nhập để đặt hàng, xem lịch sử đơn, theo dõi doanh số và mức chiết khấu tháng (KPI); gửi yêu cầu bảo hành, khiếu nại trong Trung tâm tài khoản (biểu tượng bánh răng cạnh avatar); ảnh/video hàng lỗi gửi qua Zalo BD Team. Có thể đổi giao diện sáng trắng / sáng vàng, đổi mật khẩu.");
+  return L.join("\n\n")}
+/* Danh mục sản phẩm cho AI: toàn bộ danh sách rút gọn + chi tiết đầy đủ của các mẫu liên quan nhất tới câu hỏi */
+function aiCat(q){const row=p=>`- ${p.n} | ${vnd(p.p)} | ${catName[p.c]||"Khác"}${p.bs?" | bán chạy":""}${p.nd?" | không chiết khấu":""}`;
+  const full=p=>{const v=(p.v||[]).map(x=>x.n+(x.p?` ${vnd(x.p)}`:"")).filter(Boolean).join(" / "),c=(p.cl||[]).map(x=>x.n).filter(Boolean).join(", ");
+    return `### ${p.n}\nGiá sỉ: ${vnd(p.p)}${p.o&&p.o>p.p?` (giá gốc ${vnd(p.o)}, giảm ${p.off}%)`:""} • Nhóm: ${catName[p.c]||"Khác"}${p.tag?` • Nhãn: ${p.tag}`:""}${p.bs?" • Bán chạy":""}${p.nd?" • Không áp dụng chiết khấu":""}${v?`\nPhân loại: ${v}`:""}${c?`\nMàu: ${c}`:""}${p.desc?`\nMô tả: ${String(p.desc).replace(/\s+/g," ").slice(0,900)}`:""}`};
+  let hit=[];try{const qq=nm(q||"");if(qq.trim())hit=search(qq).slice(0,18)}catch(e){}
+  if(!hit.length)hit=ALL.filter(p=>p.bs).slice(0,10);
+  try{const rec=nm(AIH.slice(-4).map(h=>h.t).join(" "));ALL.forEach(p=>{if(p.n&&rec.includes(nm(p.n))&&!hit.includes(p))hit.push(p)})}catch(e){}
+  return{det:hit.slice(0,26).map(full).join("\n\n"),rows:ALL.slice(0,2500).map(row).join("\n")}}
+function aiSystem(c,q){const k=aiCat(q);return `Bạn là trợ lý tư vấn bán hàng AI của ${CONFIG.team} – Phụ Kiện Hoàng Đế: đối tác chiến lược phân phối sản phẩm chính hãng WEKOME và nhà phân phối độc quyền PICOM tại Việt Nam, bán sỉ phụ kiện điện thoại cho đại lý 64 tỉnh thành. Zalo/Hotline: ${CONFIG.zalo}.
+
+GIỌNG ĐIỆU:
+${c.tone||AI_TONE_DEF}
+
+QUY TẮC BẮT BUỘC:
+${aiRuleList(c).map((r,i)=>`${i+1}. ${r}`).join("\n")}
+
+${AI_SMART}
+${c.extra?`\nKIẾN THỨC BỔ SUNG CỦA CỬA HÀNG:\n${c.extra}\n`:""}${(c.kb||[]).length?`\nKIẾN THỨC CỬA HÀNG ĐÃ HỌC (do admin dạy, đáng tin cậy – dùng để trả lời khách):\n${c.kb.map(x=>`## ${x.t}\n${x.text}`).join("\n\n")}\n`:""}${(c.notes||[]).length?`\nĐIỀU ADMIN (CHỦ SHOP) DẶN BẠN GHI NHỚ:\n${c.notes.slice(-40).map(n=>"- "+n).join("\n")}\n`:""}${(c.samples||[]).length?`\nMẪU TRẢ LỜI DO ADMIN DẠY – học cách diễn đạt, giọng điệu và cách xử lý khi gặp câu hỏi tương tự (giá và thông số vẫn lấy đúng từ DANH SÁCH SẢN PHẨM hiện tại, không chép giá cũ từ mẫu):\n${c.samples.slice(-40).map(x=>`Khách: ${x.q}\nBạn: ${x.a}`).join("\n---\n")}\n`:""}
+=== KIẾN THỨC WEBSITE (thông tin chính thức) ===
+${aiSiteKB()}
+
+=== NỘI DUNG CÁC MỤC TRÊN TRANG CHỦ ===
+${(()=>{try{return aiPageText().slice(0,18000)}catch(e){return""}})()}
+
+${c.sync===false?"(Chưa bật đồng bộ sản phẩm – hãy mời khách liên hệ Zalo để được báo giá)":`=== SẢN PHẨM LIÊN QUAN NHẤT TỚI CÂU HỎI (chi tiết, cập nhật ${new Date().toLocaleString("vi-VN")}) ===
+${k.det||"(không có)"}
+
+=== TOÀN BỘ DANH SÁCH SẢN PHẨM ĐANG BÁN (${ALL.length} mã – tên | giá sỉ | nhóm) ===
+${k.rows}`}`}
 function aiPageText(){const out=[];document.querySelectorAll("section:not(#tat-ca),footer").forEach(el=>{const h=el.querySelector("h1,h2,h3"),t=(el.textContent||"").replace(/[ \t\u00a0]+/g," ").replace(/\s*\n\s*/g,"\n").replace(/\n{2,}/g,"\n").trim();if(t.length<25)return;out.push(`### ${h?h.textContent.replace(/\s+/g," ").trim():(el.id||"Phần trang")}\n${t.slice(0,6000)}`)});return out.join("\n\n").slice(0,45000)}
 function aiAdminSystem(c){return `Bạn là AI tư vấn bán hàng của ${CONFIG.team} – Phụ Kiện Hoàng Đế, đang được CHỦ SHOP (admin) huấn luyện qua khung chat này. Hãy đọc hiểu thông minh và làm đúng theo lời admin.
 
@@ -2017,17 +2067,18 @@ async function aiAdminCall(t,cfg,hist){const {ai,inst}=await aiLoad(),sys=aiAdmi
       const ch=model.startChat({history:hist.slice(-10).map(h=>({role:h.r,parts:[{text:h.t}]}))});const r=await ch.sendMessage(t);const a=String(r.response.text()||"").trim();if(!a)throw new Error("empty");return a}
     catch(e){last=e;if(!/(not.?found|404|is not supported|unknown model|not available)/i.test(String(e&&(e.message||e))))break}}
   throw last}
-async function aiAnswer(t,cfg,hist){const {ai,inst}=await aiLoad(),sys=aiSystem(cfg);let last;
-  for(const m of VOICE_AI.models){try{const model=ai.getGenerativeModel(inst,{model:m,systemInstruction:sys,generationConfig:{temperature:.3,maxOutputTokens:700}});
-      const ch=model.startChat({history:hist.slice(-8).map(h=>({role:h.r,parts:[{text:h.t}]}))});const r=await ch.sendMessage(t);const a=String(r.response.text()||"").trim();if(!a)throw new Error("empty");
-      hist.push({r:"user",t},{r:"model",t:a});if(hist.length>16)hist.splice(0,hist.length-16);return a}
-    catch(e){last=e;if(!/(not.?found|404|is not supported|unknown model|not available)/i.test(String(e&&(e.message||e))))break}}
+async function aiAnswer(t,cfg,hist){const {ai,inst}=await aiLoad(),sys=aiSystem(cfg,t);let last;
+  for(const m of CHAT_MODELS){try{const model=ai.getGenerativeModel(inst,{model:m,systemInstruction:sys,generationConfig:{temperature:.35,maxOutputTokens:1400}});
+      const ch=model.startChat({history:hist.slice(-12).map(h=>({role:h.r,parts:[{text:h.t}]}))});const r=await ch.sendMessage(t);const a=String(r.response.text()||"").trim();if(!a)throw new Error("empty");
+      hist.push({r:"user",t},{r:"model",t:a});if(hist.length>24)hist.splice(0,hist.length-24);return a}
+    catch(e){last=e;if(!/(not.?found|404|is not supported|unknown model|not available|429|quota|exhaust|overload|503|unavailable|empty)/i.test(String(e&&(e.message||e))))break}}
   throw last}
 const aiHtml=a=>escH(a).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\n/g,"<br>");
 const aiActive=()=>AIC.on&&FB&&!DEMO;
 function ask(t){add(t.replace(/</g,"&lt;"),"u");const ty=add('<span class="typing"><i></i><i></i><i></i></span>',"b");
-  if(aiActive()){withTimeout(aiAnswer(t,AIC,AIH),15000).then(a=>{ty.remove();const al=nm(a),m=ALL.filter(p=>p.n&&al.includes(nm(p.n))).slice(0,3);add(aiHtml(a)+m.map(card).join("")+ZL,"b")})
-    .catch(e=>{console.warn("AI chat:",e);ty.remove();const r=reply(t);add(r.h,"b");if(r.qk)setQK(r.qk)});return}
+  if(aiActive()){withTimeout(aiAnswer(t,AIC,AIH),30000).then(a=>{ty.remove();const al=nm(a),m=ALL.filter(p=>p.n&&al.includes(nm(p.n))).sort((x,y)=>y.n.length-x.n.length).slice(0,4);add(aiHtml(a)+m.map(card).join("")+ZL,"b")})
+    .catch(e=>{console.warn("AI chat:",e);ty.remove();const r=reply(t);add(r.h+(IS_ADMIN?`<div class="ai-dbg">⚠️ <b>Chỉ admin thấy:</b> AI Gemini lỗi nên đang dùng chatbot cũ – ${escH(String(e&&(e.message||e.code)||e).slice(0,160))}</div>`:""),"b");if(r.qk)setQK(r.qk)});return}
+  if(IS_ADMIN&&!window.__aiOffWarn){window.__aiOffWarn=1;setTimeout(()=>add(`<div class="ai-dbg">⚠️ <b>Chỉ admin thấy:</b> ${!AIC.on?"AI đang <b>TẮT</b> nên khách chỉ gặp chatbot cũ. Vào Admin → mục AI → tích <b>Bật AI cho khách</b> → bấm <b>Lưu</b>.":"AI chưa kết nối được Firebase – hãy tải lại trang."}</div>`,"b"),900)}
   setTimeout(()=>{ty.remove();const r=reply(t);add(r.h,"b");if(r.qk)setQK(r.qk)},450+Math.min(t.length*12,600))}
 msgs.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;const [k,v]=b.dataset.act.split(":");
   if(k==="cat"){goCat(v);if(innerWidth<700)closeChat()}
@@ -2059,11 +2110,12 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   if(bud&&has(/(mo|shop|cua hang|kinh doanh|von|setup|dau tu|ngan sach)/)){const v=toVND(bud[1],bud[2]),num=s=>parseFloat(s)*1e6;
     const ok=PACKS.filter(p=>num(p.money)<=v),best=ok[ok.length-1];
     if(!best)return{h:`Với ${vnd(v)}, bạn chưa đủ gói thấp nhất (Khởi nghiệp từ 60 triệu). Bạn vẫn có thể bắt đầu nhập sỉ lẻ, đơn tối thiểu chỉ 500.000đ online.${ZL}`};
-    return{h:`💡 Với khoảng ${vnd(v)}, gói phù hợp nhất là <b>${best.nm}</b> (từ ${best.money}):\n${best.items.map(i=>"• "+i).join("\n")}${ok.length>1?`\nCác gói khác vừa ngân sách: ${ok.slice(0,-1).map(p=>p.nm).join(", ")}.`:""}\n${btn("Xem chính sách hợp tác","sec:hop-tac")}${ZL}`,qk:["Hỗ trợ đại lý","Nên nhập mặt hàng gì?","Quy trình hợp tác"]}}
+    return{h:`⚠️ Hiện BD Team đang <b>tạm ngưng nhận lịch setup</b> – nhắn Zalo để được báo thời gian mở lại.
+💡 Với khoảng ${vnd(v)}, gói phù hợp nhất là <b>${best.nm}</b> (từ ${best.money}):\n${best.items.map(i=>"• "+i).join("\n")}${ok.length>1?`\nCác gói khác vừa ngân sách: ${ok.slice(0,-1).map(p=>p.nm).join(", ")}.`:""}\n${btn("Xem chính sách hợp tác","sec:hop-tac")}${ZL}`,qk:["Hỗ trợ đại lý","Nên nhập mặt hàng gì?","Quy trình hợp tác"]}}
   if(has(/(nen nhap|moi mo|goi y nhap|tu van nhap|nhap gi|mat hang gi)/)){
     const pick=["cap","cu","kinh","op","bt","sdp"].map(c=>ALL.filter(p=>p.c===c).sort((a,b)=>b.off-a.off)[0]);ctx.last=pick;
     return{h:"🛒 Shop mới nên có đủ nhóm thiết yếu, quay vòng nhanh:"+pick.map(card).join("")+"\nThêm đồng hồ PICOM (độc quyền) để tăng giá trị đơn."+ZL,qk:["Đồng hồ PICOM","Gói mở cửa hàng","Đơn tối thiểu?"]}}
-  if(has(/(\bgoi\b(?! y)|\bvon\b|setup|mo shop|mo cua hang|nhuong quyen|khoi nghiep|thinh vuong|mo dai ly|chua co (cua hang|shop))/))return{h:"🏪 4 gói setup shop:\n"+PACKS.map(p=>`• <b>${p.nm}</b>: từ ${p.money} – ${p.items[0].toLowerCase()}`).join("\n")+`\nCho mình biết ngân sách (vd "tôi có 150 triệu") để gợi ý gói hợp nhất.\n${btn("Xem chi tiết","sec:hop-tac")}`,qk:["Tôi có 100 triệu","Tôi có 200 triệu","Hỗ trợ đại lý"]};
+  if(has(/(\bgoi\b(?! y)|\bvon\b|setup|mo shop|mo cua hang|nhuong quyen|khoi nghiep|thinh vuong|mo dai ly|chua co (cua hang|shop))/))return{h:"⚠️ Hiện BD Team đang <b>tạm ngưng nhận lịch setup</b> do quá tải đơn đăng ký – anh/chị nhắn Zalo để được báo thời gian mở lại sớm nhất.\n🏪 4 gói setup shop:\n"+PACKS.map(p=>`• <b>${p.nm}</b>: từ ${p.money} – ${p.items[0].toLowerCase()}`).join("\n")+`\nCho mình biết ngân sách (vd "tôi có 150 triệu") để gợi ý gói hợp nhất.\n${btn("Xem chi tiết","sec:hop-tac")}`,qk:["Tôi có 100 triệu","Tôi có 200 triệu","Hỗ trợ đại lý"]};
   if(has(/(quy trinh|cac buoc|lam the nao de|bat dau)/))return{h:"🧭 Quy trình: 1) Liên hệ BD Team → 2) Khảo sát tận nơi → 3) Chọn gói & setup → 4) Khai trương & đồng hành."+ZL};
   if(has(/(ho tro|quyen loi|uu dai dai ly|chinh sach dai ly|dao tao|marketing|bien hieu)/))return{h:"🤝 Đại lý được hỗ trợ:\n"+SUPPORT.map(s=>`${s[0]} <b>${s[1]}</b>: ${s[2]}`).join("\n")+"\n"+btn("Xem chính sách","sec:hop-tac")};
   if(has(/(bao ve gia|giam gia hang|tang gia)/))return{h:"🛡️ Bảo vệ giá: hỗ trợ khi hãng giảm giá (xác minh trong 30 ngày), báo trước tối thiểu 15 ngày khi tăng giá."};
@@ -2075,6 +2127,11 @@ ${btn("📋 Sao chép tin nhắn","copy").replace('data-act="copy"',`data-act="c
   if(has(/(dia chi|\bcua hang\b(?!.*(mo|setup))|\bkho\b|\bo dau\b|tru so|chi duong|doi tac)/)&&!detectCat(q))return{h:"📍 Hệ thống:\n"+storeView().map(s=>`• <b>${s.name}</b>: ${s.addr}`).join("\n")+"\n"+btn("Xem đối tác","sec:cua-hang")};
   if(has(/(doi tac|doc quyen|thuong hieu|chinh hang|hang that)/))return{h:"🏆 Nhà phân phối độc quyền PICOM, đối tác chiến lược lâu dài của WK Design và WEKOME. Phân phối 64 tỉnh thành."+btn("Xem đồng hồ PICOM","cat:dc")};
   if(has(/(ban chay|chu luc|hot nhat|noi bat)/))return{h:"⭐ Sản phẩm chủ lực:\n"+MAIN.map(p=>`• ${p.name} – <b>${p.price}</b>`).join("\n")+"\n"+btn("Xem dạng 3D","sec:chu-luc")};
+  /* chính sách tổng hợp */
+  if(has(/(chinh sach|policy|dieu khoan|quy dinh)/)){const rg=g=>{const t=POL[g].t,a=t[0],b=t.filter(x=>x[2]!=null).slice(-1)[0];return`${POL[g].n}: từ <b>${pctStr(a[2])}</b> (doanh số ${polRange(g,a).toLowerCase()}) đến <b>${pctStr(b[2])}</b>`};
+    return{h:`📜 <b>Chính sách của BD Team</b>\n• Đơn tối thiểu 500.000₫, không giới hạn số lượng mỗi mã\n• Hỗ trợ phí vận chuyển đơn trên 5 triệu (thanh toán trước)\n• Chiết khấu đại lý cộng dồn doanh số theo tháng:\n   – ${rg("wk")}\n   – ${rg("po")}\n   – ${rg("pw")}\n• Bảo vệ giá 30 ngày khi hãng giảm giá, báo trước 15 ngày khi tăng giá\n• Xuất hóa đơn đỏ\n• Bảo hành: trọn đời miễn phí cho WK Design; sản phẩm khác theo chính sách bảo hành công ty (xem trong Trung tâm tài khoản ⚙️)\n${btn("Xem chính sách hợp tác","sec:hop-tac")}${btn("Xem chiết khấu đại lý","sec:dai-ly")}${ZL}`,qk:["Doanh số 30 triệu","Chính sách bảo hành","Hỗ trợ đại lý","Đơn tối thiểu?"]}}
+  /* giới thiệu công ty */
+  if(has(/(gioi thieu|cong ty|ban la ai|ben ban la|bd team la|hoang de la|ve bd team)/))return{h:`🏢 <b>Phụ Kiện Hoàng Đế – BD Team</b>\n• Đối tác chiến lược phân phối sản phẩm chính hãng <b>WEKOME</b> và nhà phân phối độc quyền <b>PICOM</b> tại Việt Nam\n• Kết nối trực tiếp từ tổng công ty Shenzhen WK Technology (Thâm Quyến), kho hàng sẵn số lượng lớn tại Việt Nam\n• Phân phối 64 tỉnh thành, hơn 500 mã hàng\n• Giá vốn tối ưu, bảo vệ vùng giá, hậu mãi nhanh ngay tại Việt Nam\n${btn("Xem giới thiệu","sec:gioi-thieu")}${ZL}`,qk:["Chính sách","Chiết khấu đại lý","Sản phẩm bán chạy"]};
   /* so sánh */
   if(has(/(so sanh|khac nhau|nen chon|cai nao tot)/)){const parts=q.split(/\b(?:va|voi|hay|vs)\b/);
     if(parts.length>1){const a=search(parts[0])[0],b=search(parts.slice(1).join(" "))[0];
@@ -2570,8 +2627,8 @@ function featAdminInit(){const run=()=>{if(!ftInit){ftInit=true;
   if(AD.loaded)run();else{$("#ftList").innerHTML='<div class="aempty">Đang tải kho…</div>';const t=setInterval(()=>{if(AD.loaded){clearInterval(t);run()}},400);setTimeout(()=>clearInterval(t),20000)}}
 /* ---- AI training: cài đặt admin + sandbox ---- */
 let AIS=[],AIA=[],aiInit=false,aiRenderFn=null;
-function aiForm(){return{on:$("#aiOn").checked,sync:$("#aiSync").checked,tone:$("#aiTone").value.trim()||AI_TONE_DEF,extra:$("#aiExtra").value.trim(),rules:(()=>{const v=$("#aiRulesT").value.trim();return v===AI_RULES.join("\n")?"":v})(),samples:AIC.samples||[],notes:AIC.notes||[]}}
-function aiStat(){const n=Math.min(ALL.length,700),ch=$("#aiSync").checked?aiCtx().length:0;
+function aiForm(){return{on:$("#aiOn").checked,sync:$("#aiSync").checked,tone:$("#aiTone").value.trim()||AI_TONE_DEF,extra:$("#aiExtra").value.trim(),rules:(()=>{const v=$("#aiRulesT").value.trim();return v===AI_RULES.join("\n")?"":v})(),samples:AIC.samples||[],notes:AIC.notes||[],kb:AIC.kb||[]}}
+function aiStat(){const n=ALL.length;let ch=0;try{ch=aiSystem(aiForm(),"").length}catch(e){}
   $("#aiStat").innerHTML=`📦 <b>${n}</b> sản phẩm sẵn sàng nạp • ~<b>${ch.toLocaleString("vi-VN")}</b> ký tự/lần hỏi • Trạng thái khách: <b>${AIC.on?"🟢 AI đang bật":"⚪ AI đang tắt (dùng chatbot cũ)"}</b>${DEMO?" • <span style='color:#ff8c7a'>chế độ demo: chưa nối Firebase</span>":""}`}
 function aiAdminInit(){if(!aiInit){aiInit=true;$("#aiRulesReset").onclick=()=>{$("#aiRulesT").value=AI_RULES.join("\n")};
   $("#aiOn").onchange=$("#aiSync").onchange=aiStat;
