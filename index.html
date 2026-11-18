@@ -2815,9 +2815,12 @@ $("#peAi").onclick=peAiGen;
 $("#peG").onclick=()=>{const n=pf.n.value.trim();if(n.length<2)return peAiSt("⚠️ Hãy nhập tên sản phẩm trước.");window.open("https://www.google.com/search?q="+encodeURIComponent("thông số kỹ thuật "+n),"_blank","noopener")};
 $("#peLk").onclick=async()=>{const p=AD.edit;if(!p||!p.id)return peAiSt("⚠️ Hãy <b>lưu sản phẩm</b> trước, rồi mở lại để lấy link gửi Zalo.");
   if(!/^https:$/.test(location.protocol)||/localhost|127\.0\.0\.1/.test(location.hostname))return peAiSt("⚠️ Bạn đang mở file trên máy tính nên link sẽ sai. Hãy mở <b>trang web thật</b> (địa chỉ https://…github.io/…) rồi vào admin và bấm lại nút này.");
-  const site=location.origin+location.pathname.replace(/index\.html$/,""),link=PUSH.api+"/p/"+encodeURIComponent(p.id)+"?s="+encodeURIComponent(site);
+  const site=location.origin+location.pathname.replace(/index\.html$/,""),link=PUSH.api+"/p/"+encodeURIComponent(p.id);
   let ok=false;try{await navigator.clipboard.writeText(link);ok=true}catch(e){try{const t=document.createElement("textarea");t.value=link;document.body.appendChild(t);t.select();ok=document.execCommand("copy");t.remove()}catch(e2){}}
-  peAiSt(ok?`✅ Đã sao chép link. Dán vào Zalo: khách sẽ thấy hình + tên sản phẩm, bấm vào là mở đúng sản phẩm.<br><small style="word-break:break-all">${esc(link)}</small>`:`Hãy sao chép link này:<br><small style="word-break:break-all">${esc(link)}</small>`)};
+  peAiSt("⏳ Đang chuẩn bị link…");
+  /* gửi sẵn tên + hình + địa chỉ web lên Worker để link ngắn và mở nhanh */
+  let reg="";try{const u=FB&&FB.auth&&FB.auth.currentUser,idToken=await u.getIdToken();await withTimeout(pushCall("/share",{idToken,id:p.id,n:p.n||pf.n.value,img:p.img||"",site}),15000)}catch(e){reg=String(e&&e.message||e)}
+  peAiSt((reg?`⚠️ Link đã sẵn sàng nhưng chưa lưu được thẻ xem trước (${esc(reg)}). Hãy cập nhật Worker Cloudflare bản mới nhất.<br>`:ok?"✅ Đã sao chép link ngắn. Dán vào Zalo: khách thấy hình + tên sản phẩm, bấm vào là mở đúng sản phẩm.<br>":"Hãy sao chép link này:<br>")+`<small style="word-break:break-all">${esc(link)}</small>`)};
 const peUrl=()=>{if(peAddUrl(pf.url.value)){pf.url.value="";$("#peInfo").textContent="✅ Đã thêm ảnh từ link"}};
 pf.url.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();peUrl()}});pf.url.addEventListener("change",peUrl);
 pf.file.onchange=async()=>{const fs=[...pf.file.files];pf.file.value="";if(!fs.length)return;const room=PE_MAX-AD.slots.length;
