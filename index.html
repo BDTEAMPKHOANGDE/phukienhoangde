@@ -2200,7 +2200,7 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="10/11-v17";
+const APP_VER="21/11-v18";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
@@ -3291,7 +3291,7 @@ async function saveOrder(cus,rows,B){if(!FB||DEMO)return false;
 async function makeBill(cus,it,meta={}){
   const FF='"Be Vietnam Pro",Arial,Helvetica,sans-serif';try{await Promise.all(["400","600","800"].map(w=>document.fonts.load(`${w} 28px "Be Vietnam Pro"`,"Đơn hàng")))}catch(e){}
   const W=1080,PX=56,MAXH=1880,now=meta.date||new Date(),pad=n=>String(n).padStart(2,"0");
-  const code=meta.code||"BD"+String(now.getFullYear()).slice(2)+pad(now.getMonth()+1)+pad(now.getDate())+"-"+String(Math.floor(Math.random()*9000)+1000);
+  const code=meta.code||"BD"+String(now.getFullYear()).slice(2)+pad(now.getMonth()+1)+pad(now.getDate())+"-"+(()=>{const A="23456789ABCDEFGHJKMNPQRSTUVWXYZ",r=new Uint32Array(6);try{crypto.getRandomValues(r)}catch(e){for(let i=0;i<6;i++)r[i]=Math.floor(Math.random()*1e9)}return Array.from(r,x=>A[x%A.length]).join("")})();   /* 21/11: mã đơn 6 ký tự ngẫu nhiên, gần như không trùng */
   const when=`${pad(now.getHours())}:${pad(now.getMinutes())} ${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()}`;
   const mc=document.createElement("canvas").getContext("2d");
   const wrap=(t,font,w)=>{mc.font=font;const out=[];let line="";for(const word of String(t).split(/\s+/)){let wd=word;
