@@ -1541,8 +1541,8 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 /* ================= CẤU HÌNH – SỬA Ở ĐÂY ================= */
 const CONFIG={phone:"0878701888",zalo:"0878701888",team:"BD Team"};
 /* MICRO AI (điện thoại): ghi âm → Gemini qua Firebase AI Logic chuyển thành chữ.
-   recaptchaV3 = “Site key” reCAPTCHA v3 (bắt buộc khi App Check của AI Logic được thực thi) – dán vào giữa 2 dấu ngoặc kép. */
-const VOICE_AI={recaptchaV3:"",sdk:"12.0.0",models:["gemini-3.5-flash-lite","gemini-3.6-flash","gemini-2.5-flash"]};
+   recaptchaV3 = ID khóa Fraud Defense / reCAPTCHA Enterprise (21/11: chuyển sang Enterprise; AI Logic tự bắt buộc App Check từ 21/01/2027). */
+const VOICE_AI={recaptchaV3:"6LczqyouAAAAABIPC1LFG7Zc9v5CbW0Tcz6gQqF2",sdk:"12.0.0",models:["gemini-3.5-flash-lite","gemini-3.6-flash","gemini-2.5-flash"]};
 const U="https://phukienhoangde.com/wp-content/uploads/";
 /* Sản phẩm chính (vuốt ngang + mặt xúc xắc). Thay "img" bằng ảnh của bạn. */
 const MAIN_DEMO=[
@@ -2200,7 +2200,7 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="21/11-v18";
+const APP_VER="21/11-v19";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
@@ -2311,7 +2311,7 @@ function wav16(bufs,sr){let n=bufs.reduce((a,b)=>a+b.length,0);const all=new Flo
 let AIP=null;
 function aiLoad(){if(AIP)return AIP;const V=VOICE_AI.sdk,u=m=>`https://www.gstatic.com/firebasejs/${V}/firebase-${m}.js`;
   AIP=(async()=>{const [app,ai]=await Promise.all([import(u("app")),import(u("ai"))]);const a=app.initializeApp(FIREBASE,"voice-ai");
-    if(VOICE_AI.recaptchaV3){const ac=await import(u("app-check"));ac.initializeAppCheck(a,{provider:new ac.ReCaptchaV3Provider(VOICE_AI.recaptchaV3),isTokenAutoRefreshEnabled:true})}
+    if(VOICE_AI.recaptchaV3){const ac=await import(u("app-check"));ac.initializeAppCheck(a,{provider:new ac.ReCaptchaEnterpriseProvider(VOICE_AI.recaptchaV3),isTokenAutoRefreshEnabled:true})}
     return{ai,inst:ai.getAI(a,{backend:new ai.GoogleAIBackend()})}})();AIP.catch(()=>{AIP=null});return AIP}
 const AI_PROMPT="Đây là đoạn ghi âm khách hàng nói tiếng Việt để tìm sản phẩm trên web bán sỉ phụ kiện điện thoại (cáp sạc, củ sạc, tai nghe bluetooth, sạc dự phòng, loa, đồng hồ trẻ em PICOM, WEKOME, Denmen, Type-C, Lightning…). Hãy chép lại CHÍNH XÁC câu nói bằng tiếng Việt có dấu. Chỉ trả về đúng câu nói, không thêm giải thích hay dấu ngoặc. Nếu không có tiếng nói rõ ràng, trả về chuỗi rỗng.";
 async function aiTranscribe(b64){if(DEMO||!FIREBASE||!FIREBASE.apiKey)throw new Error("no-firebase");const {ai,inst}=await aiLoad();let last;
