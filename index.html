@@ -363,6 +363,16 @@ body.adm-on{overflow-x:clip!important;overflow-y:visible!important}
 .adm-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;background:rgba(7,6,10,.95);border-bottom:1px solid var(--line)}
 .adm-brand{font-weight:700;font-size:16px}.adm-brand span{color:var(--gold2)}
 .adm-act{display:flex;gap:6px}.adm-act .btn{padding:8px 12px;font-size:12.5px}#admOut{color:var(--muted);background:none}
+.adm-tabs button[hidden]{display:none!important}
+.cfg-tabs{position:static;top:auto;background:rgba(20,16,10,.92);border-top:1px solid rgba(217,178,95,.25);border-bottom:1px solid rgba(217,178,95,.25)}
+.cfg-tabs button{font-size:13px}
+.dup-g{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:10px 0;background:rgba(22,19,14,.7)}
+.dup-g h4{margin:0 0 8px;font-size:14px;color:var(--gold2)}
+.dup-r{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px dashed var(--line);font-size:13.5px}
+.dup-r:first-of-type{border-top:0}
+.dup-r img{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#fff;flex:none}
+.dup-r .dn{flex:1;min-width:0}
+.dup-r .dn small{display:block;color:var(--muted)}
 .adm-tabs{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;position:sticky;top:61px;z-index:4;background:rgba(7,6,10,.95)}
 .adm-tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);font:600 13.5px 'Be Vietnam Pro';padding:9px 15px;border-radius:999px;cursor:pointer}
 .adm-tabs button.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1408;border-color:transparent}
@@ -1406,7 +1416,8 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
 <div id="admin" hidden><div class="lg-scene adm-scene" aria-hidden="true"><b class="lg-amb a1"></b><b class="lg-amb a2"></b><b class="lg-amb a3"></b><span class="lg-gridtop"></span><span class="lg-floor"><span></span></span><span class="lg-dust"><i style="--x:8%;--d:0s;--t:9s;--s:2px"></i><i style="--x:16%;--d:3s;--t:11s;--s:3px"></i><i style="--x:24%;--d:1.5s;--t:8s;--s:2px"></i><i style="--x:33%;--d:5s;--t:12s;--s:2px"></i><i style="--x:41%;--d:2s;--t:10s;--s:3px"></i><i style="--x:49%;--d:6s;--t:9s;--s:2px"></i><i style="--x:57%;--d:0.8s;--t:13s;--s:2px"></i><i style="--x:64%;--d:4s;--t:10s;--s:3px"></i><i style="--x:72%;--d:2.6s;--t:9s;--s:2px"></i><i style="--x:80%;--d:5.5s;--t:12s;--s:2px"></i><i style="--x:88%;--d:1.2s;--t:11s;--s:3px"></i><i style="--x:94%;--d:3.6s;--t:8s;--s:2px"></i><i style="--x:12%;--d:7s;--t:14s;--s:2px"></i><i style="--x:28%;--d:8s;--t:10s;--s:2px"></i><i style="--x:52%;--d:9s;--t:12s;--s:3px"></i><i style="--x:70%;--d:7.5s;--t:9s;--s:2px"></i><i style="--x:86%;--d:8.6s;--t:13s;--s:2px"></i><i style="--x:38%;--d:10s;--t:11s;--s:2px"></i></span></div>
   <div class="adm-top"><div class="adm-brand">👑 Quản trị <span>BD Team</span></div>
     <div class="adm-act"><button class="btn btn-ghost" id="admExit">Xem trang khách</button><button class="btn" id="admOut" hidden>Đăng xuất</button></div></div>
-  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner">🤝 Đối tác</button><button data-tab="data">📥 Dữ liệu</button><button data-tab="lay">🧭 Sắp xếp vị trí</button><button data-tab="feat">⭐ Chủ lực</button><button data-tab="nd">🚫 Không chiết khấu</button><button data-tab="mon">📅 Tổng kết tháng</button><button data-tab="tk">🛡 Bảo hành &amp; KN <i class="ord-n" id="tkN" hidden></i></button><button data-tab="ai">🤖 AI training</button></div>
+  <div class="adm-tabs" id="admTabs" hidden><button data-tab="ord">🧾 Đơn hàng <i class="ord-n" id="ordN" hidden></i></button><button data-tab="prod" class="on">📦 Kho hàng</button><button data-tab="cust">👥 Tài khoản đăng ký</button><button data-tab="partner" class="cfg-g" hidden>🤝 Đối tác</button><button data-tab="data" class="cfg-g" hidden>📥 Dữ liệu</button><button data-tab="lay" class="cfg-g" hidden>🧭 Sắp xếp vị trí</button><button data-tab="feat" class="cfg-g" hidden>⭐ Chủ lực</button><button data-tab="nd" class="cfg-g" hidden>🚫 Không chiết khấu</button><button data-tab="mon" class="cfg-g" hidden>📅 Tổng kết tháng</button><button data-tab="tk">🛡 Bảo hành &amp; KN <i class="ord-n" id="tkN" hidden></i></button><button data-tab="ai" class="cfg-g" hidden>🤖 AI training</button><button data-tab="dup" class="cfg-g" hidden>🔍 Quét lỗi trùng</button><button data-tab="cfg">⚙️ Cài đặt tính năng</button></div>
+  <div class="adm-tabs cfg-tabs" id="cfgTabs" hidden></div>
   <div class="adm-in">
     <div data-v="demo" hidden class="adm-card"><h3>Chưa kết nối Firebase</h3><p>Trang quản trị sẽ hoạt động sau khi bạn dán cấu hình Firebase và email admin vào file (xem HUONG-DAN-CAI-DAT). Hiện website đang chạy với 68 sản phẩm mẫu.</p></div>
     <div data-v="err" hidden class="adm-card"><h3>Không kết nối được Firebase</h3><p>Kiểm tra lại mạng hoặc cấu hình Firebase trong file.</p></div>
@@ -1490,6 +1501,12 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
           <input id="ftQ" class="ai-ta" placeholder="🔍 Gõ tên sản phẩm để thêm vào khu vực chủ lực…" autocomplete="off"><div id="ftRes"></div>
           <div class="adm-row" style="margin-top:10px"><button class="btn btn-gold" type="button" id="ftSave">💾 Lưu & áp dụng</button><button class="btn btn-ghost" type="button" id="ftAuto">↺ Về tự động (theo ★)</button></div>
           <div class="adm-out" id="ftOut"></div></div>
+      </div>
+      <div data-t="dup" hidden>
+        <div class="adm-card"><h3>🔍 Quét lỗi sản phẩm trùng</h3>
+          <p>Tìm sản phẩm bị nhập 2 lần trong kho: <b>trùng tên</b>, <b>trùng mã model</b> trong cùng nhóm hàng, hoặc <b>dùng chung 1 ảnh</b>. Công cụ chỉ báo, <b>không tự xoá</b> – bấm <b>Sửa</b> để kiểm tra rồi ẩn hoặc xoá bằng tay.</p>
+          <div class="adm-row"><label style="display:flex;gap:8px;align-items:center;flex:1 1 220px"><input type="checkbox" id="dupShow" style="width:18px;height:18px;flex:none;margin:0"> <span>Chỉ quét sản phẩm đang hiện trên shop</span></label><button class="btn btn-gold" type="button" id="dupRun">🔍 Quét ngay</button></div>
+          <div class="adm-out" id="dupOut"></div></div>
       </div>
       <div data-t="ai" hidden>
         <div class="adm-card"><h3>🤖 AI training – Trợ lý tư vấn & bán hàng</h3>
@@ -2553,7 +2570,7 @@ function adminRoute(){if(location.hash!=="#admin"){adm.hidden=true;document.body
   if(!FB.auth.currentUser){admShow("login");return}if(!IS_ADMIN){admShow("deny");return}
   admShow("app");if(!AD.loaded)admLoad();ordWatch();try{pushUI();pushOpenOrder()}catch(e){}}
 addEventListener("hashchange",adminRoute);window.__adminRoute=adminRoute;
-function admShow(v){$("#admin").classList.toggle("lg-mode",v==="login");$$("#admin [data-v]").forEach(el=>el.hidden=el.dataset.v!==v);$("#admTabs").hidden=v!=="app";$("#admOut").hidden=!(v==="app"||v==="deny")}
+function admShow(v){$("#admin").classList.toggle("lg-mode",v==="login");$$("#admin [data-v]").forEach(el=>el.hidden=el.dataset.v!==v);$("#admTabs").hidden=v!=="app";if(v!=="app"){const ct=$("#cfgTabs");if(ct)ct.hidden=true}$("#admOut").hidden=!(v==="app"||v==="deny")}
 $("#admExit").onclick=()=>{location.hash="";location.reload()};
 $("#admOut").onclick=async()=>{await FB.A.signOut(FB.auth);location.hash="";location.reload()};
 $("#admLogin").onsubmit=async e=>{e.preventDefault();const f=e.target,er=f.querySelector(".au-err"),b=f.querySelector("button");
@@ -3633,7 +3650,7 @@ function zsText(L){const show=$("#zsP").value==="show",ck=$("#zsCk").checked,lk=
   const gs=[...new Set(L.map(p=>zsPct(p)?(p.bg||grpOf(p.n)):"").filter(Boolean))];
   const ckLine=ck&&gs.length?"\n💰 Chiết khấu tháng cho đại lý: "+gs.map(g=>`${POL[g].n} đến ${pctStr(Math.max(...POL[g].t.map(t=>t[2]||0)))}`).join(" • "):"";
   const anySale=L.some(p=>offOf(p));
-  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế${anySale?" (có hàng đang SALE)":""}\n${lines.join("\n")}${ckLine}\n📦 Đơn tối thiểu ${vnd(MIN_ORD)}\n📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}\n🛒 Xem & đặt hàng: ${ZS.site}`}
+  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế${anySale?" (có hàng đang SALE)":""}${lk?"\n👉 Nhấn vào link dưới mỗi sản phẩm để xem và ĐẶT ĐƠN TRỰC TIẾP":""}\n${lines.join("\n")}${ckLine}\n📦 Đơn tối thiểu ${vnd(MIN_ORD)}\n📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}\n🛒 Nhấn vào link để đặt đơn trực tiếp: ${ZS.site}`}
 /* tải ảnh an toàn để vẽ vào JPG: ảnh trong cơ sở dữ liệu → tải trực tiếp (cho phép CORS) → qua Worker → ô thay thế */
 const zsImgEl=(u,cors)=>new Promise((ok,no)=>{const i=new Image();if(cors)i.crossOrigin="anonymous";i.referrerPolicy="no-referrer";const t=setTimeout(()=>no(new Error("timeout")),12000);i.onload=()=>{clearTimeout(t);ok(i)};i.onerror=()=>{clearTimeout(t);no(new Error("load"))};i.src=u});
 async function zsLoad(src){if(!src)return null;
@@ -3694,6 +3711,30 @@ async function zsBuild(){const L=ZS.sel.map(id=>ALL.find(p=>String(p.id)===Strin
   $("#zsPrev").innerHTML=files.map((f,i)=>{f._u=URL.createObjectURL(f);return`<div><img src="${f._u}" alt="Ảnh gửi Zalo ${i+1}">${files.length>1?`<button type="button" class="btn btn-ghost zs-one" data-zsi="${i}">📤 Gửi ảnh ${i+1}/${files.length}</button>`:""}</div>`}).join("");
   zsSt(`✅ Đã tạo ${files.length} ảnh cho ${L.length} sản phẩm.${miss?` <br>⚠️ ${miss} ảnh chưa lấy được (hiện ô 📦): ${escH(missN.slice(0,5).join(", "))}. Có thể ảnh mẫu này lưu ở trang không cho tải – thử đổi ảnh sản phẩm đó trong admin.`:""}`);
 }
+
+/* ---- ⚙️ Cài đặt tính năng: gom các mục cài đặt vào 1 chỗ có tab con (các mục cũ giữ nguyên, chỉ đổi chỗ bấm) ---- */
+(function(){const G=["lay","partner","feat","nd","mon","data","ai","dup"],top=$("#admTabs"),sub=$("#cfgTabs");if(!top||!sub)return;
+  sub.innerHTML=G.map(k=>{const b=top.querySelector(`[data-tab="${k}"]`);return b?`<button type="button" data-sub="${k}">${b.innerHTML}</button>`:""}).join("");
+  let last="lay";
+  const sync=tab=>{const inG=G.includes(tab)||tab==="cfg";sub.hidden=!inG||top.hidden;if(inG){top.querySelector('[data-tab="cfg"]').classList.add("on");if(G.includes(tab)){last=tab;$$("#cfgTabs button").forEach(x=>x.classList.toggle("on",x.dataset.sub===tab))}}};
+  $$("#admTabs button").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.tab==="cfg"){const t=top.querySelector(`[data-tab="${last}"]`);if(t)t.click();return}sync(b.dataset.tab)}));
+  sub.addEventListener("click",e=>{const x=e.target.closest("[data-sub]");if(!x)return;const t=top.querySelector(`[data-tab="${x.dataset.sub}"]`);if(t)t.click()});
+  $("#dupRun").onclick=dupScan;top.querySelector('[data-tab="dup"]').addEventListener("click",()=>{if(!$("#dupOut").innerHTML)dupScan()})})();
+/* ---- 🔍 Quét lỗi sản phẩm trùng (chỉ đọc, không sửa dữ liệu) ---- */
+function dupScan(){const out=$("#dupOut");const L=(AD.items||[]).filter(p=>p&&p.id&&(!$("#dupShow").checked||p.show));
+  if(!L.length){out.innerHTML="Kho trống hoặc chưa tải xong – mở tab 📦 Kho hàng rồi quét lại.";return}
+  const key=t=>nm(String(t||"")).replace(/[^a-z0-9]+/g," ").trim();
+  const codeOf=t=>{const m=nm(String(t||"")).match(/\b[a-z]{1,5}\s?-?\s?\d{1,4}[a-z]{0,3}\b/g);return m?[...new Set(m.map(x=>x.replace(/[^a-z0-9]/g,"")).filter(x=>/[a-z]/.test(x)&&/\d/.test(x)&&!/^\d+(w|mah|m|cm|mm|g|v|a|h|gb)$/.test(x)&&!/^(w|mah)\d+$/.test(x)))]:[]};
+  const groups=[],seen=new Set();
+  const add=(why,arr)=>{if(arr.length<2)return;const ids=arr.map(p=>p.id).sort().join("|");if(seen.has(ids))return;seen.add(ids);groups.push({why,arr})};
+  const by=f=>{const m=new Map();L.forEach(p=>{[].concat(f(p)).filter(Boolean).forEach(k=>{if(!m.has(k))m.set(k,[]);m.get(k).push(p)})});return m};
+  by(p=>key(p.n)).forEach((a,k)=>add(`Trùng tên: “${a[0].n}”`,a));
+  by(p=>codeOf(p.n).map(c=>c+"@"+(p.c||""))).forEach((a,k)=>{const n=new Set(a.map(p=>key(p.n)));if(n.size>1)add(`Trùng mã model “${k.split("@")[0].toUpperCase()}” trong nhóm ${catName[a[0].c]||"khác"}`,a)});
+  by(p=>{const i=String(p.img||"");return /^https?:/.test(i)?i.split("?")[0]:""}).forEach(a=>add("Dùng chung 1 ảnh",a));
+  if(!groups.length){out.innerHTML=`✅ Không thấy sản phẩm trùng trong ${L.length} mã.`;return}
+  const th=i=>{i=String(i||"");return /^https?:|^data:/.test(i)?i:""};
+  out.innerHTML=`⚠️ Thấy <b>${groups.length}</b> nhóm có thể trùng trong ${L.length} mã:`+groups.map(g=>`<div class="dup-g"><h4>${escH(g.why)}</h4>${g.arr.map(p=>`<div class="dup-r">${th(p.img)?`<img src="${escH(th(p.img))}" alt="" loading="lazy">`:"<span style='width:42px;text-align:center'>📦</span>"}<div class="dn">${escH(p.n)}<small>${vnd(+p.p||0)} • ${p.show?"đang hiện shop":"đang ẩn"} • mã ${escH(p.id)}</small></div><button type="button" class="btn btn-ghost" data-dupe="${escH(p.id)}">✏️ Sửa</button></div>`).join("")}</div>`).join("");
+  $$("#dupOut [data-dupe]").forEach(b=>b.onclick=()=>{const p=AD.items.find(x=>x.id===b.dataset.dupe);if(p)openEdit(p)})}
 </script>
 </body>
 </html>
