@@ -3015,12 +3015,11 @@ $("#peAi").onclick=peAiGen;
 $("#peG").onclick=()=>{const n=pf.n.value.trim();if(n.length<2)return peAiSt("⚠️ Hãy nhập tên sản phẩm trước.");window.open("https://www.google.com/search?q="+encodeURIComponent("thông số kỹ thuật "+n),"_blank","noopener")};
 $("#peLk").onclick=async()=>{const p=AD.edit;if(!p||!p.id)return peAiSt("⚠️ Hãy <b>lưu sản phẩm</b> trước, rồi mở lại để lấy link gửi Zalo.");
   if(!/^https:$/.test(location.protocol)||/localhost|127\.0\.0\.1/.test(location.hostname))return peAiSt("⚠️ Bạn đang mở file trên máy tính nên link sẽ sai. Hãy mở <b>trang web thật</b> (địa chỉ https://…github.io/…) rồi vào admin và bấm lại nút này.");
-  const site=location.origin+location.pathname.replace(/index\.html$/,""),link=PUSH.api+"/p/"+encodeURIComponent(p.id);
-  let ok=false;try{await navigator.clipboard.writeText(link);ok=true}catch(e){try{const t=document.createElement("textarea");t.value=link;document.body.appendChild(t);t.select();ok=document.execCommand("copy");t.remove()}catch(e2){}}
-  peAiSt("⏳ Đang chuẩn bị link…");
-  /* gửi sẵn tên + hình + địa chỉ web lên Worker để link ngắn và mở nhanh */
-  let reg="";try{const u=FB&&FB.auth&&FB.auth.currentUser,idToken=await u.getIdToken();await withTimeout(pushCall("/share",{idToken,id:p.id,n:p.n||pf.n.value,img:p.img||"",site}),15000)}catch(e){reg=String(e&&e.message||e)}
-  peAiSt((reg?`⚠️ Link đã sẵn sàng nhưng chưa lưu được thẻ xem trước (${esc(reg)}). Hãy cập nhật Worker Cloudflare bản mới nhất.<br>`:ok?"✅ Đã sao chép link ngắn. Dán vào Zalo: khách thấy hình + tên sản phẩm, bấm vào là mở đúng sản phẩm.<br>":"Hãy sao chép link này:<br>")+`<small style="word-break:break-all">${esc(link)}</small>`)};
+  peAiSt("⏳ Đang tạo link ngắn…");
+  await shortReg([{id:p.id,n:p.n||pf.n.value,i:p.img||""}]);
+  const coded=!!SHORT[p.id],link=PUSH.api+"/p/"+encodeURIComponent(SHORT[p.id]||p.id);
+  let ok=false;try{await navigator.clipboard.writeText(link);ok=true}catch(e){try{const t=document.createElement("textarea");t.value=link;t.readOnly=true;t.style.cssText="position:fixed;top:-1000px;opacity:0";document.body.appendChild(t);t.select();ok=document.execCommand("copy");t.remove()}catch(e2){}}
+  peAiSt((!coded?`⚠️ Chưa lấy được mã ngắn (Worker chưa cập nhật hoặc mất mạng) – tạm dùng link dài.<br>`:ok?"✅ Đã sao chép link ngắn. Dán vào Zalo: khách thấy hình + tên sản phẩm, bấm vào là mở đúng sản phẩm.<br>":"Hãy sao chép link này:<br>")+`<small style="word-break:break-all">${esc(link)}</small>`)};
 const peUrl=()=>{if(peAddUrl(pf.url.value)){pf.url.value="";$("#peInfo").textContent="✅ Đã thêm ảnh từ link"}};
 pf.url.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();peUrl()}});pf.url.addEventListener("change",peUrl);
 pf.file.onchange=async()=>{const fs=[...pf.file.files];pf.file.value="";if(!fs.length)return;const room=PE_MAX-AD.slots.length;
@@ -3617,7 +3616,13 @@ function zsCopy(){const v=$("#zsTxt").value;try{const t=document.createElement("
 const zsTitle=()=>$("#zsT").value==="_"?($("#zsTc").value.trim()||"HÀNG MỚI VỀ").toUpperCase():$("#zsT").value;
 const zsPct=p=>{const g=p.bg||grpOf(p.n);if(!g||!POL[g]||exOf(p))return 0;let mx=Math.max(...POL[g].t.map(t=>t[2]||0));if(g==="wk"&&isPB(p.n))mx=Math.min(mx,7);return mx};
 const zsPrice=p=>p.v&&p.v.length?{p:prRange(p)[0],from:true,o:0}:{p:p.p,from:false,o:p.o&&p.o>p.p?p.o:0};
-const zsLink=p=>PUSH.api+"/p/"+encodeURIComponent(p.id);
+const SHORT=(()=>{try{return JSON.parse(localStorage.getItem("bdShort")||"{}")||{}}catch(e){return{}}})();
+const shortSave=()=>{try{localStorage.setItem("bdShort",JSON.stringify(SHORT))}catch(e){}};
+const zsLink=p=>PUSH.api+"/p/"+encodeURIComponent(SHORT[p.id]||p.id);
+/* gửi tên + ảnh lên Worker để có thẻ xem trước Zalo, đồng thời nhận MÃ NGẮN cho link */
+async function shortReg(list){if(!(FB&&FB.auth&&FB.auth.currentUser))return;const need=list.filter(p=>p&&p.id);if(!need.length)return;
+  try{const idToken=await FB.auth.currentUser.getIdToken(),site=/^https:/.test(location.protocol)?location.origin+location.pathname.replace(/index\.html$/,""):ZS.site;
+    await Promise.all(need.map(p=>withTimeout(pushCall("/share",{idToken,id:p.id,n:p.n,img:p.i&&!String(p.i).startsWith("data:")?p.i:(p.img||""),site}),12000).then(j=>{if(j&&j.code)SHORT[p.id]=j.code}).catch(()=>{})));shortSave()}catch(e){}}
 function zsText(L){const show=$("#zsP").value==="show",ck=$("#zsCk").checked,lk=$("#zsLk").checked;
   const lines=L.map(p=>{const r=zsPrice(p),off=offOf(p);let s=`• ${p.n}`;
     if(show)s+=` – ${r.from?"giá từ ":"giá "}${vnd(r.p)}${off?` 🔥 ĐANG SALE -${off}%${r.o?` (giá gốc ${vnd(r.o)})`:""}`:""}`;else s+=" – giá liên hệ";
@@ -3674,6 +3679,7 @@ async function zsDraw(L,page,pages,logo){const W=1080,H=1350,cv=document.createE
   return new Promise((ok,no)=>{try{cv.toBlob(b=>b?ok(b):no(new Error("Không tạo được ảnh")),"image/jpeg",.9)}catch(e){no(e)}})}
 async function zsBuild(){const L=ZS.sel.map(id=>ALL.find(p=>String(p.id)===String(id))).filter(Boolean);if(!L.length)return;
   const my=(zsBuild.n=(zsBuild.n||0)+1);zsSt("⏳ Đang tạo ảnh…");$("#zsPrev").innerHTML="";
+  if($("#zsLk").checked){zsSt("⏳ Đang tạo link ngắn…");await shortReg(L);if(my!==zsBuild.n)return}
   $("#zsTxt").value=zsText(L);
   try{await (document.fonts&&document.fonts.ready)}catch(e){}
   let logo=null;try{logo=await zsLoad($("#logo")&&$("#logo").src)}catch(e){}
@@ -3684,9 +3690,7 @@ async function zsBuild(){const L=ZS.sel.map(id=>ALL.find(p=>String(p.id)===Strin
   ZS.files.forEach(f=>{try{URL.revokeObjectURL(f._u)}catch(e){}});ZS.files=files;
   $("#zsPrev").innerHTML=files.map(f=>{f._u=URL.createObjectURL(f);return`<img src="${f._u}" alt="Ảnh gửi Zalo">`}).join("");
   zsSt(`✅ Đã tạo ${files.length} ảnh cho ${L.length} sản phẩm.${miss?` <br>⚠️ ${miss} ảnh chưa lấy được (hiện ô 📦): ${escH(missN.slice(0,5).join(", "))}. Có thể ảnh mẫu này lưu ở trang không cho tải – thử đổi ảnh sản phẩm đó trong admin.`:""}`);
-  /* lưu sẵn thẻ xem trước cho link từng sản phẩm (để Zalo hiện ảnh + tên ngay) */
-  if($("#zsLk").checked&&FB&&FB.auth&&FB.auth.currentUser){try{const idToken=await FB.auth.currentUser.getIdToken(),site=location.origin+location.pathname.replace(/index\.html$/,"");
-    for(const p of L){pushCall("/share",{idToken,id:p.id,n:p.n,img:p.i&&!String(p.i).startsWith("data:")?p.i:"",site:/^https:/.test(location.protocol)?site:ZS.site}).catch(()=>{})}}catch(e){}}}
+}
 </script>
 </body>
 </html>
