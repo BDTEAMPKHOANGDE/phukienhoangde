@@ -2249,7 +2249,7 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="22/11-v20";
+const APP_VER="22/11-v21";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
@@ -3650,7 +3650,7 @@ function zsText(L){const show=$("#zsP").value==="show",ck=$("#zsCk").checked,lk=
   const gs=[...new Set(L.map(p=>zsPct(p)?(p.bg||grpOf(p.n)):"").filter(Boolean))];
   const ckLine=ck&&gs.length?"\n💰 Chiết khấu tháng cho đại lý: "+gs.map(g=>`${POL[g].n} đến ${pctStr(Math.max(...POL[g].t.map(t=>t[2]||0)))}`).join(" • "):"";
   const anySale=L.some(p=>offOf(p));
-  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế${anySale?" (có hàng đang SALE)":""}${lk?"\n👉 Nhấn vào link dưới mỗi sản phẩm để xem và ĐẶT ĐƠN TRỰC TIẾP":""}\n${lines.join("\n")}${ckLine}\n📦 Đơn tối thiểu ${vnd(MIN_ORD)}\n📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}\n🛒 Nhấn vào link để đặt đơn trực tiếp: ${ZS.site}`}
+  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế${anySale?" (có hàng đang SALE)":""}${lk?"\n👉 Nhấn vào link dưới mỗi sản phẩm để xem và ĐẶT ĐƠN TRỰC TIẾP":""}\n${lines.join("\n")}${ckLine}\n📦 Đơn tối thiểu ${vnd(MIN_ORD)}\n📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}\n🛒 Nhấn vào link tham khảo thêm đa dạng mẫu mã sản phẩm: ${ZS.site}`}
 /* tải ảnh an toàn để vẽ vào JPG: ảnh trong cơ sở dữ liệu → tải trực tiếp (cho phép CORS) → qua Worker → ô thay thế */
 const zsImgEl=(u,cors)=>new Promise((ok,no)=>{const i=new Image();if(cors)i.crossOrigin="anonymous";i.referrerPolicy="no-referrer";const t=setTimeout(()=>no(new Error("timeout")),12000);i.onload=()=>{clearTimeout(t);ok(i)};i.onerror=()=>{clearTimeout(t);no(new Error("load"))};i.src=u});
 async function zsLoad(src){if(!src)return null;
