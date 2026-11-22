@@ -1060,6 +1060,7 @@ body.zs-on #grid .pc .zs-ck{display:flex}
 .zs-opt select,.zs-opt input[type=text]{flex:1;min-width:160px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#0b0907;color:var(--text);font-size:14px}
 .zs-opt .zs-cb{flex-wrap:nowrap;align-items:flex-start}.zs-cb input{margin-top:3px;flex:none;width:18px;height:18px}
 .zs-prev{display:grid;gap:10px;margin:8px 0 12px}
+.zs-one{width:100%;margin-top:6px;justify-content:center;font-size:13.5px}
 .zs-prev img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
 .zs-box textarea{width:100%;box-sizing:border-box;min-height:150px;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0907;color:var(--text);font-size:14px;line-height:1.55;font-family:inherit}
 .zs-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -3598,20 +3599,22 @@ function zsAdmin(){const b=$("#zsBtn");if(b)b.hidden=!IS_ADMIN;if(!IS_ADMIN&&ZS.
   ["zsP","zsCk","zsLk"].forEach(k=>$("#"+k).onchange=zsBuild);
   $("#zsCp").onclick=()=>{zsCopy()?zsSt("✅ Đã chép đoạn chữ – vào Zalo nhấn giữ ô chat → Dán."):zsSt("Hãy bôi đen đoạn chữ rồi chép thủ công.")};
   $("#zsDl").onclick=()=>{if(!ZS.files.length)return;ZS.files.forEach((f,i)=>setTimeout(()=>{const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)},i*400));zsSt("⬇️ Đang tải "+ZS.files.length+" ảnh về máy.")};
-  $("#zsShare").onclick=()=>{if(!ZS.files.length)return;
-    if(ZS.sharing&&Date.now()-ZS.sharing<20000)return zsSt("⏳ Bảng chia sẻ đang mở – chọn Zalo trong bảng đó, hoặc đóng bảng rồi bấm lại.");
-    const text=$("#zsTxt").value,ok=zsCopy();let can=false;try{can=!!(navigator.share&&navigator.canShare&&navigator.canShare({files:ZS.files}))}catch(e){}
-    if(!can){$("#zsDl").click();window.open("https://chat.zalo.me/","_blank","noopener");return zsSt("💻 Máy này không hỗ trợ chia sẻ trực tiếp: ảnh đã tải về"+(ok?", đoạn chữ đã chép":"")+". Trong Zalo, gửi ảnh rồi dán chữ.")}
-    let d={files:ZS.files,text};try{if(!navigator.canShare(d))d={files:ZS.files}}catch(e){d={files:ZS.files}}
-    ZS.sharing=Date.now();const btn=$("#zsShare");btn.disabled=true;setTimeout(()=>{btn.disabled=false},20000);
-    let pr;try{pr=navigator.share(d)}catch(e){pr=Promise.reject(e)}
-    pr.then(()=>zsSt("✅ Đã gửi sang ứng dụng."+(ok?" Đoạn chữ đã chép sẵn – nếu Zalo không tự kèm chữ, nhấn giữ ô chat → Dán.":"")))
-      .catch(e=>{const n=e&&e.name;if(n==="AbortError")zsSt("Đã đóng bảng chia sẻ.");
-        else if(n==="InvalidStateError")zsSt("⚠️ Trình duyệt còn kẹt lần chia sẻ trước. Hãy <b>tải lại trang</b> (kéo xuống để làm mới) rồi bấm lại, hoặc dùng nút <b>Tải ảnh</b> và gửi trong Zalo.");
-        else zsSt("⚠️ Không chia sẻ được ("+escH(e&&e.message||e)+"). Hãy dùng nút <b>Tải ảnh</b> rồi gửi trong Zalo.")})
-      .finally(()=>{ZS.sharing=0;btn.disabled=false})};
+  $("#zsShare").onclick=()=>zsShareFiles(ZS.files,$("#zsShare"));
+  /* chia sẻ từng ảnh (dự phòng khi Zalo không nhận nhiều ảnh cùng lúc) */
+  $("#zsPrev").addEventListener("click",e=>{const b=e.target.closest("[data-zsi]");if(b)zsShareFiles([ZS.files[+b.dataset.zsi]],b)});
 })();
 function zsSt(h){$("#zsSt").innerHTML=h}
+function zsShareFiles(files,btn){if(!files||!files.length||!files[0])return;
+  if(ZS.sharing&&Date.now()-ZS.sharing<20000)return zsSt("⏳ Bảng chia sẻ đang mở – chọn Zalo trong bảng đó, hoặc đóng bảng rồi bấm lại.");
+  const ok=zsCopy();let can=false;try{can=!!(navigator.share&&navigator.canShare&&navigator.canShare({files}))}catch(e){}
+  if(!can){$("#zsDl").click();window.open("https://chat.zalo.me/","_blank","noopener");return zsSt("💻 Máy này không hỗ trợ chia sẻ trực tiếp: ảnh đã tải về"+(ok?", đoạn chữ đã chép":"")+". Trong Zalo, gửi ảnh rồi dán chữ.")}
+  ZS.sharing=Date.now();btn.disabled=true;setTimeout(()=>{btn.disabled=false},20000);
+  let pr;try{pr=navigator.share({files})}catch(e){pr=Promise.reject(e)}
+  pr.then(()=>zsSt("✅ Đã gửi ảnh sang Zalo."+(ok?" <b>Đoạn chữ đã chép sẵn</b> – trong khung chat Zalo nhấn giữ ô nhập → <b>Dán</b> rồi gửi.":"")))
+    .catch(e=>{const n=e&&e.name;if(n==="AbortError")zsSt("Đã đóng bảng chia sẻ."+(files.length>1?" Nếu Zalo báo lỗi khi nhận nhiều ảnh, hãy gửi <b>từng ảnh</b> bằng nút dưới mỗi ảnh.":""));
+      else if(n==="InvalidStateError")zsSt("⚠️ Trình duyệt còn kẹt lần chia sẻ trước. Hãy <b>tải lại trang</b> (kéo xuống để làm mới) rồi bấm lại, hoặc dùng nút <b>Tải ảnh</b>.");
+      else zsSt("⚠️ Không chia sẻ được ("+escH(e&&e.message||e)+"). Hãy gửi <b>từng ảnh</b> hoặc dùng nút <b>Tải ảnh</b>.")})
+    .finally(()=>{ZS.sharing=0;btn.disabled=false})}
 function zsCopy(){const v=$("#zsTxt").value;try{const t=document.createElement("textarea");t.value=v;t.readOnly=true;t.setAttribute("aria-hidden","true");t.style.cssText="position:fixed;top:-1000px;left:0;opacity:0;font-size:16px";document.body.appendChild(t);t.select();t.setSelectionRange(0,v.length);const ok=document.execCommand("copy");t.remove();if(ok)return true}catch(e){}try{navigator.clipboard.writeText(v);return true}catch(e){}return false}
 const zsTitle=()=>$("#zsT").value==="_"?($("#zsTc").value.trim()||"HÀNG MỚI VỀ").toUpperCase():$("#zsT").value;
 const zsPct=p=>{const g=p.bg||grpOf(p.n);if(!g||!POL[g]||exOf(p))return 0;let mx=Math.max(...POL[g].t.map(t=>t[2]||0));if(g==="wk"&&isPB(p.n))mx=Math.min(mx,7);return mx};
@@ -3688,7 +3691,7 @@ async function zsBuild(){const L=ZS.sel.map(id=>ALL.find(p=>String(p.id)===Strin
     if(my!==zsBuild.n)return;files.push(new File([b],`hang-moi-${day}${pages>1?"-"+(i+1):""}.jpg`,{type:"image/jpeg"}))}
   const missN=[];for(const p of L){try{if(!(await zsLoad(p.i))){miss++;missN.push(p.n)}}catch(e){miss++;missN.push(p.n)}}
   ZS.files.forEach(f=>{try{URL.revokeObjectURL(f._u)}catch(e){}});ZS.files=files;
-  $("#zsPrev").innerHTML=files.map(f=>{f._u=URL.createObjectURL(f);return`<img src="${f._u}" alt="Ảnh gửi Zalo">`}).join("");
+  $("#zsPrev").innerHTML=files.map((f,i)=>{f._u=URL.createObjectURL(f);return`<div><img src="${f._u}" alt="Ảnh gửi Zalo ${i+1}">${files.length>1?`<button type="button" class="btn btn-ghost zs-one" data-zsi="${i}">📤 Gửi ảnh ${i+1}/${files.length}</button>`:""}</div>`}).join("");
   zsSt(`✅ Đã tạo ${files.length} ảnh cho ${L.length} sản phẩm.${miss?` <br>⚠️ ${miss} ảnh chưa lấy được (hiện ô 📦): ${escH(missN.slice(0,5).join(", "))}. Có thể ảnh mẫu này lưu ở trang không cho tải – thử đổi ảnh sản phẩm đó trong admin.`:""}`);
 }
 </script>
