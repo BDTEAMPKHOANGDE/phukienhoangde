@@ -1036,6 +1036,36 @@ html[data-theme] .sec-h h2,html[data-theme] .hero-txt h1,html[data-theme] .conta
 @media(max-width:820px){.hero-txt .hx-h{font-size:clamp(26px,7.4vw,38px);margin:22px 0 18px}.hero-txt .cta{margin-top:28px}.hx-map{height:min(62vh,430px);min-height:340px;margin-top:6px}.hx-chip{padding:6px 11px}.hx-chip b{font-size:16px}.hx-chip span{font-size:11px}}
 .ai-dbg{margin-top:8px;padding:8px 10px;border-radius:10px;border:1px dashed #e2513b;background:rgba(226,81,59,.1);font-size:12.5px;line-height:1.5;color:#ffb4a6}
 </style>
+<style id="zs-css">
+/* ===== Gửi hàng mới qua Zalo (admin) ===== */
+.zs-btn{margin:0 0 12px;width:100%;justify-content:center}
+body.zs-on #grid .pc{cursor:pointer}
+body.zs-on #grid .pc .qadd,body.zs-on #grid .pc .pdbtn{pointer-events:none;opacity:.35}
+.zs-ck{position:absolute;top:8px;right:8px;z-index:5;width:30px;height:30px;border-radius:50%;border:2px solid #f7dc92;background:rgba(10,8,5,.75);display:none;align-items:center;justify-content:center;font-size:17px;color:#1b1408;font-weight:900}
+body.zs-on #grid .pc .zs-ck{display:flex}
+#grid .pc.zs-sel{outline:3px solid #f7dc92;outline-offset:-3px}
+#grid .pc.zs-sel .zs-ck{background:linear-gradient(135deg,#f7dc92,#c9a24a)}
+#grid .pc.zs-sel .zs-ck::after{content:"✓"}
+.zs-bar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:9000;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px 12px;border-radius:18px;background:rgba(14,11,8,.95);border:1px solid rgba(217,178,95,.6);box-shadow:0 14px 40px rgba(0,0,0,.6);max-width:calc(100vw - 24px);box-sizing:border-box}
+.zs-bar[hidden]{display:none}
+.zs-bar b{color:#f7dc92;font-size:14px;margin-right:4px}
+.zs-bar .btn{padding:9px 14px;font-size:13.5px}
+.zs-m{position:fixed;inset:0;z-index:100001;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:14px;background:rgba(5,4,8,.86);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.zs-m[hidden]{display:none}
+.zs-box{position:relative;width:100%;max-width:560px;box-sizing:border-box;padding:18px 16px 16px;border-radius:20px;background:#120f0a;border:1px solid rgba(217,178,95,.5);color:var(--text)}
+.zs-box h3{margin:0 40px 12px 0;font-size:17px;color:#f7dc92}
+.zs-x{position:absolute;top:8px;right:8px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:#f7dc92;font-size:26px;cursor:pointer}
+.zs-opt{display:grid;gap:8px;margin-bottom:12px;font-size:14px}
+.zs-opt label{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.zs-opt select,.zs-opt input[type=text]{flex:1;min-width:160px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#0b0907;color:var(--text);font-size:14px}
+.zs-opt .zs-cb{flex-wrap:nowrap;align-items:flex-start}.zs-cb input{margin-top:3px;flex:none;width:18px;height:18px}
+.zs-prev{display:grid;gap:10px;margin:8px 0 12px}
+.zs-prev img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+.zs-box textarea{width:100%;box-sizing:border-box;min-height:150px;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0b0907;color:var(--text);font-size:14px;line-height:1.55;font-family:inherit}
+.zs-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.zs-act .btn{flex:1 1 140px;justify-content:center;font-size:14px}
+.zs-st{margin-top:10px;font-size:13px;line-height:1.5;color:var(--muted);min-height:18px}
+</style>
 </head>
 <body class="loading">
 
@@ -1256,6 +1286,7 @@ b.classList.remove("loading");b.classList.add("ready");var r=document.querySelec
   <div class="chips"><div class="chips-row" id="chips"></div></div>
   <div class="wrap">
     <div class="search"><span>🔍</span><input id="q" placeholder="Gõ hoặc bấm 🎤 để nói…"><button type="button" class="vmic" id="qMic" aria-label="Tìm bằng giọng nói">🎤</button></div>
+    <button type="button" class="btn btn-ghost zs-btn" id="zsBtn" hidden>📤 Gửi hàng mới qua Zalo</button>
     <div class="count" id="count"></div>
     <div class="grid" id="grid"></div>
     <div class="empty-m" id="emptyM">Không tìm thấy sản phẩm. Hỏi trợ lý AI ở góc màn hình nhé!</div>
@@ -2507,7 +2538,7 @@ function tkAdmInit(){if(!TK.on){TK.on=true;$("#tkGo").onclick=tkAdmLoad;$("#tkF"
 function updateAcct(){const n=$("#acctName");n.textContent=IS_ADMIN?"Admin":PROFILE?PROFILE.name.split(" ").slice(-1)[0]:"Đăng nhập";$("#acctBtn").classList.toggle("in",!!(PROFILE||IS_ADMIN));$("#acGear").hidden=!PROFILE||IS_ADMIN}
 FB_READY.then(f=>{if(!f)return;f.A.onAuthStateChanged(f.auth,async u=>{IS_ADMIN=!!(u&&ADMIN_EMAIL&&u.email&&u.email.toLowerCase()===ADMIN_EMAIL.toLowerCase());PROFILE=null;
   if(u&&!IS_ADMIN){try{const d=await FB.F.getDoc(FB.F.doc(FB.db,"customers",u.uid));if(d.exists())PROFILE=d.data()}catch(e){}}
-  updateAcct();$("#admFab").hidden=!IS_ADMIN;if(IS_ADMIN&&location.hash!=="#admin"&&!sessionStorage.getItem("admHint")){sessionStorage.setItem("admHint",1);toast("👑 Bạn đang đăng nhập Admin – bấm nút <b>Quản trị</b> góc trái dưới để sửa sản phẩm")}if(location.hash==="#admin")adminRoute()})});
+  updateAcct();$("#admFab").hidden=!IS_ADMIN;try{zsAdmin()}catch(e){}if(IS_ADMIN&&location.hash!=="#admin"&&!sessionStorage.getItem("admHint")){sessionStorage.setItem("admHint",1);toast("👑 Bạn đang đăng nhập Admin – bấm nút <b>Quản trị</b> góc trái dưới để sửa sản phẩm")}if(location.hash==="#admin")adminRoute()})});
 
 /* ===================================================================
    TRANG ADMIN  (mở bằng link …#admin hoặc nút "Quản trị" ở chân trang)
@@ -3528,6 +3559,126 @@ window.__t={reply,voiceGo,goCat,openAuth,openEdit,AD,adminRoute};
   build();let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(build,150)});
   if("IntersectionObserver" in window)new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(cv);
   requestAnimationFrame(frame)})();
+
+/* ===== Gửi hàng mới qua Zalo (chỉ admin): chọn nhiều sản phẩm → ảnh JPG + đoạn chữ + link từng sản phẩm ===== */
+const ZS={on:false,sel:[],files:[],site:"https://bdteampkhoangde.github.io/phukienhoangde/"};
+function zsAdmin(){const b=$("#zsBtn");if(b)b.hidden=!IS_ADMIN;if(!IS_ADMIN&&ZS.on)zsMode(false)}
+(function(){
+  const bar=document.createElement("div");bar.className="zs-bar";bar.id="zsBar";bar.hidden=true;
+  bar.innerHTML='<b id="zsCnt">Đã chọn 0</b><button type="button" class="btn btn-gold" id="zsMake">🖼️ Tạo ảnh</button><button type="button" class="btn btn-ghost" id="zsClr">Bỏ chọn</button><button type="button" class="btn btn-ghost" id="zsOff">Thoát</button>';
+  document.body.appendChild(bar);
+  const m=document.createElement("div");m.className="zs-m";m.id="zsM";m.hidden=true;m.setAttribute("role","dialog");m.setAttribute("aria-modal","true");
+  m.innerHTML=`<div class="zs-box"><button type="button" class="zs-x" id="zsX" aria-label="Đóng">×</button><h3>📤 Gửi hàng mới qua Zalo</h3>
+    <div class="zs-opt">
+      <label>Tiêu đề <select id="zsT"><option>HÀNG MỚI VỀ</option><option>KHUYẾN MÃI HOT</option><option>SẢN PHẨM BÁN CHẠY</option><option value="_">Tự nhập…</option></select></label>
+      <label id="zsTcL" hidden>Nội dung tiêu đề <input type="text" id="zsTc" maxlength="40" placeholder="VD: HÀNG VỀ THÁNG 12"></label>
+      <label>Giá <select id="zsP"><option value="show">Hiện giá bán hiện tại</option><option value="hide">Ẩn giá (ghi "Liên hệ")</option></select></label>
+      <label class="zs-cb"><input type="checkbox" id="zsCk" checked><span>Ghi mức chiết khấu tháng (WEKOME / PICOM)</span></label>
+      <label class="zs-cb"><input type="checkbox" id="zsLk" checked><span>Kèm link từng sản phẩm (khách bấm là mở đúng sản phẩm)</span></label>
+    </div>
+    <div class="zs-prev" id="zsPrev"></div>
+    <textarea id="zsTxt" aria-label="Đoạn chữ gửi kèm"></textarea>
+    <div class="zs-act"><button type="button" class="btn btn-gold" id="zsShare">📤 Chia sẻ Zalo</button><button type="button" class="btn btn-ghost" id="zsDl">⬇️ Tải ảnh</button><button type="button" class="btn btn-ghost" id="zsCp">📋 Chép chữ</button><a class="btn btn-ghost" id="zsZl" href="https://chat.zalo.me/" target="_blank" rel="noopener">💬 Mở Zalo</a></div>
+    <div class="zs-st" id="zsSt"></div></div>`;
+  document.body.appendChild(m);
+  const mark=()=>$$("#grid .pc").forEach(el=>{if(!el.querySelector(".zs-ck")){const c=document.createElement("span");c.className="zs-ck";el.appendChild(c)}el.classList.toggle("zs-sel",ZS.sel.includes(el.dataset.id))});
+  new MutationObserver(()=>{if(ZS.on)mark()}).observe($("#grid"),{childList:true});
+  window.zsMode=on=>{ZS.on=on;document.body.classList.toggle("zs-on",on);$("#zsBar").hidden=!on;$("#zsBtn").textContent=on?"✖ Thoát chế độ chọn":"📤 Gửi hàng mới qua Zalo";if(on){mark();toast("Bấm vào sản phẩm để chọn (tối đa 27 mẫu)")}cnt()};
+  const cnt=()=>{$("#zsCnt").textContent=`Đã chọn ${ZS.sel.length}`;$("#zsMake").disabled=!ZS.sel.length};
+  $("#zsBtn").onclick=()=>zsMode(!ZS.on);
+  $("#zsOff").onclick=()=>zsMode(false);
+  $("#zsClr").onclick=()=>{ZS.sel=[];mark();cnt()};
+  /* khi đang chọn: bấm thẻ sản phẩm = chọn / bỏ chọn (không mở chi tiết, không thêm giỏ) */
+  $("#grid").addEventListener("click",e=>{if(!ZS.on)return;const c=e.target.closest(".pc");if(!c)return;e.preventDefault();e.stopPropagation();
+    const id=c.dataset.id,i=ZS.sel.indexOf(id);if(i>=0)ZS.sel.splice(i,1);else{if(ZS.sel.length>=27)return toast("Tối đa 27 sản phẩm mỗi lần gửi");ZS.sel.push(id)}mark();cnt()},true);
+  $("#zsMake").onclick=()=>{m.hidden=false;document.body.style.overflow="hidden";zsBuild()};
+  const close=()=>{m.hidden=true;document.body.style.overflow=""};
+  $("#zsX").onclick=close;m.addEventListener("click",e=>{if(e.target===m)close()});
+  $("#zsT").onchange=()=>{$("#zsTcL").hidden=$("#zsT").value!=="_";zsBuild()};
+  $("#zsTc").oninput=()=>{clearTimeout(zsBuild.t);zsBuild.t=setTimeout(zsBuild,600)};
+  ["zsP","zsCk","zsLk"].forEach(k=>$("#"+k).onchange=zsBuild);
+  $("#zsCp").onclick=()=>{zsCopy()?zsSt("✅ Đã chép đoạn chữ – vào Zalo nhấn giữ ô chat → Dán."):zsSt("Hãy bôi đen đoạn chữ rồi chép thủ công.")};
+  $("#zsDl").onclick=()=>{if(!ZS.files.length)return;ZS.files.forEach((f,i)=>setTimeout(()=>{const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)},i*400));zsSt("⬇️ Đang tải "+ZS.files.length+" ảnh về máy.")};
+  $("#zsShare").onclick=()=>{if(!ZS.files.length)return;const ok=zsCopy(),text=$("#zsTxt").value;
+    const d={files:ZS.files,text};let can=false;try{can=!!(navigator.canShare&&navigator.canShare({files:ZS.files}))}catch(e){}
+    if(can){navigator.share(navigator.canShare(d)?d:{files:ZS.files}).then(()=>zsSt("✅ Đã mở chia sẻ."+(ok?" Đoạn chữ đã được chép sẵn – nếu Zalo không tự kèm chữ, nhấn giữ ô chat → Dán.":""))).catch(e=>{if(e&&e.name!=="AbortError")zsSt("⚠️ Không chia sẻ được: "+escH(e.message||e)+". Hãy dùng nút Tải ảnh.")})}
+    else{$("#zsDl").click();window.open("https://chat.zalo.me/","_blank","noopener");zsSt("💻 Máy này không hỗ trợ chia sẻ trực tiếp: ảnh đã tải về"+(ok?", đoạn chữ đã chép":"")+". Trong Zalo, kéo ảnh vào khung chat rồi dán chữ.")}};
+})();
+function zsSt(h){$("#zsSt").innerHTML=h}
+function zsCopy(){const t=$("#zsTxt");try{t.focus();t.select();t.setSelectionRange(0,t.value.length);const ok=document.execCommand("copy");t.setSelectionRange(t.value.length,t.value.length);if(ok)return true}catch(e){}try{navigator.clipboard.writeText(t.value);return true}catch(e){}return false}
+const zsTitle=()=>$("#zsT").value==="_"?($("#zsTc").value.trim()||"HÀNG MỚI VỀ").toUpperCase():$("#zsT").value;
+const zsPct=p=>{const g=p.bg||grpOf(p.n);if(!g||!POL[g]||exOf(p))return 0;let mx=Math.max(...POL[g].t.map(t=>t[2]||0));if(g==="wk"&&isPB(p.n))mx=Math.min(mx,7);return mx};
+const zsPrice=p=>p.v&&p.v.length?{p:prRange(p)[0],from:true,o:0}:{p:p.p,from:false,o:p.o&&p.o>p.p?p.o:0};
+const zsLink=p=>PUSH.api+"/p/"+encodeURIComponent(p.id);
+function zsText(L){const show=$("#zsP").value==="show",ck=$("#zsCk").checked,lk=$("#zsLk").checked;
+  const lines=L.map(p=>{const r=zsPrice(p),off=offOf(p);let s=`• ${p.n}`;
+    if(show)s+=` – ${r.from?"giá từ ":"giá "}${vnd(r.p)}${off?` 🔥 ĐANG SALE -${off}%${r.o?` (giá gốc ${vnd(r.o)})`:""}`:""}`;else s+=" – giá liên hệ";
+    if(lk)s+=`\n   👉 ${zsLink(p)}`;return s});
+  const gs=[...new Set(L.map(p=>zsPct(p)?(p.bg||grpOf(p.n)):"").filter(Boolean))];
+  const ckLine=ck&&gs.length?"\n💰 Chiết khấu tháng cho đại lý: "+gs.map(g=>`${POL[g].n} đến ${pctStr(Math.max(...POL[g].t.map(t=>t[2]||0)))}`).join(" • "):"";
+  const anySale=L.some(p=>offOf(p));
+  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế${anySale?" (có hàng đang SALE)":""}\n${lines.join("\n")}${ckLine}\n📦 Đơn tối thiểu ${vnd(MIN_ORD)}\n📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}\n🛒 Xem & đặt hàng: ${ZS.site}`}
+/* tải ảnh an toàn để vẽ vào JPG: ảnh trong cơ sở dữ liệu → tải trực tiếp (cho phép CORS) → qua Worker → ô thay thế */
+const zsImgEl=(u,cors)=>new Promise((ok,no)=>{const i=new Image();if(cors)i.crossOrigin="anonymous";i.referrerPolicy="no-referrer";const t=setTimeout(()=>no(new Error("timeout")),12000);i.onload=()=>{clearTimeout(t);ok(i)};i.onerror=()=>{clearTimeout(t);no(new Error("load"))};i.src=u});
+async function zsLoad(src){if(!src)return null;
+  try{if(src.startsWith("db:")){const d=await getImg(src.slice(3));return d?await zsImgEl(d):null}
+    if(src.startsWith("data:"))return await zsImgEl(src)}catch(e){return null}
+  if(!/^https?:/.test(src))return null;
+  try{return await zsImgEl(src,true)}catch(e){}
+  try{return await zsImgEl(PUSH.api+"/anh?u="+encodeURIComponent(src),true)}catch(e){}
+  return null}
+function zsWrap(cx,t,maxW,maxL){const w=String(t).split(/\s+/),L=[];let cur="";for(const x of w){const tr=cur?cur+" "+x:x;if(cx.measureText(tr).width<=maxW)cur=tr;else{if(cur)L.push(cur);cur=x;if(L.length===maxL)break}}if(L.length<maxL&&cur)L.push(cur);
+  if(L.length===maxL&&w.join(" ").length>L.join(" ").length){let l=L[maxL-1];while(l.length&&cx.measureText(l+"…").width>maxW)l=l.slice(0,-1);L[maxL-1]=l+"…"}return L.slice(0,maxL)}
+function zsRR(cx,x,y,w,h,r){cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r);cx.arcTo(x+w,y+h,x,y+h,r);cx.arcTo(x,y+h,x,y,r);cx.arcTo(x,y,x+w,y,r);cx.closePath()}
+async function zsDraw(L,page,pages,logo){const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const cx=cv.getContext("2d");
+  const FF=getComputedStyle(document.body).fontFamily||"sans-serif",F=(w,s)=>`${w} ${s}px ${FF}`,show=$("#zsP").value==="show",ck=$("#zsCk").checked;
+  let g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#0d0b12");g.addColorStop(1,"#17120a");cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  g=cx.createRadialGradient(W*.8,-40,10,W*.8,-40,700);g.addColorStop(0,"rgba(217,178,95,.28)");g.addColorStop(1,"rgba(217,178,95,0)");cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  /* đầu ảnh */
+  if(logo){cx.save();cx.beginPath();cx.arc(92,92,52,0,6.283);cx.clip();cx.drawImage(logo,40,40,104,104);cx.restore()}
+  else{cx.fillStyle="#d9b25f";cx.beginPath();cx.arc(92,92,52,0,6.283);cx.fill();cx.fillStyle="#1b1408";cx.font=F(900,40);cx.textAlign="center";cx.fillText("HĐ",92,106)}
+  cx.strokeStyle="#d9b25f";cx.lineWidth=3;cx.beginPath();cx.arc(92,92,53,0,6.283);cx.stroke();
+  cx.textAlign="left";cx.fillStyle="#f4eee2";cx.font=F(800,34);cx.fillText("Phụ Kiện Hoàng Đế",168,82);
+  cx.fillStyle="#d9b25f";cx.font=F(600,21);cx.fillText("BD TEAM • WEKOME & PICOM",168,118);
+  const tt=zsTitle();g=cx.createLinearGradient(40,0,W-40,0);g.addColorStop(0,"#f7dc92");g.addColorStop(.6,"#e0b25a");g.addColorStop(1,"#e48a6a");
+  cx.fillStyle=g;cx.font=F(900,64);cx.textAlign="center";let fs=64;while(cx.measureText(tt).width>W-80&&fs>36){fs-=2;cx.font=F(900,fs)}cx.fillText(tt,W/2,226);
+  if(pages>1){cx.font=F(600,20);cx.fillStyle="rgba(244,238,226,.6)";cx.fillText(`Trang ${page}/${pages}`,W/2,258)}
+  /* lưới sản phẩm */
+  const n=L.length,cols=n<=1?1:n<=4?2:3,rows=Math.ceil(n/cols),top=280,bot=1170,gap=22,cw=(W-80-gap*(cols-1))/cols,ch=(bot-top-gap*(rows-1))/rows;
+  const imgs=await Promise.all(L.map(p=>zsLoad(p.i)));
+  L.forEach((p,k)=>{const x=40+(k%cols)*(cw+gap),y=top+Math.floor(k/cols)*(ch+gap);
+    zsRR(cx,x,y,cw,ch,22);cx.fillStyle="rgba(24,19,12,.96)";cx.fill();cx.strokeStyle="rgba(217,178,95,.55)";cx.lineWidth=2;cx.stroke();
+    const tf=Math.max(18,Math.min(30,cw/13)),textH=tf*2*1.25+(show?tf*1.7:tf*1.2)+(ck&&zsPct(p)?tf*1.05:0)+28,ih=Math.max(80,ch-textH-20),iw=cw-24,ix=x+12,iy=y+12;
+    zsRR(cx,ix,iy,iw,ih,16);cx.fillStyle="#ffffff";cx.fill();
+    const im=imgs[k];if(im){const r=Math.min(iw/im.width,ih/im.height),dw=im.width*r,dh=im.height*r;cx.save();zsRR(cx,ix,iy,iw,ih,16);cx.clip();cx.drawImage(im,ix+(iw-dw)/2,iy+(ih-dh)/2,dw,dh);cx.restore()}
+    else{cx.fillStyle="#2a2217";zsRR(cx,ix,iy,iw,ih,16);cx.fill();cx.fillStyle="#d9b25f";cx.textAlign="center";cx.font=F(700,Math.min(64,ih/3));cx.fillText("📦",ix+iw/2,iy+ih/2+Math.min(22,ih/9))}
+    const off=offOf(p);if(off&&show){cx.font=F(800,tf*.85);const bt=`SALE -${off}%`,bw=cx.measureText(bt).width+tf*1.2,bh=tf*1.5;zsRR(cx,ix+8,iy+8,bw,bh,bh/2);cx.fillStyle="#e2513b";cx.fill();cx.fillStyle="#fff";cx.textAlign="center";cx.fillText(`SALE -${off}%`,ix+8+bw/2,iy+8+bh*.68)}
+    let ty=iy+ih+tf*1.25+6;cx.textAlign="left";cx.fillStyle="#f4eee2";cx.font=F(700,tf);
+    zsWrap(cx,p.n,iw,2).forEach(l=>{cx.fillText(l,ix,ty);ty+=tf*1.25});
+    if(show){const r=zsPrice(p);ty+=tf*.35;cx.fillStyle="#f7dc92";cx.font=F(900,tf*1.25);const pt=(r.from?"từ ":"")+vnd(r.p);cx.fillText(pt,ix,ty);
+      if(r.o){const w0=cx.measureText(pt).width;cx.font=F(500,tf*.8);cx.fillStyle="rgba(244,238,226,.55)";const ot=vnd(r.o),ox=ix+w0+12;if(ox+cx.measureText(ot).width<=ix+iw){cx.fillText(ot,ox,ty);const ow=cx.measureText(ot).width;cx.fillRect(ox,ty-tf*.28,ow,2)}}}
+    else{ty+=tf*.2;cx.fillStyle="#f7dc92";cx.font=F(800,tf*1.05);cx.fillText("Giá: Liên hệ",ix,ty)}
+    const pc=ck&&zsPct(p);if(pc){ty+=tf*1.05;cx.font=F(600,tf*.75);cx.fillStyle="#9fe0b0";cx.fillText(`Chiết khấu tháng đến ${pctStr(pc)}`,ix,ty)}});
+  /* chân ảnh */
+  cx.fillStyle="rgba(217,178,95,.6)";cx.fillRect(40,1196,W-80,2);
+  cx.textAlign="center";cx.fillStyle="#f7dc92";cx.font=F(800,38);cx.fillText(`📞 Zalo / Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}`,W/2,1250);
+  cx.fillStyle="rgba(244,238,226,.8)";cx.font=F(500,22);cx.fillText("bdteampkhoangde.github.io/phukienhoangde  •  Đơn tối thiểu "+vnd(MIN_ORD),W/2,1298);
+  return new Promise((ok,no)=>{try{cv.toBlob(b=>b?ok(b):no(new Error("Không tạo được ảnh")),"image/jpeg",.9)}catch(e){no(e)}})}
+async function zsBuild(){const L=ZS.sel.map(id=>ALL.find(p=>String(p.id)===String(id))).filter(Boolean);if(!L.length)return;
+  const my=(zsBuild.n=(zsBuild.n||0)+1);zsSt("⏳ Đang tạo ảnh…");$("#zsPrev").innerHTML="";
+  $("#zsTxt").value=zsText(L);
+  try{await (document.fonts&&document.fonts.ready)}catch(e){}
+  let logo=null;try{logo=await zsLoad($("#logo")&&$("#logo").src)}catch(e){}
+  const per=9,pages=Math.ceil(L.length/per),files=[],day=new Date().toISOString().slice(0,10);let miss=0;
+  for(let i=0;i<pages;i++){const part=L.slice(i*per,i*per+per);let b;try{b=await zsDraw(part,i+1,pages,logo)}catch(e){if(my===zsBuild.n)zsSt("❌ Không tạo được ảnh: "+escH(e.message||e));return}
+    if(my!==zsBuild.n)return;files.push(new File([b],`hang-moi-${day}${pages>1?"-"+(i+1):""}.jpg`,{type:"image/jpeg"}))}
+  for(const p of L){try{if(!(await zsLoad(p.i)))miss++}catch(e){miss++}}
+  ZS.files.forEach(f=>{try{URL.revokeObjectURL(f._u)}catch(e){}});ZS.files=files;
+  $("#zsPrev").innerHTML=files.map(f=>{f._u=URL.createObjectURL(f);return`<img src="${f._u}" alt="Ảnh gửi Zalo">`}).join("");
+  zsSt(`✅ Đã tạo ${files.length} ảnh cho ${L.length} sản phẩm.${miss?` <br>⚠️ ${miss} ảnh sản phẩm chưa lấy được (hiện ô 📦) – cập nhật Worker bản mới để lấy đủ ảnh.`:""}`);
+  /* lưu sẵn thẻ xem trước cho link từng sản phẩm (để Zalo hiện ảnh + tên ngay) */
+  if($("#zsLk").checked&&FB&&FB.auth&&FB.auth.currentUser){try{const idToken=await FB.auth.currentUser.getIdToken(),site=location.origin+location.pathname.replace(/index\.html$/,"");
+    for(const p of L){pushCall("/share",{idToken,id:p.id,n:p.n,img:p.i&&!String(p.i).startsWith("data:")?p.i:"",site:/^https:/.test(location.protocol)?site:ZS.site}).catch(()=>{})}}catch(e){}}}
 </script>
 </body>
 </html>
