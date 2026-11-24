@@ -2249,7 +2249,7 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="22/11-v21";
+const APP_VER="24/11-v22";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
@@ -3590,8 +3590,9 @@ function zsAdmin(){const b=$("#zsBtn");if(b)b.hidden=!IS_ADMIN;if(!IS_ADMIN&&ZS.
       <label>Tiêu đề <select id="zsT"><option>HÀNG MỚI VỀ</option><option>KHUYẾN MÃI HOT</option><option>SẢN PHẨM BÁN CHẠY</option><option value="_">Tự nhập…</option></select></label>
       <label id="zsTcL" hidden>Nội dung tiêu đề <input type="text" id="zsTc" maxlength="40" placeholder="VD: HÀNG VỀ THÁNG 12"></label>
       <label>Giá <select id="zsP"><option value="show">Hiện giá bán hiện tại</option><option value="hide">Ẩn giá (ghi "Liên hệ")</option></select></label>
-      <label class="zs-cb"><input type="checkbox" id="zsCk" checked><span>Ghi mức chiết khấu tháng (WEKOME / PICOM)</span></label>
-      <label class="zs-cb"><input type="checkbox" id="zsLk" checked><span>Kèm link từng sản phẩm (khách bấm là mở đúng sản phẩm)</span></label>
+      <label>Dòng dưới giá <input type="text" id="zsVat" maxlength="24" value="Tặng v.a.t" placeholder="VD: Tặng v.a.t (để trống nếu không cần)"></label>
+      <input type="checkbox" id="zsCk" hidden>
+      <input type="checkbox" id="zsLk" hidden>
     </div>
     <div class="zs-prev" id="zsPrev"></div>
     <textarea id="zsTxt" aria-label="Đoạn chữ gửi kèm"></textarea>
@@ -3612,7 +3613,7 @@ function zsAdmin(){const b=$("#zsBtn");if(b)b.hidden=!IS_ADMIN;if(!IS_ADMIN&&ZS.
   const close=()=>{m.hidden=true;document.body.style.overflow=""};
   $("#zsX").onclick=close;m.addEventListener("click",e=>{if(e.target===m)close()});
   $("#zsT").onchange=()=>{$("#zsTcL").hidden=$("#zsT").value!=="_";zsBuild()};
-  $("#zsTc").oninput=()=>{clearTimeout(zsBuild.t);zsBuild.t=setTimeout(zsBuild,600)};
+  $("#zsTc").oninput=()=>{clearTimeout(zsBuild.t);zsBuild.t=setTimeout(zsBuild,600)};$("#zsVat").oninput=()=>{clearTimeout(zsBuild.t);zsBuild.t=setTimeout(zsBuild,700)};
   ["zsP","zsCk","zsLk"].forEach(k=>$("#"+k).onchange=zsBuild);
   $("#zsCp").onclick=()=>{zsCopy()?zsSt("✅ Đã chép đoạn chữ – vào Zalo nhấn giữ ô chat → Dán."):zsSt("Hãy bôi đen đoạn chữ rồi chép thủ công.")};
   $("#zsDl").onclick=()=>{if(!ZS.files.length)return;ZS.files.forEach((f,i)=>setTimeout(()=>{const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)},i*400));zsSt("⬇️ Đang tải "+ZS.files.length+" ảnh về máy.")};
@@ -3643,14 +3644,12 @@ const zsLink=p=>PUSH.api+"/p/"+encodeURIComponent(SHORT[p.id]||p.id);
 async function shortReg(list){if(!(FB&&FB.auth&&FB.auth.currentUser))return;const need=list.filter(p=>p&&p.id);if(!need.length)return;
   try{const idToken=await FB.auth.currentUser.getIdToken(),site=/^https:/.test(location.protocol)?location.origin+location.pathname.replace(/index\.html$/,""):ZS.site;
     await Promise.all(need.map(p=>withTimeout(pushCall("/share",{idToken,id:p.id,n:p.n,img:p.i&&!String(p.i).startsWith("data:")?p.i:(p.img||""),site}),12000).then(j=>{if(j&&j.code)SHORT[p.id]=j.code}).catch(()=>{})));shortSave()}catch(e){}}
-function zsText(L){const show=$("#zsP").value==="show",ck=$("#zsCk").checked,lk=$("#zsLk").checked;
-  const lines=L.map(p=>{const r=zsPrice(p),off=offOf(p);let s=`• ${p.n}`;
-    if(show)s+=` – ${r.from?"giá từ ":"giá "}${vnd(r.p)}${off?` 🔥 ĐANG SALE -${off}%${r.o?` (giá gốc ${vnd(r.o)})`:""}`:""}`;else s+=" – giá liên hệ";
-    if(lk)s+=`\n   👉 ${zsLink(p)}`;return s});
-  const gs=[...new Set(L.map(p=>zsPct(p)?(p.bg||grpOf(p.n)):"").filter(Boolean))];
-  const ckLine=ck&&gs.length?"\n💰 Chiết khấu tháng cho đại lý: "+gs.map(g=>`${POL[g].n} đến ${pctStr(Math.max(...POL[g].t.map(t=>t[2]||0)))}`).join(" • "):"";
-  const anySale=L.some(p=>offOf(p));
-  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế${anySale?" (có hàng đang SALE)":""}${lk?"\n👉 Nhấn vào link dưới mỗi sản phẩm để xem và ĐẶT ĐƠN TRỰC TIẾP":""}\n${lines.join("\n")}${ckLine}\n📦 Đơn tối thiểu ${vnd(MIN_ORD)}\n📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}\n🛒 Nhấn vào link tham khảo thêm đa dạng mẫu mã sản phẩm: ${ZS.site}`}
+function zsText(L){const vat=$("#zsVat").value.trim(),anySale=L.some(p=>offOf(p));
+  return `🔥 ${zsTitle()} – Phụ Kiện Hoàng Đế
+Em gửi anh/chị bảng giá sỉ ${L.length} mẫu${anySale?" (có mẫu đang SALE)":""}${vat?`, giá ${vat.toLowerCase()}`:""}. Anh/chị cần mẫu nào cứ nhắn em báo giá theo số lượng và lên đơn giao ngay ạ.
+📦 Đơn tối thiểu ${vnd(MIN_ORD)}
+📞 Zalo/Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}
+🛒 Nhấn vào link tham khảo thêm đa dạng mẫu mã sản phẩm: ${ZS.site}`}
 /* tải ảnh an toàn để vẽ vào JPG: ảnh trong cơ sở dữ liệu → tải trực tiếp (cho phép CORS) → qua Worker → ô thay thế */
 const zsImgEl=(u,cors)=>new Promise((ok,no)=>{const i=new Image();if(cors)i.crossOrigin="anonymous";i.referrerPolicy="no-referrer";const t=setTimeout(()=>no(new Error("timeout")),12000);i.onload=()=>{clearTimeout(t);ok(i)};i.onerror=()=>{clearTimeout(t);no(new Error("load"))};i.src=u});
 async function zsLoad(src){if(!src)return null;
@@ -3663,40 +3662,42 @@ async function zsLoad(src){if(!src)return null;
 function zsWrap(cx,t,maxW,maxL){const w=String(t).split(/\s+/),L=[];let cur="";for(const x of w){const tr=cur?cur+" "+x:x;if(cx.measureText(tr).width<=maxW)cur=tr;else{if(cur)L.push(cur);cur=x;if(L.length===maxL)break}}if(L.length<maxL&&cur)L.push(cur);
   if(L.length===maxL&&w.join(" ").length>L.join(" ").length){let l=L[maxL-1];while(l.length&&cx.measureText(l+"…").width>maxW)l=l.slice(0,-1);L[maxL-1]=l+"…"}return L.slice(0,maxL)}
 function zsRR(cx,x,y,w,h,r){cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r);cx.arcTo(x+w,y+h,x,y+h,r);cx.arcTo(x,y+h,x,y,r);cx.arcTo(x,y,x+w,y,r);cx.closePath()}
-async function zsDraw(L,page,pages,logo){const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const cx=cv.getContext("2d");
-  const FF=getComputedStyle(document.body).fontFamily||"sans-serif",F=(w,s)=>`${w} ${s}px ${FF}`,show=$("#zsP").value==="show",ck=$("#zsCk").checked;
-  let g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#0d0b12");g.addColorStop(1,"#17120a");cx.fillStyle=g;cx.fillRect(0,0,W,H);
-  g=cx.createRadialGradient(W*.8,-40,10,W*.8,-40,700);g.addColorStop(0,"rgba(217,178,95,.28)");g.addColorStop(1,"rgba(217,178,95,0)");cx.fillStyle=g;cx.fillRect(0,0,W,H);
-  /* đầu ảnh */
-  if(logo){cx.save();cx.beginPath();cx.arc(92,92,52,0,6.283);cx.clip();cx.drawImage(logo,40,40,104,104);cx.restore()}
-  else{cx.fillStyle="#d9b25f";cx.beginPath();cx.arc(92,92,52,0,6.283);cx.fill();cx.fillStyle="#1b1408";cx.font=F(900,40);cx.textAlign="center";cx.fillText("HĐ",92,106)}
-  cx.strokeStyle="#d9b25f";cx.lineWidth=3;cx.beginPath();cx.arc(92,92,53,0,6.283);cx.stroke();
-  cx.textAlign="left";cx.fillStyle="#f4eee2";cx.font=F(800,34);cx.fillText("Phụ Kiện Hoàng Đế",168,82);
-  cx.fillStyle="#d9b25f";cx.font=F(600,21);cx.fillText("BD TEAM • WEKOME & PICOM",168,118);
-  const tt=zsTitle();g=cx.createLinearGradient(40,0,W-40,0);g.addColorStop(0,"#f7dc92");g.addColorStop(.6,"#e0b25a");g.addColorStop(1,"#e48a6a");
-  cx.fillStyle=g;cx.font=F(900,64);cx.textAlign="center";let fs=64;while(cx.measureText(tt).width>W-80&&fs>36){fs-=2;cx.font=F(900,fs)}cx.fillText(tt,W/2,226);
-  if(pages>1){cx.font=F(600,20);cx.fillStyle="rgba(244,238,226,.6)";cx.fillText(`Trang ${page}/${pages}`,W/2,258)}
-  /* lưới sản phẩm */
-  const n=L.length,cols=n<=1?1:n<=4?2:3,rows=Math.ceil(n/cols),top=280,bot=1170,gap=22,cw=(W-80-gap*(cols-1))/cols,ch=(bot-top-gap*(rows-1))/rows;
+const zsK=v=>{v=+v||0;const k=v/1000;return (Number.isInteger(k)?k:Math.round(k*10)/10).toString().replace(".",",")+"K"};
+const zsBrand=p=>{const t=nm(p.n||"");return /picom/.test(t)?"PICOM":/wk design|wkdesign/.test(t)?"WK DESIGN":/wekome|\bwk\b|\bwp-?\d|\bws-?\d|\bwa-?\d/.test(t)?"WEKOME":""};
+async function zsDraw(L,page,pages,logo){const n=L.length,cols=n<=1?1:n<=8?2:3,rows=Math.ceil(n/cols),W=1080,G=18,M=18;
+  const cw=(W-M*2-G*(cols-1))/cols,ch=cols===1?760:cols===2?Math.round(cw*.82):Math.round(cw*1.36),footH=74,H=M*2+rows*ch+(rows-1)*G+footH;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const cx=cv.getContext("2d");
+  const SANS=getComputedStyle(document.body).fontFamily||"sans-serif",SERIF='"Times New Roman",Georgia,"Noto Serif",serif',F=(w,sz,f)=>`${w} ${sz}px ${f||SANS}`;
+  const show=$("#zsP").value==="show",vat=$("#zsVat").value.trim();
+  /* nền tối như mẫu */
+  let g=cx.createLinearGradient(0,0,W,H);g.addColorStop(0,"#1d1d1f");g.addColorStop(1,"#2b2a27");cx.fillStyle=g;cx.fillRect(0,0,W,H);
   const imgs=await Promise.all(L.map(p=>zsLoad(p.i)));
-  L.forEach((p,k)=>{const x=40+(k%cols)*(cw+gap),y=top+Math.floor(k/cols)*(ch+gap);
-    zsRR(cx,x,y,cw,ch,22);cx.fillStyle="rgba(24,19,12,.96)";cx.fill();cx.strokeStyle="rgba(217,178,95,.55)";cx.lineWidth=2;cx.stroke();
-    const tf=Math.max(18,Math.min(30,cw/13)),textH=tf*2*1.25+(show?tf*1.7:tf*1.2)+(ck&&zsPct(p)?tf*1.05:0)+28,ih=Math.max(80,ch-textH-20),iw=cw-24,ix=x+12,iy=y+12;
-    zsRR(cx,ix,iy,iw,ih,16);cx.fillStyle="#ffffff";cx.fill();
-    const im=imgs[k];if(im){const r=Math.min(iw/im.width,ih/im.height),dw=im.width*r,dh=im.height*r;cx.save();zsRR(cx,ix,iy,iw,ih,16);cx.clip();cx.drawImage(im,ix+(iw-dw)/2,iy+(ih-dh)/2,dw,dh);cx.restore()}
-    else{cx.fillStyle="#2a2217";zsRR(cx,ix,iy,iw,ih,16);cx.fill();cx.fillStyle="#d9b25f";cx.textAlign="center";cx.font=F(700,Math.min(64,ih/3));cx.fillText("📦",ix+iw/2,iy+ih/2+Math.min(22,ih/9))}
-    const off=offOf(p);if(off&&show){cx.font=F(800,tf*.85);const bt=`SALE -${off}%`,bw=cx.measureText(bt).width+tf*1.2,bh=tf*1.5;zsRR(cx,ix+8,iy+8,bw,bh,bh/2);cx.fillStyle="#e2513b";cx.fill();cx.fillStyle="#fff";cx.textAlign="center";cx.fillText(`SALE -${off}%`,ix+8+bw/2,iy+8+bh*.68)}
-    let ty=iy+ih+tf*1.25+6;cx.textAlign="left";cx.fillStyle="#f4eee2";cx.font=F(700,tf);
-    zsWrap(cx,p.n,iw,2).forEach(l=>{cx.fillText(l,ix,ty);ty+=tf*1.25});
-    if(show){const r=zsPrice(p);ty+=tf*.35;cx.fillStyle="#f7dc92";cx.font=F(900,tf*1.25);const pt=(r.from?"từ ":"")+vnd(r.p);cx.fillText(pt,ix,ty);
-      if(r.o){const w0=cx.measureText(pt).width;cx.font=F(500,tf*.8);cx.fillStyle="rgba(244,238,226,.55)";const ot=vnd(r.o),ox=ix+w0+12;if(ox+cx.measureText(ot).width<=ix+iw){cx.fillText(ot,ox,ty);const ow=cx.measureText(ot).width;cx.fillRect(ox,ty-tf*.28,ow,2)}}}
-    else{ty+=tf*.2;cx.fillStyle="#f7dc92";cx.font=F(800,tf*1.05);cx.fillText("Giá: Liên hệ",ix,ty)}
-    const pc=ck&&zsPct(p);if(pc){ty+=tf*1.05;cx.font=F(600,tf*.75);cx.fillStyle="#9fe0b0";cx.fillText(`Chiết khấu tháng đến ${pctStr(pc)}`,ix,ty)}});
-  /* chân ảnh */
-  cx.fillStyle="rgba(217,178,95,.6)";cx.fillRect(40,1196,W-80,2);
-  cx.textAlign="center";cx.fillStyle="#f7dc92";cx.font=F(800,38);cx.fillText(`📞 Zalo / Hotline: ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}`,W/2,1250);
-  cx.fillStyle="rgba(244,238,226,.8)";cx.font=F(500,22);cx.fillText("bdteampkhoangde.github.io/phukienhoangde  •  Đơn tối thiểu "+vnd(MIN_ORD),W/2,1298);
-  return new Promise((ok,no)=>{try{cv.toBlob(b=>b?ok(b):no(new Error("Không tạo được ảnh")),"image/jpeg",.9)}catch(e){no(e)}})}
+  L.forEach((p,k)=>{const x=M+(k%cols)*(cw+G),y=M+Math.floor(k/cols)*(ch+G);
+    zsRR(cx,x,y,cw,ch,cols===3?26:32);cx.fillStyle="#ffffff";cx.fill();
+    const side=cols<3,pad=cols===3?14:18;
+    /* vùng ảnh */
+    const ix=x+pad,iy=y+pad+(zsBrand(p)?22:0),iw=side?cw*.56-pad:cw-pad*2,ih=side?ch-pad*2-(zsBrand(p)?22:0):ch*.5-(zsBrand(p)?22:0);
+    const brand=zsBrand(p);if(brand){cx.fillStyle="#111";cx.font=F(900,cols===3?17:20);cx.textAlign="left";cx.fillText(brand,x+pad,y+pad+16)}
+    const im=imgs[k];if(im){const r=Math.min(iw/im.width,ih/im.height),dw=im.width*r,dh=im.height*r;cx.drawImage(im,ix+(iw-dw)/2,iy+(ih-dh)/2,dw,dh)}
+    else{cx.fillStyle="#f1ede4";zsRR(cx,ix,iy,iw,ih,16);cx.fill();cx.font=F(400,Math.min(70,ih/3));cx.textAlign="center";cx.fillText("📦",ix+iw/2,iy+ih/2+20)}
+    /* vùng chữ */
+    const tx=side?x+cw*.56:x+pad,tw=side?cw*.44-pad:cw-pad*2,ty0=side?y+pad:y+pad+ih+(brand?22:0)+8,th=side?ch-pad*2:y+ch-pad-ty0,cxm=tx+tw/2;
+    const nfs=cols===1?44:cols===2?Math.max(24,Math.min(32,cw/17)):Math.max(19,Math.min(24,cw/14));
+    cx.font=F(700,nfs,SERIF);const lines=zsWrap(cx,String(p.n||""),tw,cols===3?2:3);
+    const r=zsPrice(p),off=offOf(p),pfs=Math.round(nfs*1.45),vfs=Math.round(nfs*1.05);
+    const blockH=lines.length*nfs*1.2+(show?pfs*1.55:nfs*1.4)+(show&&r.o?nfs*.95:0)+(vat?vfs*1.35:0);
+    let ty=ty0+Math.max(0,(th-blockH)/(side?1.6:2))+nfs;
+    cx.textAlign="center";cx.fillStyle="#141414";lines.forEach(l=>{cx.fillText(l,cxm,ty);ty+=nfs*1.2});
+    if(show){const pt=(r.from?"từ ":"")+zsK(r.p);cx.font=F(900,pfs);const pw=cx.measureText(pt).width+pfs*.9,ph=pfs*1.3,px=cxm-pw/2,py=ty-nfs*.35;
+      zsRR(cx,px,py,pw,ph,ph*.28);cx.fillStyle="#d8343b";cx.fill();cx.fillStyle="#fff";cx.fillText(pt,cxm,py+ph*.76);ty=py+ph+nfs*.95;
+      if(r.o){cx.font=F(600,nfs*.75);cx.fillStyle="#8a8a8a";const ot=`Giá cũ ${zsK(r.o)}${off?`  (-${off}%)`:""}`;cx.fillText(ot,cxm,ty-nfs*.15);const ow=cx.measureText(`Giá cũ ${zsK(r.o)}`).width;ty+=nfs*.95-nfs*.15}}
+    else{cx.font=F(800,nfs*1.1,SERIF);cx.fillStyle="#d8343b";cx.fillText("Giá: Liên hệ",cxm,ty+nfs*.4);ty+=nfs*1.4}
+    if(vat){cx.font=F(700,vfs,SERIF);cx.fillStyle="#d8343b";cx.fillText(vat,cxm,ty+vfs*.2)}
+    if(off&&show){cx.font=F(900,cols===3?15:18);const bt=`SALE -${off}%`,bw=cx.measureText(bt).width+20,bh=cols===3?26:30,bx=x+cw-bw-pad,by=y+pad;zsRR(cx,bx,by,bw,bh,bh/2);cx.fillStyle="#d8343b";cx.fill();cx.fillStyle="#fff";cx.textAlign="center";cx.fillText(bt,bx+bw/2,by+bh*.7)}});
+  /* chân ảnh gọn */
+  const fy=H-footH+8;cx.textAlign="center";cx.fillStyle="#f7dc92";cx.font=F(800,28);cx.fillText(`Phụ Kiện Hoàng Đế – BD Team  •  Zalo/Hotline ${CONFIG.phone.replace(/(\d{4})(\d{3})(\d+)/,"$1.$2.$3")}`,W/2,fy+30);
+  if(pages>1){cx.font=F(600,18);cx.fillStyle="rgba(255,255,255,.6)";cx.fillText(`Trang ${page}/${pages}`,W/2,fy+56)}
+  return new Promise((ok,no)=>{try{cv.toBlob(b=>b?ok(b):no(new Error("Không tạo được ảnh")),"image/jpeg",.92)}catch(e){no(e)}})}
 async function zsBuild(){const L=ZS.sel.map(id=>ALL.find(p=>String(p.id)===String(id))).filter(Boolean);if(!L.length)return;
   const my=(zsBuild.n=(zsBuild.n||0)+1);zsSt("⏳ Đang tạo ảnh…");$("#zsPrev").innerHTML="";
   if($("#zsLk").checked){zsSt("⏳ Đang tạo link ngắn…");await shortReg(L);if(my!==zsBuild.n)return}
