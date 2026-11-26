@@ -364,6 +364,10 @@ body.adm-on{overflow-x:clip!important;overflow-y:visible!important}
 .adm-brand{font-weight:700;font-size:16px}.adm-brand span{color:var(--gold2)}
 .adm-act{display:flex;gap:6px}.adm-act .btn{padding:8px 12px;font-size:12.5px}#admOut{color:var(--muted);background:none}
 .adm-tabs button[hidden]{display:none!important}
+.sv-bar{position:fixed;left:12px;bottom:14px;z-index:100002;max-width:calc(100vw - 24px);padding:10px 14px;border-radius:14px;background:rgba(14,11,8,.95);border:1px solid rgba(217,178,95,.6);color:#f7dc92;font-size:13.5px;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:default}
+.sv-bar.ok{border-color:#3ea86b;color:#9fe0b0}
+.sv-bar.err{border-color:#e2513b;color:#ffb4a6;cursor:pointer}
+.sv-bar[hidden]{display:none}
 .cfg-tabs{position:static;top:auto;background:rgba(20,16,10,.92);border-top:1px solid rgba(217,178,95,.25);border-bottom:1px solid rgba(217,178,95,.25)}
 .cfg-tabs button{font-size:13px}
 .dup-g{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:10px 0;background:rgba(22,19,14,.7)}
@@ -2249,7 +2253,7 @@ const inApp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\/|TikTok|musical_ly/i.test(nav
 const GUIDE_DENIED=isIOS
  ?"<b>iPhone (Safari):</b><br>1. Bấm biểu tượng <b>aA</b> trên thanh địa chỉ → <b>Cài đặt trang web</b> → <b>Micro</b> → <b>Cho phép</b><br>2. Mở <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → bật <b>Đọc chính tả</b><br>3. Tải lại trang và bấm 🎤 lần nữa"
  :"<b>Android (Chrome):</b><br>1. Bấm biểu tượng <b>ổ khóa / ⓘ</b> cạnh đường link<br>2. Chọn <b>Quyền</b> (hoặc Cài đặt trang web) → <b>Micro</b> → <b>Cho phép</b><br>3. Tải lại trang và bấm 🎤 lần nữa";
-const APP_VER="24/11-v22";
+const APP_VER="26/11-v23";
 /* ===== v13: dừng hiệu ứng ngoài màn hình, khoá cuộn nền khi mở hộp thoại, chống bấm đúp/zoom ===== */
 {const io2=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("paused",!e.isIntersecting)),{rootMargin:"120px 0px"});
   $$("section,footer").forEach(el=>io2.observe(el))}
@@ -2935,9 +2939,25 @@ $("#aShowOn").onclick=()=>bulkShow(true);$("#aShowOff").onclick=()=>bulkShow(fal
 $("#aAdd").onclick=()=>openEdit(null);
 /* ---- ghi dữ liệu: chia phần theo dung lượng thật (Firestore ≤ 1MB / bản ghi) ---- */
 const ENC=new TextEncoder(),bytesOf=o=>ENC.encode(JSON.stringify(o)).length,PART_BYTES=650000;
-async function savePart(k){const items=AD.items.filter(x=>x._part===k).map(strip);
-  if(k==null||bytesOf(items)>PART_BYTES)return saveAll();
-  await FB.F.setDoc(FB.F.doc(FB.db,"catalog","p"+k),{items});await saveMeta()}
+/* Lưu kho theo hàng đợi: nhiều lần lưu liên tiếp được gộp; mỗi phần chỉ ghi 1 lần với dữ liệu mới nhất */
+const SQ={chain:Promise.resolve(),pend:new Set(),n:0,err:null,t0:0};
+function savePart(k){if(k==null)return sqEnq(()=>saveAll());SQ.pend.add(k);return sqEnq(sqFlush)}
+function sqEnq(fn){SQ.n++;if(!SQ.t0)SQ.t0=Date.now();sqBar();const pr=SQ.chain.then(fn);SQ.chain=pr.catch(()=>{}).then(()=>{SQ.n--;sqBar()});return pr}
+async function sqFlush(){const ks=[...SQ.pend];SQ.pend.clear();if(!ks.length)return;
+  try{const todo=new Set(ks);
+    /* phần nào vượt giới hạn: chỉ dời vài sản phẩm cuối sang phần cuối cùng (hoặc phần mới), không ghi lại toàn bộ kho */
+    for(const k of ks){let items=AD.items.filter(x=>x._part===k);
+      while(items.length>1&&bytesOf(items.map(strip))>PART_BYTES){const mv=items.pop();let L=Math.max(...AD.items.map(x=>x._part??0));
+        if(L===k||bytesOf(AD.items.filter(x=>x._part===L).map(strip))+bytesOf(strip(mv))>PART_BYTES)L=Math.max(L,k)+1;mv._part=L;todo.add(L)}}
+    for(const k of todo){await FB.F.setDoc(FB.F.doc(FB.db,"catalog","p"+k),{items:AD.items.filter(x=>x._part===k).map(strip)})}
+    await saveMeta();SQ.err=null}
+  catch(e){ks.forEach(k=>SQ.pend.add(k));SQ.err=e;throw e}}
+function sqBar(){let el=$("#svBar");if(!el){el=document.createElement("div");el.id="svBar";el.className="sv-bar";el.hidden=true;document.body.appendChild(el);
+    el.onclick=()=>{if(SQ.err&&SQ.pend.size){SQ.err=null;sqEnq(sqFlush).catch(()=>{})}}}
+  if(SQ.n>0){el.hidden=false;el.className="sv-bar";el.textContent="⏳ Đang lưu lên máy chủ… (vẫn sửa tiếp được)"}
+  else if(SQ.err&&SQ.pend.size){el.hidden=false;el.className="sv-bar err";el.textContent="⚠️ Chưa lưu được thay đổi – bấm vào đây để thử lại"}
+  else{const sec=SQ.t0?((Date.now()-SQ.t0)/1000).toFixed(1):"";SQ.t0=0;if(!el.hidden){el.className="sv-bar ok";el.textContent=`✅ Đã lưu xong${sec?` (${sec} giây)`:""}`;clearTimeout(sqBar.t);sqBar.t=setTimeout(()=>{if(!SQ.n)el.hidden=true},2500)}}}
+addEventListener("beforeunload",e=>{if(SQ.n>0||(SQ.err&&SQ.pend.size)){e.preventDefault();e.returnValue=""}});
 const nextPart=()=>{const parts=AD.items.map(x=>x._part).filter(x=>x!=null);return parts.length?Math.max(...parts):0};
 async function saveMeta(){const {F,db}=FB;const parts=AD.items.length?Math.max(...AD.items.map(x=>x._part??0))+1:1;await F.setDoc(F.doc(db,"catalog","meta"),{parts,count:AD.items.length,updated:F.serverTimestamp()})}
 async function saveAll(){let k=0,size=12;for(const x of AD.items){const b=bytesOf(strip(x))+1;if(size+b>PART_BYTES&&size>12){k++;size=12}x._part=k;size+=b}
@@ -3048,11 +3068,11 @@ pf.file.onchange=async()=>{const fs=[...pf.file.files];pf.file.value="";if(!fs.l
 async function compress(file,max=800){let bmp;try{bmp=await createImageBitmap(file)}catch(e){bmp=await new Promise((ok,no)=>{const im=new Image();im.onload=()=>ok(im);im.onerror=no;im.src=URL.createObjectURL(file)})}
   const sc=Math.min(1,max/Math.max(bmp.width,bmp.height)),w=Math.round(bmp.width*sc),h=Math.round(bmp.height*sc),cv=document.createElement("canvas");cv.width=w;cv.height=h;
   const x=cv.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(bmp,0,0,w,h);
-  for(const q of[.8,.7,.6,.5]){let d=cv.toDataURL("image/webp",q);if(!d.startsWith("data:image/webp"))d=cv.toDataURL("image/jpeg",q);if(d.length<700000||q===.5)return{data:d,w,h}}}
+  for(const q of[.8,.7,.6,.5]){let d=cv.toDataURL("image/webp",q);if(!d.startsWith("data:image/webp"))d=cv.toDataURL("image/jpeg",q);if(d.length<300000||q===.5)return{data:d,w,h}}}
 pf.onsubmit=async e=>{e.preventDefault();const b=pf.querySelector("button[type=submit]"),info=$("#peInfo");
   const d={n:pf.n.value.trim(),c:pf.c.value,p:Math.round(+String(pf.p.value).replace(/[^\d]/g,"")),o:Math.round(+String(pf.o.value).replace(/[^\d]/g,""))||0,tag:pf.tag.value.trim(),nt:pf.nt.value.trim(),nd:pf.nd.checked,desc:pf.desc.value.trim(),feat:pf.feat.checked,show:pf.show.checked,s:Math.round(+String(pf.sold.value).replace(/[^\d]/g,""))||0};if(AD.edit&&d.desc!==AD.edit.desc)AD.edit.descAuto=false;
   if(d.n.length<2)return info.textContent="❌ Nhập tên sản phẩm.";if(!d.p)return info.textContent="❌ Nhập giá sỉ.";
-  busy(b,true,"Đang lưu…");const {F,db}=FB;let p=AD.edit,isNew=!p;
+  busy(b,true,AD.slots.some(x=>x.data)?"Đang tải ảnh…":"Đang lưu…");const {F,db}=FB;let p=AD.edit,isNew=!p;
   try{if(isNew){p={id:uid36(),img:"",_part:nextPart(),ord:Date.now()};}
     if(pf.url.value.trim())peAddUrl(pf.url.value);
     const oldImg=p.img,oldIds=dbIds(p),refs=[];
@@ -3063,9 +3083,10 @@ pf.onsubmit=async e=>{e.preventDefault();const b=pf.querySelector("button[type=s
     Object.assign(p,d);
     p.colors=AD.cl.filter(c=>c.n.trim()).map(c=>({n:c.n.trim(),h:c.h,k:Math.max(0,Math.min(4,+c.k||0))}));
     p.vars=AD.vr.filter(v=>v.n.trim()).map(v=>({n:v.n.trim(),p:num(v.p),o:num(v.o)}));
-    if(isNew)AD.items.unshift(p);await savePart(p._part);
+    if(isNew)AD.items.unshift(p);
+    savePart(p._part).catch(err=>atoast("⚠️ Chưa lưu được lên máy chủ: "+authMsg(err)+" – bấm thanh báo lỗi để thử lại"));
     if(!p.img){atoast("🤖 Đang tự tìm ảnh…");autoImages([p]).then(async r=>{const x=r.rep[0];if(x&&x.ok){await savePart(p._part);admList();atoast(`🤖 Đã tự gắn ảnh từ ${x.src} (khớp ${Math.round(x.s*100)}%)`)}else atoast("⚠️ Chưa tìm thấy ảnh phù hợp – để trống")}).catch(()=>{})}
-    pe.classList.remove("on");admList();atoast(isNew?"✅ Đã thêm sản phẩm":"✅ Đã lưu thay đổi")}
+    pe.classList.remove("on");admList();atoast(isNew?"✅ Đã thêm sản phẩm – đang lưu nền":"✅ Đã cập nhật – đang lưu nền")}
   catch(err){if(isNew)AD.items=AD.items.filter(x=>x!==p);info.textContent="❌ Lưu thất bại: "+authMsg(err)}finally{busy(b,false)}};
 $("#peDel").onclick=async()=>{const p=AD.edit;if(!p||!confirm(`Xóa vĩnh viễn "${p.n}"? Không thể hoàn tác.`))return;
   try{AD.items=AD.items.filter(x=>x!==p);await savePart(p._part);Promise.all(dbIds(p).map(id=>FB.F.deleteDoc(FB.F.doc(FB.db,"images",id)).catch(()=>{})));
